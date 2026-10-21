@@ -1,0 +1,28 @@
+'use strict';
+(function(root){
+  const M=root.EXPORT_DATABASE_MODEL,U=root.EXPORT_DESIGN_DIAGRAMS,$=id=>document.getElementById(id),esc=U.escape;
+  let selected='trade',initialized=false;
+  function show(){
+    if(initialized)return;
+    initialized=true;render();
+  }
+  function render(){
+    const domain=M.domains.find(item=>item.id===selected),local=domain.entities.filter(item=>!item.external);
+    $('database-tabs').innerHTML=M.domains.map((item,index)=>'<button type="button" role="tab" id="database-tab-'+item.id+'" data-tab="'+item.id+'" aria-controls="database-panel" aria-selected="'+(selected===item.id)+'" tabindex="'+(selected===item.id?'0':'-1')+'"><small>0'+(index+1)+'</small>'+esc(item.name)+'</button>').join('');
+    $('database-panel').setAttribute('aria-labelledby','database-tab-'+selected);
+    $('database-panel').innerHTML='<section class="database-card database-er"><div class="database-section-heading"><div><span class="database-eyebrow">ENTITY RELATIONSHIP</span><h3>'+esc(domain.name)+' · ER 图</h3><p>'+esc(domain.subtitle)+'</p></div><span class="database-counter">'+local.length+' 个领域实体 · '+domain.relations.length+' 条关系</span></div><div id="database-er-diagram"></div><div class="database-legend"><span>PK 主键</span><span>FK 外键 / 跨域逻辑引用</span><span>UK 唯一键</span><span>|| 恰好一条 · o| 零或一条 · o{ 零到多条</span><span>标题注明领域的表为跨域引用</span></div><p class="database-muted">每个实体的字段列从左到右为：类型、字段、键、字段说明。复合唯一键、空值条件及业务约束见实体清单。跨域关系是逻辑关联，不预设跨服务数据库外键。</p></section>'+
+      '<section class="database-card"><div class="database-section-heading"><div><span class="database-eyebrow">DOMAIN ANALYSIS</span><h3>领域边界与聚合</h3></div><span class="database-counter">'+esc(domain.nodes)+'</span></div><p class="database-boundary">'+esc(domain.boundary)+'</p><div class="database-aggregates">'+domain.aggregates.map(item=>'<article><h4>'+esc(item[0])+'</h4><code>'+esc(item[1])+'</code><p>'+esc(item[2])+'</p></article>').join('')+'</div><h4 class="database-subheading">业务生命周期</h4>'+U.table(['对象','状态推进'],domain.lifecycle)+'</section>'+
+      '<section class="database-card"><h3>关键不变量与一致性</h3><ol class="database-rules">'+domain.rules.map(rule=>'<li>'+esc(rule)+'</li>').join('')+'</ol></section>'+
+      '<section class="database-card"><h3>跨领域协作</h3>'+U.table(['方向 / 领域','数据契约与边界'],domain.integrations)+'<p class="database-muted">所有可变业务根保留version用于乐观锁；金额变更、额度占用和唯一业务键还需数据库事务及约束。时间保存UTC并区分发生 / 接收 / 生效时间；页面按业务时区展示。图中省略通用创建、更新、组织及操作人字段。</p></section>'+
+      (domain.jsonLinks?'<section class="database-card"><h3>宽表内的引用与文件路径</h3><p class="database-boundary">'+esc(domain.jsonLinks)+'</p></section>':'')+
+      (selected==='trade'?'<section class="database-card"><h3>所有填写信息 · 字段落点</h3><p class="database-muted">对照当前建档表单逐项映射。必要文件路径在对应节点提交前必填，草稿或尚未到达该节点时可空；新增表单输入必须同步更新schema及完整快照，不能丢在页面临时状态中。</p>'+U.table(['信息组','主表字段','当前表单输入键','字段说明'],M.inputGroups)+'</section><section class="database-card"><h3>版本快照 · 完整前后记录与审批</h3>'+U.table(['事件','完整记录','操作与审批规则'],[['创建档案','before=NULL；after为完整主表第1版','记录创建人、创建原因和时间；审批人为空。'],['保存或文件换绑','before为数据库更新前整行；after为更新后整行','version递增；内容变化还递增content_version；当前受影响批准失效。'],['提交审批','前后记录包含提交前后状态及全部文件路径','冻结所审content_version；不修改历史快照。'],['批准或驳回','另建审批事件快照，完整保存状态变更前后记录','reviewed_snapshot_id指向被审提交；记录独立审批人、意见、决定时间，禁止回填旧快照。'],['失败或拒绝','主表与成功快照均不变','回滚后独立记录operation_log，不能伪造成功版本。']])+'</section>':'')+
+      (selected==='trade'||selected==='config'?'<section class="database-card"><div class="database-section-heading"><div><span class="database-eyebrow">FILE STORAGE · ALL REVISIONS</span><h3>文件存储与全部 revision 留档</h3><p>文件本体存文件系统；文件记录表每个revision一行。修改仅新增，不覆盖历史，不自动切换业务绑定。</p></div></div>'+U.table(['对象','字段 / 路径','保存与引用规则'],M.fileRevisionFields)+'</section>':'')+
+      '<section class="database-card"><div class="database-section-heading"><div><span class="database-eyebrow">AUDIT & TRACEABILITY</span><h3>审计合规 · 操作流水与证据</h3><p>资金事实与操作审计独立追加；字段差异、审批及授权快照直接保存在宽表JSON中，按请求ID与交易ID追溯。</p></div></div>'+U.table(['必须留痕的操作','动作编码示例','审计关联与证据','复核要点'],domain.auditControls||[])+(selected==='config'?'<h4 class="database-subheading">统一操作流水字段规范</h4>'+U.table(['字段组','建议字段','约束与用途'],M.auditFields):'')+'<p class="database-muted">全部关键状态转换追加操作者、触发事件、前后状态、版本、依据与结果。成功变更和审计同事务；失败 / 拒绝在业务回滚后独立记录。文件只引用当时revision路径，查阅和下载同样受权控并留痕。</p></section>'+
+      '<section class="database-card"><details open><summary>实体清单 · 核心字段与约束（'+local.length+'）</summary>'+U.table(['实体 / 表名','职责及数据内容','唯一性 / 一致性约束'],local.map(item=>[item.name+'\n'+item.id,item.purpose,item.constraint]))+'</details></section>'+
+      '<section class="database-card database-field-dictionary"><h3>逐实体字段明细 · 字段说明</h3><p class="database-muted">ER图中每个字段的最右列即字段说明，与以下字典同源。跨域实体仅列本图引用字段，完整定义见所属领域；类型为逻辑类型，组合唯一约束见实体清单。</p>'+domain.entities.map(item=>'<details class="database-entity-fields"'+(!item.external?' open':'')+'><summary>'+esc(item.name)+' · '+esc(item.id)+(item.external?'（跨域引用）':'')+'</summary>'+U.table(['字段','类型','键','字段说明'],M.fieldRows(item))+'</details>').join('')+'</section>'+
+      '<section class="database-card"><h3>范围与待定项</h3><ul class="database-rules">'+domain.questions.map(item=>'<li>'+esc(item)+'</li>').join('')+'</ul><p class="database-muted">依据本交付包现有业务操作、资金流设计、RBAC及协议原型分析。此处为逻辑设计，不创建数据库、不迁移本机业务记录；状态转换及N01—N23对齐见“状态机设计”。</p></section>';
+    U.mount($('database-er-diagram'),M.source(domain),'database-'+domain.id,domain.name+' ER 图',{entities:domain.entities,focus:{trade:'trade_record',funds:'fund_order',rbac:'user_account',config:'operation_log'}[domain.id]});
+  }
+  function initialize(){U.bindTabs($('database-tabs'),id=>{selected=id;render();});}
+  root.EXPORT_DATABASE_WORKSPACE={initialize,show};
+})(globalThis);

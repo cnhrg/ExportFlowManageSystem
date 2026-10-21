@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; script-src 'self' file:; style-src 'self' 'unsafe-inline' file:; img-src 'self' data: blob: file:; frame-src 'self' blob: file:; connect-src 'none'; object-src 'none'; base-uri 'none'">
+  <title>跨境贸易IT管理系统产品原型展示</title>
+  <link rel="stylesheet" href="assets/vendor/x6.css">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/review.css">
+  <link rel="stylesheet" href="assets/process.css">
+  <link rel="stylesheet" href="assets/capability.css">
+  <link rel="stylesheet" href="assets/management-views.css">
+  <link rel="stylesheet" href="assets/boss-dashboard.css">
+  <link rel="stylesheet" href="assets/showcase.css">
+  <link rel="stylesheet" href="assets/contracts.css">
+  <link rel="stylesheet" href="assets/operations-mobile.css">
+  <link rel="stylesheet" href="assets/protocols.css">
+  <link rel="stylesheet" href="assets/database.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-heading">
+      <div class="brand"><span class="brand-mark">IT</span><div class="brand-copy">跨境贸易<small>TRADE IT SYSTEM</small></div></div>
+      <button id="sidebar-toggle" class="sidebar-toggle" type="button" aria-label="收起侧边栏" aria-expanded="true" aria-controls="navigation" title="收起侧边栏">‹</button>
+    </div>
+    <div class="workspace-label">产品原型 / 核心技术设计</div>
+    <nav id="navigation" aria-label="主导航">
+      <button class="nav-item active" data-view="overview" aria-label="流程总览" title="流程总览"><span aria-hidden="true">◈</span><b class="nav-label">流程总览</b><em>01</em></button>
+      <button class="nav-item" data-view="capabilities" aria-label="业务操作" title="业务操作"><span aria-hidden="true">◇</span><b class="nav-label">业务操作</b><em>04</em></button>
+      <button class="nav-item" data-view="contracts" aria-label="电子合同" title="电子合同"><span aria-hidden="true">▧</span><b class="nav-label">电子合同</b><em>EC</em></button>
+      <button class="nav-item" data-view="funds-design" aria-label="资金流设计" title="资金流设计"><span aria-hidden="true">↗</span><b class="nav-label">资金流设计</b><em>05</em></button>
+      <button class="nav-item" data-view="rbac" aria-label="RBAC权限设计" title="RBAC权限设计"><span aria-hidden="true">⌘</span><b class="nav-label">RBAC权限设计</b><em>06</em></button>
+      <button class="nav-item" data-view="boss-viewer" aria-label="BossViewer看板" title="BossViewer看板"><span aria-hidden="true">▤</span><b class="nav-label">BossViewer看板</b><em>07</em></button>
+      <button class="nav-item" data-view="protocol-design" aria-label="协议设计" title="协议设计"><span aria-hidden="true">⇌</span><b class="nav-label">协议设计</b><em>08</em></button>
+      <button class="nav-item" data-view="database-design" aria-label="数据库设计" title="数据库设计"><span aria-hidden="true">▦</span><b class="nav-label">数据库设计</b><em>09</em></button>
+      <button class="nav-item" data-view="state-design" aria-label="状态机设计" title="状态机设计"><span aria-hidden="true">⇢</span><b class="nav-label">状态机设计</b><em>10</em></button>
+    </nav>
+    <nav id="supplementary-navigation" class="sidebar-secondary" aria-label="参考资料">
+      <button class="nav-item" data-view="materials" aria-label="材料索引" title="材料索引"><span aria-hidden="true">▣</span><b class="nav-label">材料索引</b></button>
+      <button class="nav-item" data-view="entities" aria-label="四流实体说明" title="四流实体说明"><span aria-hidden="true">⇄</span><b class="nav-label">四流实体说明</b></button>
+    </nav>
+    <div class="sidebar-bottom">
+      <p>产品原型与设计演示<br>非生产系统</p>
+      <a href="代理出口业务操作指引_角色节点重组版.docx" download>↓ 业务入口原型图</a>
+      <button id="print-button">打印业务摘要</button>
+    </div>
+  </aside>
+  <main>
+    <header class="showcase-header">
+      <div><h1>跨境贸易IT管理系统产品原型展示</h1><p>业务流程与操作原型 · 资金流核心设计 · RBAC 权限模型 · 管理看板</p></div>
+      <span class="showcase-badge">产品原型 / 技术设计</span>
+    </header>
+    <section id="view-overview" class="view active">
+      <div class="toolbar process-toolbar">
+        <label>流程 <select id="process-filter" class="process-select" aria-label="按流程筛选"><option value="all">全部流程</option></select></label>
+        <div class="segmented" id="mode-buttons" aria-label="付款分支"><button class="selected" data-mode="all">完整流程</button><button data-mode="pre">出口前预付款</button><button data-mode="post">出口后付款</button></div>
+        <label>角色 <select id="role-filter"><option value="all">全部角色</option></select></label>
+        <label>四流 <select id="flow-filter"><option value="all">全部业务流</option></select></label>
+        <label class="search"><span>⌕</span><input id="graph-search" placeholder="搜索节点、材料或职责" aria-label="搜索流程节点"></label>
+        <button id="open-sequence" class="sequence-open">预览时序图</button>
+        <button id="review-settings">材料审核设置</button>
+      </div>
+      <div id="process-sequences" class="diagram-entry-list" aria-label="全部流程时序图"></div>
+      <div class="graph-layout">
+        <div class="graph-shell">
+          <div id="graph" aria-label="交互业务流程图"></div>
+          <div class="canvas-controls"><button id="zoom-out" aria-label="缩小">−</button><span id="zoom-label">60%</span><button id="zoom-in" aria-label="放大">＋</button><i></i><button id="fit-button">适配全图</button><button id="readable-button">阅读比例</button></div>
+          <div class="canvas-hint">宽幅画布 · 限定范围内拖动平移 · 点击节点查看关联 · 适配全图查看全貌</div>
+        </div>
+        <aside id="node-detail" class="detail-panel" hidden aria-label="节点详情"></aside>
+      </div>
+      <div class="diagram-footer"><span><i class="dot" style="--c:#009d99"></i>货物流</span><span><i class="dot" style="--c:#2563eb"></i>报关流</span><span><i class="dot" style="--c:#d58a12"></i>资金流</span><span><i class="dot" style="--c:#7957d5"></i>退税流</span><span class="muted">虚线：条件分支／异常回路 · 筛选仅改变显示，不改变审核规则</span></div>
+      <details class="node-directory"><summary>展开完整节点目录（可键盘访问）</summary><div id="node-list"></div></details>
+    </section>
+    <section id="view-entities" class="view" aria-label="四流实体流转"><div id="entity-flow-cards" class="entity-flow-grid"></div></section>
+    <section id="view-materials" class="view">
+      <div class="toolbar"><label class="search wide"><span>⌕</span><input id="material-search" placeholder="搜索文件、节点、责任方、修改建议" aria-label="搜索材料"></label><select id="material-kind" aria-label="材料类别"><option value="all">全部材料</option><option value="source">已有原件</option><option value="required">待补证据</option></select><span id="material-result" class="muted"></span><a class="primary-link" href="材料节点清单.csv" download>↓ CSV 清单</a></div>
+      <div class="table-wrap"><table><thead><tr><th>材料 / 来源</th><th>责任与节点</th><th>性质 / 状态</th><th>调整建议 / 确认方</th></tr></thead><tbody id="material-rows"></tbody></table></div>
+    </section>
+    <section id="view-capabilities" class="view" aria-label="产品功能原型">
+      <div class="capability-heading">
+        <div><h2>业务操作</h2><p>先选择工作入口，进入后按当前岗位查看该工作区的授权页面。</p></div>
+        <div id="ops-user-controls"></div>
+      </div>
+      <div id="ops-device-tabs" class="ops-device-tabs" role="tablist" aria-label="业务操作设备原型"></div>
+      <div id="operations-prototype" role="tabpanel">
+      <button type="button" id="work-directory-return" class="demo-button work-directory-return" data-work-directory hidden>← 返回工作入口目录</button>
+      <div id="ops-mobile-navigation" class="ops-mobile-navigation"></div>
+      <div class="capability-layout">
+        <aside class="capability-index" aria-label="业务操作目录">
+          <div class="capability-index-heading"><strong id="capability-navigation-heading">工作入口目录</strong></div>
+          <div id="capability-list"></div>
+        </aside>
+        <article id="capability-detail" class="capability-detail" aria-live="polite"></article>
+      </div>
+      </div>
+    </section>
+    <section id="view-contracts" class="view management-view" aria-label="电子合同产品流程">
+      <div class="management-heading"><div><span class="management-eyebrow">E-CONTRACT · PRODUCT JOURNEY</span><h2>电子合同</h2><p>选取空白模板 → 填充交易信息 → 电子盖章 → 提交电子合同</p></div><span class="prototype-chip">本机交互原型 · 非真实签署</span></div>
+      <div id="contract-workspace"><p id="contract-message" role="status" aria-live="polite"></p><div id="contract-body"></div></div>
+    </section>
+    <section id="view-protocol-design" class="view management-view" aria-label="外部系统协议设计">
+      <div class="management-heading"><div><span class="management-eyebrow">EXTERNAL INTEGRATION · PROTOCOL DESIGN</span><h2>协议设计</h2><p>关务报关功能用例 / 银行资金操作用例 / 税务办理用例</p></div><span class="prototype-chip">功能用例设计 · 未连接外部机构</span></div>
+      <div id="protocol-tabs" class="protocol-tabs" role="tablist" aria-label="外部系统对接类型"></div>
+      <div id="protocol-panel" class="protocol-panel" role="tabpanel" tabindex="0"></div>
+    </section>
+    <section id="view-database-design" class="view management-view" aria-label="数据库设计">
+      <div class="management-heading"><div><span class="management-eyebrow">WIDE TABLES · DATABASE DESIGN</span><h2>数据库设计</h2><p>每天少量单据 · 四个领域采用业务宽表 · 文件存储留档，实体仅记录版本路径，全部 revision 保留。</p></div><span class="prototype-chip">14 张核心表 · 宽表逻辑设计</span></div>
+      <div id="database-tabs" class="database-tabs" role="tablist" aria-label="数据库设计领域"></div>
+      <div id="database-panel" role="tabpanel" tabindex="0"></div>
+    </section>
+    <section id="view-state-design" class="view management-view" aria-label="状态机设计">
+      <div class="management-heading"><div><span class="management-eyebrow">STATE MACHINE · PROCESS ALIGNMENT</span><h2>状态机设计</h2><p>主流程编排与领域状态分层，逐项对齐 N01—N23、版本审核和资金放行条件。</p></div><span class="prototype-chip">状态与转换设计 · 非执行引擎</span></div>
+      <div id="state-design-tabs" class="database-tabs" role="tablist" aria-label="状态机设计领域"></div>
+      <div id="state-design-panel" role="tabpanel" tabindex="0"></div>
+    </section>
+    <section id="view-rbac" class="view management-view" aria-label="RBAC权限设计">
+      <div class="management-heading">
+        <div><span class="management-eyebrow">ROLE-BASED ACCESS · MIND MAP</span><h2>RBAC 角色权限脑图</h2><p>按 A / B / E / F 主体和资金操作拆分角色，查看对应业务节点与权限。</p></div>
+        <span class="management-status">最小权限 · 职责分离</span>
+      </div>
+      <div class="rbac-prototype-window">
+        <div class="prototype-window-top"><div><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span><b>平台角色权限结构</b></div><div class="prototype-window-user">设计原型 · 非生产权限</div></div>
+        <div id="rbac-mindmap" class="rbac-mindmap" aria-label="按主体和资金操作划分的RBAC角色及权限"></div>
+        <div class="rbac-product-toolbar rbac-legacy"><div><span>系统管理</span><b>角色与权限</b></div><div><button type="button" class="secondary-button" id="rbac-reset">恢复默认</button><button type="button" class="primary-button" id="rbac-save">保存配置</button></div></div>
+        <div class="rbac-product-layout rbac-legacy">
+          <aside class="rbac-role-panel"><div class="rbac-role-panel-title"><b>角色列表</b><span>12 个角色</span></div><label id="rbac-role-search" class="rbac-role-search"><span>⌕</span><input type="search" placeholder="搜索角色" aria-label="搜索角色"></label><div id="rbac-role-list" class="rbac-role-list">
+            <button type="button" class="rbac-role-option active" data-rbac-role="sales"><span class="role-avatar">销</span><span><b>销售 / 业务经办</b><small>业务端 · 12人</small></span><i>›</i></button>
+            <button type="button" class="rbac-role-option" data-rbac-role="operations"><span class="role-avatar role-blue">运</span><span><b>运营</b><small>业务端 · 8人</small></span><i>›</i></button>
+            <button type="button" class="rbac-role-option" data-rbac-role="legal"><span class="role-avatar role-purple">法</span><span><b>法务 / 合同管理员</b><small>支持端 · 3人</small></span><i>›</i></button>
+            <button type="button" class="rbac-role-option" data-rbac-role="finance"><span class="role-avatar role-orange">财</span><span><b>财务经办</b><small>资金端 · 5人</small></span><i>›</i></button>
+            <button type="button" class="rbac-role-option" data-rbac-role="finance-approver"><span class="role-avatar role-orange">审</span><span><b>财务审批 / 资金授权人</b><small>资金端 · 2人</small></span><i>›</i></button>
+            <button type="button" class="rbac-role-option" data-rbac-role="customs"><span class="role-avatar role-purple">关</span><span><b>报关经办</b><small>业务端 · 4人</small></span><i>›</i></button>
+            <button type="button" class="rbac-role-option" data-rbac-role="tax"><span class="role-avatar role-blue">税</span><span><b>税务经办</b><small>支持端 · 2人</small></span><i>›</i></button>
+            <button type="button" class="rbac-role-option" data-rbac-role="compliance"><span class="role-avatar role-red">合</span><span><b>合规人员</b><small>风控端 · 3人</small></span><i>›</i></button>
+            <button type="button" class="rbac-role-option" data-rbac-role="admin"><span class="role-avatar">管</span><span><b>系统管理员</b><small>系统端 · 2人</small></span><i>›</i></button>
+            <button type="button" class="rbac-role-option" data-rbac-role="boss"><span class="role-avatar role-green">B</span><span><b>Boss Viewer</b><small>管理端 · 2人</small></span><i>›</i></button>
+            <button type="button" class="rbac-role-option" data-rbac-role="super-admin"><span class="role-avatar role-red">S</span><span><b>Super Admin</b><small>系统端 · 1人</small></span><i>›</i></button>
+            <button type="button" class="rbac-role-option" data-rbac-role="internal-audit"><span class="role-avatar role-purple">审</span><span><b>内部审计合规</b><small>审计端 · 1人</small></span><i>›</i></button>
+          </div></aside>
+          <div class="rbac-config-panel">
+            <div class="rbac-config-heading"><div><div class="rbac-role-title-row"><h3 id="rbac-selected-role">销售 / 业务经办</h3><span class="enabled-tag">已启用</span></div><p id="rbac-role-description">建立交易档案并维护本方未锁定资料，提交后进入独立审核。</p></div><button type="button" class="secondary-button" id="rbac-edit-members">管理成员 <span>12</span></button></div>
+            <div class="rbac-config-meta"><label>数据范围<select id="rbac-scope"><option>所属组织</option><option>指定客户 / 交易</option><option>授权范围内全部</option></select></label><label>敏感字段<select id="rbac-sensitive"><option>按字段策略脱敏</option><option>仅显示掩码</option><option>需单独授权查看</option></select></label><span>最近更新：2026-10-20 16:42 · 演示数据</span></div>
+            <div class="rbac-permission-heading"><div><b>功能权限</b><span>勾选角色可执行的操作；审批、执行与导出须单独授权</span></div><label><input id="rbac-select-all" type="checkbox"> 全选基础权限</label></div>
+            <div class="rbac-permission-table-wrap"><table class="rbac-permission-table"><thead><tr><th>功能模块</th><th>查看</th><th>新建</th><th>编辑</th><th>提交</th><th>审核</th><th>执行</th><th>导出</th></tr></thead><tbody id="rbac-permission-rows">
+              <tr><th>交易档案</th><td><input type="checkbox" checked aria-label="交易档案查看"></td><td><input type="checkbox" checked aria-label="交易档案新建"></td><td><input type="checkbox" checked aria-label="交易档案编辑"></td><td><input type="checkbox" checked aria-label="交易档案提交"></td><td><input type="checkbox" aria-label="交易档案审核"></td><td><input type="checkbox" aria-label="交易档案执行"></td><td><input type="checkbox" aria-label="交易档案导出"></td></tr>
+              <tr><th>合同与单证</th><td><input type="checkbox" checked aria-label="合同与单证查看"></td><td><input type="checkbox" aria-label="合同与单证新建"></td><td><input type="checkbox" checked aria-label="合同与单证编辑"></td><td><input type="checkbox" checked aria-label="合同与单证提交"></td><td><input type="checkbox" aria-label="合同与单证审核"></td><td><input type="checkbox" aria-label="合同与单证执行"></td><td><input type="checkbox" aria-label="合同与单证导出"></td></tr>
+              <tr><th>收款与资金</th><td><input type="checkbox" checked aria-label="收款与资金查看"></td><td><input type="checkbox" aria-label="收款与资金新建"></td><td><input type="checkbox" aria-label="收款与资金编辑"></td><td><input type="checkbox" aria-label="收款与资金提交"></td><td><input type="checkbox" aria-label="收款与资金审核"></td><td><input type="checkbox" aria-label="收款与资金执行"></td><td><input type="checkbox" aria-label="收款与资金导出"></td></tr>
+              <tr><th>报关与退税</th><td><input type="checkbox" checked aria-label="报关与退税查看"></td><td><input type="checkbox" aria-label="报关与退税新建"></td><td><input type="checkbox" aria-label="报关与退税编辑"></td><td><input type="checkbox" aria-label="报关与退税提交"></td><td><input type="checkbox" aria-label="报关与退税审核"></td><td><input type="checkbox" aria-label="报关与退税执行"></td><td><input type="checkbox" aria-label="报关与退税导出"></td></tr>
+              <tr><th>用户与角色</th><td><input type="checkbox" aria-label="用户与角色查看"></td><td><input type="checkbox" aria-label="用户与角色新建"></td><td><input type="checkbox" aria-label="用户与角色编辑"></td><td><input type="checkbox" aria-label="用户与角色提交"></td><td><input type="checkbox" aria-label="用户与角色审核"></td><td><input type="checkbox" aria-label="用户与角色执行"></td><td><input type="checkbox" aria-label="用户与角色导出"></td></tr>
+              <tr><th>合同模板</th><td><input type="checkbox" aria-label="合同模板查看"></td><td><input type="checkbox" aria-label="合同模板新建"></td><td><input type="checkbox" aria-label="合同模板编辑"></td><td><input type="checkbox" aria-label="合同模板提交"></td><td><input type="checkbox" aria-label="合同模板审核"></td><td><input type="checkbox" aria-label="合同模板执行"></td><td><input type="checkbox" aria-label="合同模板导出"></td></tr>
+            </tbody></table></div>
+            <div class="rbac-config-foot"><span id="rbac-save-status" role="status">角色权限变更需复核后生效；高风险动作受职责分离策略约束。</span><button type="button" class="text-button" id="rbac-temp-grant">＋ 临时授权</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="management-notice rbac-legacy"><strong>设计边界</strong><span>角色授权不替代组织身份认证、MFA、受限 VPN、业务授权或银行 / 海关 / 税务系统的正式权限。敏感操作须独立授权并留痕。</span></div>
+      <div class="rbac-summary rbac-legacy">
+        <article><small>角色模板</small><strong>12</strong><span>覆盖业务、资金、合规与管理</span></article>
+        <article><small>关键控制</small><strong>4</strong><span>范围 / 字段 / 动作 / 职责冲突</span></article>
+        <article><small>高风险动作</small><strong>双人复核</strong><span>付款放行、敏感导出、权限变更</span></article>
+        <article><small>默认策略</small><strong>拒绝</strong><span>未显式授权则不可见、不可操作</span></article>
+      </div>
+      <article class="management-card rbac-legacy">
+        <div class="management-card-heading"><div><h3>角色授权摘要</h3><p>各角色的关键权限边界；具体授权在上方角色配置界面中按需维护。</p></div><span class="prototype-chip">角色定义</span></div>
+        <div class="management-table-wrap"><table class="rbac-table">
+          <thead><tr><th>角色</th><th>交易 / 资料</th><th>审核 / 审批</th><th>资金 / 申报</th><th>管理 / 导出</th><th>关键约束</th></tr></thead>
+          <tbody>
+            <tr><th>销售 / 业务经办</th><td><span class="perm allow">建档 · 编辑本方</span></td><td><span class="perm deny">不可终审本人提交</span></td><td><span class="perm deny">不可执行</span></td><td><span class="perm deny">不可管理</span></td><td>仅限所属组织及未锁定资料</td></tr>
+            <tr><th>运营</th><td><span class="perm allow">授权在途单据 · 修改 / 重提</span></td><td><span class="perm allow">分场景审核 · 驳回补正</span></td><td><span class="perm deny">不可代财务 / 报关执行</span></td><td><span class="perm limited">按授权导出</span></td><td>本人修改 / 提交版本不得自审；不代替专业及外部确认</td></tr>
+            <tr><th>法务 / 合同管理员</th><td><span class="perm limited">合同与条款</span></td><td><span class="perm allow">合同 Review</span></td><td><span class="perm deny">不可执行</span></td><td><span class="perm limited">模板分权管理</span></td><td>模板修改与发布分离</td></tr>
+            <tr><th>财务经办</th><td><span class="perm limited">账户 · 流水 · 对账</span></td><td><span class="perm limited">提交付款申请</span></td><td><span class="perm limited">结汇试算 · 付款提请</span></td><td><span class="perm limited">按授权导出</span></td><td>本人申请不得本人审批；账号按需掩码</td></tr>
+            <tr><th>财务审批 / 资金授权人</th><td><span class="perm limited">审批范围内交易</span></td><td><span class="perm allow">额度内复核 / 放行</span></td><td><span class="perm limited">授权执行 / 指令确认</span></td><td><span class="perm deny">不可管理</span></td><td>MFA、额度控制与双人授权可配置</td></tr>
+            <tr><th>报关经办</th><td><span class="perm limited">报关资料 · 草稿</span></td><td><span class="perm limited">提交申报材料</span></td><td><span class="perm deny">不可付款</span></td><td><span class="perm limited">委托范围内资料</span></td><td>不能代出口方确认最终草稿</td></tr>
+            <tr><th>税务经办</th><td><span class="perm limited">证明 / 退税材料</span></td><td><span class="perm limited">资料复核 · 跟踪</span></td><td><span class="perm deny">不可代纳税主体申报</span></td><td><span class="perm limited">按授权导出</span></td><td>外部申报由有权主体执行</td></tr>
+            <tr><th>合规人员</th><td><span class="perm limited">主体 / 风险 / 核查证据</span></td><td><span class="perm allow">授权范围内 Hold 复核</span></td><td><span class="perm deny">不可付款 / 申报</span></td><td><span class="perm limited">审计查询</span></td><td>不得删除命中记录或审计轨迹</td></tr>
+            <tr><th>系统管理员</th><td><span class="perm limited">编辑合同模板</span></td><td><span class="perm deny">无业务审批权</span></td><td><span class="perm deny">无付款 / 申报权</span></td><td><span class="perm allow">账号 · 角色 · 配置</span></td><td>模板版本留痕；管理职责与业务授权隔离</td></tr>
+            <tr><th>Boss Viewer</th><td><span class="perm limited">单据 / 资金汇总及授权脱敏摘要</span></td><td><span class="perm deny">只读，不参与审批</span></td><td><span class="perm deny">不可执行</span></td><td><span class="perm limited">导出需单独授权</span></td><td>不查看完整账号、个人敏感信息及合同原件</td></tr>
+            <tr><th>Super Admin</th><td><span class="perm allow">全部业务与系统资料</span></td><td><span class="perm allow">全部审批权限</span></td><td><span class="perm allow">全部资金 / 申报权限</span></td><td><span class="perm allow">全部管理与导出权限</span></td><td>全权限角色；所有敏感操作完整留痕</td></tr>
+            <tr><th>内部审计合规</th><td><span class="perm allow">全模块查看</span></td><td><span class="perm deny">只读，不可审批</span></td><td><span class="perm deny">只读，不可执行</span></td><td><span class="perm deny">不可编辑 / 导出</span></td><td>可查看业务、权限配置及完整审计轨迹</td></tr>
+          </tbody>
+        </table></div>
+        <div class="rbac-legend"><span><i class="perm-dot allow-dot"></i>允许（仍受范围 / 条件约束）</span><span><i class="perm-dot limited-dot"></i>受限或需额外授权</span><span><i class="perm-dot deny-dot"></i>禁止</span></div>
+      </article>
+      <div class="rbac-lower-grid rbac-legacy">
+        <article class="management-card"><div class="management-card-heading"><div><h3>权限判定维度</h3><p>访问决策按以下维度组合计算，任一条件不满足即拒绝。</p></div></div><div class="policy-list">
+          <div><b>角色</b><span>用户仅获得岗位所需的最小权限；临时授权须注明原因、审批人和到期时间。</span></div>
+          <div><b>数据范围</b><span>本组织 / 指定客户 / 指定交易；跨组织访问须有有效委托关系。</span></div>
+          <div><b>字段与附件</b><span>账户、个人信息、合同原文按敏感级别脱敏；查看与下载分别授权。</span></div>
+          <div><b>动作与条件</b><span>查看、编辑、提交、审核、放行、执行、导出分别控制，并校验状态、额度与版本。</span></div>
+        </div></article>
+        <article class="management-card"><div class="management-card-heading"><div><h3>职责分离与权限生命周期</h3><p>关键动作通过互斥角色和可追溯授权降低越权风险。</p></div></div><div class="policy-list">
+          <div><b>关键职责分离</b><span>申请人 ≠ 审批人；资料修改人 ≠ 最终审核人；系统管理员 ≠ 业务审批人。</span></div>
+          <div><b>高风险操作</b><span>付款放行、导出敏感数据、角色变更触发二次验证 / 双人复核并记录理由。</span></div>
+          <div><b>定期复核</b><span>授权变更、临时权限到期、人员离职或组织变更时及时回收并复核。</span></div>
+          <div><b>审计留痕</b><span>记录授权前后值、操作者、时间、来源、审批依据及拒绝原因；原始记录不可覆盖。</span></div>
+        </div></article>
+      </div>
+    </section>
+    <section id="view-boss-viewer" class="view management-view" aria-label="BossViewer经营看板">
+      <div class="management-heading">
+        <div><span class="management-eyebrow">FUNDS ANALYTICS · READ-ONLY</span><h2>BossViewer 资金看板</h2><p>电脑端 / 移动端独立原型 · 双币种收支 · 资金去向 · 收益与付款</p></div>
+        <div class="boss-viewer-meta"><span class="readonly-pill">◉ 脱敏只读</span><span class="prototype-chip">交互原型</span></div>
+      </div>
+      <div id="boss-workspace"></div>
+    </section>
+    <section id="view-funds-design" class="view" aria-label="步骤5资金流与信息流设计">
+      <div class="capability-heading"><div><span class="capability-eyebrow">FUNDS &amp; INFORMATION FLOW · V1 / STEP 05</span><h2>资金流设计 · V1</h2><p>两项费用均由D承担：实收入CNH不可用余额后按万分之三计提，每贸易单完成INVOICE申报后计提人民币300元；均须先经银行核验入账为国内RMB可用余额，才能扣取并转B收益账户，不得从CNH不可用余额直接转收益。V1不垫资；V2支持B先行垫付A、后续D回款核验入账后按协议清偿。本地原型不执行真实扣费、垫资或银行指令。</p></div></div>
+      <div id="funds-design-content"></div>
+    </section>
+    <section id="view-simulation" class="view">
+      <div class="section-title"><div><h2>人工审核门禁 · 合成数据演示</h2><p>仅存在于当前页面内存。刷新、重置或切换付款模式会清空；无真实人员认证、无支付或申报能力。</p></div><button id="reset-simulation">重置演示</button></div>
+      <div class="simulation-banner">所有勾选均表示“在合成场景中已核验”，不能作为真实业务批准。示例额度不是 B 的实际授信。</div>
+      <div class="toolbar"><label>演示分支 <select id="simulation-mode"><option value="post">出口后付款</option><option value="pre">出口前预付款（含 B 垫资）</option></select></label><span id="simulation-progress" class="muted"></span></div>
+      <div class="simulation-layout"><div id="simulation-list" class="simulation-list"></div><div id="simulation-detail" class="simulation-detail"></div></div>
+      <details class="audit"><summary>本页模拟审核记录（非真实审计日志）</summary><div id="audit-log">暂无记录。</div></details>
+    </section>
+    <section id="print-summary" aria-label="完整打印摘要"></section>
+    <footer class="page-footer">CROSS-BORDER TRADE IT <span>产品原型展示 / 核心技术设计 / 非生产系统</span></footer>
+    <div id="toast" role="status" aria-live="polite" hidden></div>
+    <div id="fatal-error" role="alert" hidden></div>
+  </main>
+  <dialog id="review-dialog" aria-labelledby="review-dialog-title"><header><h2 id="review-dialog-title"></h2><button id="review-dialog-close" aria-label="关闭Review弹窗">×</button></header><div id="review-dialog-body"></div></dialog>
+  <dialog id="sequence-dialog" aria-labelledby="sequence-dialog-title">
+    <div class="sequence-layout">
+      <header class="sequence-header"><h2 id="sequence-dialog-title">流程时序图</h2><button id="sequence-close" aria-label="关闭时序图">×</button></header>
+      <p id="sequence-scope" class="sequence-scope"></p>
+      <div class="diagram-selector"><label for="diagram-select">切换图示</label><select id="diagram-select" aria-label="切换流程时序图或四流实体图"></select></div>
+      <div id="sequence-node-links" class="sequence-node-links" aria-label="时序图关联节点"></div>
+      <div class="sequence-body">
+        <section class="sequence-view" aria-label="时序图预览">
+          <div class="sequence-controls"><button id="sequence-zoom-out" aria-label="缩小时序图">−</button><span id="sequence-scale">100%</span><button id="sequence-zoom-in" aria-label="放大时序图">＋</button><button id="sequence-fit">适配宽度</button><button id="sequence-toggle-editor" aria-expanded="true">收起源码</button><button id="sequence-download-png">下载 PNG</button><span id="sequence-rendered-nodes"></span></div>
+          <div id="sequence-viewport"><div id="sequence-preview"></div></div>
+        </section>
+        <section class="sequence-editor" aria-label="Mermaid源码编辑">
+          <label for="sequence-source">Mermaid 源码</label>
+          <textarea id="sequence-source" spellcheck="false" maxlength="50000" aria-describedby="sequence-status"></textarea>
+          <div class="sequence-actions"><button id="sequence-refresh">更新预览</button><button id="sequence-save" class="primary">保存到本机</button><button id="sequence-default">恢复默认</button><button id="sequence-download">下载 .mmd</button></div>
+        </section>
+      </div>
+      <p id="sequence-error" class="sequence-message" role="alert" hidden></p>
+      <p id="sequence-status" class="sequence-message" role="status" aria-live="polite"></p>
+    </div>
+  </dialog>
+  <input id="review-import-file" type="file" accept=".json,application/json" hidden>
+  <button id="change-transaction" class="new-case-button">更换交易（先备份）</button>
+  <script src="assets/sheet-materials.js"></script>
+  <script src="assets/material-requirements.js"></script>
+  <script src="assets/material-catalog.js"></script>
+  <script src="assets/business-data.js"></script>
+  <script src="assets/rules.js"></script>
+  <script src="assets/review-schema.js"></script>
+  <script src="assets/node-validation-rules.js"></script>
+  <script src="assets/process-data.js"></script>
+  <script src="assets/entity-flows.js"></script>
+  <script src="assets/review-model.js"></script>
+  <script src="assets/source-previews.js"></script>
+  <script src="assets/contract-model.js"></script>
+  <script src="assets/contract-workspace.js"></script>
+  <script src="assets/vendor/review-vendor.js"></script>
+  <script src="assets/review-workspace.js"></script>
+  <script src="assets/vendor/x6.js"></script>
+  <script src="assets/vendor/mermaid.js"></script>
+  <script src="assets/process-workspace.js"></script>
+  <script src="assets/audit-store.js"></script>
+  <script src="assets/operations-workspace.js"></script>
+  <script src="assets/capability-workspace.js"></script>
+  <script src="assets/protocol-workspace.js"></script>
+  <script src="assets/database-model.js"></script>
+  <script src="assets/design-diagrams.js"></script>
+  <script src="assets/database-workspace.js"></script>
+  <script src="assets/state-model.js"></script>
+  <script src="assets/audit-design.js"></script>
+  <script src="assets/state-workspace.js"></script>
+  <script src="assets/flow.js"></script>
+  <script src="assets/boss-workspace.js"></script>
+  <script src="assets/management-prototypes.js"></script>
+</body>
+</html>
