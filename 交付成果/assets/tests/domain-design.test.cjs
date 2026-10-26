@@ -12,7 +12,10 @@ test('grouped fields retain every name, matching type and original description',
     const rows=database.fieldRows(domain,entity);
     const expected=entity.fields.flatMap(([names,types,description])=>{
       const fields=names.split(' / '),kinds=types.split(' / ');
-      return fields.map((name,index)=>[name,kinds.length===1?kinds[0]:kinds[index],description]);
+      return fields.map((name,index)=>{
+        const sourceType=kinds.length===1?kinds[0]:kinds[index];
+        return [name,sourceType==='公共字段'?database.commonFields[name].split(' NOT NULL')[0]:sourceType,description];
+      });
     });
     assert.equal(new Set(rows.map(row=>row[0])).size,rows.length,entity.name);
     assert.deepEqual(rows.map(row=>row.slice(0,2)),expected.map(row=>row.slice(0,2)),entity.name);
@@ -21,6 +24,23 @@ test('grouped fields retain every name, matching type and original description',
       for(const field of database.indexedFields(key))assert.ok(rows.some(row=>row[0]===field),entity.name+': '+key);
     }
   }
+});
+
+test('common audit fields have concrete types in the dictionary and ER diagram',()=>{
+  const trade=model.domains.find(domain=>domain.id==='trade');
+  const entity=trade.entities.find(item=>item.name==='trade_record_tab');
+  const rows=database.fieldRows(trade,entity);
+  assert.deepEqual(rows.filter(([name])=>['created_by','created_at','updated_by','updated_at','version'].includes(name)).map(([name,type])=>[name,type]),[
+    ['created_by','VARCHAR(64)'],
+    ['created_at','DATETIME(3)'],
+    ['updated_by','VARCHAR(64)'],
+    ['updated_at','DATETIME(3)'],
+    ['version','INT UNSIGNED']
+  ]);
+  const source=database.source(trade);
+  assert.match(source,/VARCHAR_64 created_by/);
+  assert.match(source,/DATETIME_3 created_at/);
+  assert.doesNotMatch(source,/metadata/);
 });
 
 test('field aliases bind real persisted codebooks, never conceptual diagram labels',()=>{

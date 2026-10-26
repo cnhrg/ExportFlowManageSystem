@@ -21,6 +21,8 @@ node doc/sql/domain/verify.cjs --database verify_domain_<本轮随机后缀>
 
 `schema.sql` 是生成产物，修改唯一模型或生成器后重新生成，不手工维护第二份字段字典。`verify.cjs` 要求显式隔离库名、先确认空库再事务回滚测试；拒绝export_trade及旧演示库。复合触发器使用mysql客户端DELIMITER语法；驱动须按完整触发器语句执行，不能直接按分号切割。
 
+领域模型和生成DDL不绑定部署位置：本机验证、云厂商托管MySQL及合规要求下的自建MySQL均使用同一字段名、字段类型和约束；仅连接参数、可用性拓扑及运维配置按环境区分。公共审计字段在模型展示时按字段名展开为具体SQL类型，不以“公共字段”或`metadata`充当数据库类型。
+
 建库后已按用户确认的最新模型应用 `migrations/001-contract-review-nullable.sql`：合同未审核时 `review_snapshot_json` 可为NULL，同步两列说明；使用ALTER，不删除或重建表。最新 `schema.sql` 已含该结果，新实例不需要重复执行此迁移。
 
 首次创建独立实例使用 `node infra/local/setup-mysql.cjs`，**已有实例会拒绝覆盖**。`--resume-bootstrap` 仅用于本脚本中断后的空库恢复，遇到任何既有表即停止；不会DROP、TRUNCATE或重建旧数据。部分DDL失败需先调查，不可自动清库重试。

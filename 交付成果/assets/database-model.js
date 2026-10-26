@@ -4,6 +4,14 @@
   if(!model)throw new Error('领域模型未加载');
   const domains=model.domains;
   const entities=new Map(domains.flatMap(domain=>domain.entities.map(entity=>[entity.name,{domain,entity}])));
+  const commonFields={
+    created_by:"VARCHAR(64) NOT NULL DEFAULT 'system'",
+    updated_by:"VARCHAR(64) NOT NULL DEFAULT 'system'",
+    created_at:'DATETIME(3) NOT NULL DEFAULT (UTC_TIMESTAMP(3))',
+    updated_at:'DATETIME(3) NOT NULL DEFAULT (UTC_TIMESTAMP(3)) ON UPDATE CURRENT_TIMESTAMP(3)',
+    version:'INT UNSIGNED NOT NULL DEFAULT 0',
+    deleted_id:'BIGINT UNSIGNED NOT NULL DEFAULT 0'
+  };
   const indexDefinitions=keys=>keys.split('·').map(value=>value.trim()).filter(value=>/^(PK|UK|FK|IDX)\b/i.test(value));
   function indexedFields(index){
     const group=index.match(/^(?:PK|UK|FK|IDX)\s+\(([^)]+)\)/i);
@@ -58,10 +66,13 @@
       const names=groupedNames.split(' / '),types=groupedTypes.split(' / ');
       if(types.length!==1&&types.length!==names.length)throw new Error(entity.name+'：字段与类型数量不一致');
       return names.map((name,index)=>{
-        const type=types.length===1?types[0]:types[index];
+        const sourceType=types.length===1?types[0]:types[index];
+        const commonField=sourceType==='公共字段';
+        const type=commonField?(commonFields[name]||'').split(' NOT NULL')[0]:sourceType;
+        if(commonField&&!type)throw new Error(entity.name+'.'+name+'：未定义公共字段类型');
         const indexes=indexDefinitions(entity.keys).filter(key=>indexedFields(key).includes(name));
         const values=enumeration(domain,entity,name);
-        return [name,type,indexes.join('；')||'—',example(name,type,values),[description,values].filter(Boolean).join('；')];
+        return [name,type,indexes.join('；')||'—',example(name,type,values),[description,values].filter(Boolean).join('；'),commonField];
       });
     });
   }
@@ -80,7 +91,8 @@
       return '  '+endpoint(from)+' '+edge+' '+endpoint(to)+' : "'+text(label+'（'+cardinality+'，逻辑引用）')+'"';
     });
     const blocks=domain.entities.map(entity=>'  '+entity.name+'["'+text(entity.title+' · '+entity.name)+'"] {\n'+fieldRows(domain,entity).map(([name,type,indexes,,description])=>{
-      const diagramType=type.replace(/[^A-Za-z0-9_]/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,'')||'metadata';
+      const diagramType=type.replace(/[^A-Za-z0-9_]/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,'');
+      if(!diagramType)throw new Error(entity.name+'.'+name+'：无法生成ER图字段类型');
       const keys=[...new Set(indexDefinitions(entity.keys).filter(key=>indexedFields(key).includes(name)).map(key=>key.split(' ')[0]).filter(key=>['PK','UK'].includes(key)))];
       const brief=description.length>90?description.slice(0,90)+'…（完整说明见字段字典）':description;
       return '    '+diagramType+' '+name+(keys.length?' '+keys.join(','):'')+' "'+text(type+'；'+brief)+'"';
@@ -95,7 +107,7 @@
     codebooks:domains.reduce((count,domain)=>count+(domain.codebooks||[]).length,0),
     machines:Object.values(model.stateMachines).flat().length
   };
-  const api={domains,entities,relations:model.relationModels,fieldRows,indexDefinitions,indexedFields,enumeration,source:diagram,stats};
+  const api={domains,entities,relations:model.relationModels,commonFields,fieldRows,indexDefinitions,indexedFields,enumeration,source:diagram,stats};
   root.EXPORT_DATABASE_MODEL=api;
   if(typeof module!=='undefined')module.exports=api;
 })(globalThis);

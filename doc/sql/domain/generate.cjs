@@ -42,14 +42,7 @@ const appendOnly = new Set([
   'tax_event_tab', 'payment_fund_flow_tab', 'account_ledger_entry_tab',
   'compliance_disposition_event_tab', 'admin_audit_log_tab', 'report_snapshot_tab'
 ]);
-const common = {
-  created_by: "VARCHAR(64) NOT NULL DEFAULT 'system'",
-  updated_by: "VARCHAR(64) NOT NULL DEFAULT 'system'",
-  created_at: 'DATETIME(3) NOT NULL DEFAULT (UTC_TIMESTAMP(3))',
-  updated_at: 'DATETIME(3) NOT NULL DEFAULT (UTC_TIMESTAMP(3)) ON UPDATE CURRENT_TIMESTAMP(3)',
-  version: 'INT UNSIGNED NOT NULL DEFAULT 0',
-  deleted_id: 'BIGINT UNSIGNED NOT NULL DEFAULT 0'
-};
+const common = model.commonFields;
 const extraChecks = {
   trade_record_tab: ['approved_revision_number <= revision_number',
     "JSON_TYPE(transaction_goods_items_json) = 'ARRAY'",
@@ -104,11 +97,11 @@ function objectName(prefix, table, suffix) {
 }
 function tables() {
   return model.domains.flatMap(domain => domain.entities.map(entity => {
-    const fields = model.fieldRows(domain, entity).map(([name, logicalType, , , description]) => {
+    const fields = model.fieldRows(domain, entity).map(([name, logicalType, , , description, commonField]) => {
       let type = logicalType.replace(/ NULL$/, '');
       const isNullable = logicalType.endsWith(' NULL') || (nullable[entity.name] || '').split(' ').includes(name);
       if (name === 'id') type = 'BIGINT UNSIGNED';
-      if (type === '公共字段') {
+      if (commonField) {
         assert.ok(common[name], entity.name + '.' + name);
         return { name, type: common[name].split(' NOT NULL')[0], nullable: false, comment: description, sql: identifier(name) + ' ' + common[name] + ' COMMENT ' + literal(description) };
       }
