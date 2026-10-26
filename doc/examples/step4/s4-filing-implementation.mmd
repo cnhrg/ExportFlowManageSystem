@@ -1,0 +1,27 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 出口报关代理经办人前端
+    participant APP as 单体应用两受众受限入口
+    participant DB as 同一MySQL业务及技术中间件
+    participant FILE as 私有S3与ClamAV文件工作流
+    participant CHANNEL as 正式监管渠道未接入
+    PAGE->>APP: GET当前资源/版本并逐项查看本次内容，读预算5000/4000ms
+    opt 本目标需要文件
+      PAGE->>FILE: 共用持久上传任务/原始字节/确切VersionId
+      APP->>FILE: 事务外核验摘要及ClamAV；固定键条件写，失败原任务自恢复
+    end
+    PAGE->>APP: 明确确认本次精确内容，取得受众/路径/键/标签/内容HMAC绑定凭据
+    Note over APP,DB: 下述每次本地业务写各自BEGIN READ COMMITTED；先查原受理，同文回放优先，异文409
+    APP->>DB: 固定序锁交易根→批次→申报号排序→修订/商品→办理/事件→文件→确认→受理
+    APP->>DB: 锁后当前读受理/门禁，缺确认或旧标签拒绝；1秒锁等待/2秒事务预算
+    PAGE->>APP: POST filing-requests，action/revision/hash/original_request
+    APP->>DB: 锁申报根、同版独立决定及A确认、原办理集合FOR UPDATE
+    APP->>DB: 当前读确认精确匹配；unknown原号存在禁止第二意图；更正/撤回核对原官方办理与适用许可
+    APP->>DB: INSERT customs_filing_request_tab含不可变请求hash/payload及pending1，COMMIT后才可能外部I/O
+    opt 未来经正式确认渠道且允许办理
+    APP->>CHANNEL: 事务外原办理号提交或查单，显式deadline，超时不重发新号
+    APP->>DB: 新短事务锁原办理号，未知写execution_status3；响应留待核原件
+    end
+    APP-->>PAGE: 原办理资源及missing_gate_codes；未核实官方证据不得改为已提交/受理/放行
+    Note over APP,DB: 写预算客户端10000/应用8000ms；失败整体ROLLBACK，COMMIT未知先主库查原键
+    Note over APP,FILE: 所有外部I/O事务外；业务历史进关务修订/办理/事件，不塞通用技术封套

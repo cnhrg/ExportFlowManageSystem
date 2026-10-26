@@ -1,0 +1,609 @@
+[
+  {
+    "id": "correction",
+    "designOnly": true,
+    "externalSuccessStatus": "UNVERIFIED",
+    "http": {
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/filing-requests",
+        "headers": {
+          "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+          "Content-Type": "application/json",
+          "Idempotency-Key": "d7041111-0000-4000-8000-000000000001",
+          "If-Match": "\"s4-v1-57e9172357bd\"",
+          "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+        },
+        "body": {
+          "revisionNumber": 2,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "action": "FILING_ACTION_CORRECT",
+          "reason": "正式更正需要原号、许可、新版独审及A确认",
+          "originalRequestNumber": "REQ-S4-SYNTHETIC",
+          "correctionEventNumber": "SYNTHETIC-NOT-A-VERIFIED-CORRECTION"
+        }
+      },
+      "response": {
+        "status": 422,
+        "headers": {
+          "Content-Type": "application/problem+json",
+          "Cache-Control": "no-store"
+        },
+        "body": {
+          "type": "urn:export-trade:problem:customs-authority-unverified",
+          "title": "正式条件不满足",
+          "status": 422,
+          "detail": "CUSTOMS_AUTHORITY_UNVERIFIED",
+          "instance": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/filing-requests",
+          "errors": [
+            {
+              "pointer": "/",
+              "code": "CUSTOMS_AUTHORITY_UNVERIFIED",
+              "detail": "无真实正式证据不得降级成功"
+            }
+          ],
+          "outcomeUnknown": false,
+          "retryAfterMs": 0
+        }
+      },
+      "rpc": "CreateCustomsFilingRequest",
+      "designOnly": true,
+      "timeoutMs": 10000,
+      "requestType": "CreateCustomsFilingRequestReqMsg",
+      "responseType": "CreateCustomsFilingRequestRspMsg",
+      "httpResponse": "HTTP/1.1 422 Unprocessable Content\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:problem:customs-authority-unverified\",\n  \"title\": \"正式条件不满足\",\n  \"status\": 422,\n  \"detail\": \"CUSTOMS_AUTHORITY_UNVERIFIED\",\n  \"instance\": \"/api/v1/customs-declarations/DEC-S4-SYNTHETIC/filing-requests\",\n  \"errors\": [\n    {\n      \"pointer\": \"/\",\n      \"code\": \"CUSTOMS_AUTHORITY_UNVERIFIED\",\n      \"detail\": \"无真实正式证据不得降级成功\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+      "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/filing-requests\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7041111-0000-4000-8000-000000000001' \\\n  --header 'If-Match: \"s4-v1-57e9172357bd\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"revisionNumber\":2,\"contentHash\":\"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\"action\":\"FILING_ACTION_CORRECT\",\"reason\":\"正式更正需要原号、许可、新版独审及A确认\",\"originalRequestNumber\":\"REQ-S4-SYNTHETIC\",\"correctionEventNumber\":\"SYNTHETIC-NOT-A-VERIFIED-CORRECTION\"}'"
+    },
+    "rpc": {
+      "designOnly": true,
+      "service": "trade.customs.v1.ExternalCustomsService",
+      "method": "CreateCustomsFilingRequest",
+      "requestType": "CreateCustomsFilingRequestReqMsg",
+      "responseType": "CreateCustomsFilingRequestRspMsg",
+      "deadlineMs": 10000,
+      "metadata": {
+        "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "idempotency-key": "d7041111-0000-4000-8000-000000000001",
+        "if-match": "\"s4-v1-57e9172357bd\"",
+        "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "request": {
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "filing": {
+          "revisionNumber": 2,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "action": "FILING_ACTION_CORRECT",
+          "reason": "正式更正需要原号、许可、新版独审及A确认",
+          "originalRequestNumber": "REQ-S4-SYNTHETIC",
+          "correctionEventNumber": "SYNTHETIC-NOT-A-VERIFIED-CORRECTION"
+        }
+      },
+      "successTrailers": {},
+      "error": {
+        "code": "FAILED_PRECONDITION",
+        "details": {
+          "code": "CUSTOMS_AUTHORITY_UNVERIFIED",
+          "httpStatus": 422,
+          "errors": [
+            {
+              "pointer": "/",
+              "code": "CUSTOMS_AUTHORITY_UNVERIFIED",
+              "detail": "无真实正式证据不得降级成功"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/filing-requests"
+        }
+      }
+    }
+  },
+  {
+    "id": "withdrawal",
+    "designOnly": true,
+    "externalSuccessStatus": "UNVERIFIED",
+    "http": {
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/filing-requests",
+        "headers": {
+          "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+          "Content-Type": "application/json",
+          "Idempotency-Key": "d7041111-0000-4000-8000-000000000002",
+          "If-Match": "\"s4-v1-57e9172357bd\"",
+          "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+        },
+        "body": {
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "action": "FILING_ACTION_WITHDRAW",
+          "reason": "仅原号撤回意图；无正式依据不改变状态或释放占量",
+          "originalRequestNumber": "REQ-S4-SYNTHETIC"
+        }
+      },
+      "response": {
+        "status": 422,
+        "headers": {
+          "Content-Type": "application/problem+json",
+          "Cache-Control": "no-store"
+        },
+        "body": {
+          "type": "urn:export-trade:problem:customs-official-evidence-required",
+          "title": "正式条件不满足",
+          "status": 422,
+          "detail": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+          "instance": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/filing-requests",
+          "errors": [
+            {
+              "pointer": "/",
+              "code": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+              "detail": "无真实正式证据不得降级成功"
+            }
+          ],
+          "outcomeUnknown": false,
+          "retryAfterMs": 0
+        }
+      },
+      "rpc": "CreateCustomsFilingRequest",
+      "designOnly": true,
+      "timeoutMs": 10000,
+      "requestType": "CreateCustomsFilingRequestReqMsg",
+      "responseType": "CreateCustomsFilingRequestRspMsg",
+      "httpResponse": "HTTP/1.1 422 Unprocessable Content\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:problem:customs-official-evidence-required\",\n  \"title\": \"正式条件不满足\",\n  \"status\": 422,\n  \"detail\": \"CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED\",\n  \"instance\": \"/api/v1/customs-declarations/DEC-S4-SYNTHETIC/filing-requests\",\n  \"errors\": [\n    {\n      \"pointer\": \"/\",\n      \"code\": \"CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED\",\n      \"detail\": \"无真实正式证据不得降级成功\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+      "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/filing-requests\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7041111-0000-4000-8000-000000000002' \\\n  --header 'If-Match: \"s4-v1-57e9172357bd\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"revisionNumber\":1,\"contentHash\":\"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\"action\":\"FILING_ACTION_WITHDRAW\",\"reason\":\"仅原号撤回意图；无正式依据不改变状态或释放占量\",\"originalRequestNumber\":\"REQ-S4-SYNTHETIC\"}'"
+    },
+    "rpc": {
+      "designOnly": true,
+      "service": "trade.customs.v1.ExternalCustomsService",
+      "method": "CreateCustomsFilingRequest",
+      "requestType": "CreateCustomsFilingRequestReqMsg",
+      "responseType": "CreateCustomsFilingRequestRspMsg",
+      "deadlineMs": 10000,
+      "metadata": {
+        "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "idempotency-key": "d7041111-0000-4000-8000-000000000002",
+        "if-match": "\"s4-v1-57e9172357bd\"",
+        "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "request": {
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "filing": {
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "action": "FILING_ACTION_WITHDRAW",
+          "reason": "仅原号撤回意图；无正式依据不改变状态或释放占量",
+          "originalRequestNumber": "REQ-S4-SYNTHETIC"
+        }
+      },
+      "successTrailers": {},
+      "error": {
+        "code": "FAILED_PRECONDITION",
+        "details": {
+          "code": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+          "httpStatus": 422,
+          "errors": [
+            {
+              "pointer": "/",
+              "code": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+              "detail": "无真实正式证据不得降级成功"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/filing-requests"
+        }
+      }
+    }
+  },
+  {
+    "id": "release-verification",
+    "designOnly": true,
+    "externalSuccessStatus": "UNVERIFIED",
+    "http": {
+      "request": {
+        "method": "POST",
+        "path": "/internal/v1/customs-declarations/DEC-S4-SYNTHETIC/official-evidence-decisions",
+        "headers": {
+          "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+          "Content-Type": "application/json",
+          "Idempotency-Key": "d7041111-0000-4000-8000-000000000003",
+          "If-Match": "\"s4-v1-57e9172357bd\"",
+          "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+        },
+        "body": {
+          "evidenceEventNumber": "EV-S4-SYNTHETIC",
+          "outcome": "DECISION_OUTCOME_APPROVE",
+          "reason": "缺正式来源不能确认放行",
+          "verificationProfileReference": "SYNTHETIC-NOT-REGISTERED",
+          "verificationEvidence": []
+        }
+      },
+      "response": {
+        "status": 422,
+        "headers": {
+          "Content-Type": "application/problem+json",
+          "Cache-Control": "no-store"
+        },
+        "body": {
+          "type": "urn:export-trade:problem:customs-official-evidence-required",
+          "title": "正式条件不满足",
+          "status": 422,
+          "detail": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+          "instance": "/internal/v1/customs-declarations/DEC-S4-SYNTHETIC/official-evidence-decisions",
+          "errors": [
+            {
+              "pointer": "/",
+              "code": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+              "detail": "无真实正式证据不得降级成功"
+            }
+          ],
+          "outcomeUnknown": false,
+          "retryAfterMs": 0
+        }
+      },
+      "rpc": "CreateCustomsOfficialEvidenceDecision",
+      "designOnly": true,
+      "timeoutMs": 10000,
+      "requestType": "CreateCustomsOfficialEvidenceDecisionReqMsg",
+      "responseType": "CreateCustomsOfficialEvidenceDecisionRspMsg",
+      "httpResponse": "HTTP/1.1 422 Unprocessable Content\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:problem:customs-official-evidence-required\",\n  \"title\": \"正式条件不满足\",\n  \"status\": 422,\n  \"detail\": \"CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED\",\n  \"instance\": \"/internal/v1/customs-declarations/DEC-S4-SYNTHETIC/official-evidence-decisions\",\n  \"errors\": [\n    {\n      \"pointer\": \"/\",\n      \"code\": \"CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED\",\n      \"detail\": \"无真实正式证据不得降级成功\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+      "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/customs-declarations/DEC-S4-SYNTHETIC/official-evidence-decisions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7041111-0000-4000-8000-000000000003' \\\n  --header 'If-Match: \"s4-v1-57e9172357bd\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"evidenceEventNumber\":\"EV-S4-SYNTHETIC\",\"outcome\":\"DECISION_OUTCOME_APPROVE\",\"reason\":\"缺正式来源不能确认放行\",\"verificationProfileReference\":\"SYNTHETIC-NOT-REGISTERED\",\"verificationEvidence\":[]}'"
+    },
+    "rpc": {
+      "designOnly": true,
+      "service": "trade.customs.v1.InternalCustomsOperationsService",
+      "method": "CreateCustomsOfficialEvidenceDecision",
+      "requestType": "CreateCustomsOfficialEvidenceDecisionReqMsg",
+      "responseType": "CreateCustomsOfficialEvidenceDecisionRspMsg",
+      "deadlineMs": 10000,
+      "metadata": {
+        "authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "idempotency-key": "d7041111-0000-4000-8000-000000000003",
+        "if-match": "\"s4-v1-57e9172357bd\"",
+        "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "request": {
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "decision": {
+          "evidenceEventNumber": "EV-S4-SYNTHETIC",
+          "outcome": "DECISION_OUTCOME_APPROVE",
+          "reason": "缺正式来源不能确认放行",
+          "verificationProfileReference": "SYNTHETIC-NOT-REGISTERED",
+          "verificationEvidence": []
+        }
+      },
+      "successTrailers": {},
+      "error": {
+        "code": "FAILED_PRECONDITION",
+        "details": {
+          "code": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+          "httpStatus": 422,
+          "errors": [
+            {
+              "pointer": "/",
+              "code": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+              "detail": "无真实正式证据不得降级成功"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "/internal/v1/customs-declarations/DEC-S4-SYNTHETIC/official-evidence-decisions"
+        }
+      }
+    }
+  },
+  {
+    "id": "attachment-A",
+    "designOnly": true,
+    "externalSuccessStatus": "UNVERIFIED",
+    "http": {
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries",
+        "headers": {
+          "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+          "Content-Type": "application/json",
+          "Idempotency-Key": "d7041111-0000-4000-8000-000000000004",
+          "If-Match": "\"s4-v1-57e9172357bd\"",
+          "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+        },
+        "body": {
+          "revisionNumber": 1,
+          "submittedEventNumber": "SYNTHETIC-NOT-A-REAL-SUBMISSION",
+          "recipientPartyRoleCode": 1,
+          "recipientParticipantSequenceNumber": 1,
+          "attachmentTwo": {
+            "logicalFileNumber": "FILE-S4-ATTACHMENT-SHAPE",
+            "revisionNumber": 1,
+            "sha256": "142688a3f9c2ff44906430e8d07108b72252cbe0806e5cbb60f3af0736d55110",
+            "documentTypeCode": 20
+          }
+        }
+      },
+      "response": {
+        "status": 422,
+        "headers": {
+          "Content-Type": "application/problem+json",
+          "Cache-Control": "no-store"
+        },
+        "body": {
+          "type": "urn:export-trade:problem:customs-official-evidence-required",
+          "title": "正式条件不满足",
+          "status": 422,
+          "detail": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+          "instance": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries",
+          "errors": [
+            {
+              "pointer": "/",
+              "code": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+              "detail": "无真实正式证据不得降级成功"
+            }
+          ],
+          "outcomeUnknown": false,
+          "retryAfterMs": 0
+        }
+      },
+      "rpc": "CreateCustomsAttachmentDelivery",
+      "designOnly": true,
+      "timeoutMs": 10000,
+      "requestType": "CreateCustomsAttachmentDeliveryReqMsg",
+      "responseType": "CreateCustomsAttachmentDeliveryRspMsg",
+      "httpResponse": "HTTP/1.1 422 Unprocessable Content\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:problem:customs-official-evidence-required\",\n  \"title\": \"正式条件不满足\",\n  \"status\": 422,\n  \"detail\": \"CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED\",\n  \"instance\": \"/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries\",\n  \"errors\": [\n    {\n      \"pointer\": \"/\",\n      \"code\": \"CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED\",\n      \"detail\": \"无真实正式证据不得降级成功\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+      "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7041111-0000-4000-8000-000000000004' \\\n  --header 'If-Match: \"s4-v1-57e9172357bd\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"revisionNumber\":1,\"submittedEventNumber\":\"SYNTHETIC-NOT-A-REAL-SUBMISSION\",\"recipientPartyRoleCode\":1,\"recipientParticipantSequenceNumber\":1,\"attachmentTwo\":{\"logicalFileNumber\":\"FILE-S4-ATTACHMENT-SHAPE\",\"revisionNumber\":1,\"sha256\":\"142688a3f9c2ff44906430e8d07108b72252cbe0806e5cbb60f3af0736d55110\",\"documentTypeCode\":20}}'"
+    },
+    "rpc": {
+      "designOnly": true,
+      "service": "trade.customs.v1.ExternalCustomsService",
+      "method": "CreateCustomsAttachmentDelivery",
+      "requestType": "CreateCustomsAttachmentDeliveryReqMsg",
+      "responseType": "CreateCustomsAttachmentDeliveryRspMsg",
+      "deadlineMs": 10000,
+      "metadata": {
+        "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "idempotency-key": "d7041111-0000-4000-8000-000000000004",
+        "if-match": "\"s4-v1-57e9172357bd\"",
+        "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "request": {
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "delivery": {
+          "revisionNumber": 1,
+          "submittedEventNumber": "SYNTHETIC-NOT-A-REAL-SUBMISSION",
+          "recipientPartyRoleCode": 1,
+          "recipientParticipantSequenceNumber": 1,
+          "attachmentTwo": {
+            "logicalFileNumber": "FILE-S4-ATTACHMENT-SHAPE",
+            "revisionNumber": 1,
+            "sha256": "142688a3f9c2ff44906430e8d07108b72252cbe0806e5cbb60f3af0736d55110",
+            "documentTypeCode": 20
+          }
+        }
+      },
+      "successTrailers": {},
+      "error": {
+        "code": "FAILED_PRECONDITION",
+        "details": {
+          "code": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+          "httpStatus": 422,
+          "errors": [
+            {
+              "pointer": "/",
+              "code": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+              "detail": "无真实正式证据不得降级成功"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries"
+        }
+      }
+    }
+  },
+  {
+    "id": "attachment-B",
+    "designOnly": true,
+    "externalSuccessStatus": "UNVERIFIED",
+    "http": {
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries",
+        "headers": {
+          "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+          "Content-Type": "application/json",
+          "Idempotency-Key": "d7041111-0000-4000-8000-000000000005",
+          "If-Match": "\"s4-v1-57e9172357bd\"",
+          "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+        },
+        "body": {
+          "revisionNumber": 1,
+          "submittedEventNumber": "SYNTHETIC-NOT-A-REAL-SUBMISSION",
+          "recipientPartyRoleCode": 2,
+          "recipientParticipantSequenceNumber": 1,
+          "attachmentTwo": {
+            "logicalFileNumber": "FILE-S4-ATTACHMENT-SHAPE",
+            "revisionNumber": 1,
+            "sha256": "142688a3f9c2ff44906430e8d07108b72252cbe0806e5cbb60f3af0736d55110",
+            "documentTypeCode": 20
+          }
+        }
+      },
+      "response": {
+        "status": 422,
+        "headers": {
+          "Content-Type": "application/problem+json",
+          "Cache-Control": "no-store"
+        },
+        "body": {
+          "type": "urn:export-trade:problem:customs-official-evidence-required",
+          "title": "正式条件不满足",
+          "status": 422,
+          "detail": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+          "instance": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries",
+          "errors": [
+            {
+              "pointer": "/",
+              "code": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+              "detail": "无真实正式证据不得降级成功"
+            }
+          ],
+          "outcomeUnknown": false,
+          "retryAfterMs": 0
+        }
+      },
+      "rpc": "CreateCustomsAttachmentDelivery",
+      "designOnly": true,
+      "timeoutMs": 10000,
+      "requestType": "CreateCustomsAttachmentDeliveryReqMsg",
+      "responseType": "CreateCustomsAttachmentDeliveryRspMsg",
+      "httpResponse": "HTTP/1.1 422 Unprocessable Content\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:problem:customs-official-evidence-required\",\n  \"title\": \"正式条件不满足\",\n  \"status\": 422,\n  \"detail\": \"CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED\",\n  \"instance\": \"/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries\",\n  \"errors\": [\n    {\n      \"pointer\": \"/\",\n      \"code\": \"CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED\",\n      \"detail\": \"无真实正式证据不得降级成功\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+      "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7041111-0000-4000-8000-000000000005' \\\n  --header 'If-Match: \"s4-v1-57e9172357bd\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"revisionNumber\":1,\"submittedEventNumber\":\"SYNTHETIC-NOT-A-REAL-SUBMISSION\",\"recipientPartyRoleCode\":2,\"recipientParticipantSequenceNumber\":1,\"attachmentTwo\":{\"logicalFileNumber\":\"FILE-S4-ATTACHMENT-SHAPE\",\"revisionNumber\":1,\"sha256\":\"142688a3f9c2ff44906430e8d07108b72252cbe0806e5cbb60f3af0736d55110\",\"documentTypeCode\":20}}'"
+    },
+    "rpc": {
+      "designOnly": true,
+      "service": "trade.customs.v1.ExternalCustomsService",
+      "method": "CreateCustomsAttachmentDelivery",
+      "requestType": "CreateCustomsAttachmentDeliveryReqMsg",
+      "responseType": "CreateCustomsAttachmentDeliveryRspMsg",
+      "deadlineMs": 10000,
+      "metadata": {
+        "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "idempotency-key": "d7041111-0000-4000-8000-000000000005",
+        "if-match": "\"s4-v1-57e9172357bd\"",
+        "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "request": {
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "delivery": {
+          "revisionNumber": 1,
+          "submittedEventNumber": "SYNTHETIC-NOT-A-REAL-SUBMISSION",
+          "recipientPartyRoleCode": 2,
+          "recipientParticipantSequenceNumber": 1,
+          "attachmentTwo": {
+            "logicalFileNumber": "FILE-S4-ATTACHMENT-SHAPE",
+            "revisionNumber": 1,
+            "sha256": "142688a3f9c2ff44906430e8d07108b72252cbe0806e5cbb60f3af0736d55110",
+            "documentTypeCode": 20
+          }
+        }
+      },
+      "successTrailers": {},
+      "error": {
+        "code": "FAILED_PRECONDITION",
+        "details": {
+          "code": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+          "httpStatus": 422,
+          "errors": [
+            {
+              "pointer": "/",
+              "code": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+              "detail": "无真实正式证据不得降级成功"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries"
+        }
+      }
+    }
+  },
+  {
+    "id": "wrong-recipient",
+    "designOnly": true,
+    "externalSuccessStatus": "UNVERIFIED",
+    "http": {
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries/DEL-S4-SYNTHETIC/receipts",
+        "headers": {
+          "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+          "Content-Type": "application/json",
+          "Idempotency-Key": "d7041111-0000-4000-8000-000000000006",
+          "If-Match": "\"s4-v1-57e9172357bd\"",
+          "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+        },
+        "body": {
+          "outcome": "received",
+          "reason": "A不能代B接收",
+          "evidence": []
+        }
+      },
+      "response": {
+        "status": 403,
+        "headers": {
+          "Content-Type": "application/problem+json",
+          "Cache-Control": "no-store"
+        },
+        "body": {
+          "type": "urn:export-trade:problem:customs-recipient-mismatch",
+          "title": "正式条件不满足",
+          "status": 403,
+          "detail": "CUSTOMS_RECIPIENT_MISMATCH",
+          "instance": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries/DEL-S4-SYNTHETIC/receipts",
+          "errors": [
+            {
+              "pointer": "/",
+              "code": "CUSTOMS_RECIPIENT_MISMATCH",
+              "detail": "无真实正式证据不得降级成功"
+            }
+          ],
+          "outcomeUnknown": false,
+          "retryAfterMs": 0
+        }
+      },
+      "rpc": "CreateCustomsAttachmentReceipt",
+      "designOnly": true,
+      "timeoutMs": 10000,
+      "requestType": "CreateCustomsAttachmentReceiptReqMsg",
+      "responseType": "CreateCustomsAttachmentReceiptRspMsg",
+      "httpResponse": "HTTP/1.1 403 Error\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:problem:customs-recipient-mismatch\",\n  \"title\": \"正式条件不满足\",\n  \"status\": 403,\n  \"detail\": \"CUSTOMS_RECIPIENT_MISMATCH\",\n  \"instance\": \"/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries/DEL-S4-SYNTHETIC/receipts\",\n  \"errors\": [\n    {\n      \"pointer\": \"/\",\n      \"code\": \"CUSTOMS_RECIPIENT_MISMATCH\",\n      \"detail\": \"无真实正式证据不得降级成功\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+      "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries/DEL-S4-SYNTHETIC/receipts\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7041111-0000-4000-8000-000000000006' \\\n  --header 'If-Match: \"s4-v1-57e9172357bd\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"outcome\":\"received\",\"reason\":\"A不能代B接收\",\"evidence\":[]}'"
+    },
+    "rpc": {
+      "designOnly": true,
+      "service": "trade.customs.v1.ExternalCustomsService",
+      "method": "CreateCustomsAttachmentReceipt",
+      "requestType": "CreateCustomsAttachmentReceiptReqMsg",
+      "responseType": "CreateCustomsAttachmentReceiptRspMsg",
+      "deadlineMs": 10000,
+      "metadata": {
+        "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "idempotency-key": "d7041111-0000-4000-8000-000000000006",
+        "if-match": "\"s4-v1-57e9172357bd\"",
+        "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "request": {
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "deliveryNumber": "DEL-S4-SYNTHETIC",
+        "receipt": {
+          "outcome": "received",
+          "reason": "A不能代B接收",
+          "evidence": []
+        }
+      },
+      "successTrailers": {},
+      "error": {
+        "code": "PERMISSION_DENIED",
+        "details": {
+          "code": "CUSTOMS_RECIPIENT_MISMATCH",
+          "httpStatus": 403,
+          "errors": [
+            {
+              "pointer": "/",
+              "code": "CUSTOMS_RECIPIENT_MISMATCH",
+              "detail": "无真实正式证据不得降级成功"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries/DEL-S4-SYNTHETIC/receipts"
+        }
+      }
+    }
+  }
+]

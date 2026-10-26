@@ -1,0 +1,12 @@
+sequenceDiagram
+    actor PERSON as 案件责任人
+    participant SYSTEM as 代理出口系统
+    PERSON->>SYSTEM: 提交关案申请及资金差异已解决的依据
+    SYSTEM-->>PERSON: 显示当前资料版本、涉及事项、缺项和本方可办操作
+    PERSON->>SYSTEM: 核对本次内容并确认提交
+    SYSTEM-->>PERSON: 显示独立关案结果和仍有效的暂停，不自动解冻
+    actor REVIEWER as 独立关案复核人
+    REVIEWER->>SYSTEM: 独立查看本次依据、范围与当前事实
+    SYSTEM-->>REVIEWER: 显示原提交和仍未满足的条件
+    REVIEWER->>SYSTEM: 独立批准或退回申请，逐项写明理由
+    SYSTEM-->>REVIEWER: 显示独立关案结果和仍有效的暂停，不自动解冻

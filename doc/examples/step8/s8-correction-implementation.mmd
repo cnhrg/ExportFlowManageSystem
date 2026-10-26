@@ -1,0 +1,59 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 更正申请人
+    participant REVIEWER as 独立更正审批人
+    
+    participant EDITOR as 原节点经办人
+    participant NODEREVIEWER as 原节点独立审核人
+    participant DOWNSTREAM as 下游业务域经办人
+    participant APP as 单体内部接口
+    participant DB as 同一MySQL主库
+    participant FILE as 私有S3与ClamAV
+    PAGE->>APP: GET本目标上下文/原资源，客户端5秒应用4秒
+    APP-->>PAGE: 精确当前标签、完整范围、允许意图和待补项
+    opt 目标需要新证据
+      PAGE->>APP: 复用原上传/确认任务，明确文件所属业务对象
+      APP->>FILE: 事务外确切VersionId/摘要/ClamAV，持久任务租约退避恢复
+      FILE-->>APP: 已就绪不可变引用或pending；未就绪不能业务提交
+    end
+    Note over PAGE,APP: 独立HTTP/RPC消息 CreateCorrectionApplication，不是整个用例合成一笔请求
+    PAGE->>APP: 明确该次意图，POST /internal/v1/trades/{trade_number}/discrepancy-cases/{case_number}/correction-applications 原键/If-Match/确认，10秒/8秒
+    APP->>APP: 校验当前身份/受众/对象权限，规范化该次正文
+    APP->>DB: BEGIN READ COMMITTED，先查原主体受众键受理
+    alt 同键原文已有冻结结果
+      DB-->>APP: 原资源/Location/标签，优先于新版本、确认消费和终态
+      APP-->>PAGE: 原201结果；异文409；不重复领域决定
+    else 当前独立新写
+      APP->>DB: 固定锁序：交易根（多单二进制升序）、物流/关务/税务根、资金范围/事务/分配、account id升序、案件/事件尾/文件/确认/受理
+      APP->>DB: 根锁后再查原键，FOR UPDATE当前读源向量及完整对象集合
+      APP->>DB: 新意图校验强标签、独立人员/确认绑定及终态，失败ROLLBACK
+      APP->>DB: 保存原节点/原批准修订、完整受影响对象及依赖边，绑定当前完整源向量
+      APP->>DB: 追加action5/result1更正范围申请；不改原批准和任何外部办理事实
+      APP->>DB: 本次业务事实与最小冻结回执同短事务COMMIT
+      APP-->>PAGE: 201具体资源Location；COMMIT未知503原键恢复
+    end
+    Note over REVIEWER,APP: 独立HTTP/RPC消息 CreateCorrectionDecision，不是整个用例合成一笔请求
+    REVIEWER->>APP: 明确该次意图，POST /internal/v1/trades/{trade_number}/discrepancy-cases/{case_number}/correction-decisions 原键/If-Match/确认，10秒/8秒
+    APP->>APP: 校验当前身份/受众/对象权限，规范化该次正文
+    APP->>DB: BEGIN READ COMMITTED，先查原主体受众键受理
+    alt 同键原文已有冻结结果
+      DB-->>APP: 原资源/Location/标签，优先于新版本、确认消费和终态
+      APP-->>REVIEWER: 原201结果；异文409；不重复领域决定
+    else 当前独立新写
+      APP->>DB: 固定锁序：交易根（多单二进制升序）、物流/关务/税务根、资金范围/事务/分配、account id升序、案件/事件尾/文件/确认/受理
+      APP->>DB: 根锁后再查原键，FOR UPDATE当前读源向量及完整对象集合
+      APP->>DB: 新意图校验强标签、独立人员/确认绑定及终态，失败ROLLBACK
+      APP->>DB: 独立审批范围，区分未执行/执行未知/已执行，未知先原号查单而非直接作废
+      APP->>DB: 追加action6/result2或3及失效范围；通过使旧报告与受影响未执行批准失效
+      APP->>DB: 冻结原节点重审及下游传播门禁要求；pending不准新执行，不批准更正后的业务事实
+      APP->>DB: 本次业务事实与最小冻结回执同短事务COMMIT
+      APP-->>REVIEWER: 201具体资源Location；COMMIT未知503原键恢复
+    end
+    EDITOR->>APP: 所属原域版本资源建立新修订并送审，绑定范围决定稳定引用
+    APP->>DB: 原域另一个短事务复查范围/门禁，保留旧批准，追加新修订与送审事件
+    NODEREVIEWER->>APP: 原域独立审核确切新修订，外部正式更正仍须真实证据
+    APP->>DB: 原域另一个短事务形成新审查事实及待传播清单；未知外部执行仍阻断
+    DOWNSTREAM->>APP: 所属域原入口核实旧批准失效/新依据重审，提交稳定执行引用
+    APP->>DB: 各所属域分别短事务确认门禁，缺稳定接口/证据则pending，不假造传播成功
+    Note over APP,FILE: 全部文件与外部I/O事务外，后台原任务恢复；无真实外证不造成功
+    Note over APP,DB: 各次独立受理；关案不解冻，终态仅原回放；步骤四至七缺稳定来源则unknown阻断

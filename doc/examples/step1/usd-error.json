@@ -1,0 +1,14 @@
+{
+  "type": "https://api.example.invalid/problems/CURRENCY_NOT_SUPPORTED",
+  "title": "CURRENCY_NOT_SUPPORTED",
+  "status": 422,
+  "detail": "仅人民币，原USD不换算",
+  "instance": "/synthetic/request",
+  "errors": [
+    {
+      "pointer": "/supplierFiling/goods/0/unitPrice/currencyCode",
+      "code": "CURRENCY_NOT_SUPPORTED",
+      "detail": "仅人民币，原USD不换算"
+    }
+  ]
+}

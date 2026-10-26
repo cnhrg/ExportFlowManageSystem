@@ -1,0 +1,168 @@
+x-log-settings: &log-settings
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+services:
+  prometheus:
+    logging: *log-settings
+    image: prom/prometheus@sha256:6927e0919a144aa7616fd0137d4816816d42f6b816de3af269ab065250859a62
+    restart: unless-stopped
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=15d
+      - --storage.tsdb.retention.size=2GB
+    ports: ["127.0.0.1:9090:9090"]
+    volumes:
+      - ./observability/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./observability/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus-data:/prometheus
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:9090/-/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+  alertmanager:
+    logging: *log-settings
+    image: prom/alertmanager@sha256:27c475db5fb156cab31d5c18a4251ac7ed567746a2483ff264516437a39b15ba
+    restart: unless-stopped
+    command: ["--config.file=/etc/alertmanager/alertmanager.yml", "--storage.path=/alertmanager", "--cluster.listen-address="]
+    ports: ["127.0.0.1:9093:9093"]
+    volumes:
+      - ./observability/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - alertmanager-data:/alertmanager
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:9093/-/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+  grafana:
+    logging: *log-settings
+    image: grafana/grafana@sha256:35c41e0fd0295f5d0ee5db7e780cf33506abfaf47686196f825364889dee878b
+    restart: unless-stopped
+    ports: ["127.0.0.1:3000:3000"]
+    env_file: ["${LOCAL_INFRA_DIR:?Set LOCAL_INFRA_DIR}/grafana.env"]
+    environment:
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+      GF_METRICS_ENABLED: "true"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./observability/datasources.yml:/etc/grafana/provisioning/datasources/local.yml:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+  loki:
+    logging: *log-settings
+    image: grafana/loki@sha256:0eaee7bf39cc83aaef46914fb58f287d4f4c4be6ec96b86c2ed55719a75e49c8
+    restart: unless-stopped
+    command: ["-config.file=/etc/loki/local.yml"]
+    ports: ["127.0.0.1:3100:3100"]
+    volumes:
+      - ./observability/loki.yml:/etc/loki/local.yml:ro
+      - loki-data:/loki
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3100/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+  docker-log-proxy:
+    logging: *log-settings
+    image: tecnativa/docker-socket-proxy@sha256:9e4b9e7517a6b660f2cc903a19b257b1852d5b3344794e3ea334ff00ae677ac2
+    restart: unless-stopped
+    environment:
+      CONTAINERS: "1"
+      NETWORKS: "1"
+      INFO: "1"
+      POST: "0"
+      LOG_LEVEL: warning
+    volumes: ["/var/run/docker.sock:/var/run/docker.sock:ro"]
+    networks: [log-discovery]
+  alloy:
+    logging: *log-settings
+    image: grafana/alloy@sha256:6ab34b8201f0e8b0c4346be4934c9965723af3f7f21dd9a65fd73f270f69b451
+    restart: unless-stopped
+    command: ["run", "--server.http.listen-addr=0.0.0.0:12345", "--storage.path=/var/lib/alloy", "/etc/alloy/config.alloy"]
+    ports: ["127.0.0.1:12345:12345"]
+    volumes:
+      - ./observability/config.alloy:/etc/alloy/config.alloy:ro
+      - alloy-data:/var/lib/alloy
+    networks: [default, log-discovery]
+    depends_on:
+      loki:
+        condition: service_healthy
+      docker-log-proxy:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "/bin/bash", "-ec", "exec 3<>/dev/tcp/127.0.0.1/12345; printf 'GET /-/ready HTTP/1.0\\r\\n\\r\\n' >&3; head -n 1 <&3 | grep -q '200'"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+  blackbox:
+    logging: *log-settings
+    image: prom/blackbox-exporter@sha256:a50c4c0eda297baa1678cd4dc4712a67fdea713b832d43ce7fcc5f9bea05094d
+    restart: unless-stopped
+    command: ["--config.file=/etc/blackbox/config.yml"]
+    volumes: ["./observability/blackbox.yml:/etc/blackbox/config.yml:ro"]
+    networks: [default, scheduler]
+  scheduler-db:
+    logging: *log-settings
+    image: mysql@sha256:76f0358884cb92d9a086d24e5671c38048d3fef40f2588703d73eb55392d6b69
+    restart: unless-stopped
+    command: ["--mysqlx=OFF", "--default-time-zone=+00:00"]
+    env_file: ["${LOCAL_INFRA_DIR:?Set LOCAL_INFRA_DIR}/scheduler-db.env"]
+    volumes:
+      - scheduler-db-data:/var/lib/mysql
+      - ${LOCAL_INFRA_DIR:?Set LOCAL_INFRA_DIR}/xxl-init:/docker-entrypoint-initdb.d:ro
+    networks: [scheduler]
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=$$MYSQL_PASSWORD mysql -h127.0.0.1 -u$$MYSQL_USER -Dxxl_job -NBe 'SELECT COUNT(*) FROM xxl_job_lock' | grep -qx 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+  xxl-job:
+    logging: *log-settings
+    image: xuxueli/xxl-job-admin@sha256:5cd0b720d34cc0fccc9084ce37e3f0f02f824951a2179890ab9d4d6bd93cd093
+    platform: linux/amd64
+    restart: unless-stopped
+    ports: ["127.0.0.1:8080:8080"]
+    env_file: ["${LOCAL_INFRA_DIR:?Set LOCAL_INFRA_DIR}/xxl-job.env"]
+    environment:
+      JAVA_OPTS: "-Xms128m -Xmx384m"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://scheduler-db:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false"
+      SPRING_DATASOURCE_USERNAME: xxl_job
+      SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE: "2"
+      SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: "5"
+      XXL_JOB_LOGRETENTIONDAYS: "7"
+      LOG_HOME: /data/applogs
+    volumes: ["xxl-job-logs:/data/applogs"]
+    networks: [default, scheduler]
+    depends_on:
+      scheduler-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "/bin/bash", "-ec", "exec 3<>/dev/tcp/127.0.0.1/8080; printf 'GET /xxl-job-admin/auth/login HTTP/1.0\\r\\n\\r\\n' >&3; head -n 1 <&3 | grep -q '200'"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 40s
+volumes:
+  prometheus-data:
+  alertmanager-data:
+  grafana-data:
+  loki-data:
+  alloy-data:
+  scheduler-db-data:
+  xxl-job-logs:
+networks:
+  log-discovery:
+    internal: true
+  scheduler:
+    internal: true

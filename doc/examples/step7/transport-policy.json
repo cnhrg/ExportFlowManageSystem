@@ -1,0 +1,194 @@
+{
+  "designOnly": true,
+  "defaultDiagramScale": 0.7,
+  "audiences": {
+    "external": "ExternalTaxRefundService / 本方对象权限",
+    "internal": "InternalTaxRefundOperationsService / 独立内部权限"
+  },
+  "writes": {
+    "headers": [
+      "Authorization",
+      "Idempotency-Key",
+      "If-Match",
+      "X-Confirmation-Id"
+    ],
+    "replay": "原键/原文/原标签；先查原受理并校验当前权限，锁根后当前读重查",
+    "confirmation": "独立确认入口复用步骤一；绑定subject/audience/method/path/body/ETag/idempotency-key及TTL，不递归确认"
+  },
+  "reads": {
+    "headers": [
+      "Authorization"
+    ],
+    "queryAllowlist": []
+  },
+  "deadlines": {
+    "readClientMs": 5000,
+    "readServerMs": 4000,
+    "writeClientMs": 10000,
+    "writeServerMs": 8000
+  },
+  "errors": [
+    [
+      "INVALID_INPUT / UNKNOWN_FIELD / INVALID_IF_MATCH / DEADLINE_REQUIRED",
+      400,
+      "INVALID_ARGUMENT",
+      false,
+      "修正字段或头，业务变化用新键"
+    ],
+    [
+      "UNAUTHENTICATED / REAUTHENTICATION_REQUIRED / CONFIRMATION_EXPIRED / SIGNATURE_REQUIRED / SIGNATURE_INVALID / SIGNATURE_EXPIRED",
+      401,
+      "UNAUTHENTICATED",
+      false,
+      "重新认证；签名错误仅适用已约定机构接入，不要求供应商私钥"
+    ],
+    [
+      "FORBIDDEN / CERTIFICATE_REVOKED / SIGNER_NOT_AUTHORIZED",
+      403,
+      "PERMISSION_DENIED",
+      false,
+      "恢复合法身份/授权；不能以同键绕过撤销"
+    ],
+    [
+      "NOT_FOUND",
+      404,
+      "NOT_FOUND",
+      false,
+      "不可见与不存在统一处理，不猜号"
+    ],
+    [
+      "METHOD_NOT_ALLOWED",
+      405,
+      "UNIMPLEMENTED",
+      false,
+      "使用已声明资源方法；HTTP返回Allow，不自动换方法"
+    ],
+    [
+      "IDEMPOTENCY_CONFLICT / NONCE_REUSED / CONFIRMATION_MISMATCH",
+      409,
+      "ALREADY_EXISTS",
+      false,
+      "停止异文或跨请求移植；原调用允许恢复"
+    ],
+    [
+      "FILING_ALREADY_EXISTS",
+      409,
+      "ALREADY_EXISTS",
+      false,
+      "GET原资料再PUT"
+    ],
+    [
+      "FILE_NOT_READY",
+      409,
+      "FAILED_PRECONDITION",
+      true,
+      "按2秒查询原上传资源；不缓存为最终失败"
+    ],
+    [
+      "TRADE_NOT_EDITABLE / DEPENDENT_FILING_CONFLICT",
+      409,
+      "FAILED_PRECONDITION",
+      false,
+      "后续专门流程，不直接覆盖"
+    ],
+    [
+      "REVISION_CONFLICT",
+      412,
+      "FAILED_PRECONDITION",
+      false,
+      "GET合并后新键新标签"
+    ],
+    [
+      "UNSUPPORTED_MEDIA_TYPE",
+      415,
+      "INVALID_ARGUMENT",
+      false,
+      "写接口使用application/json，不自动改写正文"
+    ],
+    [
+      "CURRENCY_NOT_SUPPORTED / DOCUMENT_INCONSISTENT / REQUIRED_MATERIAL / REQUIRED_EVIDENCE / FILE_REJECTED / REQUIRED / IDENTITY_MISMATCH / CONFIRMATION_REQUIRED / INVALID_QUANTITY / INVALID_AMOUNT / INVALID_PACKING",
+      422,
+      "INVALID_ARGUMENT",
+      false,
+      "修正字段/业务/证明；恶意文件和摘要冲突不重试"
+    ],
+    [
+      "IF_MATCH_REQUIRED",
+      428,
+      "FAILED_PRECONDITION",
+      false,
+      "先GET本方资源"
+    ],
+    [
+      "RATE_LIMITED",
+      429,
+      "RESOURCE_EXHAUSTED",
+      true,
+      "Retry-After或retry_after_ms；原键重试"
+    ],
+    [
+      "DEPENDENCY_UNAVAILABLE / COMMIT_OUTCOME_UNKNOWN / RECEIPT_NOT_READY",
+      503,
+      "UNAVAILABLE",
+      true,
+      "原键查询/恢复；未知不等于未提交"
+    ],
+    [
+      "DEADLINE_EXCEEDED",
+      504,
+      "DEADLINE_EXCEEDED",
+      true,
+      "端侧超时可能无HTTP响应；写入结果未知先恢复"
+    ],
+    [
+      "CLIENT_CANCELLED",
+      null,
+      "CANCELLED",
+      false,
+      "客户端终止等待不证明数据库回滚"
+    ],
+    [
+      "INTERNAL_ERROR",
+      500,
+      "INTERNAL",
+      false,
+      "告警及人工定位；不自动业务重提"
+    ],
+    [
+      "SCOPE_RULE_UNCONFIRMED / TAX_AUTHORITY_UNCONFIRMED / TAX_CHANNEL_UNAVAILABLE",
+      422,
+      "FAILED_PRECONDITION",
+      false,
+      "保留准备；取得正式范围/职责依据并接入渠道后另建确切意图"
+    ],
+    [
+      "SELF_REVIEW / APPROVAL_STALE / SUBMISSION_VERSION_CONFLICT",
+      409,
+      "FAILED_PRECONDITION",
+      false,
+      "独立审核确切新版本，不复用旧批准"
+    ],
+    [
+      "OFFICIAL_EVIDENCE_REQUIRED / OFFICIAL_EXACT_REVISION_REQUIRED / OFFICIAL_SOURCE_KEY_REQUIRED",
+      422,
+      "FAILED_PRECONDITION",
+      false,
+      "补真实官方依据与确切版、稳定源key；不冒称受理"
+    ],
+    [
+      "REFUND_OBSERVATION_UNAVAILABLE / REAL_BANK_EVIDENCE_REQUIRED",
+      422,
+      "FAILED_PRECONDITION",
+      false,
+      "仅等待独立真实资金域权威观测，不制造到账或增加B余额"
+    ],
+    [
+      "DISPATCH_UNKNOWN / TAX_TERMINAL",
+      409,
+      "FAILED_PRECONDITION",
+      false,
+      "未知只查原办理号；终态只读不自动重开或关闭交易"
+    ]
+  ],
+  "unknown": "DEADLINE_EXCEEDED/UNAVAILABLE不证明提交失败；恢复原操作号/原办理号，禁止新号盲重发"
+}

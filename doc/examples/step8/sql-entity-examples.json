@@ -1,0 +1,223 @@
+{
+  "designOnly": true,
+  "executed": false,
+  "normalClosureE2EProven": false,
+  "trade_event_tab": {
+    "event_number": "RPT-S8-SYNTHETIC",
+    "trade_record_id": "<resolved internal id>",
+    "revision_number": 1,
+    "event_type_code": 18,
+    "from_trade_status_code": null,
+    "to_trade_status_code": null,
+    "actor_reference": "SYNTHETIC-RECONCILER",
+    "reason_code": 1,
+    "reason_text": "内部合成核对，外部证据unknown",
+    "event_payload": {
+      "payload_schema_version": 1,
+      "report_schema_version": 1,
+      "rule_version": "S8-RECONCILIATION-1",
+      "source_version_vector": [
+        {
+          "context_code": "trade",
+          "business_number": "TRD-S8-SYNTHETIC",
+          "revision_reference": "1",
+          "content_hash": "09374aec203ba430c53b9fcf46759cb154699ba852d41fb3fd2fdb226d142f72",
+          "event_tail_reference": "EVT-S8-SYNTHETIC-BASE"
+        }
+      ],
+      "object_sets": [
+        {
+          "type": "trade",
+          "object_ids": [
+            "TRD-S8-SYNTHETIC"
+          ],
+          "hash": "28c0b28c134c7ef66afdcadcb9dca9e062e5244aeb6840fbea66c2c721207ddc"
+        },
+        {
+          "type": "shipment",
+          "object_ids": [],
+          "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "type": "customs",
+          "object_ids": [],
+          "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "type": "payment",
+          "object_ids": [],
+          "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "type": "accounting",
+          "object_ids": [],
+          "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "type": "certificate",
+          "object_ids": [],
+          "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "type": "taxrefund",
+          "object_ids": [],
+          "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "type": "compliance",
+          "object_ids": [],
+          "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ],
+      "checks": [
+        {
+          "item_number": "SOURCE-COMPLETENESS",
+          "rule_code": "SOURCE_UNKNOWN",
+          "result": 3,
+          "expected_decimal": "",
+          "observed_decimal": "",
+          "currency_code": "",
+          "sources": [
+            {
+              "type": "trade",
+              "id": "TRD-S8-SYNTHETIC",
+              "revision": "1",
+              "hash": "09374aec203ba430c53b9fcf46759cb154699ba852d41fb3fd2fdb226d142f72",
+              "source_event_tail": "EVT-S8-SYNTHETIC-BASE"
+            }
+          ],
+          "evidence": [],
+          "blocking_codes": [
+            "SOURCE_UNKNOWN"
+          ],
+          "explanation": "跨域尚未提供真实源与完整集合，空合成集合不证明无对象"
+        },
+        {
+          "item_number": "EXTERNAL-EVIDENCE",
+          "rule_code": "REAL_EXTERNAL_PROOF",
+          "result": 3,
+          "expected_decimal": "",
+          "observed_decimal": "",
+          "currency_code": "",
+          "sources": [],
+          "evidence": [],
+          "blocking_codes": [
+            "EXTERNAL_EVIDENCE_MISSING"
+          ],
+          "explanation": "原创文件只证明内部合成记录，不构成银行/海关/税务证明"
+        },
+        {
+          "item_number": "FUNDS-ALLOCATION",
+          "rule_code": "CNY_CONSERVATION",
+          "result": 1,
+          "expected_decimal": "100.00",
+          "observed_decimal": "100.00",
+          "currency_code": "CNY",
+          "sources": [
+            {
+              "type": "trade",
+              "id": "TRD-S8-SYNTHETIC",
+              "revision": "1",
+              "hash": "09374aec203ba430c53b9fcf46759cb154699ba852d41fb3fd2fdb226d142f72",
+              "source_event_tail": "EVT-S8-SYNTHETIC-BASE"
+            }
+          ],
+          "evidence": [
+            {
+              "logical_file_number": "FILE-S8-SYNTHETIC",
+              "revision_number": 1,
+              "sha256": "5c331c40fe7d48aa26b6e83dd36aaa3b2bdea6b54d76bb7bf3d96b823aafd030",
+              "document_purpose_code": 19
+            }
+          ],
+          "blocking_codes": [],
+          "explanation": "仅说明结构中的合成金额一致，不证明真实资金平衡"
+        }
+      ],
+      "evidence_references": [
+        {
+          "document_purpose_code": 19,
+          "logical_file_number": "FILE-S8-SYNTHETIC",
+          "revision_number": 1,
+          "content_digest": "5c331c40fe7d48aa26b6e83dd36aaa3b2bdea6b54d76bb7bf3d96b823aafd030"
+        }
+      ]
+    },
+    "trace_id": "S8-SYNTHETIC-TRACE",
+    "occurred_at": "2026-11-01T01:00:00Z"
+  },
+  "compliance_discrepancy_case_tab": {
+    "case_number": "CASE-S8-SYNTHETIC",
+    "case_type_code": 4,
+    "severity_code": 2,
+    "owner_context_code": "funds",
+    "owner_business_number": "PAY-S8-SYNTHETIC",
+    "trade_number": "TRD-S8-SYNTHETIC",
+    "transaction_number": "PAY-S8-SYNTHETIC",
+    "scope_code": 3,
+    "case_status": 2,
+    "assigned_to": "SYNTHETIC-CASE-OWNER",
+    "due_at": "2026-11-05T01:00:00Z",
+    "evidence_manifest_json": [
+      {
+        "evidence_type_code": 1,
+        "owner_context_code": "document",
+        "business_reference": "FILE-S8-SYNTHETIC",
+        "version_reference": "1",
+        "content_digest": "5c331c40fe7d48aa26b6e83dd36aaa3b2bdea6b54d76bb7bf3d96b823aafd030"
+      }
+    ],
+    "opened_at": "2026-11-01T01:00:00Z",
+    "closed_at": null
+  },
+  "compliance_disposition_event_tab": {
+    "disposition_event_number": "DSP-S8-SYNTHETIC-HOLD",
+    "case_number": "CASE-S8-SYNTHETIC",
+    "action_code": 2,
+    "result_code": 2,
+    "actor_reference": "SYNTHETIC-CASE-OWNER",
+    "approver_reference": "SYNTHETIC-INDEPENDENT-REVIEWER",
+    "reason_code": 1,
+    "decision_snapshot_json": {
+      "action_code": 2,
+      "result_code": 2,
+      "reason_code": 1,
+      "actor_reference": "SYNTHETIC-CASE-OWNER",
+      "approver_reference": "SYNTHETIC-INDEPENDENT-REVIEWER",
+      "decided_at": "2026-11-01T01:00:00Z",
+      "decision_type": "hold_decision",
+      "decision_details": {
+        "reason": "真实资金证据缺失，只暂停本对象付款操作",
+        "affected_contexts": [
+          {
+            "context_code": "funds",
+            "business_reference": "PAY-S8-SYNTHETIC",
+            "scope_code": 3,
+            "operations": [
+              "approve-payment",
+              "execute-payment"
+            ],
+            "source": {
+              "type": "funds",
+              "id": "PAY-S8-SYNTHETIC",
+              "revision": "1",
+              "hash": "09374aec203ba430c53b9fcf46759cb154699ba852d41fb3fd2fdb226d142f72",
+              "source_event_tail": "EVT-S8-SYNTHETIC-BASE"
+            }
+          }
+        ]
+      }
+    },
+    "affected_contexts_json": [
+      {
+        "context_code": "funds",
+        "business_reference": "PAY-S8-SYNTHETIC",
+        "scope_code": 3,
+        "action_code": 2,
+        "expected_acknowledgement": true
+      }
+    ],
+    "evidence_reference": "FILE-S8-SYNTHETIC#1",
+    "occurred_at": "2026-11-01T01:00:00Z"
+  }
+}

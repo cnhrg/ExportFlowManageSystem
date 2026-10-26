@@ -1,0 +1,14 @@
+sequenceDiagram
+    actor OP as 出口代理资金经办人
+    participant SYS as 代理出口系统（单体）
+    actor REVIEWER as 出口代理资金独立审核人
+    OP->>SYS: 请求审核指定INVOICE和分配范围
+    SYS-->>OP: 返回批准版、证据、未决差异和当前桶
+    REVIEWER->>SYS: 独立确认贸易核验结论
+    SYS-->>REVIEWER: 仅记录核验事实；没有银行可用证据仍受限
+    OP->>SYS: 提交实际银行可用凭证及部分释放金额
+    alt 银行真实可用范围匹配
+      SYS-->>OP: 原子记账并从受限部分释放到可用
+    else 无真实银行证据或范围不匹配
+      SYS-->>OP: 拒绝释放，余额仍在受限桶
+    end

@@ -19,7 +19,7 @@
       '<p><b>甲方（'+esc(t.parties[0])+'）</b><br>'+field('partyA')+'<br>注册号：'+field('codeA')+'<br>地址：'+field('addressA')+'<br>授权代表：'+field('signerA')+'</p>'+
       '<p><b>乙方（'+esc(t.parties[1])+'）</b><br>'+field('partyB')+'<br>注册号：'+field('codeB')+'<br>地址：'+field('addressB')+'<br>授权代表：'+field('signerB')+'</p>'+
       '<h4>一、合同标的</h4><p>'+esc(t.terms)+'</p><p>'+field('goods')+' / '+field('quantity')+' '+field('unit')+'<br>单价：'+field('price')+' · 总金额：'+field('amount')+' '+field('currency')+'</p>'+
-      [['二、服务范围','scope'],['三、费用及佣金','fees'],['四、结算与付款','payment'],['五、交付约定','delivery'],['六、有效期','validity'],['七、争议解决','disputes'],['八、补充约定','changes']].map(([label,key])=>'<h4>'+label+'</h4><p>'+field(key)+'</p>').join('')+
+      [['二、服务范围','scope'],['三、代理服务费及其他费用','fees'],['四、结算与付款','payment'],['五、交付约定','delivery'],['六、有效期','validity'],['七、争议解决','disputes'],['八、补充约定','changes']].map(([label,key])=>'<h4>'+label+'</h4><p>'+field(key)+'</p>').join('')+
       '<div class="contract-seal-row"><div>甲方签章<div class="contract-seal">待授权<br>甲方签章位</div></div><div>乙方签章<div class="contract-seal">待授权<br>乙方签章位</div></div></div></article>';
   }
   function templateScreen(){
@@ -80,7 +80,7 @@
       '<div class="contract-actions">'+button('revise','修订当前版本',role!=='drafter'||r.status==='submitted')+button('download','下载演示合同 HTML')+button('download-request','下载提交数据示例 JSON')+'</div>'+
       '<article class="contract-paper"><div class="contract-watermark">演示合同 · 不具签署效力</div><pre>'+esc(M.documentText(r).split('----- 原模板参考附件开始 -----')[0])+'</pre><div class="contract-seal-row">'+['A','B'].map((party,index)=>'<div><strong>'+esc(index===0?r.values.partyA:r.values.partyB)+'</strong><div class="contract-seal'+(r.seals.includes(party)?' visible':'')+'">演示专用<br>非有效印章<br>'+party+'方签章位</div><small>签章位：文末'+(index===0?'左侧':'右侧')+' · 实际坐标由外包模板控件确认</small></div>').join('')+'</div></article>'+
       '<details><summary>原模板全文参考（脱敏文本，不是本笔签署正文）</summary><pre class="contract-template-text">'+esc(r.source.text)+'</pre></details>'+
-      (r.status==='draft'?'<section class="contract-review"><h4>独立人工审核 · 当前 V'+r.version+'</h4>'+['主体、签署人、企业身份及委托链已核对','模板全文及修订差异已Review，佣金 / 两日付款 / 汇率冲突已书面统一','费用、金额、付款分支及版本已由法务 / 财务复核','电子签署适用性、双方意愿及用章授权依据已确认'].map(text=>'<label><input type="checkbox" data-contract-check'+(role!=='reviewer'?' disabled':'')+'>'+esc(text)+'</label>').join('')+'<label>审核意见<textarea id="contract-review-reason" rows="2"'+(role!=='reviewer'?' disabled':'')+'></textarea></label>'+button('approve','模拟独立审核通过',role!=='reviewer')+'</section>':'')+
+      (r.status==='draft'?'<section class="contract-review"><h4>独立人工审核 · 当前 V'+r.version+'</h4>'+['主体、签署人、企业身份及委托链已核对','模板全文及修订差异已Review，服务费 / 两日付款 / 汇率冲突已书面统一','固定人民币300元服务费由D承担，首次获批分账时从D已核验可用余额结算；D授权及收费依据齐备，A合同应付不因该费用减少','电子签署适用性、相关方意愿及用章授权依据已确认'].map(text=>'<label><input type="checkbox" data-contract-check'+(role!=='reviewer'?' disabled':'')+'>'+esc(text)+'</label>').join('')+'<label>审核意见<textarea id="contract-review-reason" rows="2"'+(role!=='reviewer'?' disabled':'')+'></textarea></label>'+button('approve','模拟独立审核通过',role!=='reviewer')+'</section>':'')+
       (step===2&&['approved','sealed'].includes(r.status)?'<section class="contract-sign-controls"><h4>电子盖章 · 双方签章位</h4><p>红色印章仅为演示贴图，不生成数字签名。</p><div class="contract-actions">'+button('seal-A','盖甲方演示章',!ready||r.seals.includes('A'))+button('seal-B','盖乙方演示章',!ready||r.seals.includes('B'))+button('next-submit','下一步 → 提交电子合同',r.status!=='sealed')+'</div></section>':'')+
       (step===3&&r.status==='sealed'?'<section class="contract-submit-card"><span class="contract-file-icon">EC</span><h3>合同已就绪，待提交</h3><p>'+esc(r.values.number)+' · V'+r.version+' · 双方演示章齐备</p><p>提交对象：法大大电子合同平台（未接入）</p>'+button('submit','模拟提交电子合同',!ready)+'<p>提交后等待外部签署，不自动认定生效。</p></section>':'')+
       (r.status==='failed'?'<p class="contract-warning">提交失败不代表已签署，保留相同业务幂等键；生产环境须先查询外部任务再决定是否重试。</p>'+button('submit','模拟重试提交（同幂等键）',!ready):'')+
@@ -132,7 +132,7 @@
       partyB:kind==='agency'?v.bName||'':kind==='sales'?v.cName||'':'',codeB:kind==='agency'?v.bCode||'':kind==='sales'?v.cCode||'':'',
       addressB:kind==='sales'?v.cAddress||'':'',goods:[v.goods,v.spec].filter(Boolean).join(' / '),
       quantity:v.quantity||'',unit:v.unit||'',price:v.unitPrice||'',amount:v.totalValue||'',currency:v.currency||'',
-      scope:kind==='agency'?v.bInstruction||'':t.terms,fees:[v.commissionRate&&'费率 '+v.commissionRate+'%',v.commissionBasis,v.commissionEvidence].filter(Boolean).join('；'),
+      scope:kind==='agency'?v.bInstruction||'':t.terms,fees:[v.serviceFeeAmount&&'代理服务费：人民币'+v.serviceFeeAmount+'元 / 交易单',v.serviceFeePayer&&'承担方：'+v.serviceFeePayer,v.serviceFeeMethod].filter(Boolean).join('；')||'代理服务费固定人民币300元 / 交易单，由D承担并在首次获批分账时从D可用余额结算；须有D书面授权，不减少A合同应付。',
       delivery:[v.eRoute,v.cDelivery].filter(Boolean).join('；')};
     if(revision){const old=records.find(r=>r.id===revision);values.transaction=old.values.transaction;values.batch=old.values.batch;}
     render();message('已带入'+(data.source||'本页建档字段')+'（未自动认定为已批准）。缺失签署人、地址、条款及授权仍须补齐；实际买卖方和物流委托链需人工确认。');
@@ -143,7 +143,7 @@
       partyB:kind==='agency'?'B合成贸易代理有限公司':kind==='logistics'?'E合成物流有限公司':'境外合成买方有限公司',
       codeB:'DEMO-COUNTERPART-001',addressB:'合成乙方地址（非真实）',signerB:'乙方演示授权人',
       goods:'合成家居收纳用品 / DEMO-01',quantity:'1200',unit:'件',price:'8.50',amount:'10200',currency:'USD',
-      scope:M.template(kind).terms,fees:'演示：费用承担方、佣金基数 / 费率及开票按本笔书面约定；不得将未解决的佣金承担冲突直接带入付款。',
+      scope:M.template(kind).terms,fees:'演示：代理服务费固定为每笔人民币300元，由D承担并在首次获批分账时从D已核验可用余额结算；D授权及收费依据必须齐备，不减少A合同应付。不按货值比例抽佣；INVOICE申报、补件及改版不触发结算。银行实际费用凭证列示并按合同承担。',
       payment:'演示：适用付款分支、单证及资金门禁全部通过并经独立审批后执行；银行实际汇率及费用以本笔有效凭证为准。',
       delivery:'演示：按本笔确认的运输计划及交付地点执行；销售贸易术语 / 保险与物流报价须按实际合同复核。',
       validity:'演示：双方通过合法有效电子签署后生效；至本笔履约及结算完毕。',

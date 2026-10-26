@@ -1,0 +1,12 @@
+sequenceDiagram
+    actor 税务通知核实员 as 税务通知核实员
+    actor 供应商经办人 as 供应商经办人
+    participant SYSTEM as 代理出口系统
+    税务通知核实员->>SYSTEM: 查看官方原始通知和对应申请版本
+    SYSTEM-->>税务通知核实员: 显示原办理号、通知标识和仍缺的核实依据
+    税务通知核实员->>SYSTEM: 登记核实后的受理、补正或处理进度
+    alt 缺少正式证据
+    SYSTEM-->>税务通知核实员: 保留待核任务，正式进度不变
+    else 已核实
+    SYSTEM-->>供应商经办人: 显示有正式依据的进度和补正要求
+    end

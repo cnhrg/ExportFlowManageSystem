@@ -1,0 +1,16 @@
+{
+  "type": "https://api.example.invalid/problems/COMMIT_OUTCOME_UNKNOWN",
+  "title": "COMMIT_OUTCOME_UNKNOWN",
+  "status": 503,
+  "detail": "提交结果未知，按原键恢复",
+  "instance": "/synthetic/request",
+  "errors": [
+    {
+      "pointer": "/",
+      "code": "COMMIT_OUTCOME_UNKNOWN",
+      "detail": "提交结果未知，按原键恢复"
+    }
+  ],
+  "outcomeUnknown": true,
+  "retryAfterMs": 1000
+}

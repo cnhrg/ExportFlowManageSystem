@@ -18,6 +18,11 @@
   <link rel="stylesheet" href="assets/operations-mobile.css">
   <link rel="stylesheet" href="assets/protocols.css">
   <link rel="stylesheet" href="assets/database.css">
+  <link rel="stylesheet" href="assets/system-usecases.css">
+  <link rel="stylesheet" href="assets/work-breakdown.css">
+  <link rel="stylesheet" href="assets/resource.css">
+  <link rel="stylesheet" href="assets/product-guide.css">
+  <link rel="stylesheet" href="assets/demo/workspace.css">
 </head>
 <body>
   <aside class="sidebar">
@@ -28,7 +33,8 @@
     <div class="workspace-label">产品原型 / 核心技术设计</div>
     <nav id="navigation" aria-label="主导航">
       <button class="nav-item active" data-view="overview" aria-label="流程总览" title="流程总览"><span aria-hidden="true">◈</span><b class="nav-label">流程总览</b><em>01</em></button>
-      <button class="nav-item" data-view="capabilities" aria-label="业务操作" title="业务操作"><span aria-hidden="true">◇</span><b class="nav-label">业务操作</b><em>04</em></button>
+      <button class="nav-item" data-view="external-demo" aria-label="对外门户" title="对外门户"><span aria-hidden="true">◇</span><b class="nav-label">对外门户</b><em>外</em></button>
+      <button class="nav-item" data-view="internal-demo" aria-label="对内工作台" title="对内工作台"><span aria-hidden="true">▦</span><b class="nav-label">对内工作台</b><em>内</em></button>
       <button class="nav-item" data-view="contracts" aria-label="电子合同" title="电子合同"><span aria-hidden="true">▧</span><b class="nav-label">电子合同</b><em>EC</em></button>
       <button class="nav-item" data-view="funds-design" aria-label="资金流设计" title="资金流设计"><span aria-hidden="true">↗</span><b class="nav-label">资金流设计</b><em>05</em></button>
       <button class="nav-item" data-view="rbac" aria-label="RBAC权限设计" title="RBAC权限设计"><span aria-hidden="true">⌘</span><b class="nav-label">RBAC权限设计</b><em>06</em></button>
@@ -36,6 +42,9 @@
       <button class="nav-item" data-view="protocol-design" aria-label="协议设计" title="协议设计"><span aria-hidden="true">⇌</span><b class="nav-label">协议设计</b><em>08</em></button>
       <button class="nav-item" data-view="database-design" aria-label="数据库设计" title="数据库设计"><span aria-hidden="true">▦</span><b class="nav-label">数据库设计</b><em>09</em></button>
       <button class="nav-item" data-view="state-design" aria-label="状态机设计" title="状态机设计"><span aria-hidden="true">⇢</span><b class="nav-label">状态机设计</b><em>10</em></button>
+      <button class="nav-item" data-view="system-usecases" aria-label="系统用例" title="系统用例"><span aria-hidden="true">◎</span><b class="nav-label">系统用例</b><em>11</em></button>
+      <button class="nav-item" data-view="work-breakdown" aria-label="工作拆解脑图" title="工作拆解脑图"><span aria-hidden="true">⌘</span><b class="nav-label">工作拆解</b><em>12</em></button>
+      <button class="nav-item" data-view="resources" aria-label="资源规划" title="资源规划"><span aria-hidden="true">▤</span><b class="nav-label">资源</b><em>13</em></button>
     </nav>
     <nav id="supplementary-navigation" class="sidebar-secondary" aria-label="参考资料">
       <button class="nav-item" data-view="materials" aria-label="材料索引" title="材料索引"><span aria-hidden="true">▣</span><b class="nav-label">材料索引</b></button>
@@ -45,6 +54,8 @@
       <p>产品原型与设计演示<br>非生产系统</p>
       <a href="代理出口业务操作指引_角色节点重组版.docx" download>↓ 业务入口原型图</a>
       <button id="print-button">打印业务摘要</button>
+      <a href="../doc/对外产品需求与操作手册.html">对外产品文档</a>
+      <a href="../doc/对内运营产品需求与操作手册.html">对内产品文档</a>
     </div>
   </aside>
   <main>
@@ -79,40 +90,77 @@
       <div class="toolbar"><label class="search wide"><span>⌕</span><input id="material-search" placeholder="搜索文件、节点、责任方、修改建议" aria-label="搜索材料"></label><select id="material-kind" aria-label="材料类别"><option value="all">全部材料</option><option value="source">已有原件</option><option value="required">待补证据</option></select><span id="material-result" class="muted"></span><a class="primary-link" href="材料节点清单.csv" download>↓ CSV 清单</a></div>
       <div class="table-wrap"><table><thead><tr><th>材料 / 来源</th><th>责任与节点</th><th>性质 / 状态</th><th>调整建议 / 确认方</th></tr></thead><tbody id="material-rows"></tbody></table></div>
     </section>
-    <section id="view-capabilities" class="view" aria-label="产品功能原型">
-      <div class="capability-heading">
-        <div><h2>业务操作</h2><p>先选择工作入口，进入后按当前岗位查看该工作区的授权页面。</p></div>
-        <div id="ops-user-controls"></div>
-      </div>
-      <div id="ops-device-tabs" class="ops-device-tabs" role="tablist" aria-label="业务操作设备原型"></div>
-      <div id="operations-prototype" role="tabpanel">
-      <button type="button" id="work-directory-return" class="demo-button work-directory-return" data-work-directory hidden>← 返回工作入口目录</button>
-      <div id="ops-mobile-navigation" class="ops-mobile-navigation"></div>
-      <div class="capability-layout">
-        <aside class="capability-index" aria-label="业务操作目录">
-          <div class="capability-index-heading"><strong id="capability-navigation-heading">工作入口目录</strong></div>
-          <div id="capability-list"></div>
-        </aside>
-        <article id="capability-detail" class="capability-detail" aria-live="polite"></article>
-      </div>
-      </div>
+    <section id="view-business-demo" class="view" aria-label="业务入口产品原型">
+      <div id="entrance-demo"><p>正在加载离线原型，请保持本地资源完整。</p></div>
     </section>
     <section id="view-contracts" class="view management-view" aria-label="电子合同产品流程">
       <div class="management-heading"><div><span class="management-eyebrow">E-CONTRACT · PRODUCT JOURNEY</span><h2>电子合同</h2><p>选取空白模板 → 填充交易信息 → 电子盖章 → 提交电子合同</p></div><span class="prototype-chip">本机交互原型 · 非真实签署</span></div>
       <div id="contract-workspace"><p id="contract-message" role="status" aria-live="polite"></p><div id="contract-body"></div></div>
     </section>
-    <section id="view-protocol-design" class="view management-view" aria-label="外部系统协议设计">
-      <div class="management-heading"><div><span class="management-eyebrow">EXTERNAL INTEGRATION · PROTOCOL DESIGN</span><h2>协议设计</h2><p>关务报关功能用例 / 银行资金操作用例 / 税务办理用例</p></div><span class="prototype-chip">功能用例设计 · 未连接外部机构</span></div>
-      <div id="protocol-tabs" class="protocol-tabs" role="tablist" aria-label="外部系统对接类型"></div>
+    <section id="view-protocol-design" class="view management-view" aria-label="服务协议与外部对接设计">
+      <div class="management-heading"><div><span class="management-eyebrow">SERVICE API · INTEGRATION CONTRACTS</span><h2>协议设计</h2><p>服务对外提供 / 服务对内运营 / 对接外部服务；汇总八步骤协议并关联原系统用例。</p></div><span class="prototype-chip">契约设计 · 非已部署接口</span></div>
+      <div id="protocol-tabs" class="protocol-tabs" role="tablist" aria-label="协议服务边界"></div>
       <div id="protocol-panel" class="protocol-panel" role="tabpanel" tabindex="0"></div>
     </section>
     <section id="view-database-design" class="view management-view" aria-label="数据库设计">
-      <div class="management-heading"><div><span class="management-eyebrow">WIDE TABLES · DATABASE DESIGN</span><h2>数据库设计</h2><p>每天少量单据 · 四个领域采用业务宽表 · 文件存储留档，实体仅记录版本路径，全部 revision 保留。</p></div><span class="prototype-chip">14 张核心表 · 宽表逻辑设计</span></div>
+      <div class="management-heading"><div><span class="management-eyebrow">DOMAIN MODEL · DATABASE DESIGN</span><h2>数据库设计</h2><p>领域实体、字段与受控码的唯一主方案 · 跨域逻辑引用 · 权威事实、版本和审计分层。</p></div><span id="database-model-count" class="prototype-chip">领域逻辑设计 · 非生产DDL</span></div>
       <div id="database-tabs" class="database-tabs" role="tablist" aria-label="数据库设计领域"></div>
       <div id="database-panel" role="tabpanel" tabindex="0"></div>
     </section>
+    <section id="view-system-usecases" class="view management-view" aria-label="步骤一与步骤二系统用例设计">
+      <div class="management-heading"><div><span class="management-eyebrow">STEPS 1–2 · SYSTEM USE CASES</span><h2>系统用例</h2><p>按业务步骤与系统用例查看详细时序、HTTP请求/响应、cURL与关联ReqMsg / RspMsg协议。</p></div><span class="prototype-chip">设计与本机演示数据 · 非后端服务</span></div>
+      <div id="system-usecases-steps" role="tablist" aria-label="业务步骤"></div>
+      <div id="system-usecases-step-panel" role="tabpanel" aria-labelledby="s1-step-one">
+        <div id="system-usecases-tabs" role="tablist" aria-label="步骤一系统用例"></div>
+        <div id="system-usecases-panel" role="tabpanel" tabindex="0"></div>
+      </div>
+    </section>
+    <section id="view-resources" class="view management-view" aria-label="两年ToB资源与自建机房规划">
+      <div class="management-heading"><div><span class="management-eyebrow">CAPACITY · SINGLE-SITE INFRASTRUCTURE</span><h2>资源</h2><p>最小 / 适中 / 富裕三档预算（当前配置为富裕档）· ToB最多300单/日 · 两年 · 单文件约200KB / 每单原件≤5MB · 30次请求/单。三档均MySQL一主一从，非全栈HA；无采购价格，规划非已部署配置。</p></div></div>
+      <div id="resource-panel"></div>
+    </section>
+    <section id="view-work-breakdown" class="view management-view" aria-label="系统设计工作拆解脑图">
+      <header class="work-breakdown-heading">
+        <div><span class="management-eyebrow">SYSTEM DESIGN · DELIVERY WORK PACKAGES</span><h2>系统设计工作拆解</h2><p>按工作名称查看具体要做什么、处理逻辑、预期结果和测试方法，并关联系统用例说明。</p></div>
+        <span class="work-breakdown-stamp">设计拆解 · 非生产功能</span>
+      </header>
+      <nav id="work-breakdown-phases" class="work-breakdown-phases" aria-label="按实施期次查看工作脑图">
+        <button type="button" data-work-phase="1" aria-pressed="true">第一期 · 银行与人工协同</button>
+        <button type="button" data-work-phase="2" aria-pressed="false">第二期 · 签署物流通知</button>
+        <button type="button" data-work-phase="3" aria-pressed="false">第三期 · 关务税务及查询</button>
+      </nav>
+      <h3 id="work-breakdown-phase-title">第一期：银行接入与全流程人工协同</h3>
+      <p id="work-breakdown-phase-goal"></p>
+      <div class="work-breakdown-tools" aria-label="脑图操作">
+        <label class="work-breakdown-search" for="work-breakdown-search">搜索工作包
+          <input id="work-breakdown-search" type="search" placeholder="工作名称、系统用例、处理逻辑或测试方法" autocomplete="off">
+        </label>
+        <button id="work-breakdown-expand" type="button">展开全部</button>
+        <button id="work-breakdown-collapse" type="button">折叠至分层</button>
+        <button id="work-breakdown-fit" type="button">适应画布</button>
+        <button id="work-breakdown-export" type="button">导出工作明细.xlsx</button>
+        <button id="work-breakdown-zoom-out" type="button" aria-label="缩小脑图">缩小</button>
+        <button id="work-breakdown-zoom-in" type="button" aria-label="放大脑图">放大</button>
+        <span id="work-breakdown-count" class="work-breakdown-count" aria-live="polite"></span>
+      </div>
+      <p id="work-breakdown-map-help" class="work-breakdown-note">全部工作按2倍效率估算，每包向上取整到0.5人日，各层直接汇总；此系数为计划假设。子任务不列工时，点击用例名称查看说明。第一期仅接银行，其他外部事项人工办理并独立核实，不做关务信息查询及界面美化。<a href="../doc/多期工作计划.html">查看完整工作计划</a>。</p>
+      <p id="work-breakdown-export-status" class="work-breakdown-note" role="status">表格导出三期全部工作，每期一个工作表；仅列简要明细与人力安排，不受当前搜索影响。</p>
+      <div class="work-breakdown-layout">
+        <div class="work-breakdown-map-shell">
+          <div id="work-breakdown-tree" role="region" aria-label="代理出口系统设计工作包脑图" aria-describedby="work-breakdown-map-help"></div>
+        </div>
+        <aside id="work-breakdown-detail" class="work-breakdown-detail" aria-label="工作包详情" aria-live="polite">
+          <p class="work-breakdown-detail-empty">选择一项工作，查看具体功能、处理逻辑、预期结果、测试方法和关联用例。</p>
+        </aside>
+      </div>
+      <details class="work-breakdown-directory">
+        <summary>文字版工作包索引（键盘与读屏）</summary>
+        <div id="work-breakdown-accessible-list"></div>
+      </details>
+      <p id="work-breakdown-status" class="muted" role="status" aria-live="polite"></p>
+    </section>
     <section id="view-state-design" class="view management-view" aria-label="状态机设计">
-      <div class="management-heading"><div><span class="management-eyebrow">STATE MACHINE · PROCESS ALIGNMENT</span><h2>状态机设计</h2><p>主流程编排与领域状态分层，逐项对齐 N01—N23、版本审核和资金放行条件。</p></div><span class="prototype-chip">状态与转换设计 · 非执行引擎</span></div>
+      <div class="management-heading"><div><span class="management-eyebrow">STATE MACHINE · DOMAIN CONTRACTS</span><h2>状态机设计</h2><p>领域状态、事件、Guard与异常补偿；保留 N01—N23 主流程，明确列出版本差异。</p></div><span class="prototype-chip">领域状态转换设计 · 非执行引擎</span></div>
       <div id="state-design-tabs" class="database-tabs" role="tablist" aria-label="状态机设计领域"></div>
       <div id="state-design-panel" role="tabpanel" tabindex="0"></div>
     </section>
@@ -207,7 +255,7 @@
       <div id="boss-workspace"></div>
     </section>
     <section id="view-funds-design" class="view" aria-label="步骤5资金流与信息流设计">
-      <div class="capability-heading"><div><span class="capability-eyebrow">FUNDS &amp; INFORMATION FLOW · V1 / STEP 05</span><h2>资金流设计 · V1</h2><p>两项费用均由D承担：实收入CNH不可用余额后按万分之三计提，每贸易单完成INVOICE申报后计提人民币300元；均须先经银行核验入账为国内RMB可用余额，才能扣取并转B收益账户，不得从CNH不可用余额直接转收益。V1不垫资；V2支持B先行垫付A、后续D回款核验入账后按协议清偿。本地原型不执行真实扣费、垫资或银行指令。</p></div></div>
+      <div class="capability-heading"><div><span class="capability-eyebrow">FUNDS &amp; INFORMATION FLOW · V1 / STEP 05</span><h2>资金流设计 · V1</h2><p>D货款经银行贸易核验入账并确认国内RMB可用后，首次获批分账时由D承担固定人民币300元服务费，从D可用余额一次性结算，再按合同应付向A付款；不按实收本金比例抽佣，INVOICE申报不触发收费。D授权及收费依据必须齐备，服务费结算不减少A合同应付。银行实际费用按凭证单列并依协议承担。本地原型不执行真实银行指令。</p></div></div>
       <div id="funds-design-content"></div>
     </section>
     <section id="view-simulation" class="view">
@@ -265,17 +313,45 @@
   <script src="assets/vendor/mermaid.js"></script>
   <script src="assets/process-workspace.js"></script>
   <script src="assets/audit-store.js"></script>
-  <script src="assets/operations-workspace.js"></script>
-  <script src="assets/capability-workspace.js"></script>
   <script src="assets/protocol-workspace.js"></script>
+  <script src="assets/domain-model.js"></script>
   <script src="assets/database-model.js"></script>
-  <script src="assets/design-diagrams.js"></script>
-  <script src="assets/database-workspace.js"></script>
   <script src="assets/state-model.js"></script>
   <script src="assets/audit-design.js"></script>
+  <script src="assets/design-diagrams.js"></script>
+  <script src="assets/system-usecases-model.js"></script>
+  <script src="assets/system-usecases-artifacts.js"></script>
+  <script src="assets/step-two-usecases-model.js"></script>
+  <script src="assets/step-two-usecases-artifacts.js"></script>
+  <script src="assets/step-three-usecases-model.js"></script>
+  <script src="assets/step-three-usecases-artifacts.js"></script>
+  <script src="assets/step-four-usecases-model.js"></script>
+  <script src="assets/step-four-usecases-artifacts.js"></script>
+  <script src="assets/step-five-usecases-model.js"></script>
+  <script src="assets/step-five-usecases-artifacts.js"></script>
+  <script src="assets/step-six-usecases-model.js"></script>
+  <script src="assets/step-six-usecases-artifacts.js"></script>
+  <script src="assets/step-seven-usecases-model.js"></script>
+  <script src="assets/step-seven-usecases-artifacts.js"></script>
+  <script src="assets/step-eight-usecases-model.js"></script>
+  <script src="assets/step-eight-usecases-artifacts.js"></script>
+  <script src="assets/system-usecases-workspace.js"></script>
+  <script src="assets/database-workspace.js"></script>
   <script src="assets/state-workspace.js"></script>
+  <script src="assets/resource-model.js"></script>
+  <script src="assets/resource-workspace.js"></script>
   <script src="assets/flow.js"></script>
   <script src="assets/boss-workspace.js"></script>
   <script src="assets/management-prototypes.js"></script>
+  <script src="assets/work-package-context.js"></script>
+  <script src="assets/work-breakdown.js"></script>
+  <script src="assets/vendor/simpleMindMap.core.min.js"></script>
+  <script src="assets/work-breakdown-workspace.js"></script>
+  <script src="assets/work-breakdown-export.js"></script>
+  <script src="assets/product-guide-model.js"></script>
+  <script src="assets/product-guide-state.js"></script>
+  <script src="assets/demo-model.js"></script>
+  <script src="assets/demo-state.js"></script>
+  <script src="assets/demo/workspace.js"></script>
 </body>
 </html>

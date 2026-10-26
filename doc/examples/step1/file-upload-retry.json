@@ -1,0 +1,7 @@
+{
+  "uploadId": "UPLOAD-DEMO-001",
+  "state": "retry_wait",
+  "attemptCount": 2,
+  "nextAttemptAt": "2026-10-25T08:24:03.000Z",
+  "lastErrorCode": "DEPENDENCY_UNAVAILABLE"
+}

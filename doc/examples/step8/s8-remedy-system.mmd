@@ -1,0 +1,12 @@
+sequenceDiagram
+    actor PERSON as 案件责任人
+    participant SYSTEM as 代理出口系统
+    PERSON->>SYSTEM: 补交凭据和原负责业务的实际处理记录
+    SYSTEM-->>PERSON: 显示当前资料版本、涉及事项、缺项和本方可办操作
+    PERSON->>SYSTEM: 核对本次内容并确认提交
+    SYSTEM-->>PERSON: 保存补充材料或逐项退回，原暂停继续有效
+    actor REVIEWER as 独立合规复核人
+    REVIEWER->>SYSTEM: 独立查看本次依据、范围与当前事实
+    SYSTEM-->>REVIEWER: 显示原提交和仍未满足的条件
+    REVIEWER->>SYSTEM: 独立批准或退回申请，逐项写明理由
+    SYSTEM-->>REVIEWER: 保存补充材料或逐项退回，原暂停继续有效

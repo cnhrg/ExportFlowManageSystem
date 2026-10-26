@@ -1,0 +1,19 @@
+{
+  "claims": {
+    "profile": "S1-PROOF-1",
+    "audience": "export-trade-external-demo",
+    "subjectReference": "DEMO-SUPPLIER-USER",
+    "keyReference": "DEMO-SUPPLIER-KEY",
+    "certificateReference": "DEMO-CERT-NOT-ISSUED",
+    "suite": "SIGNATURE_SUITE_RSA_PSS_SHA256",
+    "method": "POST",
+    "resourcePath": "/api/v1/trades",
+    "idempotencyKey": "TRD-S1-DEMO-001",
+    "ifMatch": "",
+    "bodyDigest": "46d8a1b7d28cacfb4b27a08a468dfdbb65ee62ada98ed850cc804e9b094119da",
+    "issuedAt": "2026-10-25T08:24:00.000Z",
+    "expiresAt": "2026-10-25T08:29:00.000Z",
+    "nonce": "MDEyMzQ1Njc4OWFiY2RlZg"
+  },
+  "signature": "AA=="
+}

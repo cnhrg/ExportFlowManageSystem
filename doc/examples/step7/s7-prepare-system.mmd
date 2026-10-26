@@ -1,0 +1,7 @@
+sequenceDiagram
+    actor 供应商经办人 as 供应商经办人
+    participant SYSTEM as 代理出口系统
+    供应商经办人->>SYSTEM: 查看退税责任、材料清单和范围规则
+    SYSTEM-->>供应商经办人: 未确认项与允许准备范围，不推算税率
+    供应商经办人->>SYSTEM: 提交本方备料与范围引用
+    SYSTEM-->>供应商经办人: 准备案件、缺项和确切标签，不是正式申请

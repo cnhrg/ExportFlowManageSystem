@@ -1,0 +1,30 @@
+sequenceDiagram
+    autonumber
+    actor PAGE as 出口代理付款经办人
+    actor ACTOR1 as 出口代理付款独立审批人
+    actor ACTOR2 as 中国供应商收款确认人
+    participant APP as 单体资金应用
+    participant DB as MySQL资金及账务
+    participant STORE as 私有S3确切版本
+    participant SCAN as ClamAV
+    participant BANK as 银行事实边界（未接入）
+    PAGE->>APP: GET当前资源/强ETag，再确认具体正文及原幂等键
+    APP->>STORE: 事务外核验确切受益方账号版及审批/银行证据
+    APP->>DB: BEGIN READ COMMITTED先查approval/intent原键
+    APP->>DB: 锁trade根/稳定银行身份/结算/付款单；排序锁allocation/account
+    APP->>DB: FOR UPDATE当前读可用额/占用/分支证据/独立审批/差异
+    alt 缺证据或余额不足
+    APP->>DB: ROLLBACK；拒绝批准/办理，不生成银行成功
+    else 门禁完整
+    APP->>DB: event4桶2到3 + 占用投影 + 冻结执行快照 + voucher/entries原子COMMIT
+    APP->>BANK: COMMIT后用原transaction_number办理/查单（当前适配器未接入）
+    alt 超时/执行未知
+    APP->>DB: 追加unknown观测；保留锁额，不重发新单
+    else 真实明确失败且未扣款
+    APP->>DB: 新RC事务先查原键/锁根当前读；event5解锁+凭证原子COMMIT
+    else 真实扣款已证实
+    APP->>DB: 新RC事务event2消耗锁额+凭证原子COMMIT；不推断A到账
+    end
+    end
+    APP-->>PAGE: GET原付款号恢复；A到账另核真实收款证据，缺失返回422
+    Note over APP,DB: RC先查重入/根锁后当前读；资金与账务本地原子；外部I/O事务外

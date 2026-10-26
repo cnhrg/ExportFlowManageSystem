@@ -73,13 +73,34 @@
     clearTimeout(toastTimer); toastTimer=setTimeout(()=>$('toast').hidden=true,5000);
   }
   function showView(view) {
+    if(['external-demo','internal-demo','capabilities','product-workspace'].includes(view)){
+      globalThis.EXPORT_DEMO?.openEntrance(['internal-demo','capabilities'].includes(view)?'internal':'external');
+      return;
+    }
+    const designHash=location.hash.match(/^#(database-design|state-design|resources)(?:\/|$)/);
+    if(designHash&&designHash[1]!==view)history.replaceState(null,'',location.pathname+location.search);
     currentView=view;
+    document.body.classList.toggle('demo-active',view==='business-demo');
+    if(view==='business-demo'&&matchMedia('(max-width:760px)').matches)document.body.classList.add('sidebar-collapsed');
     document.querySelectorAll('.view').forEach(e=>e.classList.toggle('active',e.id==='view-'+view));
     document.querySelectorAll('[data-view]').forEach(e=>e.classList.toggle('active',e.dataset.view===view));
     if(view==='overview' && graph) requestAnimationFrame(()=>graph.resize($('graph').clientWidth,$('graph').clientHeight));
     if(view==='capabilities')globalThis.EXPORT_CAPABILITY_WORKSPACE?.resize();
     if(view==='database-design')globalThis.EXPORT_DATABASE_WORKSPACE?.show();
     if(view==='state-design')globalThis.EXPORT_STATE_WORKSPACE?.show();
+    if(view==='system-usecases')globalThis.EXPORT_SYSTEM_USECASES_WORKSPACE?.show();
+  }
+  function openDesignRoute(){
+    if(location.hash==='#resources'){showView('resources');return;}
+    const match=location.hash.match(/^#(database-design|state-design)(?:\/([a-z]+))?$/);
+    if(!match)return;
+    const domain=match[2]||'trade';
+    if(!globalThis.EXPORT_DOMAIN_MODEL.domains.some(item=>item.id===domain)){
+      toast('未知设计领域：'+domain);return;
+    }
+    showView(match[1]);
+    const workspace=match[1]==='database-design'?globalThis.EXPORT_DATABASE_WORKSPACE:globalThis.EXPORT_STATE_WORKSPACE;
+    workspace.show(domain);
   }
   function details(id) {
     const n=nodeMap.get(id); selectedNode=id; showView('overview');
@@ -342,6 +363,7 @@
     EXPORT_PROTOCOLS.initialize();
     EXPORT_DATABASE_WORKSPACE.initialize();
     EXPORT_STATE_WORKSPACE.initialize();
+    globalThis.EXPORT_SYSTEM_USECASES_WORKSPACE?.initialize();
     EXPORT_CONTRACTS.initialize();
     renderStaticViews();appendPrintedRules();createGraph();renderSimulation();EXPORT_REVIEW_WORKSPACE.initialize();updateCompletion();
     globalThis.EXPORT_CAPABILITY_WORKSPACE?.initialize();
@@ -381,6 +403,8 @@
     document.addEventListener('click',e=>{const b=e.target.closest('[data-sequence]');if(b)EXPORT_SEQUENCE.open(b.dataset.sequence,graphMode,b);});
     filterGraph();
     globalThis.EXPORT_APP={graph,showView,details,getSimulation:()=>({mode:simulationMode,approved:[...approved.keys()],versions:Object.fromEntries(versions),audit:[...audit]}),selectSimulation:id=>{simSelected=id;renderSimulation();showView('simulation');}};
+    window.addEventListener('hashchange',openDesignRoute);
+    openDesignRoute();
   }
   try {init();} catch(error) {
     $('fatal-error').hidden=false;$('fatal-error').textContent='页面初始化失败：'+error.message+'。请保留完整交付目录后重新打开。';

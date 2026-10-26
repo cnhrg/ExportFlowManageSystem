@@ -1,0 +1,102 @@
+{
+  "designOnly": true,
+  "bankSuccess": false,
+  "syntheticOnly": true,
+  "executableSeed": false,
+  "invoice": {
+    "invoiceNumber": "INV-S5-SYNTHETIC",
+    "tradeNumber": "TRD-S5-SYNTHETIC",
+    "declaredAmount": {
+      "amount": "1000.00",
+      "currencyCode": "CNY"
+    },
+    "approvedTradeRevisionNumber": 1,
+    "status": "FUNDS_TRANSACTION_STATUS_PENDING_APPROVAL",
+    "invoiceFiles": [
+      {
+        "logicalFileNumber": "FILE-S5-SYNTHETIC",
+        "revisionNumber": 1,
+        "sha256": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+        "documentTypeCode": 14
+      }
+    ],
+    "missingGateCodes": [
+      "FUND_EVIDENCE_MISSING"
+    ],
+    "etag": "\"s5-synthetic-revision-1\""
+  },
+  "balances": {
+    "restricted": {
+      "amount": "0.00",
+      "currencyCode": "CNY"
+    },
+    "available": {
+      "amount": "0.00",
+      "currencyCode": "CNY"
+    },
+    "paymentLocked": {
+      "amount": "0.00",
+      "currencyCode": "CNY"
+    }
+  },
+  "fieldMapping": {
+    "bankAccount": "payment_bank_account_tab",
+    "documents": "payment_transaction_tab",
+    "allocations": "payment_fund_allocation_tab",
+    "events": "payment_fund_flow_tab",
+    "differences": "payment_reconcile_difference_tab",
+    "accounts": "account_tab",
+    "vouchers": "account_voucher_tab",
+    "entries": "account_ledger_entry_tab"
+  },
+  "sourceTableProjections": {
+    "payment_transaction_tab": [
+      {
+        "transaction_number": "INV-S5-SYNTHETIC",
+        "transaction_type": 1,
+        "source_context_code": "step5-design-only",
+        "trade_number": "TRD-S5-SYNTHETIC",
+        "trade_revision_number": 1,
+        "amount": "1000.00",
+        "currency_code": "CNY",
+        "source_lines_json": {
+          "validationOnly": true,
+          "invoice_number": "INV-S5-SYNTHETIC"
+        },
+        "execution_basis_json": {
+          "validationOnly": true,
+          "noBankFact": true
+        },
+        "transaction_status": 2,
+        "request_number": "S5-SYNTHETIC-INV-S5-SYNTHETIC",
+        "request_hash": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+        "approval_snapshot_json": {
+          "validationOnly": true
+        },
+        "result_snapshot_json": {
+          "validationOnly": true
+        },
+        "lifecycle_events_json": [
+          {
+            "kind": "synthetic_internal_submission_only"
+          }
+        ],
+        "created_by": "SYNTHETIC-VALIDATION-ONLY"
+      }
+    ],
+    "payment_fund_flow_tab": [],
+    "payment_bank_account_tab": [],
+    "payment_fund_allocation_tab": [],
+    "payment_reconcile_difference_tab": [],
+    "account_tab": [],
+    "account_voucher_tab": [],
+    "account_ledger_entry_tab": []
+  },
+  "absentRowsReason": "未核实真实银行/分配/收款，不制造银行配置身份、实收、释放、付款、到账、费用或成功账务分录；真实验证的故障凭证全部回滚。",
+  "constraints": [
+    "no bank success or service-fee settlement fixtures without verified available funds",
+    "service fee settles once from verified D-funded available balance during first approved distribution",
+    "event11 requires real bank identity",
+    "event3 partial release requires bank availability evidence"
+  ]
+}

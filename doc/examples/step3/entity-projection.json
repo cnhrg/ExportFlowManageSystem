@@ -1,0 +1,67 @@
+{
+  "designOnly": true,
+  "source": "权威物流四表，不新增核心列",
+  "snapshot": {
+    "number": "SNP-S3-SYNTHETIC-APPROVED",
+    "reason": 2,
+    "tradeRevision": 4,
+    "goods": [
+      {
+        "sequence": 1,
+        "quantity": "100.000000",
+        "amount": "10000.00",
+        "currency": "CNY",
+        "unit": "PCS"
+      }
+    ]
+  },
+  "plan": {
+    "approvedSnapshotNumber": "SNP-S3-SYNTHETIC-APPROVED",
+    "tradeRevisionNumber": 4,
+    "carrierParticipantSequence": 1,
+    "originCode": "CN-SYNTHETIC-ORIGIN",
+    "destinationCode": "CN-SYNTHETIC-DESTINATION",
+    "plannedDepartureDate": "2026-11-01",
+    "plannedArrivalDate": "2026-11-03",
+    "allocations": [
+      {
+        "goodsItemSequence": 1,
+        "quantity": "40.000000",
+        "unitCode": "PCS",
+        "amount": "4000.00",
+        "currencyCode": "CNY"
+      }
+    ],
+    "legs": [
+      {
+        "sequence": 1,
+        "modeCode": 3,
+        "originCode": "CN-SYNTHETIC-ORIGIN",
+        "destinationCode": "CN-SYNTHETIC-DESTINATION",
+        "plannedDepartureAt": "2026-11-01T01:00:00.123Z",
+        "plannedArrivalAt": "2026-11-03T01:00:00.123Z"
+      }
+    ]
+  },
+  "receipt": {
+    "shipmentNumber": "SHP-S3-SYNTHETIC-001",
+    "status": "SHIPMENT_STATUS_PLANNED",
+    "planRevision": "1",
+    "etag": "\"s3-plan-1-accept-1\"",
+    "acceptanceId": "S3-SYNTHETIC-ACCEPTANCE"
+  },
+  "file": {
+    "logicalFileNumber": "FILE-S3-SYNTHETIC-001",
+    "revisionNumber": 1,
+    "sha256": "58502c66fd34f31116f302ac24505e47b00068059ae11169a82b6f1c44c516bd",
+    "documentTypeCode": 3
+  },
+  "fieldMapping": {
+    "shipment": "logistics_shipment_tab",
+    "allocations": "logistics_shipment_item_tab",
+    "legs": "logistics_transport_leg_tab",
+    "verifiedFacts": "logistics_event_tab",
+    "planRevision": "同库受理序号/不可变计划封套",
+    "pendingEvidence": "不可变中间件提交及独立审核决定"
+  }
+}

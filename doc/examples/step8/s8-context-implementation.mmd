@@ -1,0 +1,12 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 内部授权查询者
+    participant APP as 单体内部接口
+    participant DB as 同一MySQL主库
+    PAGE->>APP: GET具体资源，客户端5秒应用4秒
+    APP->>APP: 当前身份、受众及对象授权
+      APP->>DB: 读取批准修订和各域稳定type/id/revision/hash/source事件尾，不借用最新主档
+      APP->>DB: 按业务关系枚举全部对象ID集合及集合摘要；空集合与未接域unknown分别返回
+      APP->>DB: 列出证据缺口、未决执行、每个有效暂停原因及各目标执行门禁；返回上下文强标签
+    APP-->>PAGE: 200资源及强ETag，Cache-Control no-store
+    Note over APP,DB: 无业务写；未知原受理保留原键，不能推定未提交

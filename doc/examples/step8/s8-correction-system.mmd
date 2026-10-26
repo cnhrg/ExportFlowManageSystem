@@ -1,0 +1,20 @@
+sequenceDiagram
+    actor PERSON as 更正申请人
+    participant SYSTEM as 代理出口系统
+    PERSON->>SYSTEM: 申请更正原业务，列明全部影响范围
+    SYSTEM-->>PERSON: 显示当前资料版本、涉及事项、缺项和本方可办操作
+    PERSON->>SYSTEM: 核对本次内容并确认提交
+    SYSTEM-->>PERSON: 显示范围审批结果、原环节重审及后续业务的处理情况
+    actor REVIEWER as 独立更正审批人
+    REVIEWER->>SYSTEM: 独立查看本次依据、范围与当前事实
+    SYSTEM-->>REVIEWER: 显示原提交和仍未满足的条件
+    REVIEWER->>SYSTEM: 独立批准或退回申请，逐项写明理由
+    SYSTEM-->>REVIEWER: 显示范围审批结果、原环节重审及后续业务的处理情况
+    actor EDITOR as 原节点经办人
+    actor NODEREVIEWER as 原节点独立审核人
+    actor DOWNSTREAM as 下游业务域经办人
+    EDITOR->>SYSTEM: 按已批准范围在原节点建立新修订并重新送审
+    NODEREVIEWER->>SYSTEM: 独立审核确切新修订，原批准不沿用
+    SYSTEM-->>NODEREVIEWER: 新审查结果及仍待执行的传播范围
+    DOWNSTREAM->>SYSTEM: 确认本域旧批准失效及新依据重审结果
+    SYSTEM-->>DOWNSTREAM: 显示本业务的限制已落实或尚待补充；外部执行结果不明时仍不能继续

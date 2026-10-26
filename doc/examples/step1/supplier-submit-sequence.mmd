@@ -1,0 +1,43 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 供应商交易填报前端
+    participant APP as 单体应用的对外接入接口
+    participant DATABASE as 同一MySQL的预留与交易表
+    participant STORE as 私有文件及证据存储
+    Note over PAGE,APP: 无供应商签名设备；HTTPS保护传输，实名强认证与确认记录保全证据
+    PAGE->>APP: 申请本人交易号预留（参见预取号子图）
+    APP-->>PAGE: 201或200原预留及交易号
+    Note over PAGE,STORE: 共用上传子流程完成三单；事先沟通资料由供应商统一填写
+    PAGE->>APP: 展示确切资料/材料版本，用户明确确认并完成必要重新认证
+    APP-->>PAGE: 有限时效的确认凭据，绑定原键/正文/方法/路径，无客户端私钥
+    PAGE->>APP: 创建交易（原键、完整资料及X-Confirmation-Id；超时10秒）
+    APP->>APP: 重查实名会话/授权，核对确认凭据与原业务内容
+    APP->>STORE: 事务外保全受控认证及明确确认的证据；失败自动重试且不开始业务写入
+    APP->>DATABASE: BEGIN；先SELECT本人原预留 FOR UPDATE
+    APP->>DATABASE: SELECT原交易号 FOR UPDATE；查询原创建及提交事件
+    alt 原交易已存在
+      APP->>APP: 比对原主体及首次创建摘要，同文回放原受理元数据，异文409
+      APP->>DATABASE: COMMIT只读或ROLLBACK冲突
+    else 原交易不存在
+      APP->>DATABASE: 核验预留归属、当前授权门禁及有序文件资格
+      APP->>DATABASE: 再验本地门禁；消费本次确认，INSERT交易/参与方/创建及提交事件/操作证据引用
+      alt 任一校验或写入失败
+        APP->>DATABASE: ROLLBACK全部交易写入；无空壳；唯一冲突新事务先重查
+      else 写入成功
+        APP->>DATABASE: COMMIT；提交未知先查原键，不盲INSERT
+      end
+    end
+    opt 仅在已确定同文受理或新事务已提交
+      APP->>STORE: 先查询原事件绑定的既有平台回执
+      opt 尚无签名回执
+        APP->>APP: 仅对已确定受理的原结果生成平台受控签名回执
+        APP->>STORE: 条件保存原事件键回执；失败自行恢复
+      end
+      APP-->>PAGE: 回执已保存才201或重放200；未就绪503 RECEIPT_NOT_READY
+    end
+    Note over APP,PAGE: 异文/校验/写入失败返回对应问题；COMMIT未知查不到确定结果则503，不签成功回执
+    opt 响应丢失或超时
+      PAGE->>APP: 当前实名会话，原业务键原文及原确认查询/重试
+      APP->>DATABASE: BEGIN；先查询原受理事实，不新增交易
+      APP-->>PAGE: 恢复原结果；依赖或提交未知503，不误报失败已回滚
+    end

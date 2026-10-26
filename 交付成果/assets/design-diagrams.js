@@ -71,6 +71,7 @@
       parsed.querySelectorAll('.edgeLabel text,.edgeLabel tspan').forEach(element=>element.style.setProperty('fill','#385a7c','important'));
       svg=document.importNode(parsed.documentElement,true);svg.style.maxWidth='none';svg.setAttribute('role','img');svg.setAttribute('aria-label',title);
       fullSvg=new XMLSerializer().serializeToString(svg);canvas.replaceChildren(svg);fit();
+      if(options.initialScale!==undefined)resize(options.initialScale);
       if(options.focus){resize(.85);locate(options.focus);}
       host.querySelector('[data-diagram-action="svg"]').disabled=false;
       status.textContent=options.entities?'默认定位领域核心实体；选择“定位实体”阅读其他表，或点击“适配全图”查看完整关系。图内可横向及纵向滚动。':'全图用于看关系；点击“阅读比例”查看字段与连线，可横向及纵向滚动。';

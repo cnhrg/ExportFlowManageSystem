@@ -1,0 +1,11 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 出口报关代理经办人前端
+    participant APP as 单体应用两受众受限入口
+    participant DB as 同一MySQL业务及技术中间件
+    participant FILE as 私有S3与ClamAV文件工作流
+    participant CHANNEL as 正式监管渠道未接入
+    PAGE->>APP: GET批次customs-basis
+    APP->>DB: 当前对象授权；读原因2快照及同批冻结物流计划
+    APP->>DB: 读合同生效及正式电子委托引用，按快照解析角色1/2/3/6
+    APP-->>PAGE: 200准备依据及交易/批次标签；缺规则列missing_gate_codes，无写入

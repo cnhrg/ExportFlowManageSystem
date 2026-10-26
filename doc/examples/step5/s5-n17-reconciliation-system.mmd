@@ -1,0 +1,15 @@
+sequenceDiagram
+    actor OP as 出口代理资金差异处理人
+    participant SYS as 代理出口系统（单体）
+    actor REVIEWER as 出口代理资金独立复核人
+    OP->>SYS: 报告并查询具体资金/账务差异
+    SYS-->>OP: 返回银行与内部记录、影响范围和当前操作限制
+    OP->>SYS: 附实质处置与原始依据，不更改旧余额
+    REVIEWER->>SYS: 独立复核处置和新增补账/凭证
+    alt 两侧事实可勾稽且凭证平衡
+      SYS-->>REVIEWER: 关闭该差异并保存不可变结果
+    else 证据不足或金额不平
+      SYS-->>REVIEWER: 保持处理中；相关锁额/受限继续
+    end
+    OP->>SYS: 用原差异号读取处置和补正结果
+    SYS-->>OP: 显示原始记录、处理历史和当前限制，未完成的事项继续保留

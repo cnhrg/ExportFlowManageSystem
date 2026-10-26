@@ -1,0 +1,553 @@
+[
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/trades/TRD-S3-SYNTHETIC-001/shipments",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7030000-0000-4000-8000-000000000001",
+        "If-Match": "\"s3-trade-approved-4-accept-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "approvedSnapshotNumber": "SNP-S3-SYNTHETIC-APPROVED",
+        "tradeRevisionNumber": 4,
+        "carrierParticipantSequence": 1,
+        "originCode": "CN-SYNTHETIC-ORIGIN",
+        "destinationCode": "CN-SYNTHETIC-DESTINATION",
+        "plannedDepartureDate": "2026-11-01",
+        "plannedArrivalDate": "2026-11-03",
+        "allocations": [
+          {
+            "goodsItemSequence": 1,
+            "quantity": "40.000000",
+            "unitCode": "PCS",
+            "amount": "4000.00",
+            "currencyCode": "CNY"
+          }
+        ],
+        "legs": [
+          {
+            "sequence": 1,
+            "modeCode": 3,
+            "originCode": "CN-SYNTHETIC-ORIGIN",
+            "destinationCode": "CN-SYNTHETIC-DESTINATION",
+            "plannedDepartureAt": "2026-11-01T01:00:00.123Z",
+            "plannedArrivalAt": "2026-11-03T01:00:00.123Z"
+          }
+        ]
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/api/v1/shipments/SHP-S3-SYNTHETIC-001",
+        "ETag": "\"s3-plan-1-accept-1\""
+      },
+      "body": {
+        "shipmentNumber": "SHP-S3-SYNTHETIC-001",
+        "status": "SHIPMENT_STATUS_PLANNED",
+        "planRevision": "1",
+        "etag": "\"s3-plan-1-accept-1\"",
+        "acceptanceId": "S3-SYNTHETIC-CREATE-SHIPMENT"
+      }
+    },
+    "rpc": "CreateShipment",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateShipmentReqMsg",
+    "responseType": "CreateShipmentRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /api/v1/shipments/SHP-S3-SYNTHETIC-001\nETag: \"s3-plan-1-accept-1\"\n\n{\n  \"shipmentNumber\": \"SHP-S3-SYNTHETIC-001\",\n  \"status\": \"SHIPMENT_STATUS_PLANNED\",\n  \"planRevision\": \"1\",\n  \"etag\": \"\\\"s3-plan-1-accept-1\\\"\",\n  \"acceptanceId\": \"S3-SYNTHETIC-CREATE-SHIPMENT\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/trades/TRD-S3-SYNTHETIC-001/shipments\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7030000-0000-4000-8000-000000000001' \\\n  --header 'If-Match: \"s3-trade-approved-4-accept-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"approvedSnapshotNumber\":\"SNP-S3-SYNTHETIC-APPROVED\",\"tradeRevisionNumber\":4,\"carrierParticipantSequence\":1,\"originCode\":\"CN-SYNTHETIC-ORIGIN\",\"destinationCode\":\"CN-SYNTHETIC-DESTINATION\",\"plannedDepartureDate\":\"2026-11-01\",\"plannedArrivalDate\":\"2026-11-03\",\"allocations\":[{\"goodsItemSequence\":1,\"quantity\":\"40.000000\",\"unitCode\":\"PCS\",\"amount\":\"4000.00\",\"currencyCode\":\"CNY\"}],\"legs\":[{\"sequence\":1,\"modeCode\":3,\"originCode\":\"CN-SYNTHETIC-ORIGIN\",\"destinationCode\":\"CN-SYNTHETIC-DESTINATION\",\"plannedDepartureAt\":\"2026-11-01T01:00:00.123Z\",\"plannedArrivalAt\":\"2026-11-03T01:00:00.123Z\"}]}'"
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/shipments/SHP-S3-SYNTHETIC-001",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s3-plan-1-accept-1\""
+      },
+      "body": {
+        "shipmentNumber": "SHP-S3-SYNTHETIC-001",
+        "tradeNumber": "TRD-S3-SYNTHETIC-001",
+        "status": "SHIPMENT_STATUS_PLANNED",
+        "plan": {
+          "approvedSnapshotNumber": "SNP-S3-SYNTHETIC-APPROVED",
+          "tradeRevisionNumber": 4,
+          "carrierParticipantSequence": 1,
+          "originCode": "CN-SYNTHETIC-ORIGIN",
+          "destinationCode": "CN-SYNTHETIC-DESTINATION",
+          "plannedDepartureDate": "2026-11-01",
+          "plannedArrivalDate": "2026-11-03",
+          "allocations": [
+            {
+              "goodsItemSequence": 1,
+              "quantity": "40.000000",
+              "unitCode": "PCS",
+              "amount": "4000.00",
+              "currencyCode": "CNY"
+            }
+          ],
+          "legs": [
+            {
+              "sequence": 1,
+              "modeCode": 3,
+              "originCode": "CN-SYNTHETIC-ORIGIN",
+              "destinationCode": "CN-SYNTHETIC-DESTINATION",
+              "plannedDepartureAt": "2026-11-01T01:00:00.123Z",
+              "plannedArrivalAt": "2026-11-03T01:00:00.123Z"
+            }
+          ]
+        },
+        "planRevision": "1",
+        "etag": "\"s3-plan-1-accept-1\"",
+        "evidence": [
+          {
+            "submissionId": "SUB-S3-SYNTHETIC-001",
+            "shipmentNumber": "SHP-S3-SYNTHETIC-001",
+            "content": {
+              "kind": "EVIDENCE_KIND_READINESS",
+              "planRevision": "1",
+              "legSequence": 1,
+              "occurredAt": "2026-10-30T01:00:00.123Z",
+              "sourceReference": "SYNTHETIC-READINESS-001",
+              "files": [
+                {
+                  "logicalFileNumber": "FILE-S3-SYNTHETIC-001",
+                  "revisionNumber": 1,
+                  "sha256": "58502c66fd34f31116f302ac24505e47b00068059ae11169a82b6f1c44c516bd",
+                  "documentTypeCode": 3
+                }
+              ],
+              "statement": "原创合成备货声明，不证明已订舱、放行或签收"
+            },
+            "state": "pending_review"
+          }
+        ]
+      }
+    },
+    "rpc": "GetShipment",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetShipmentReqMsg",
+    "responseType": "GetShipmentRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s3-plan-1-accept-1\"\n\n{\n  \"shipmentNumber\": \"SHP-S3-SYNTHETIC-001\",\n  \"tradeNumber\": \"TRD-S3-SYNTHETIC-001\",\n  \"status\": \"SHIPMENT_STATUS_PLANNED\",\n  \"plan\": {\n    \"approvedSnapshotNumber\": \"SNP-S3-SYNTHETIC-APPROVED\",\n    \"tradeRevisionNumber\": 4,\n    \"carrierParticipantSequence\": 1,\n    \"originCode\": \"CN-SYNTHETIC-ORIGIN\",\n    \"destinationCode\": \"CN-SYNTHETIC-DESTINATION\",\n    \"plannedDepartureDate\": \"2026-11-01\",\n    \"plannedArrivalDate\": \"2026-11-03\",\n    \"allocations\": [\n      {\n        \"goodsItemSequence\": 1,\n        \"quantity\": \"40.000000\",\n        \"unitCode\": \"PCS\",\n        \"amount\": \"4000.00\",\n        \"currencyCode\": \"CNY\"\n      }\n    ],\n    \"legs\": [\n      {\n        \"sequence\": 1,\n        \"modeCode\": 3,\n        \"originCode\": \"CN-SYNTHETIC-ORIGIN\",\n        \"destinationCode\": \"CN-SYNTHETIC-DESTINATION\",\n        \"plannedDepartureAt\": \"2026-11-01T01:00:00.123Z\",\n        \"plannedArrivalAt\": \"2026-11-03T01:00:00.123Z\"\n      }\n    ]\n  },\n  \"planRevision\": \"1\",\n  \"etag\": \"\\\"s3-plan-1-accept-1\\\"\",\n  \"evidence\": [\n    {\n      \"submissionId\": \"SUB-S3-SYNTHETIC-001\",\n      \"shipmentNumber\": \"SHP-S3-SYNTHETIC-001\",\n      \"content\": {\n        \"kind\": \"EVIDENCE_KIND_READINESS\",\n        \"planRevision\": \"1\",\n        \"legSequence\": 1,\n        \"occurredAt\": \"2026-10-30T01:00:00.123Z\",\n        \"sourceReference\": \"SYNTHETIC-READINESS-001\",\n        \"files\": [\n          {\n            \"logicalFileNumber\": \"FILE-S3-SYNTHETIC-001\",\n            \"revisionNumber\": 1,\n            \"sha256\": \"58502c66fd34f31116f302ac24505e47b00068059ae11169a82b6f1c44c516bd\",\n            \"documentTypeCode\": 3\n          }\n        ],\n        \"statement\": \"原创合成备货声明，不证明已订舱、放行或签收\"\n      },\n      \"state\": \"pending_review\"\n    }\n  ]\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/shipments/SHP-S3-SYNTHETIC-001\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "PUT",
+      "path": "/api/v1/shipments/SHP-S3-SYNTHETIC-001/plan",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7030000-0000-4000-8000-000000000003",
+        "If-Match": "\"s3-plan-1-accept-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "approvedSnapshotNumber": "SNP-S3-SYNTHETIC-APPROVED",
+        "tradeRevisionNumber": 4,
+        "carrierParticipantSequence": 1,
+        "originCode": "CN-SYNTHETIC-ORIGIN",
+        "destinationCode": "CN-SYNTHETIC-DESTINATION",
+        "plannedDepartureDate": "2026-11-01",
+        "plannedArrivalDate": "2026-11-04",
+        "allocations": [
+          {
+            "goodsItemSequence": 1,
+            "quantity": "40.000000",
+            "unitCode": "PCS",
+            "amount": "4000.00",
+            "currencyCode": "CNY"
+          }
+        ],
+        "legs": [
+          {
+            "sequence": 1,
+            "modeCode": 3,
+            "originCode": "CN-SYNTHETIC-ORIGIN",
+            "destinationCode": "CN-SYNTHETIC-DESTINATION",
+            "plannedDepartureAt": "2026-11-01T01:00:00.123Z",
+            "plannedArrivalAt": "2026-11-03T01:00:00.123Z"
+          }
+        ]
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s3-plan-2-accept-2\""
+      },
+      "body": {
+        "shipmentNumber": "SHP-S3-SYNTHETIC-001",
+        "status": "SHIPMENT_STATUS_PLANNED",
+        "planRevision": "2",
+        "etag": "\"s3-plan-2-accept-2\"",
+        "acceptanceId": "S3-SYNTHETIC-PLAN-REPLACE"
+      }
+    },
+    "rpc": "ReplaceShipmentPlan",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "ReplaceShipmentPlanReqMsg",
+    "responseType": "ReplaceShipmentPlanRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s3-plan-2-accept-2\"\n\n{\n  \"shipmentNumber\": \"SHP-S3-SYNTHETIC-001\",\n  \"status\": \"SHIPMENT_STATUS_PLANNED\",\n  \"planRevision\": \"2\",\n  \"etag\": \"\\\"s3-plan-2-accept-2\\\"\",\n  \"acceptanceId\": \"S3-SYNTHETIC-PLAN-REPLACE\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request PUT \"${BASE_URL:?Set BASE_URL}/api/v1/shipments/SHP-S3-SYNTHETIC-001/plan\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7030000-0000-4000-8000-000000000003' \\\n  --header 'If-Match: \"s3-plan-1-accept-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"approvedSnapshotNumber\":\"SNP-S3-SYNTHETIC-APPROVED\",\"tradeRevisionNumber\":4,\"carrierParticipantSequence\":1,\"originCode\":\"CN-SYNTHETIC-ORIGIN\",\"destinationCode\":\"CN-SYNTHETIC-DESTINATION\",\"plannedDepartureDate\":\"2026-11-01\",\"plannedArrivalDate\":\"2026-11-04\",\"allocations\":[{\"goodsItemSequence\":1,\"quantity\":\"40.000000\",\"unitCode\":\"PCS\",\"amount\":\"4000.00\",\"currencyCode\":\"CNY\"}],\"legs\":[{\"sequence\":1,\"modeCode\":3,\"originCode\":\"CN-SYNTHETIC-ORIGIN\",\"destinationCode\":\"CN-SYNTHETIC-DESTINATION\",\"plannedDepartureAt\":\"2026-11-01T01:00:00.123Z\",\"plannedArrivalAt\":\"2026-11-03T01:00:00.123Z\"}]}'"
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/shipments/SHP-S3-SYNTHETIC-001/evidence-submissions",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7030000-0000-4000-8000-000000000004",
+        "If-Match": "\"s3-plan-1-accept-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "kind": "EVIDENCE_KIND_READINESS",
+        "planRevision": "1",
+        "legSequence": 1,
+        "occurredAt": "2026-10-30T01:00:00.123Z",
+        "sourceReference": "SYNTHETIC-READINESS-001",
+        "files": [
+          {
+            "logicalFileNumber": "FILE-S3-SYNTHETIC-001",
+            "revisionNumber": 1,
+            "sha256": "58502c66fd34f31116f302ac24505e47b00068059ae11169a82b6f1c44c516bd",
+            "documentTypeCode": 3
+          }
+        ],
+        "statement": "原创合成备货声明，不证明已订舱、放行或签收"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/api/v1/shipments/SHP-S3-SYNTHETIC-001/evidence-submissions/SUB-S3-SYNTHETIC-001"
+      },
+      "body": {
+        "submissionId": "SUB-S3-SYNTHETIC-001",
+        "shipmentNumber": "SHP-S3-SYNTHETIC-001",
+        "content": {
+          "kind": "EVIDENCE_KIND_READINESS",
+          "planRevision": "1",
+          "legSequence": 1,
+          "occurredAt": "2026-10-30T01:00:00.123Z",
+          "sourceReference": "SYNTHETIC-READINESS-001",
+          "files": [
+            {
+              "logicalFileNumber": "FILE-S3-SYNTHETIC-001",
+              "revisionNumber": 1,
+              "sha256": "58502c66fd34f31116f302ac24505e47b00068059ae11169a82b6f1c44c516bd",
+              "documentTypeCode": 3
+            }
+          ],
+          "statement": "原创合成备货声明，不证明已订舱、放行或签收"
+        },
+        "state": "pending_review"
+      }
+    },
+    "rpc": "CreateShipmentEvidence",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateShipmentEvidenceReqMsg",
+    "responseType": "CreateShipmentEvidenceRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /api/v1/shipments/SHP-S3-SYNTHETIC-001/evidence-submissions/SUB-S3-SYNTHETIC-001\n\n{\n  \"submissionId\": \"SUB-S3-SYNTHETIC-001\",\n  \"shipmentNumber\": \"SHP-S3-SYNTHETIC-001\",\n  \"content\": {\n    \"kind\": \"EVIDENCE_KIND_READINESS\",\n    \"planRevision\": \"1\",\n    \"legSequence\": 1,\n    \"occurredAt\": \"2026-10-30T01:00:00.123Z\",\n    \"sourceReference\": \"SYNTHETIC-READINESS-001\",\n    \"files\": [\n      {\n        \"logicalFileNumber\": \"FILE-S3-SYNTHETIC-001\",\n        \"revisionNumber\": 1,\n        \"sha256\": \"58502c66fd34f31116f302ac24505e47b00068059ae11169a82b6f1c44c516bd\",\n        \"documentTypeCode\": 3\n      }\n    ],\n    \"statement\": \"原创合成备货声明，不证明已订舱、放行或签收\"\n  },\n  \"state\": \"pending_review\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/shipments/SHP-S3-SYNTHETIC-001/evidence-submissions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7030000-0000-4000-8000-000000000004' \\\n  --header 'If-Match: \"s3-plan-1-accept-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"kind\":\"EVIDENCE_KIND_READINESS\",\"planRevision\":\"1\",\"legSequence\":1,\"occurredAt\":\"2026-10-30T01:00:00.123Z\",\"sourceReference\":\"SYNTHETIC-READINESS-001\",\"files\":[{\"logicalFileNumber\":\"FILE-S3-SYNTHETIC-001\",\"revisionNumber\":1,\"sha256\":\"58502c66fd34f31116f302ac24505e47b00068059ae11169a82b6f1c44c516bd\",\"documentTypeCode\":3}],\"statement\":\"原创合成备货声明，不证明已订舱、放行或签收\"}'"
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/shipments/SHP-S3-SYNTHETIC-001/evidence-submissions/SUB-S3-SYNTHETIC-001",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "submissionId": "SUB-S3-SYNTHETIC-001",
+        "shipmentNumber": "SHP-S3-SYNTHETIC-001",
+        "content": {
+          "kind": "EVIDENCE_KIND_READINESS",
+          "planRevision": "1",
+          "legSequence": 1,
+          "occurredAt": "2026-10-30T01:00:00.123Z",
+          "sourceReference": "SYNTHETIC-READINESS-001",
+          "files": [
+            {
+              "logicalFileNumber": "FILE-S3-SYNTHETIC-001",
+              "revisionNumber": 1,
+              "sha256": "58502c66fd34f31116f302ac24505e47b00068059ae11169a82b6f1c44c516bd",
+              "documentTypeCode": 3
+            }
+          ],
+          "statement": "原创合成备货声明，不证明已订舱、放行或签收"
+        },
+        "state": "rejected",
+        "reviewResult": {
+          "outcome": "DECISION_OUTCOME_RETURN",
+          "reason": "合成材料无有效商业证明，补齐本批三单后另建提交并关联旧提交",
+          "reviewedAt": "2026-10-30T02:00:00.123Z",
+          "reviewerReference": "SYNTHETIC-INDEPENDENT-REVIEWER",
+          "verificationEvidence": []
+        }
+      }
+    },
+    "rpc": "GetShipmentEvidence",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetShipmentEvidenceReqMsg",
+    "responseType": "GetShipmentEvidenceRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\n\n{\n  \"submissionId\": \"SUB-S3-SYNTHETIC-001\",\n  \"shipmentNumber\": \"SHP-S3-SYNTHETIC-001\",\n  \"content\": {\n    \"kind\": \"EVIDENCE_KIND_READINESS\",\n    \"planRevision\": \"1\",\n    \"legSequence\": 1,\n    \"occurredAt\": \"2026-10-30T01:00:00.123Z\",\n    \"sourceReference\": \"SYNTHETIC-READINESS-001\",\n    \"files\": [\n      {\n        \"logicalFileNumber\": \"FILE-S3-SYNTHETIC-001\",\n        \"revisionNumber\": 1,\n        \"sha256\": \"58502c66fd34f31116f302ac24505e47b00068059ae11169a82b6f1c44c516bd\",\n        \"documentTypeCode\": 3\n      }\n    ],\n    \"statement\": \"原创合成备货声明，不证明已订舱、放行或签收\"\n  },\n  \"state\": \"rejected\",\n  \"reviewResult\": {\n    \"outcome\": \"DECISION_OUTCOME_RETURN\",\n    \"reason\": \"合成材料无有效商业证明，补齐本批三单后另建提交并关联旧提交\",\n    \"reviewedAt\": \"2026-10-30T02:00:00.123Z\",\n    \"reviewerReference\": \"SYNTHETIC-INDEPENDENT-REVIEWER\",\n    \"verificationEvidence\": []\n  }\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/shipments/SHP-S3-SYNTHETIC-001/evidence-submissions/SUB-S3-SYNTHETIC-001\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/internal/v1/shipments/SHP-S3-SYNTHETIC-001/review-context",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "shipment": {
+          "shipmentNumber": "SHP-S3-SYNTHETIC-001",
+          "tradeNumber": "TRD-S3-SYNTHETIC-001",
+          "status": "SHIPMENT_STATUS_PLANNED",
+          "plan": {
+            "approvedSnapshotNumber": "SNP-S3-SYNTHETIC-APPROVED",
+            "tradeRevisionNumber": 4,
+            "carrierParticipantSequence": 1,
+            "originCode": "CN-SYNTHETIC-ORIGIN",
+            "destinationCode": "CN-SYNTHETIC-DESTINATION",
+            "plannedDepartureDate": "2026-11-01",
+            "plannedArrivalDate": "2026-11-03",
+            "allocations": [
+              {
+                "goodsItemSequence": 1,
+                "quantity": "40.000000",
+                "unitCode": "PCS",
+                "amount": "4000.00",
+                "currencyCode": "CNY"
+              }
+            ],
+            "legs": [
+              {
+                "sequence": 1,
+                "modeCode": 3,
+                "originCode": "CN-SYNTHETIC-ORIGIN",
+                "destinationCode": "CN-SYNTHETIC-DESTINATION",
+                "plannedDepartureAt": "2026-11-01T01:00:00.123Z",
+                "plannedArrivalAt": "2026-11-03T01:00:00.123Z"
+              }
+            ]
+          },
+          "planRevision": "1",
+          "etag": "\"s3-plan-1-accept-1\"",
+          "evidence": [
+            {
+              "submissionId": "SUB-S3-SYNTHETIC-001",
+              "shipmentNumber": "SHP-S3-SYNTHETIC-001",
+              "content": {
+                "kind": "EVIDENCE_KIND_READINESS",
+                "planRevision": "1",
+                "legSequence": 1,
+                "occurredAt": "2026-10-30T01:00:00.123Z",
+                "sourceReference": "SYNTHETIC-READINESS-001",
+                "files": [
+                  {
+                    "logicalFileNumber": "FILE-S3-SYNTHETIC-001",
+                    "revisionNumber": 1,
+                    "sha256": "58502c66fd34f31116f302ac24505e47b00068059ae11169a82b6f1c44c516bd",
+                    "documentTypeCode": 3
+                  }
+                ],
+                "statement": "原创合成备货声明，不证明已订舱、放行或签收"
+              },
+              "state": "pending_review"
+            }
+          ]
+        },
+        "missingGateCodes": [
+          "LOGISTICS_GATE_MISSING",
+          "CLEARANCE_REQUIRED"
+        ],
+        "openExceptionIds": []
+      }
+    },
+    "rpc": "GetShipmentReviewContext",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetShipmentReviewContextReqMsg",
+    "responseType": "GetShipmentReviewContextRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\n\n{\n  \"shipment\": {\n    \"shipmentNumber\": \"SHP-S3-SYNTHETIC-001\",\n    \"tradeNumber\": \"TRD-S3-SYNTHETIC-001\",\n    \"status\": \"SHIPMENT_STATUS_PLANNED\",\n    \"plan\": {\n      \"approvedSnapshotNumber\": \"SNP-S3-SYNTHETIC-APPROVED\",\n      \"tradeRevisionNumber\": 4,\n      \"carrierParticipantSequence\": 1,\n      \"originCode\": \"CN-SYNTHETIC-ORIGIN\",\n      \"destinationCode\": \"CN-SYNTHETIC-DESTINATION\",\n      \"plannedDepartureDate\": \"2026-11-01\",\n      \"plannedArrivalDate\": \"2026-11-03\",\n      \"allocations\": [\n        {\n          \"goodsItemSequence\": 1,\n          \"quantity\": \"40.000000\",\n          \"unitCode\": \"PCS\",\n          \"amount\": \"4000.00\",\n          \"currencyCode\": \"CNY\"\n        }\n      ],\n      \"legs\": [\n        {\n          \"sequence\": 1,\n          \"modeCode\": 3,\n          \"originCode\": \"CN-SYNTHETIC-ORIGIN\",\n          \"destinationCode\": \"CN-SYNTHETIC-DESTINATION\",\n          \"plannedDepartureAt\": \"2026-11-01T01:00:00.123Z\",\n          \"plannedArrivalAt\": \"2026-11-03T01:00:00.123Z\"\n        }\n      ]\n    },\n    \"planRevision\": \"1\",\n    \"etag\": \"\\\"s3-plan-1-accept-1\\\"\",\n    \"evidence\": [\n      {\n        \"submissionId\": \"SUB-S3-SYNTHETIC-001\",\n        \"shipmentNumber\": \"SHP-S3-SYNTHETIC-001\",\n        \"content\": {\n          \"kind\": \"EVIDENCE_KIND_READINESS\",\n          \"planRevision\": \"1\",\n          \"legSequence\": 1,\n          \"occurredAt\": \"2026-10-30T01:00:00.123Z\",\n          \"sourceReference\": \"SYNTHETIC-READINESS-001\",\n          \"files\": [\n            {\n              \"logicalFileNumber\": \"FILE-S3-SYNTHETIC-001\",\n              \"revisionNumber\": 1,\n              \"sha256\": \"58502c66fd34f31116f302ac24505e47b00068059ae11169a82b6f1c44c516bd\",\n              \"documentTypeCode\": 3\n            }\n          ],\n          \"statement\": \"原创合成备货声明，不证明已订舱、放行或签收\"\n        },\n        \"state\": \"pending_review\"\n      }\n    ]\n  },\n  \"missingGateCodes\": [\n    \"LOGISTICS_GATE_MISSING\",\n    \"CLEARANCE_REQUIRED\"\n  ],\n  \"openExceptionIds\": []\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/internal/v1/shipments/SHP-S3-SYNTHETIC-001/review-context\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/shipments/SHP-S3-SYNTHETIC-001/evidence-decisions",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7030000-0000-4000-8000-000000000007",
+        "If-Match": "\"s3-plan-1-accept-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "submissionId": "SUB-S3-SYNTHETIC-001",
+        "outcome": "DECISION_OUTCOME_RETURN",
+        "reason": "合成例无有效业务证明，退回补正，不推进物流状态",
+        "verificationEvidence": []
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/internal/v1/shipments/SHP-S3-SYNTHETIC-001/evidence-decisions/S3-SYNTHETIC-EVIDENCE-REVIEW",
+        "ETag": "\"s3-plan-1-accept-3\""
+      },
+      "body": {
+        "shipmentNumber": "SHP-S3-SYNTHETIC-001",
+        "status": "SHIPMENT_STATUS_PLANNED",
+        "planRevision": "1",
+        "etag": "\"s3-plan-1-accept-3\"",
+        "acceptanceId": "S3-SYNTHETIC-EVIDENCE-REVIEW"
+      }
+    },
+    "rpc": "CreateShipmentEvidenceDecision",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateShipmentEvidenceDecisionReqMsg",
+    "responseType": "CreateShipmentEvidenceDecisionRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /internal/v1/shipments/SHP-S3-SYNTHETIC-001/evidence-decisions/S3-SYNTHETIC-EVIDENCE-REVIEW\nETag: \"s3-plan-1-accept-3\"\n\n{\n  \"shipmentNumber\": \"SHP-S3-SYNTHETIC-001\",\n  \"status\": \"SHIPMENT_STATUS_PLANNED\",\n  \"planRevision\": \"1\",\n  \"etag\": \"\\\"s3-plan-1-accept-3\\\"\",\n  \"acceptanceId\": \"S3-SYNTHETIC-EVIDENCE-REVIEW\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/shipments/SHP-S3-SYNTHETIC-001/evidence-decisions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7030000-0000-4000-8000-000000000007' \\\n  --header 'If-Match: \"s3-plan-1-accept-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"submissionId\":\"SUB-S3-SYNTHETIC-001\",\"outcome\":\"DECISION_OUTCOME_RETURN\",\"reason\":\"合成例无有效业务证明，退回补正，不推进物流状态\",\"verificationEvidence\":[]}'"
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/shipments/SHP-S3-SYNTHETIC-001/exception-dispositions",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7030000-0000-4000-8000-000000000008",
+        "If-Match": "\"s3-plan-1-accept-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "exceptionEventNumber": "S3-SYNTHETIC-EXCEPTION",
+        "reason": "结构设计例，真实处置须核实外部证据",
+        "evidence": [
+          {
+            "logicalFileNumber": "FILE-S3-SYNTHETIC-001",
+            "revisionNumber": 1,
+            "sha256": "58502c66fd34f31116f302ac24505e47b00068059ae11169a82b6f1c44c516bd",
+            "documentTypeCode": 3
+          }
+        ],
+        "finalFailure": false
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/internal/v1/shipments/SHP-S3-SYNTHETIC-001/exception-dispositions/S3-SYNTHETIC-EXCEPTION-RESOLVE",
+        "ETag": "\"s3-plan-1-accept-1\""
+      },
+      "body": {
+        "shipmentNumber": "SHP-S3-SYNTHETIC-001",
+        "status": "SHIPMENT_STATUS_BOOKED",
+        "planRevision": "1",
+        "etag": "\"s3-plan-1-accept-1\"",
+        "acceptanceId": "S3-SYNTHETIC-EXCEPTION-RESOLVE"
+      }
+    },
+    "rpc": "CreateShipmentExceptionDisposition",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateShipmentExceptionDispositionReqMsg",
+    "responseType": "CreateShipmentExceptionDispositionRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /internal/v1/shipments/SHP-S3-SYNTHETIC-001/exception-dispositions/S3-SYNTHETIC-EXCEPTION-RESOLVE\nETag: \"s3-plan-1-accept-1\"\n\n{\n  \"shipmentNumber\": \"SHP-S3-SYNTHETIC-001\",\n  \"status\": \"SHIPMENT_STATUS_BOOKED\",\n  \"planRevision\": \"1\",\n  \"etag\": \"\\\"s3-plan-1-accept-1\\\"\",\n  \"acceptanceId\": \"S3-SYNTHETIC-EXCEPTION-RESOLVE\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/shipments/SHP-S3-SYNTHETIC-001/exception-dispositions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7030000-0000-4000-8000-000000000008' \\\n  --header 'If-Match: \"s3-plan-1-accept-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"exceptionEventNumber\":\"S3-SYNTHETIC-EXCEPTION\",\"reason\":\"结构设计例，真实处置须核实外部证据\",\"evidence\":[{\"logicalFileNumber\":\"FILE-S3-SYNTHETIC-001\",\"revisionNumber\":1,\"sha256\":\"58502c66fd34f31116f302ac24505e47b00068059ae11169a82b6f1c44c516bd\",\"documentTypeCode\":3}],\"finalFailure\":false}'"
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/shipments/SHP-S3-SYNTHETIC-001/cancellation-decisions",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7030000-0000-4000-8000-000000000009",
+        "If-Match": "\"s3-plan-1-accept-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "reason": "仅设计：未执行计划的授权取消",
+        "evidence": [
+          {
+            "logicalFileNumber": "FILE-S3-SYNTHETIC-001",
+            "revisionNumber": 1,
+            "sha256": "58502c66fd34f31116f302ac24505e47b00068059ae11169a82b6f1c44c516bd",
+            "documentTypeCode": 3
+          }
+        ]
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/internal/v1/shipments/SHP-S3-SYNTHETIC-001/cancellation-decisions/S3-SYNTHETIC-SHIPMENT-CANCEL",
+        "ETag": "\"s3-plan-1-accept-1\""
+      },
+      "body": {
+        "shipmentNumber": "SHP-S3-SYNTHETIC-001",
+        "status": "SHIPMENT_STATUS_CANCELLED",
+        "planRevision": "1",
+        "etag": "\"s3-plan-1-accept-1\"",
+        "acceptanceId": "S3-SYNTHETIC-SHIPMENT-CANCEL"
+      }
+    },
+    "rpc": "CreateShipmentCancellation",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateShipmentCancellationReqMsg",
+    "responseType": "CreateShipmentCancellationRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /internal/v1/shipments/SHP-S3-SYNTHETIC-001/cancellation-decisions/S3-SYNTHETIC-SHIPMENT-CANCEL\nETag: \"s3-plan-1-accept-1\"\n\n{\n  \"shipmentNumber\": \"SHP-S3-SYNTHETIC-001\",\n  \"status\": \"SHIPMENT_STATUS_CANCELLED\",\n  \"planRevision\": \"1\",\n  \"etag\": \"\\\"s3-plan-1-accept-1\\\"\",\n  \"acceptanceId\": \"S3-SYNTHETIC-SHIPMENT-CANCEL\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/shipments/SHP-S3-SYNTHETIC-001/cancellation-decisions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7030000-0000-4000-8000-000000000009' \\\n  --header 'If-Match: \"s3-plan-1-accept-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"reason\":\"仅设计：未执行计划的授权取消\",\"evidence\":[{\"logicalFileNumber\":\"FILE-S3-SYNTHETIC-001\",\"revisionNumber\":1,\"sha256\":\"58502c66fd34f31116f302ac24505e47b00068059ae11169a82b6f1c44c516bd\",\"documentTypeCode\":3}]}'"
+  }
+]

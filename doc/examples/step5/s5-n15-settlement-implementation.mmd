@@ -1,0 +1,29 @@
+sequenceDiagram
+    autonumber
+    actor PAGE as 出口代理资金经办人
+    actor ACTOR1 as 出口代理资金独立审批人
+    actor ACTOR2 as 中国供应商经办人
+    participant APP as 单体资金应用
+    participant DB as MySQL资金及账务
+    participant STORE as 私有S3确切版本
+    participant SCAN as ClamAV
+    participant BANK as 银行事实边界（未接入）
+    PAGE->>APP: GET当前资源/强ETag，再确认具体正文及原幂等键
+    APP->>STORE: 事务外核对适用合同/正式报关/放行/授权费用固定证据版本
+    APP->>DB: BEGIN READ COMMITTED先查settlement/decision原键
+    APP->>DB: 锁trade根/批准版/结算单；排序锁分配与account
+    APP->>DB: FOR UPDATE当前读已付、锁额、有效分配、未决差异及结算净额
+    alt 出口前预付款
+    APP->>APP: 核对要求1到6及11到14、同一F委任、真实D实收/可用
+    else 出口后付款
+    APP->>APP: 核对要求1/3/5到14、A最终稿确认、B收正式申报件及真实放行
+    end
+    APP->>APP: 单列授权第三方扣款与银行费用；服务费不列作A应付扣项，禁止垫资授信
+    alt 缺项或审批人与制单人相同
+    APP->>DB: ROLLBACK；返回422门禁；不生成锁额/银行事件/分录
+    else 独立复核满足
+    APP->>DB: 首次获批分账按trade键从D可用余额结算300并追加event12
+    APP->>DB: 冻结A合同应付/分账来源/决策；服务费结算与凭证原子COMMIT
+    end
+    APP-->>PAGE: GET原settlement返回缺项或批准版，修正另建关联版本
+    Note over APP,DB: RC先查重入/根锁后当前读；资金与账务本地原子；外部I/O事务外

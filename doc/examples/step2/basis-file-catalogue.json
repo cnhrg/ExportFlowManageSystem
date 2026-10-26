@@ -1,0 +1,20 @@
+[
+  {
+    "purpose": "MATERIAL_PURPOSE_CUSTOMS_QUALIFICATION",
+    "logicalFileNumber": "FILE-S2-QUALIFICATION",
+    "revisionNumber": 1,
+    "sha256": "ac8d5734d4089657c9de6f987ea5b31f1fecc9dd14cabc1d1199007af6ef7952",
+    "referenceEligible": true,
+    "documentTypeCode": 8,
+    "designOnly": true
+  },
+  {
+    "purpose": "MATERIAL_PURPOSE_CUSTOMS_QUOTATION",
+    "logicalFileNumber": "FILE-S2-QUOTATION",
+    "revisionNumber": 1,
+    "sha256": "b1d57f7dd3fc422bafb55e3bdd4866422fb424c27bec307962cd902ab0e661d4",
+    "referenceEligible": true,
+    "documentTypeCode": 9,
+    "designOnly": true
+  }
+]

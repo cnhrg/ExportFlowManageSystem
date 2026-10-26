@@ -43,7 +43,8 @@
         for(const attr of [...element.attributes])if(/^on/i.test(attr.name)||/^(href|xlink:href)$/i.test(attr.name))element.removeAttribute(attr.name);
       }
       const safe=document.importNode(parsed.documentElement,true);
-      preview.replaceChildren(safe);fit();
+      preview.replaceChildren(safe);
+      if(current.kind==='entity')fit();else setScale(.7);
       const normalize=s=>s.replace(/<br\s*\/?>|\s/g,'');
       if(current.kind!=='entity'){
         const missing=currentNodes().flatMap(n=>EXPORT_NODE_VALIDATION_RULES.forNode(n)).filter(r=>!normalize(source).includes(normalize(r.name)));
@@ -51,10 +52,14 @@
         if(/N\d{2}-R\d{2}/.test(source))error('当前为本机保存的旧版详细图；点击“恢复默认”可预览简洁新版，保存后才替换旧记录。');
         else if(/participant \w+ as [ABEF] 系统自动|participant OPS as 运营|participant (?:A|B|E|F)(?:_H)? as/.test(source))error('当前为本机保存的旧版角色图；点击“恢复默认”可载入统一业务主体及人工审核员的新图，保存后才替换原记录。');
       }
-      if(((current.kind==='sequence'&&current.id==='5')||(current.kind==='entity'&&current.id==='funds'))&&(/36个月|原路退款/.test(source)||!/双边/.test(source)))error('当前为本机保存的旧版资金图；V1现为B收益真实银行双边划转、未匹配受限挂账，不含退款。点击“恢复默认”预览，保存后替换本机旧记录。');
+      if(((current.kind==='sequence'&&current.id==='5')||(current.kind==='entity'&&current.id==='funds'))&&(/36个月|原路退款|B收益真实银行双边划转|收益账户/.test(source)))error('当前为本机保存的旧版资金图；请恢复默认，改用D在首次获批分账时从可用余额一次性结算服务费的规则后再保存。');
       if(((current.kind==='sequence'&&current.id==='5')||(current.kind==='entity'&&current.id==='funds'))&&(/结汇/.test(source)||!/贸易核验入账/.test(source)))error('当前为本机保存的旧版资金图；余额释放已改为“贸易核验入账”，由收款银行核验并确认实际入账及可用状态，CIPS仅为支付清算链路。点击“恢复默认”预览，显式保存后替换，不自动覆盖原记录。');
-      if(current.kind==='sequence'&&current.id==='1'&&!/佣金.*计费基数|计费基数.*佣金/.test(source))error('当前图未包含步骤1佣金计费规则归档；点击“恢复默认”预览新版，显式保存后才替换本机旧记录。');
-      if(((current.kind==='sequence'&&current.id==='5')||(current.kind==='entity'&&current.id==='funds'))&&(!/CNH不可用余额/.test(source)||!/国内人民币可用余额/.test(source)||!/B收益账户/.test(source)||!/结款A前/.test(source)))error('当前图未包含CNH不可用、国内人民币可用、结款A前扣佣并入B收益账户的新版规则；点击“恢复默认”预览新版，显式保存后才替换本机旧记录。');
+      if(current.kind==='sequence'&&current.id==='1'&&!/服务费.*300元|300元.*服务费/.test(source))error('当前图未包含每笔300元代理服务费约定；点击“恢复默认”预览新版，显式保存后才替换本机旧记录。');
+      if(current.kind==='sequence'&&current.id==='1'&&/participant (?:TEAM|REVIEWER)|人工最终审批|审批未通过不生成交易单/.test(source))error('当前为本机保存的旧步骤一流程；新流程仅供应商、付款方首次提交及各自修改，供应商首次提交即创建交易。点击“恢复默认”预览，显式保存后才替换旧记录。');
+      if(current.kind==='sequence'&&current.id==='1'&&/本方非对称签名|每次写入均验签|身份签名及原键/.test(source))error('当前保存图仍强制供应商私钥；新版已改无设备实名确认与证据，合同由第三方实名电子签。恢复默认预览，显式保存才替换。');
+      if(current.kind==='sequence'&&current.id==='2'&&!/第三方实名电子签平台/.test(source))error('当前保存图是旧步骤二；新版包含签约依据独立批准、第三方实名电子签/核实归档/生效、改版和正式委托。恢复默认预览，显式保存才替换。');
+      if(((current.kind==='sequence'&&current.id==='5')||(current.kind==='entity'&&current.id==='funds'))&&(!/CNH不可用余额/.test(source)||!/国内人民币可用余额/.test(source)||!/服务费/.test(source)||!/D承担/.test(source)||!/分账/.test(source)||!/可用余额/.test(source)||!/不减少A合同应付/.test(source)))error('当前图未包含D在首次获批分账时从可用余额结算服务费且不减少A合同应付的规则；点击“恢复默认”预览，显式保存后才替换本机旧记录。');
+      if(((current.kind==='sequence'&&current.id==='5')||(current.kind==='entity'&&current.id==='funds'))&&(/0\.03%|万分之三|D承担两项费用|receipt_fee\s*(?:=|:|×)/.test(source)))error('当前图仍包含已取消的按本金比例收费规则；请恢复默认预览固定300元服务费方案，显式保存后替换旧记录。');
       $('sequence-rendered-nodes').textContent='包含节点：'+currentNodes().map(n=>n.id).join(' / ');
       status(dirty?'预览已更新，修改尚未保存。':'当前预览已载入。');
       return true;
@@ -89,7 +94,7 @@
     const group=kind==='entity'?E.get(id):P.groups.find(g=>g.id===id);
     $('diagram-select').value=kind+':'+id;
     $('sequence-dialog-title').textContent=(kind==='entity'?group.name+' · 实体流转图':'流程'+id+' · '+group.name+' · 时序图');
-    $('sequence-scope').textContent=kind==='entity'?group.entity+'。展示实体状态、业务主体交接、统一人工审核员审批、条件分支与异常回路；非实时业务状态。':group.source+'；'+({all:'完整分支',pre:'出口前预付款分支',post:'出口后付款分支'}[mode])+'。ABEF统一为业务主体，系统与运营工作台合一；人工审核员作为独立角色。蓝：系统处理（建设需求）；橙：人工经办／审核；绿：记录交接。完整规则见节点详情。';
+    $('sequence-scope').textContent=kind==='entity'?group.entity+'。展示实体状态、业务主体交接及适用审批、条件分支与异常回路；非实时业务状态。':id==='1'?'步骤一仅供应商、付款方各首次提交一份，并允许修改本方原资料；无运营建单、邀请或人工终审。逐用例详细中间件时序及HTTP/Protocol Buffers映射见系统用例页。':group.source+'；'+({all:'完整分支',pre:'出口前预付款分支',post:'出口后付款分支'}[mode])+'。ABEF统一为业务主体，系统与运营工作台合一；人工审核员作为独立角色。蓝：系统处理（建设需求）；橙：人工经办／审核；绿：记录交接。完整规则见节点详情。';
     error('');editor.value=loadSaved();$('sequence-save').disabled=storageBlocked;
     $('sequence-node-links').replaceChildren(...currentNodes().map(n=>{
       const button=document.createElement('button');button.type='button';button.textContent=n.id+' '+n.title;
@@ -170,14 +175,15 @@
   $('sequence-toggle-editor').onclick=()=>{
     const collapsed=dialog.classList.toggle('sequence-code-hidden');
     $('sequence-toggle-editor').textContent=collapsed?'编辑源码':'收起源码';
-    $('sequence-toggle-editor').setAttribute('aria-expanded',String(!collapsed));fit();
+    $('sequence-toggle-editor').setAttribute('aria-expanded',String(!collapsed));
+    if(current.kind==='entity')fit();
   };
   dialog.addEventListener('cancel',event=>{event.preventDefault();close();});
   window.addEventListener('beforeunload',event=>{if(dialog.open&&dirty){event.preventDefault();event.returnValue='';}});
   window.addEventListener('storage',event=>{
     if(dialog.open&&(event.key===key()||event.key===null)&&event.newValue!==baseline)error('另一页面更改了本机记录。当前源码仍保留；请下载后重新打开，避免覆盖。');
   });
-  window.addEventListener('resize',()=>{if(dialog.open)fit();});
+  window.addEventListener('resize',()=>{if(dialog.open&&current.kind==='entity')fit();});
   for(const group of P.groups)$('diagram-select').add(new Option('流程'+group.id+' · '+group.name,'sequence:'+group.id));
   for(const flow of E.flows)$('diagram-select').add(new Option(flow.name+' · 实体流转图','entity:'+flow.id));
   $('diagram-select').onchange=()=>{

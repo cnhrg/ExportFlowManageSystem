@@ -1,0 +1,132 @@
+{
+  "tradeNumber": "TRD-S1-DEMO-001",
+  "content": {
+    "supplier": {
+      "legalName": "示例供应商",
+      "countryCode": "CN",
+      "registeredAddress": "合成注册地址，非真实地点",
+      "contactName": "合成联系人",
+      "contactPhone": "DEMO-NOT-A-PHONE",
+      "contactEmail": "demo@example.invalid",
+      "identityProtectedReference": "DEMO-IDENTITY-SUPPLIER"
+    },
+    "consignee": {
+      "party": {
+        "legalName": "Example Consignee",
+        "countryCode": "SG",
+        "registeredAddress": "合成注册地址，非真实地点",
+        "contactName": "合成联系人",
+        "contactPhone": "DEMO-NOT-A-PHONE",
+        "contactEmail": "demo@example.invalid",
+        "identityProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+      },
+      "deliveryAddress": "Synthetic delivery location",
+      "deliveryArrangements": "供应商修改后的合成送货安排"
+    },
+    "salesContractNumber": "SC-DEMO-001",
+    "invoiceNumber": "CI-DEMO-001",
+    "packingListNumber": "PL-DEMO-001",
+    "goods": [
+      {
+        "itemSequenceNumber": 1,
+        "productName": "展示用金属支架",
+        "specification": "DEMO-M1",
+        "quantity": "100",
+        "unitCode": "PCS",
+        "unitPrice": {
+          "amount": "125.00",
+          "currencyCode": "CNY"
+        },
+        "total": {
+          "amount": "12500.00",
+          "currencyCode": "CNY"
+        },
+        "originCountryCode": "CN"
+      }
+    ],
+    "packing": [
+      {
+        "goodsItemSequenceNumber": 1,
+        "quantity": "100",
+        "unitCode": "PCS",
+        "cartons": 10,
+        "netWeightKg": "100.000",
+        "grossWeightKg": "120.000"
+      }
+    ],
+    "materials": [
+      {
+        "purpose": "MATERIAL_PURPOSE_SALES_CONTRACT",
+        "logicalFileNumber": "FILE-S1-DEMO-001",
+        "revisionNumber": 1,
+        "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+        "htmlAnchor": "sales-contract"
+      },
+      {
+        "purpose": "MATERIAL_PURPOSE_COMMERCIAL_INVOICE",
+        "logicalFileNumber": "FILE-S1-DEMO-001",
+        "revisionNumber": 1,
+        "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+        "htmlAnchor": "commercial-invoice"
+      },
+      {
+        "purpose": "MATERIAL_PURPOSE_PACKING_LIST",
+        "logicalFileNumber": "FILE-S1-DEMO-001",
+        "revisionNumber": 1,
+        "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+        "htmlAnchor": "packing-list"
+      }
+    ],
+    "contractTotal": {
+      "amount": "12500.00",
+      "currencyCode": "CNY"
+    },
+    "invoiceTotal": {
+      "amount": "12500.00",
+      "currencyCode": "CNY"
+    },
+    "sourceContentsConfirmed": true,
+    "exportAgent": {
+      "party": {
+        "legalName": "示例出口代理",
+        "countryCode": "CN",
+        "registeredAddress": "合成注册地址，非真实地点",
+        "contactName": "合成联系人",
+        "contactPhone": "DEMO-NOT-A-PHONE",
+        "contactEmail": "demo@example.invalid",
+        "identityProtectedReference": "DEMO-IDENTITY-EXPORT-AGENT"
+      },
+      "serviceScope": "合成代理出口范围",
+      "agreedInstructions": "供应商事先沟通后填写的代理指示"
+    },
+    "logisticsProvider": {
+      "party": {
+        "legalName": "示例物流公司",
+        "countryCode": "CN",
+        "registeredAddress": "合成注册地址，非真实地点",
+        "contactName": "合成联系人",
+        "contactPhone": "DEMO-NOT-A-PHONE",
+        "contactEmail": "demo@example.invalid",
+        "identityProtectedReference": "DEMO-IDENTITY-LOGISTICS"
+      },
+      "serviceScope": "合成运输范围",
+      "agreedInstructions": "供应商事先沟通后填写；具体运输工具尚待确定"
+    },
+    "customsBroker": {
+      "party": {
+        "legalName": "示例出口报关代理",
+        "countryCode": "CN",
+        "registeredAddress": "合成注册地址，非真实地点",
+        "contactName": "合成联系人",
+        "contactPhone": "DEMO-NOT-A-PHONE",
+        "contactEmail": "demo@example.invalid",
+        "identityProtectedReference": "DEMO-IDENTITY-CUSTOMS"
+      },
+      "serviceScope": "合成报关服务范围",
+      "agreedInstructions": "供应商事先沟通后填写；本例无真实资质证明"
+    },
+    "nominatedPayerProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+  },
+  "revisionNumber": 4,
+  "etag": "\"s1-supplier-TRD-S1-DEMO-001-r4\""
+}

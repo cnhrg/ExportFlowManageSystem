@@ -1,0 +1,258 @@
+{
+  "tradeNumber": "TRD-S2-DEMO-001",
+  "tradeRevision": 7,
+  "lifecycle": "reviewing",
+  "supplierFiling": {
+    "supplier": {
+      "legalName": "示例供应商",
+      "countryCode": "CN",
+      "registeredAddress": "合成注册地址，非真实地点",
+      "contactName": "合成联系人",
+      "contactPhone": "DEMO-NOT-A-PHONE",
+      "contactEmail": "demo@example.invalid",
+      "identityProtectedReference": "DEMO-IDENTITY-SUPPLIER"
+    },
+    "consignee": {
+      "party": {
+        "legalName": "Example Consignee",
+        "countryCode": "SG",
+        "registeredAddress": "合成注册地址，非真实地点",
+        "contactName": "合成联系人",
+        "contactPhone": "DEMO-NOT-A-PHONE",
+        "contactEmail": "demo@example.invalid",
+        "identityProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+      },
+      "deliveryAddress": "Synthetic delivery location",
+      "deliveryArrangements": "合成收货安排"
+    },
+    "salesContractNumber": "SC-DEMO-001",
+    "invoiceNumber": "CI-DEMO-001",
+    "packingListNumber": "PL-DEMO-001",
+    "goods": [
+      {
+        "itemSequenceNumber": 1,
+        "productName": "展示用金属支架",
+        "specification": "DEMO-M1",
+        "quantity": "100",
+        "unitCode": "PCS",
+        "unitPrice": {
+          "amount": "125.00",
+          "currencyCode": "CNY"
+        },
+        "total": {
+          "amount": "12500.00",
+          "currencyCode": "CNY"
+        },
+        "originCountryCode": "CN"
+      }
+    ],
+    "packing": [
+      {
+        "goodsItemSequenceNumber": 1,
+        "quantity": "100",
+        "unitCode": "PCS",
+        "cartons": 10,
+        "netWeightKg": "100.000",
+        "grossWeightKg": "120.000"
+      }
+    ],
+    "materials": [
+      {
+        "purpose": "MATERIAL_PURPOSE_SALES_CONTRACT",
+        "logicalFileNumber": "FILE-S1-DEMO-001",
+        "revisionNumber": 1,
+        "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+        "htmlAnchor": "sales-contract"
+      },
+      {
+        "purpose": "MATERIAL_PURPOSE_COMMERCIAL_INVOICE",
+        "logicalFileNumber": "FILE-S1-DEMO-001",
+        "revisionNumber": 1,
+        "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+        "htmlAnchor": "commercial-invoice"
+      },
+      {
+        "purpose": "MATERIAL_PURPOSE_PACKING_LIST",
+        "logicalFileNumber": "FILE-S1-DEMO-001",
+        "revisionNumber": 1,
+        "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+        "htmlAnchor": "packing-list"
+      }
+    ],
+    "contractTotal": {
+      "amount": "12500.00",
+      "currencyCode": "CNY"
+    },
+    "invoiceTotal": {
+      "amount": "12500.00",
+      "currencyCode": "CNY"
+    },
+    "sourceContentsConfirmed": true,
+    "exportAgent": {
+      "party": {
+        "legalName": "示例出口代理",
+        "countryCode": "CN",
+        "registeredAddress": "合成注册地址，非真实地点",
+        "contactName": "合成联系人",
+        "contactPhone": "DEMO-NOT-A-PHONE",
+        "contactEmail": "demo@example.invalid",
+        "identityProtectedReference": "DEMO-IDENTITY-EXPORT-AGENT"
+      },
+      "serviceScope": "合成代理出口范围",
+      "agreedInstructions": "供应商事先沟通后填写的代理指示",
+      "exportAgentDetails": {
+        "receiptPath": "合成受限人民币收款路径，实际账户须核实",
+        "paymentPath": "合成向供应商人民币付款路径，实际账户须核实",
+        "paymentBranchCode": 1
+      }
+    },
+    "logisticsProvider": {
+      "party": {
+        "legalName": "示例物流公司",
+        "countryCode": "CN",
+        "registeredAddress": "合成注册地址，非真实地点",
+        "contactName": "合成联系人",
+        "contactPhone": "DEMO-NOT-A-PHONE",
+        "contactEmail": "demo@example.invalid",
+        "identityProtectedReference": "DEMO-IDENTITY-LOGISTICS"
+      },
+      "serviceScope": "合成运输范围",
+      "agreedInstructions": "供应商事先沟通后填写；具体运输工具尚待确定"
+    },
+    "customsBroker": {
+      "party": {
+        "legalName": "示例出口报关代理",
+        "countryCode": "CN",
+        "registeredAddress": "合成注册地址，非真实地点",
+        "contactName": "合成联系人",
+        "contactPhone": "DEMO-NOT-A-PHONE",
+        "contactEmail": "demo@example.invalid",
+        "identityProtectedReference": "DEMO-IDENTITY-CUSTOMS"
+      },
+      "serviceScope": "合成报关服务范围",
+      "agreedInstructions": "供应商事先沟通后填写；本例无真实资质证明",
+      "customsDetails": {
+        "qualification": {
+          "purpose": "MATERIAL_PURPOSE_CUSTOMS_QUALIFICATION",
+          "logicalFileNumber": "FILE-S2-QUALIFICATION",
+          "revisionNumber": 1,
+          "sha256": "ac8d5734d4089657c9de6f987ea5b31f1fecc9dd14cabc1d1199007af6ef7952"
+        },
+        "quotedAmount": {
+          "amount": "100.00",
+          "currencyCode": "CNY"
+        },
+        "pricingBasis": "合成单笔报价计价说明，不代表真实约定",
+        "quotation": {
+          "purpose": "MATERIAL_PURPOSE_CUSTOMS_QUOTATION",
+          "logicalFileNumber": "FILE-S2-QUOTATION",
+          "revisionNumber": 1,
+          "sha256": "b1d57f7dd3fc422bafb55e3bdd4866422fb424c27bec307962cd902ab0e661d4"
+        }
+      }
+    },
+    "nominatedPayerProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+  },
+  "payerFiling": {
+    "payer": {
+      "legalName": "Example Consignee",
+      "countryCode": "SG",
+      "registeredAddress": "合成注册地址，非真实地点",
+      "contactName": "合成联系人",
+      "contactPhone": "DEMO-NOT-A-PHONE",
+      "contactEmail": "demo@example.invalid",
+      "identityProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+    },
+    "relationship": "PAYER_RELATIONSHIP_SAME_LEGAL_ENTITY",
+    "paymentPurpose": "支付本笔合成出口交易货款",
+    "relationshipEvidence": [],
+    "sourceContentsConfirmed": true
+  },
+  "missingItems": [],
+  "submittedSnapshotNumber": "SNP-S2-SUBMITTED-7",
+  "etag": "\"s2-trade-r7-review-v10\"",
+  "evidence": {
+    "agreementApplications": [
+      {
+        "application": {
+          "applicationId": "APPLICATION-S2-DEMO-001",
+          "tradeNumber": "TRD-S2-DEMO-001",
+          "contractNumber": "CON-S2-FRAMEWORK-LOGISTICS",
+          "contractRevisionNumber": 2,
+          "tradeRevision": 5,
+          "state": "pending_review"
+        },
+        "content": {
+          "contractNumber": "CON-S2-FRAMEWORK-LOGISTICS",
+          "contractRevisionNumber": 2,
+          "approvedTradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+          "partyMappings": [
+            {
+              "contractPartySequence": 1,
+              "partyRoleCode": 1,
+              "participantSequenceNumber": 1
+            },
+            {
+              "contractPartySequence": 2,
+              "partyRoleCode": 5,
+              "participantSequenceNumber": 1
+            }
+          ],
+          "serviceOrder": {
+            "logicalFileNumber": "REQUIRED-EXTERNAL-SERVICE-ORDER",
+            "revisionNumber": 1,
+            "sha256": "<no-real-evidence-in-this-design-fixture>",
+            "documentTypeCode": 11
+          },
+          "useDate": "2026-10-25"
+        }
+      }
+    ],
+    "customsAuthorizations": [
+      {
+        "authorization": {
+          "authorizationId": "AUTHORITY-S2-DEMO-001",
+          "tradeNumber": "TRD-S2-DEMO-001",
+          "state": "pending_review",
+          "tradeRevision": 6
+        },
+        "content": {
+          "approvedTradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+          "officialAuthorization": {
+            "logicalFileNumber": "REQUIRED-EXTERNAL-OFFICIAL-AUTHORIZATION",
+            "revisionNumber": 1,
+            "sha256": "<no-real-evidence-in-this-design-fixture>",
+            "documentTypeCode": 13
+          },
+          "customsParticipantSequence": 1,
+          "validFrom": "2026-10-25",
+          "validTo": "2027-10-25",
+          "scopeDescription": "本笔明确货物/报关范围；示例不代表已办理官方委托"
+        }
+      }
+    ],
+    "customsAgentRecognitions": [
+      {
+        "recognition": {
+          "recognitionId": "RECOGNITION-S2-DEMO-001",
+          "tradeNumber": "TRD-S2-DEMO-001",
+          "state": "pending_review",
+          "tradeRevision": 7
+        },
+        "content": {
+          "approvedTradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+          "customsParticipantSequence": 1,
+          "writtenRecognition": {
+            "logicalFileNumber": "REQUIRED-EXTERNAL-WRITTEN-RECOGNITION",
+            "revisionNumber": 1,
+            "sha256": "<no-real-evidence-in-this-design-fixture>",
+            "documentTypeCode": 13
+          },
+          "validFrom": "2026-10-25",
+          "validTo": "2027-10-25"
+        }
+      }
+    ]
+  },
+  "approvedSnapshotNumber": "SNP-S2-DEMO-APPROVED-001"
+}

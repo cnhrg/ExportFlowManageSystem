@@ -1,0 +1,331 @@
+syntax = "proto3";
+package trade.customs.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "trade/contracts/v1/contracts.proto";
+
+// Two audiences in one monolith; no deployed production API or official adapter.
+service ExternalCustomsService {
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetCustomsBasis(GetCustomsBasisReqMsg) returns (GetCustomsBasisRspMsg) {
+    option (google.api.http) = { get: "/api/v1/shipments/{shipment_number}/customs-basis" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCustomsDeclaration(CreateCustomsDeclarationReqMsg) returns (CreateCustomsDeclarationRspMsg) {
+    option (google.api.http) = { post: "/api/v1/shipments/{shipment_number}/customs-declarations" body: "draft" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetCustomsDeclaration(GetCustomsDeclarationReqMsg) returns (GetCustomsDeclarationRspMsg) {
+    option (google.api.http) = { get: "/api/v1/customs-declarations/{declaration_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCustomsRevision(CreateCustomsRevisionReqMsg) returns (CreateCustomsRevisionRspMsg) {
+    option (google.api.http) = { post: "/api/v1/customs-declarations/{declaration_number}/revisions" body: "revision" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetCustomsRevision(GetCustomsRevisionReqMsg) returns (GetCustomsRevisionRspMsg) {
+    option (google.api.http) = { get: "/api/v1/customs-declarations/{declaration_number}/revisions/{revision_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCustomsReviewSubmission(CreateCustomsReviewSubmissionReqMsg) returns (CreateCustomsReviewSubmissionRspMsg) {
+    option (google.api.http) = { post: "/api/v1/customs-declarations/{declaration_number}/review-submissions" body: "submission" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCustomsExporterConfirmation(CreateCustomsExporterConfirmationReqMsg) returns (CreateCustomsExporterConfirmationRspMsg) {
+    option (google.api.http) = { post: "/api/v1/customs-declarations/{declaration_number}/exporter-confirmations" body: "confirmation" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Durable intent is not an official success.
+  rpc CreateCustomsFilingRequest(CreateCustomsFilingRequestReqMsg) returns (CreateCustomsFilingRequestRspMsg) {
+    option (google.api.http) = { post: "/api/v1/customs-declarations/{declaration_number}/filing-requests" body: "filing" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetCustomsFilingRequest(GetCustomsFilingRequestReqMsg) returns (GetCustomsFilingRequestRspMsg) {
+    option (google.api.http) = { get: "/api/v1/customs-declarations/{declaration_number}/filing-requests/{request_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCustomsOfficialEvidence(CreateCustomsOfficialEvidenceReqMsg) returns (CreateCustomsOfficialEvidenceRspMsg) {
+    option (google.api.http) = { post: "/api/v1/customs-declarations/{declaration_number}/official-evidence" body: "evidence" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetCustomsOfficialEvidence(GetCustomsOfficialEvidenceReqMsg) returns (GetCustomsOfficialEvidenceRspMsg) {
+    option (google.api.http) = { get: "/api/v1/customs-declarations/{declaration_number}/official-evidence/{event_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCustomsAttachmentDelivery(CreateCustomsAttachmentDeliveryReqMsg) returns (CreateCustomsAttachmentDeliveryRspMsg) {
+    option (google.api.http) = { post: "/api/v1/customs-declarations/{declaration_number}/attachment-deliveries" body: "delivery" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetCustomsAttachmentDelivery(GetCustomsAttachmentDeliveryReqMsg) returns (GetCustomsAttachmentDeliveryRspMsg) {
+    option (google.api.http) = { get: "/api/v1/customs-declarations/{declaration_number}/attachment-deliveries/{delivery_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCustomsAttachmentReceipt(CreateCustomsAttachmentReceiptReqMsg) returns (CreateCustomsAttachmentReceiptRspMsg) {
+    option (google.api.http) = { post: "/api/v1/customs-declarations/{declaration_number}/attachment-deliveries/{delivery_number}/receipts" body: "receipt" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetCustomsEvent(GetCustomsEventReqMsg) returns (GetCustomsEventRspMsg) {
+    option (google.api.http) = { get: "/api/v1/customs-declarations/{declaration_number}/events/{event_number}" response_body: "resource" };
+  }
+}
+service InternalCustomsOperationsService {
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetCustomsReviewContext(GetCustomsReviewContextReqMsg) returns (GetCustomsReviewContextRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/customs-declarations/{declaration_number}/review-context" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCustomsReviewDecision(CreateCustomsReviewDecisionReqMsg) returns (CreateCustomsReviewDecisionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/customs-declarations/{declaration_number}/review-decisions" body: "decision" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. No source verification profile means fail closed.
+  rpc CreateCustomsOfficialEvidenceDecision(CreateCustomsOfficialEvidenceDecisionReqMsg) returns (CreateCustomsOfficialEvidenceDecisionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/customs-declarations/{declaration_number}/official-evidence-decisions" body: "decision" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetInternalCustomsEvent(GetInternalCustomsEventReqMsg) returns (GetInternalCustomsEventRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/customs-declarations/{declaration_number}/events/{event_number}" response_body: "resource" };
+  }
+}
+
+enum DeclarationStatus {
+  DECLARATION_STATUS_UNSPECIFIED = 0;
+  DECLARATION_STATUS_DRAFT = 1;
+  DECLARATION_STATUS_AWAITING_REVIEW = 2;
+  DECLARATION_STATUS_AWAITING_EXPORTER = 3;
+  DECLARATION_STATUS_EXPORTER_CONFIRMED = 4;
+  DECLARATION_STATUS_SUBMITTED = 5;
+  DECLARATION_STATUS_ACCEPTED = 6;
+  DECLARATION_STATUS_INSPECTION = 7;
+  DECLARATION_STATUS_RELEASED = 8;
+  DECLARATION_STATUS_CORRECTION_REQUIRED = 9;
+  DECLARATION_STATUS_REJECTED = 10;
+  DECLARATION_STATUS_WITHDRAWN = 11;
+}
+enum FilingAction {
+  FILING_ACTION_UNSPECIFIED = 0;
+  FILING_ACTION_DECLARE = 1;
+  FILING_ACTION_CORRECT = 2;
+  FILING_ACTION_WITHDRAW = 3;
+}
+enum ExecutionStatus {
+  EXECUTION_STATUS_UNSPECIFIED = 0;
+  EXECUTION_STATUS_PENDING = 1;
+  EXECUTION_STATUS_PROCESSING = 2;
+  EXECUTION_STATUS_UNKNOWN = 3;
+  EXECUTION_STATUS_SUBMITTED_VERIFIED = 4;
+  EXECUTION_STATUS_FAILED_VERIFIED = 5;
+}
+enum OfficialKind {
+  OFFICIAL_KIND_UNSPECIFIED = 0;
+  OFFICIAL_KIND_SUBMITTED = 1;
+  OFFICIAL_KIND_ACCEPTED = 2;
+  OFFICIAL_KIND_INSPECTION = 3;
+  OFFICIAL_KIND_RELEASED = 4;
+  OFFICIAL_KIND_CORRECTION_REQUIRED = 5;
+  OFFICIAL_KIND_WITHDRAWN = 6;
+  OFFICIAL_KIND_REJECTED = 7;
+}
+message PartyReference {
+  uint32 party_role_code = 1; // 1 A / 2 B / 3 C / 6 F, exact approved snapshot.
+  uint32 participant_sequence_number = 2;
+}
+message DeclarationItem {
+  uint32 item_sequence_number = 1;
+  uint32 trade_goods_item_sequence_number = 2;
+  string shipment_allocation_number = 3; // shipment_number#approved goods sequence; reversible, <=40.
+  string hs_code = 4; // Actual classification requires verified regulatory rules.
+  string declared_description = 5;
+  string specification = 6;
+  string declared_quantity = 7; // Positive DECIMAL(20,6), no exponent or silent rounding.
+  string unit_code = 8;
+  string declared_unit_price_amount = 9; // Nonnegative DECIMAL(20,2).
+  string declared_total_amount = 10; // Nonnegative DECIMAL(20,2), CNY only.
+  string currency_code = 11;
+  string origin_country_code = 12; // ISO alpha-2 canonical input; channel mapping requires evidence.
+}
+message DeclarationDraft {
+  string approved_snapshot_number = 1;
+  uint32 trade_revision_number = 2;
+  string shipment_plan_revision = 3;
+  PartyReference production_sales_unit = 4; // A, never derived from mutable master data.
+  PartyReference domestic_consignor = 5; // B.
+  PartyReference overseas_consignee = 6; // C, actual recipient, not payer D.
+  PartyReference customs_agent = 7; // F.
+  string customs_office_code = 8;
+  string channel_code = 9;
+  string destination_country_code = 10;
+  string transport_reference = 11;
+  string authorization_evidence_reference = 12;
+  repeated DeclarationItem items = 13;
+  repeated trade.contracts.v1.FileReference supporting_files = 14;
+}
+message CustomsBasis {
+  string trade_number = 1;
+  string shipment_number = 2;
+  string approved_snapshot_number = 3;
+  string shipment_plan_revision = 4;
+  string etag = 5;
+  repeated PartyReference parties = 6;
+  repeated string missing_gate_codes = 7;
+}
+message CustomsReceipt {
+  string declaration_number = 1;
+  uint32 revision_number = 2;
+  string content_hash = 3;
+  DeclarationStatus status = 4;
+  string etag = 5;
+  string acceptance_id = 6;
+}
+message DeclarationRevision {
+  string declaration_number = 1;
+  uint32 revision_number = 2;
+  DeclarationDraft content = 3;
+  string content_hash = 4;
+  string created_by = 5;
+  repeated CustomsEvent events = 6;
+}
+message CustomsDeclaration {
+  CustomsReceipt current = 1;
+  DeclarationRevision revision = 2;
+  repeated uint32 available_revisions = 3;
+  repeated FilingRequest filing_requests = 4;
+  repeated CustomsEvent events = 5;
+  repeated AttachmentDelivery attachment_deliveries = 6;
+  repeated string missing_gate_codes = 7;
+  optional string external_declaration_number = 8;
+}
+message CustomsReviewContext {
+  CustomsDeclaration declaration = 1;
+  repeated string missing_gate_codes = 2;
+}
+message RevisionInput {
+  uint32 base_revision_number = 1;
+  DeclarationDraft draft = 2;
+  string reason = 3;
+  optional string correction_event_number = 4;
+}
+message ReviewSubmissionInput {
+  uint32 revision_number = 1;
+  string content_hash = 2;
+}
+message ReviewDecisionInput {
+  string submission_event_number = 1;
+  uint32 revision_number = 2;
+  string content_hash = 3;
+  trade.contracts.v1.DecisionOutcome outcome = 4;
+  string reason = 5;
+  repeated trade.contracts.v1.FileReference verification_evidence = 6;
+}
+message ExporterConfirmationInput {
+  uint32 revision_number = 1;
+  string content_hash = 2;
+  string authority_reference = 3;
+  repeated trade.contracts.v1.FileReference written_evidence = 4;
+}
+message FilingRequestInput {
+  uint32 revision_number = 1;
+  string content_hash = 2;
+  FilingAction action = 3;
+  optional string original_request_number = 4;
+  string reason = 5;
+  optional string correction_event_number = 6; // Required for correction; independently verified original requirement.
+}
+message FilingRequest {
+  string request_number = 1;
+  string declaration_number = 2;
+  FilingRequestInput intent = 3;
+  ExecutionStatus execution_status = 4;
+  optional string provider_reference = 5;
+  repeated string missing_gate_codes = 6;
+  string etag = 7;
+}
+message OfficialEvidenceInput {
+  string request_number = 1;
+  uint32 revision_number = 2;
+  OfficialKind kind = 3;
+  string source_event_key = 4; // Claim only; official dedup key is reserved after source verification.
+  string external_reference_number = 5;
+  repeated trade.contracts.v1.FileReference files = 6;
+  google.protobuf.Timestamp occurred_at = 7; // UTC RFC3339 with milliseconds; claim remains unverified.
+}
+message OfficialEvidenceDecisionInput {
+  string evidence_event_number = 1;
+  trade.contracts.v1.DecisionOutcome outcome = 2;
+  string reason = 3;
+  string verification_profile_reference = 4; // Registered official source/authority profile, not a caller boolean.
+  repeated trade.contracts.v1.FileReference verification_evidence = 5;
+}
+message AttachmentDeliveryInput {
+  uint32 revision_number = 1;
+  string submitted_event_number = 2;
+  uint32 recipient_party_role_code = 3; // Only 1 A or 2 B.
+  uint32 recipient_participant_sequence_number = 4;
+  trade.contracts.v1.FileReference attachment_two = 5;
+}
+message AttachmentReceiptInput {
+  string outcome = 1; // received / disputed; no assumed acceptance.
+  string reason = 2;
+  repeated trade.contracts.v1.FileReference evidence = 3;
+}
+message AttachmentDelivery {
+  string delivery_number = 1; // Business customs event id, not middleware message id.
+  string declaration_number = 2;
+  AttachmentDeliveryInput content = 3;
+  string state = 4; // delivered / received / disputed, derived from immutable events.
+  repeated CustomsEvent receipts = 5;
+}
+message CustomsEvent {
+  string event_number = 1;
+  string declaration_number = 2;
+  uint32 revision_number = 3;
+  string actor_reference = 4;
+  string state = 5;
+  string reason = 6;
+  oneof detail {
+    ReviewSubmissionInput review_submission = 7;
+    ReviewDecisionInput review_decision = 8;
+    ExporterConfirmationInput exporter_confirmation = 9;
+    OfficialEvidenceInput official_evidence = 10;
+    OfficialEvidenceDecisionInput official_evidence_decision = 11;
+    AttachmentReceiptInput attachment_receipt = 12;
+  }
+}
+
+message GetCustomsBasisReqMsg { string shipment_number = 1; }
+message GetCustomsBasisRspMsg { CustomsBasis resource = 1; }
+message CreateCustomsDeclarationReqMsg { string shipment_number = 1; DeclarationDraft draft = 2; }
+message CreateCustomsDeclarationRspMsg { CustomsReceipt resource = 1; }
+message GetCustomsDeclarationReqMsg { string declaration_number = 1; }
+message GetCustomsDeclarationRspMsg { CustomsDeclaration resource = 1; }
+message CreateCustomsRevisionReqMsg { string declaration_number = 1; RevisionInput revision = 2; }
+message CreateCustomsRevisionRspMsg { CustomsReceipt resource = 1; }
+message GetCustomsRevisionReqMsg { string declaration_number = 1; uint32 revision_number = 2; }
+message GetCustomsRevisionRspMsg { DeclarationRevision resource = 1; }
+message CreateCustomsReviewSubmissionReqMsg { string declaration_number = 1; ReviewSubmissionInput submission = 2; }
+message CreateCustomsReviewSubmissionRspMsg { CustomsEvent resource = 1; }
+message GetCustomsReviewContextReqMsg { string declaration_number = 1; }
+message GetCustomsReviewContextRspMsg { CustomsReviewContext resource = 1; }
+message CreateCustomsReviewDecisionReqMsg { string declaration_number = 1; ReviewDecisionInput decision = 2; }
+message CreateCustomsReviewDecisionRspMsg { CustomsEvent resource = 1; }
+message CreateCustomsExporterConfirmationReqMsg { string declaration_number = 1; ExporterConfirmationInput confirmation = 2; }
+message CreateCustomsExporterConfirmationRspMsg { CustomsEvent resource = 1; }
+message CreateCustomsFilingRequestReqMsg { string declaration_number = 1; FilingRequestInput filing = 2; }
+message CreateCustomsFilingRequestRspMsg { FilingRequest resource = 1; }
+message GetCustomsFilingRequestReqMsg { string declaration_number = 1; string request_number = 2; }
+message GetCustomsFilingRequestRspMsg { FilingRequest resource = 1; }
+message CreateCustomsOfficialEvidenceReqMsg { string declaration_number = 1; OfficialEvidenceInput evidence = 2; }
+message CreateCustomsOfficialEvidenceRspMsg { CustomsEvent resource = 1; }
+message GetCustomsOfficialEvidenceReqMsg { string declaration_number = 1; string event_number = 2; }
+message GetCustomsOfficialEvidenceRspMsg { CustomsEvent resource = 1; }
+message CreateCustomsOfficialEvidenceDecisionReqMsg { string declaration_number = 1; OfficialEvidenceDecisionInput decision = 2; }
+message CreateCustomsOfficialEvidenceDecisionRspMsg { CustomsEvent resource = 1; }
+message CreateCustomsAttachmentDeliveryReqMsg { string declaration_number = 1; AttachmentDeliveryInput delivery = 2; }
+message CreateCustomsAttachmentDeliveryRspMsg { AttachmentDelivery resource = 1; }
+message GetCustomsAttachmentDeliveryReqMsg { string declaration_number = 1; string delivery_number = 2; }
+message GetCustomsAttachmentDeliveryRspMsg { AttachmentDelivery resource = 1; }
+message CreateCustomsAttachmentReceiptReqMsg { string declaration_number = 1; string delivery_number = 2; AttachmentReceiptInput receipt = 3; }
+message CreateCustomsAttachmentReceiptRspMsg { CustomsEvent resource = 1; }
+message GetCustomsEventReqMsg { string declaration_number = 1; string event_number = 2; }
+message GetCustomsEventRspMsg { CustomsEvent resource = 1; }
+message GetInternalCustomsEventReqMsg { string declaration_number = 1; string event_number = 2; }
+message GetInternalCustomsEventRspMsg { CustomsEvent resource = 1; }

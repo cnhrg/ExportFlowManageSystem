@@ -1,0 +1,22 @@
+sequenceDiagram
+    autonumber
+    actor PAGE as 出口代理资金经办人
+    actor ACTOR1 as 出口代理资金独立复核人
+    participant APP as 单体资金应用
+    participant DB as MySQL资金及账务
+    participant STORE as 私有S3确切版本
+    participant SCAN as ClamAV
+    participant BANK as 银行事实边界（未接入）
+    PAGE->>APP: GET当前资源/强ETag，再确认具体正文及原幂等键
+    APP->>STORE: 事务外读取银行原始证据固定VersionId/hash
+    APP->>SCAN: 扫描同一字节；合成文件不能当银行凭证
+    APP->>DB: BEGIN READ COMMITTED；先按主体/方法/路径/原键查同文受理
+    APP->>DB: 锁稳定收款账号身份；FOR UPDATE当前读fingerprint+bank_event_key
+    alt 有独立核实的真实到账依据
+    APP->>DB: event1 NULL到受限 + account控制投影 + 平衡voucher/entries原子COMMIT
+    APP-->>PAGE: 返回原flow；未匹配额留受限，不创建虚拟交易
+    else 当前未接银行且缺真实凭证
+    APP->>DB: ROLLBACK；不产生event1/余额/凭证
+    APP-->>PAGE: 422 BANK_EVIDENCE_REQUIRED；GET原受理待核
+    end
+    Note over APP,DB: RC先查重入/根锁后当前读；资金与账务本地原子；外部I/O事务外

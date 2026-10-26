@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "scope": "proof/type=1 only; no external success synthetic fixtures",
+  "tax_case_tab": {
+    "identity": [
+      "trade_number",
+      "tax_type_code",
+      "scope_reference"
+    ],
+    "proof": {
+      "tax_type_code": 1,
+      "claimed_amount": null,
+      "currency_code": "CNY"
+    },
+    "concurrency": "version",
+    "scopeResolution": "server confirmed scope rule; preparation placeholder cannot authorize filing"
+  },
+  "tax_submission_tab": {
+    "submission_content_json": {
+      "schema_version": 1,
+      "tax_type_code": 1,
+      "approved_snapshot_number": "server-resolved immutable cause-2 trade snapshot",
+      "scope_reference": "server-resolved confirmed rule scope or preparation-only placeholder",
+      "rule_version": "server rule revision",
+      "responsibility_basis": "closed status plus confirmed authority FileRef[] or explicit unresolved items",
+      "declaration_references": "exact declaration identities/revisions and approved item scope",
+      "fields": "SubmissionInput proof-only whitelist; never claimed_amount",
+      "check_report": "unresolved items, source version vector, checks; no false official confirmation"
+    },
+    "evidence_manifest_json": "FileRef[]: logical_file_number, revision_number, content_digest, document_purpose_code; FileVersion VersionId resolved against immutable file metadata",
+    "review_snapshot_json": {
+      "reviewer_reference": "independent actor",
+      "result_code": "2 approved/3 returned",
+      "reviewed_at": "UTC millisecond timestamp",
+      "content_hash": "exact package hash",
+      "rule_version": "server rule revision",
+      "evidence_references": "FileRef[]",
+      "comments": "optional reason; NULL whole snapshot before review"
+    },
+    "previous_submission_revision_number": "prior immutable version or NULL",
+    "correction_event_number": "verified official correction event or NULL for internal return",
+    "dispatch_reference": "original stable execution reference or NULL",
+    "execution_status": {
+      "1": "not_sent",
+      "2": "in_progress",
+      "3": "unknown",
+      "4": "confirmed_not_submitted",
+      "5": "submission_receipt_verified"
+    }
+  },
+  "tax_event_tab": {
+    "payloadSchema": "shared §11 closed JSON with schema_version=1 and operation_evidence_reference",
+    "payload": "typed branch fields mapped from Proto; authenticated actor is server-injected",
+    "types": {
+      "1": "case_opened",
+      "2": "submission_created",
+      "3": "review_returned",
+      "4": "review_approved",
+      "5": "dispatch_intent",
+      "6": "official_submitted",
+      "7": "official_accepted",
+      "8": "official_correction",
+      "9": "official_processing",
+      "10": "official_issued_or_corrected",
+      "11": "official_final_rejected",
+      "12": "official_revoked",
+      "13": "proof_delivery",
+      "14": "proof_receipt_or_objection",
+      "15": "evidence_claim",
+      "16": "verification_or_objection_disposition",
+      "18": "review_invalidated"
+    },
+    "resultCodes": {
+      "1": "recorded",
+      "2": "verified_or_approved",
+      "3": "returned"
+    },
+    "officialRequirements": "6..12 require exact revision, real external_event_key and authority_reference_number; internal events external_event_key NULL",
+    "branches": {
+      "preparation": [
+        "scope_reference",
+        "unresolved_items"
+      ],
+      "submissionAndReview": [
+        "submission_content_hash",
+        "reviewer_reference?",
+        "reason?"
+      ],
+      "official": [
+        "dispatch_reference",
+        "source_namespace",
+        "authority_reference",
+        "evidence_references",
+        "outcome_code?"
+      ],
+      "handover": [
+        "delivery_number",
+        "proof_file",
+        "recipient_reference",
+        "received_delivery_number?"
+      ]
+    },
+    "mapping": {
+      "review": "3/4",
+      "delivery": "13",
+      "receipt": "14 with received/checked/objected",
+      "disposition": "16 with objection reference and substantive evidence",
+      "officialCorrection": "10 with previous_certificate_event_number; invalidate old handover, no invented event code"
+    }
+  },
+  "middleware": "confirmation, original command receipt, sequence, file task, outbox/lease only; no handover/case/review business authority"
+}

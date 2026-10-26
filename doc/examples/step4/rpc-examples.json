@@ -1,0 +1,1030 @@
+[
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.ExternalCustomsService",
+    "method": "GetCustomsBasis",
+    "requestType": "GetCustomsBasisReqMsg",
+    "responseType": "GetCustomsBasisRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+    },
+    "request": {
+      "shipmentNumber": "SHP-S4-SYNTHETIC"
+    },
+    "response": {
+      "resource": {
+        "tradeNumber": "TRD-S4-SYNTHETIC",
+        "shipmentNumber": "SHP-S4-SYNTHETIC",
+        "approvedSnapshotNumber": "SNP-S4-SYNTHETIC-APPROVED",
+        "shipmentPlanRevision": "SYNTHETIC-PLAN-1",
+        "etag": "\"s4-v1-57e9172357bd\"",
+        "parties": [
+          {
+            "partyRoleCode": 1,
+            "participantSequenceNumber": 1
+          },
+          {
+            "partyRoleCode": 2,
+            "participantSequenceNumber": 1
+          },
+          {
+            "partyRoleCode": 3,
+            "participantSequenceNumber": 1
+          },
+          {
+            "partyRoleCode": 6,
+            "participantSequenceNumber": 1
+          }
+        ],
+        "missingGateCodes": [
+          "CUSTOMS_AUTHORITY_UNVERIFIED"
+        ]
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.ExternalCustomsService",
+    "method": "CreateCustomsDeclaration",
+    "requestType": "CreateCustomsDeclarationReqMsg",
+    "responseType": "CreateCustomsDeclarationRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+      "idempotency-key": "d7040000-0000-4000-8000-000000000002",
+      "if-match": "\"s4-v1-57e9172357bd\"",
+      "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+    },
+    "request": {
+      "shipmentNumber": "SHP-S4-SYNTHETIC",
+      "draft": {
+        "approvedSnapshotNumber": "SNP-S4-SYNTHETIC-APPROVED",
+        "tradeRevisionNumber": 4,
+        "shipmentPlanRevision": "SYNTHETIC-PLAN-1",
+        "productionSalesUnit": {
+          "partyRoleCode": 1,
+          "participantSequenceNumber": 1
+        },
+        "domesticConsignor": {
+          "partyRoleCode": 2,
+          "participantSequenceNumber": 1
+        },
+        "overseasConsignee": {
+          "partyRoleCode": 3,
+          "participantSequenceNumber": 1
+        },
+        "customsAgent": {
+          "partyRoleCode": 6,
+          "participantSequenceNumber": 1
+        },
+        "customsOfficeCode": "SYNTHETIC-OFFICE",
+        "channelCode": "SYNTHETIC-NOT-OFFICIAL",
+        "destinationCountryCode": "VN",
+        "transportReference": "SYNTHETIC-TRANSPORT",
+        "authorizationEvidenceReference": "SYNTHETIC-NOT-VALID-AUTHORITY",
+        "items": [
+          {
+            "itemSequenceNumber": 1,
+            "tradeGoodsItemSequenceNumber": 1,
+            "shipmentAllocationNumber": "SHP-S4-SYNTHETIC#1",
+            "hsCode": "SYNTHETIC",
+            "declaredDescription": "原创合成货物非真实归类",
+            "specification": "SYNTHETIC",
+            "declaredQuantity": "40.000000",
+            "unitCode": "PCS",
+            "declaredUnitPriceAmount": "100.00",
+            "declaredTotalAmount": "4000.00",
+            "currencyCode": "CNY",
+            "originCountryCode": "CN"
+          }
+        ],
+        "supportingFiles": [
+          {
+            "logicalFileNumber": "FILE-S4-SYNTHETIC",
+            "revisionNumber": 1,
+            "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+            "documentTypeCode": 3
+          }
+        ]
+      }
+    },
+    "response": {
+      "resource": {
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+        "status": "DECLARATION_STATUS_DRAFT",
+        "etag": "\"s4-v1-57e9172357bd\"",
+        "acceptanceId": "ACCEPT-S4-SYNTHETIC"
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.ExternalCustomsService",
+    "method": "GetCustomsDeclaration",
+    "requestType": "GetCustomsDeclarationReqMsg",
+    "responseType": "GetCustomsDeclarationRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC"
+    },
+    "response": {
+      "resource": {
+        "current": {
+          "declarationNumber": "DEC-S4-SYNTHETIC",
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "status": "DECLARATION_STATUS_DRAFT",
+          "etag": "\"s4-v1-57e9172357bd\"",
+          "acceptanceId": "ACCEPT-S4-SYNTHETIC"
+        },
+        "revision": {
+          "declarationNumber": "DEC-S4-SYNTHETIC",
+          "revisionNumber": 1,
+          "content": {
+            "approvedSnapshotNumber": "SNP-S4-SYNTHETIC-APPROVED",
+            "tradeRevisionNumber": 4,
+            "shipmentPlanRevision": "SYNTHETIC-PLAN-1",
+            "productionSalesUnit": {
+              "partyRoleCode": 1,
+              "participantSequenceNumber": 1
+            },
+            "domesticConsignor": {
+              "partyRoleCode": 2,
+              "participantSequenceNumber": 1
+            },
+            "overseasConsignee": {
+              "partyRoleCode": 3,
+              "participantSequenceNumber": 1
+            },
+            "customsAgent": {
+              "partyRoleCode": 6,
+              "participantSequenceNumber": 1
+            },
+            "customsOfficeCode": "SYNTHETIC-OFFICE",
+            "channelCode": "SYNTHETIC-NOT-OFFICIAL",
+            "destinationCountryCode": "VN",
+            "transportReference": "SYNTHETIC-TRANSPORT",
+            "authorizationEvidenceReference": "SYNTHETIC-NOT-VALID-AUTHORITY",
+            "items": [
+              {
+                "itemSequenceNumber": 1,
+                "tradeGoodsItemSequenceNumber": 1,
+                "shipmentAllocationNumber": "SHP-S4-SYNTHETIC#1",
+                "hsCode": "SYNTHETIC",
+                "declaredDescription": "原创合成货物非真实归类",
+                "specification": "SYNTHETIC",
+                "declaredQuantity": "40.000000",
+                "unitCode": "PCS",
+                "declaredUnitPriceAmount": "100.00",
+                "declaredTotalAmount": "4000.00",
+                "currencyCode": "CNY",
+                "originCountryCode": "CN"
+              }
+            ],
+            "supportingFiles": [
+              {
+                "logicalFileNumber": "FILE-S4-SYNTHETIC",
+                "revisionNumber": 1,
+                "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+                "documentTypeCode": 3
+              }
+            ]
+          },
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "createdBy": "SYNTHETIC-F",
+          "events": []
+        },
+        "availableRevisions": [
+          1
+        ],
+        "filingRequests": [],
+        "events": [],
+        "attachmentDeliveries": [],
+        "missingGateCodes": [
+          "CUSTOMS_AUTHORITY_UNVERIFIED"
+        ]
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.ExternalCustomsService",
+    "method": "CreateCustomsRevision",
+    "requestType": "CreateCustomsRevisionReqMsg",
+    "responseType": "CreateCustomsRevisionRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+      "idempotency-key": "d7040000-0000-4000-8000-000000000004",
+      "if-match": "\"s4-v1-57e9172357bd\"",
+      "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC",
+      "revision": {
+        "baseRevisionNumber": 1,
+        "draft": {
+          "approvedSnapshotNumber": "SNP-S4-SYNTHETIC-APPROVED",
+          "tradeRevisionNumber": 4,
+          "shipmentPlanRevision": "SYNTHETIC-PLAN-1",
+          "productionSalesUnit": {
+            "partyRoleCode": 1,
+            "participantSequenceNumber": 1
+          },
+          "domesticConsignor": {
+            "partyRoleCode": 2,
+            "participantSequenceNumber": 1
+          },
+          "overseasConsignee": {
+            "partyRoleCode": 3,
+            "participantSequenceNumber": 1
+          },
+          "customsAgent": {
+            "partyRoleCode": 6,
+            "participantSequenceNumber": 1
+          },
+          "customsOfficeCode": "SYNTHETIC-OFFICE",
+          "channelCode": "SYNTHETIC-NOT-OFFICIAL",
+          "destinationCountryCode": "VN",
+          "transportReference": "SYNTHETIC-CORRECTED",
+          "authorizationEvidenceReference": "SYNTHETIC-NOT-VALID-AUTHORITY",
+          "items": [
+            {
+              "itemSequenceNumber": 1,
+              "tradeGoodsItemSequenceNumber": 1,
+              "shipmentAllocationNumber": "SHP-S4-SYNTHETIC#1",
+              "hsCode": "SYNTHETIC",
+              "declaredDescription": "原创合成货物非真实归类",
+              "specification": "SYNTHETIC",
+              "declaredQuantity": "40.000000",
+              "unitCode": "PCS",
+              "declaredUnitPriceAmount": "100.00",
+              "declaredTotalAmount": "4000.00",
+              "currencyCode": "CNY",
+              "originCountryCode": "CN"
+            }
+          ],
+          "supportingFiles": [
+            {
+              "logicalFileNumber": "FILE-S4-SYNTHETIC",
+              "revisionNumber": 1,
+              "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+              "documentTypeCode": 3
+            }
+          ]
+        },
+        "reason": "修改运输引用，新版须重新审核及A确认"
+      }
+    },
+    "response": {
+      "resource": {
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 2,
+        "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+        "status": "DECLARATION_STATUS_DRAFT",
+        "etag": "\"s4-v2-synthetic\"",
+        "acceptanceId": "ACCEPT-S4-SYNTHETIC"
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.ExternalCustomsService",
+    "method": "GetCustomsRevision",
+    "requestType": "GetCustomsRevisionReqMsg",
+    "responseType": "GetCustomsRevisionRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC",
+      "revisionNumber": 1
+    },
+    "response": {
+      "resource": {
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "content": {
+          "approvedSnapshotNumber": "SNP-S4-SYNTHETIC-APPROVED",
+          "tradeRevisionNumber": 4,
+          "shipmentPlanRevision": "SYNTHETIC-PLAN-1",
+          "productionSalesUnit": {
+            "partyRoleCode": 1,
+            "participantSequenceNumber": 1
+          },
+          "domesticConsignor": {
+            "partyRoleCode": 2,
+            "participantSequenceNumber": 1
+          },
+          "overseasConsignee": {
+            "partyRoleCode": 3,
+            "participantSequenceNumber": 1
+          },
+          "customsAgent": {
+            "partyRoleCode": 6,
+            "participantSequenceNumber": 1
+          },
+          "customsOfficeCode": "SYNTHETIC-OFFICE",
+          "channelCode": "SYNTHETIC-NOT-OFFICIAL",
+          "destinationCountryCode": "VN",
+          "transportReference": "SYNTHETIC-TRANSPORT",
+          "authorizationEvidenceReference": "SYNTHETIC-NOT-VALID-AUTHORITY",
+          "items": [
+            {
+              "itemSequenceNumber": 1,
+              "tradeGoodsItemSequenceNumber": 1,
+              "shipmentAllocationNumber": "SHP-S4-SYNTHETIC#1",
+              "hsCode": "SYNTHETIC",
+              "declaredDescription": "原创合成货物非真实归类",
+              "specification": "SYNTHETIC",
+              "declaredQuantity": "40.000000",
+              "unitCode": "PCS",
+              "declaredUnitPriceAmount": "100.00",
+              "declaredTotalAmount": "4000.00",
+              "currencyCode": "CNY",
+              "originCountryCode": "CN"
+            }
+          ],
+          "supportingFiles": [
+            {
+              "logicalFileNumber": "FILE-S4-SYNTHETIC",
+              "revisionNumber": 1,
+              "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+              "documentTypeCode": 3
+            }
+          ]
+        },
+        "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+        "createdBy": "SYNTHETIC-F",
+        "events": []
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.ExternalCustomsService",
+    "method": "CreateCustomsReviewSubmission",
+    "requestType": "CreateCustomsReviewSubmissionReqMsg",
+    "responseType": "CreateCustomsReviewSubmissionRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+      "idempotency-key": "d7040000-0000-4000-8000-000000000006",
+      "if-match": "\"s4-v1-57e9172357bd\"",
+      "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC",
+      "submission": {
+        "revisionNumber": 1,
+        "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca"
+      }
+    },
+    "response": {
+      "resource": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "pending_review",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "reviewSubmission": {
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca"
+        }
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.InternalCustomsOperationsService",
+    "method": "GetCustomsReviewContext",
+    "requestType": "GetCustomsReviewContextReqMsg",
+    "responseType": "GetCustomsReviewContextRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC"
+    },
+    "response": {
+      "resource": {
+        "declaration": {
+          "current": {
+            "declarationNumber": "DEC-S4-SYNTHETIC",
+            "revisionNumber": 1,
+            "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+            "status": "DECLARATION_STATUS_DRAFT",
+            "etag": "\"s4-v1-57e9172357bd\"",
+            "acceptanceId": "ACCEPT-S4-SYNTHETIC"
+          },
+          "revision": {
+            "declarationNumber": "DEC-S4-SYNTHETIC",
+            "revisionNumber": 1,
+            "content": {
+              "approvedSnapshotNumber": "SNP-S4-SYNTHETIC-APPROVED",
+              "tradeRevisionNumber": 4,
+              "shipmentPlanRevision": "SYNTHETIC-PLAN-1",
+              "productionSalesUnit": {
+                "partyRoleCode": 1,
+                "participantSequenceNumber": 1
+              },
+              "domesticConsignor": {
+                "partyRoleCode": 2,
+                "participantSequenceNumber": 1
+              },
+              "overseasConsignee": {
+                "partyRoleCode": 3,
+                "participantSequenceNumber": 1
+              },
+              "customsAgent": {
+                "partyRoleCode": 6,
+                "participantSequenceNumber": 1
+              },
+              "customsOfficeCode": "SYNTHETIC-OFFICE",
+              "channelCode": "SYNTHETIC-NOT-OFFICIAL",
+              "destinationCountryCode": "VN",
+              "transportReference": "SYNTHETIC-TRANSPORT",
+              "authorizationEvidenceReference": "SYNTHETIC-NOT-VALID-AUTHORITY",
+              "items": [
+                {
+                  "itemSequenceNumber": 1,
+                  "tradeGoodsItemSequenceNumber": 1,
+                  "shipmentAllocationNumber": "SHP-S4-SYNTHETIC#1",
+                  "hsCode": "SYNTHETIC",
+                  "declaredDescription": "原创合成货物非真实归类",
+                  "specification": "SYNTHETIC",
+                  "declaredQuantity": "40.000000",
+                  "unitCode": "PCS",
+                  "declaredUnitPriceAmount": "100.00",
+                  "declaredTotalAmount": "4000.00",
+                  "currencyCode": "CNY",
+                  "originCountryCode": "CN"
+                }
+              ],
+              "supportingFiles": [
+                {
+                  "logicalFileNumber": "FILE-S4-SYNTHETIC",
+                  "revisionNumber": 1,
+                  "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+                  "documentTypeCode": 3
+                }
+              ]
+            },
+            "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+            "createdBy": "SYNTHETIC-F",
+            "events": []
+          },
+          "availableRevisions": [
+            1
+          ],
+          "filingRequests": [],
+          "events": [],
+          "attachmentDeliveries": [],
+          "missingGateCodes": [
+            "CUSTOMS_AUTHORITY_UNVERIFIED"
+          ]
+        },
+        "missingGateCodes": [
+          "CUSTOMS_AUTHORITY_UNVERIFIED"
+        ]
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.InternalCustomsOperationsService",
+    "method": "CreateCustomsReviewDecision",
+    "requestType": "CreateCustomsReviewDecisionReqMsg",
+    "responseType": "CreateCustomsReviewDecisionRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+      "idempotency-key": "d7040000-0000-4000-8000-000000000008",
+      "if-match": "\"s4-v1-57e9172357bd\"",
+      "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC",
+      "decision": {
+        "submissionEventNumber": "EV-S4-SYNTHETIC-SUBMIT",
+        "revisionNumber": 1,
+        "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+        "outcome": "DECISION_OUTCOME_RETURN",
+        "reason": "缺有效业务证明，退回补正",
+        "verificationEvidence": []
+      }
+    },
+    "response": {
+      "resource": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "returned",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "reviewDecision": {
+          "submissionEventNumber": "EV-S4-SYNTHETIC-SUBMIT",
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "outcome": "DECISION_OUTCOME_RETURN",
+          "reason": "缺有效业务证明，退回补正",
+          "verificationEvidence": []
+        }
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.ExternalCustomsService",
+    "method": "CreateCustomsExporterConfirmation",
+    "requestType": "CreateCustomsExporterConfirmationReqMsg",
+    "responseType": "CreateCustomsExporterConfirmationRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+      "idempotency-key": "d7040000-0000-4000-8000-000000000009",
+      "if-match": "\"s4-v1-57e9172357bd\"",
+      "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC",
+      "confirmation": {
+        "revisionNumber": 1,
+        "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+        "authorityReference": "SYNTHETIC-NOT-VALID-AUTHORITY",
+        "writtenEvidence": [
+          {
+            "logicalFileNumber": "FILE-S4-WRITTEN",
+            "revisionNumber": 1,
+            "sha256": "2cdd2b12968cd24ac396a6f5cd3071fc134d80919678524d029a444763e1e57f",
+            "documentTypeCode": 19
+          }
+        ]
+      }
+    },
+    "response": {
+      "resource": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "recorded_written_confirmation",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "exporterConfirmation": {
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "authorityReference": "SYNTHETIC-NOT-VALID-AUTHORITY",
+          "writtenEvidence": [
+            {
+              "logicalFileNumber": "FILE-S4-WRITTEN",
+              "revisionNumber": 1,
+              "sha256": "2cdd2b12968cd24ac396a6f5cd3071fc134d80919678524d029a444763e1e57f",
+              "documentTypeCode": 19
+            }
+          ]
+        }
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.ExternalCustomsService",
+    "method": "CreateCustomsFilingRequest",
+    "requestType": "CreateCustomsFilingRequestReqMsg",
+    "responseType": "CreateCustomsFilingRequestRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+      "idempotency-key": "d7040000-0000-4000-8000-000000000010",
+      "if-match": "\"s4-v1-57e9172357bd\"",
+      "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC",
+      "filing": {
+        "revisionNumber": 1,
+        "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+        "action": "FILING_ACTION_DECLARE",
+        "reason": "仅登记本地待办，正式职责及渠道仍待确认"
+      }
+    },
+    "response": {
+      "resource": {
+        "requestNumber": "REQ-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "intent": {
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "action": "FILING_ACTION_DECLARE",
+          "reason": "仅登记本地待办，正式职责及渠道仍待确认"
+        },
+        "executionStatus": "EXECUTION_STATUS_PENDING",
+        "missingGateCodes": [
+          "CUSTOMS_AUTHORITY_UNVERIFIED",
+          "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED"
+        ],
+        "etag": "\"s4-v1-57e9172357bd\""
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.ExternalCustomsService",
+    "method": "GetCustomsFilingRequest",
+    "requestType": "GetCustomsFilingRequestReqMsg",
+    "responseType": "GetCustomsFilingRequestRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC",
+      "requestNumber": "REQ-S4-SYNTHETIC"
+    },
+    "response": {
+      "resource": {
+        "requestNumber": "REQ-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "intent": {
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "action": "FILING_ACTION_DECLARE",
+          "reason": "仅登记本地待办，正式职责及渠道仍待确认"
+        },
+        "executionStatus": "EXECUTION_STATUS_PENDING",
+        "missingGateCodes": [
+          "CUSTOMS_AUTHORITY_UNVERIFIED",
+          "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED"
+        ],
+        "etag": "\"s4-v1-57e9172357bd\""
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.ExternalCustomsService",
+    "method": "CreateCustomsOfficialEvidence",
+    "requestType": "CreateCustomsOfficialEvidenceReqMsg",
+    "responseType": "CreateCustomsOfficialEvidenceRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+      "idempotency-key": "d7040000-0000-4000-8000-000000000012",
+      "if-match": "\"s4-v1-57e9172357bd\"",
+      "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC",
+      "evidence": {
+        "requestNumber": "REQ-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "kind": "OFFICIAL_KIND_SUBMITTED",
+        "sourceEventKey": "SYNTHETIC-CLAIM-NOT-VERIFIED",
+        "externalReferenceNumber": "SYNTHETIC-NOT-OFFICIAL",
+        "files": [
+          {
+            "logicalFileNumber": "FILE-S4-AUTHORITY-CLAIM",
+            "revisionNumber": 1,
+            "sha256": "62c1d00fe1155148acf0d7ca4d888b0dc752cf9c93977247efaf4b55cd6c6e72",
+            "documentTypeCode": 21
+          }
+        ],
+        "occurredAt": "2026-10-25T01:00:00.123Z"
+      }
+    },
+    "response": {
+      "resource": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "pending_verification",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "officialEvidence": {
+          "requestNumber": "REQ-S4-SYNTHETIC",
+          "revisionNumber": 1,
+          "kind": "OFFICIAL_KIND_SUBMITTED",
+          "sourceEventKey": "SYNTHETIC-CLAIM-NOT-VERIFIED",
+          "externalReferenceNumber": "SYNTHETIC-NOT-OFFICIAL",
+          "files": [
+            {
+              "logicalFileNumber": "FILE-S4-AUTHORITY-CLAIM",
+              "revisionNumber": 1,
+              "sha256": "62c1d00fe1155148acf0d7ca4d888b0dc752cf9c93977247efaf4b55cd6c6e72",
+              "documentTypeCode": 21
+            }
+          ],
+          "occurredAt": "2026-10-25T01:00:00.123Z"
+        }
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.ExternalCustomsService",
+    "method": "GetCustomsOfficialEvidence",
+    "requestType": "GetCustomsOfficialEvidenceReqMsg",
+    "responseType": "GetCustomsOfficialEvidenceRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC",
+      "eventNumber": "EV-S4-SYNTHETIC"
+    },
+    "response": {
+      "resource": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "pending_verification",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "officialEvidence": {
+          "requestNumber": "REQ-S4-SYNTHETIC",
+          "revisionNumber": 1,
+          "kind": "OFFICIAL_KIND_SUBMITTED",
+          "sourceEventKey": "SYNTHETIC-CLAIM-NOT-VERIFIED",
+          "externalReferenceNumber": "SYNTHETIC-NOT-OFFICIAL",
+          "files": [
+            {
+              "logicalFileNumber": "FILE-S4-AUTHORITY-CLAIM",
+              "revisionNumber": 1,
+              "sha256": "62c1d00fe1155148acf0d7ca4d888b0dc752cf9c93977247efaf4b55cd6c6e72",
+              "documentTypeCode": 21
+            }
+          ],
+          "occurredAt": "2026-10-25T01:00:00.123Z"
+        }
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.InternalCustomsOperationsService",
+    "method": "CreateCustomsOfficialEvidenceDecision",
+    "requestType": "CreateCustomsOfficialEvidenceDecisionReqMsg",
+    "responseType": "CreateCustomsOfficialEvidenceDecisionRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+      "idempotency-key": "d7040000-0000-4000-8000-000000000014",
+      "if-match": "\"s4-v1-57e9172357bd\"",
+      "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC",
+      "decision": {
+        "evidenceEventNumber": "EV-S4-SYNTHETIC",
+        "outcome": "DECISION_OUTCOME_RETURN",
+        "reason": "正式来源未接入，仅退回核实不记海关退单",
+        "verificationProfileReference": "SYNTHETIC-NOT-REGISTERED",
+        "verificationEvidence": []
+      }
+    },
+    "response": {
+      "resource": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "verification_returned",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "officialEvidenceDecision": {
+          "evidenceEventNumber": "EV-S4-SYNTHETIC",
+          "outcome": "DECISION_OUTCOME_RETURN",
+          "reason": "正式来源未接入，仅退回核实不记海关退单",
+          "verificationProfileReference": "SYNTHETIC-NOT-REGISTERED",
+          "verificationEvidence": []
+        }
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.ExternalCustomsService",
+    "method": "CreateCustomsAttachmentDelivery",
+    "requestType": "CreateCustomsAttachmentDeliveryReqMsg",
+    "responseType": "CreateCustomsAttachmentDeliveryRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+      "idempotency-key": "d7040000-0000-4000-8000-000000000015",
+      "if-match": "\"s4-v1-57e9172357bd\"",
+      "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC",
+      "delivery": {
+        "revisionNumber": 1,
+        "submittedEventNumber": "SYNTHETIC-NOT-A-REAL-SUBMISSION",
+        "recipientPartyRoleCode": 2,
+        "recipientParticipantSequenceNumber": 1,
+        "attachmentTwo": {
+          "logicalFileNumber": "FILE-S4-ATTACHMENT-SHAPE",
+          "revisionNumber": 1,
+          "sha256": "142688a3f9c2ff44906430e8d07108b72252cbe0806e5cbb60f3af0736d55110",
+          "documentTypeCode": 20
+        }
+      }
+    },
+    "response": {
+      "resource": {
+        "deliveryNumber": "DEL-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "content": {
+          "revisionNumber": 1,
+          "submittedEventNumber": "SYNTHETIC-NOT-A-REAL-SUBMISSION",
+          "recipientPartyRoleCode": 2,
+          "recipientParticipantSequenceNumber": 1,
+          "attachmentTwo": {
+            "logicalFileNumber": "FILE-S4-ATTACHMENT-SHAPE",
+            "revisionNumber": 1,
+            "sha256": "142688a3f9c2ff44906430e8d07108b72252cbe0806e5cbb60f3af0736d55110",
+            "documentTypeCode": 20
+          }
+        },
+        "state": "delivered",
+        "receipts": []
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.ExternalCustomsService",
+    "method": "GetCustomsAttachmentDelivery",
+    "requestType": "GetCustomsAttachmentDeliveryReqMsg",
+    "responseType": "GetCustomsAttachmentDeliveryRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC",
+      "deliveryNumber": "DEL-S4-SYNTHETIC"
+    },
+    "response": {
+      "resource": {
+        "deliveryNumber": "DEL-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "content": {
+          "revisionNumber": 1,
+          "submittedEventNumber": "SYNTHETIC-NOT-A-REAL-SUBMISSION",
+          "recipientPartyRoleCode": 2,
+          "recipientParticipantSequenceNumber": 1,
+          "attachmentTwo": {
+            "logicalFileNumber": "FILE-S4-ATTACHMENT-SHAPE",
+            "revisionNumber": 1,
+            "sha256": "142688a3f9c2ff44906430e8d07108b72252cbe0806e5cbb60f3af0736d55110",
+            "documentTypeCode": 20
+          }
+        },
+        "state": "delivered",
+        "receipts": []
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.ExternalCustomsService",
+    "method": "CreateCustomsAttachmentReceipt",
+    "requestType": "CreateCustomsAttachmentReceiptReqMsg",
+    "responseType": "CreateCustomsAttachmentReceiptRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+      "idempotency-key": "d7040000-0000-4000-8000-000000000017",
+      "if-match": "\"s4-v1-57e9172357bd\"",
+      "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC",
+      "deliveryNumber": "DEL-S4-SYNTHETIC",
+      "receipt": {
+        "outcome": "disputed",
+        "reason": "仅设计：来源未核实，不承认收到正式附件2",
+        "evidence": [
+          {
+            "logicalFileNumber": "FILE-S4-SYNTHETIC",
+            "revisionNumber": 1,
+            "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+            "documentTypeCode": 3
+          }
+        ]
+      }
+    },
+    "response": {
+      "resource": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "disputed",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "attachmentReceipt": {
+          "outcome": "disputed",
+          "reason": "仅设计：来源未核实，不承认收到正式附件2",
+          "evidence": [
+            {
+              "logicalFileNumber": "FILE-S4-SYNTHETIC",
+              "revisionNumber": 1,
+              "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+              "documentTypeCode": 3
+            }
+          ]
+        }
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.ExternalCustomsService",
+    "method": "GetCustomsEvent",
+    "requestType": "GetCustomsEventReqMsg",
+    "responseType": "GetCustomsEventRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC",
+      "eventNumber": "EV-S4-SYNTHETIC"
+    },
+    "response": {
+      "resource": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "pending_review",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "reviewSubmission": {
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca"
+        }
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.customs.v1.InternalCustomsOperationsService",
+    "method": "GetInternalCustomsEvent",
+    "requestType": "GetInternalCustomsEventReqMsg",
+    "responseType": "GetInternalCustomsEventRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>"
+    },
+    "request": {
+      "declarationNumber": "DEC-S4-SYNTHETIC",
+      "eventNumber": "EV-S4-SYNTHETIC"
+    },
+    "response": {
+      "resource": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "returned",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "reviewDecision": {
+          "submissionEventNumber": "EV-S4-SYNTHETIC-SUBMIT",
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "outcome": "DECISION_OUTCOME_RETURN",
+          "reason": "缺有效业务证明，退回补正",
+          "verificationEvidence": []
+        }
+      }
+    },
+    "successTrailers": {}
+  }
+]

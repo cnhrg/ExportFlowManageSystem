@@ -1,0 +1,34 @@
+sequenceDiagram
+    actor PERSON as 独立资金核对员
+    participant PAGE as 本方客户端
+    participant APP as 单体两受众门面
+    participant DB as MySQL主库
+    participant FILE as 文件任务与S3扫描
+    participant WORKER as 租约恢复worker
+    PERSON->>PAGE: 核对供应商实际收到的退税款及差额，明确本次确切意图
+    PAGE->>APP: 本受众凭证、对象、原键/标签/确认
+    APP->>DB: 认证授权；先读本subject/audience原受理
+    alt 原键已受理
+      APP->>DB: 校验原意图HMAC及当前权限；异文409
+      APP-->>PAGE: 原冻结resource/Location/ETag，不重复消费确认
+    else 新请求
+      opt 本目标需要新文件
+        APP->>FILE: 事务外查确切VersionId/hash/scan；未就绪只留任务
+        WORKER->>FILE: 按租约恢复未完成文件，不持业务锁
+      end
+      APP->>DB: SET TRANSACTION ISOLATION LEVEL READ COMMITTED； BEGIN
+      APP->>DB: 锁交易根→案件→提交版→事件/确认/受理；锁根后当前读重入
+      APP->>DB: 校验两受众权限/If-Match/确切意图确认，过期或异主体拒绝
+      APP->>DB: 当前读税务正式批准事件及其批准额，不把税务通知当到账
+      APP->>DB: 读取真实资金域受控观察及A收款账户归属、币种、稳定银行源key
+      APP->>DB: 没有该权威载体或真实流水即阻断，ROLLBACK无资金/余额/税务到账事件
+      APP->>DB: 若未来接入核对部分/重复/差异金额，不超真实净到账且独立复核
+      APP->>DB: 绝不INSERT B货款入账或增其可用余额；全部交接/核对满足才case8→9
+      alt 门禁满足
+        APP->>DB: 领域写/确认消费/最小冻结受理/任务同COMMIT
+        APP-->>PAGE: 本次结果；未产生的官方/到账事实不宣称成功
+      else 门禁不满足或数据库异常
+        APP->>DB: ROLLBACK，明确业务码
+        APP-->>PAGE: 缺项及原请求恢复路径
+      end
+    end

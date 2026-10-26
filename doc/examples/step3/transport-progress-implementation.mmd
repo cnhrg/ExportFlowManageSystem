@@ -1,0 +1,48 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 物流公司与独立审核员前端
+    participant APP as 单体应用对外或内部受限入口
+    participant DB as 同一MySQL业务及中间件表
+    participant STORE as 私有S3兼容文件与证据存储
+    participant SCAN as ClamAV扫描
+    PAGE->>APP: 本受众GET资源及批次强ETag，客户端5秒/应用4秒
+    APP->>DB: 对象授权后读当前计划与不可变批准快照
+    APP-->>PAGE: 本方数据、缺失门禁及当前标签
+    opt 本用例含材料证据
+      PAGE->>APP: 共用准备上传/确认文件，声明摘要及用途
+      PAGE->>STORE: 短期授权直传暂存对象
+      APP->>DB: 先查上传持久任务，保存确切VersionId
+      APP->>STORE: 事务外GET确切版本，校验真实长度/摘要
+      APP->>SCAN: INSTREAM实际字节，未知/病毒库过旧阻断
+      APP->>STORE: 固定最终键If-None-Match写，冲突只核对同文原对象
+      APP->>DB: 短事务确认文件元数据，失败由持久任务原键自发恢复
+    end
+    alt 只读查询目标
+      APP-->>PAGE: 200当前授权投影，不写状态或消费确认
+    else 本目标的新业务写入
+      PAGE->>APP: 明确确认当前内容，取得本受众精确意图确认凭据
+      PAGE->>APP: POST或PUT，原键/If-Match/确认，客户端10秒/应用8秒
+      APP->>STORE: 事务外保全操作证据，失败不占业务锁
+      APP->>DB: BEGIN READ COMMITTED先查原受理；固定序锁交易根、批次号排序、分配、区段、文件、确认、任务
+      alt 同键原结果存在
+        APP->>DB: 当前权限及方法/路径/原标签/业务HMAC比对
+        APP-->>PAGE: 同文200原冻结结果；异文409，不执行新分配
+      else 新命令
+        APP->>DB: 核对ETag/当前权限/确认绑定/本阶段门禁
+        alt 物流公司POST原始运输或签收证据
+        APP->>DB: 绑定具体区段和原计划版，先本方源键去重，原始声明待审
+        else 独立核实
+        APP->>DB: 读受控线路及同批正式海关放行；缺证据返回CLEARANCE_REQUIRED
+        APP->>DB: 核对逐段前序、发生时刻与有权签收主体，乱序只保留声明不跳阶段
+        APP->>DB: 写各段实际时刻和事件6至8；首段启运4，末段到达5，真实签收才6
+        end
+        alt 条件或写入失败
+          APP->>DB: ROLLBACK业务/分配/消费确认整体，锁等待1秒/事务预算2秒
+          APP-->>PAGE: 409/412/422明确业务码，缺外部证据不降级成功
+        else 本地条件满足
+          APP->>DB: 业务行/事件/原计划或证据封套/受理账本/确认消费同COMMIT
+          APP-->>PAGE: POST201准确Location，PUT200；COMMIT未知主库查原键
+        end
+      end
+    end
+    Note over APP,DB: 无银行、海关、电子签接入时只保全声明并阻断相应正式事实；调度后台不替代领域核实

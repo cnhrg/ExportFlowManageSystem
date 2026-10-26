@@ -1,0 +1,23 @@
+sequenceDiagram
+    autonumber
+    actor PAGE as 出口代理资金经办人
+    actor ACTOR1 as 出口代理资金独立审核人
+    participant APP as 单体资金应用
+    participant DB as MySQL资金及账务
+    participant STORE as 私有S3确切版本
+    participant SCAN as ClamAV
+    participant BANK as 银行事实边界（未接入）
+    PAGE->>APP: GET当前资源/强ETag，再确认具体正文及原幂等键
+    APP->>STORE: 事务外读取贸易核验证据及银行可用证明固定版本
+    APP->>SCAN: 校验相同字节；内部审核不替代银行证据
+    APP->>DB: BEGIN READ COMMITTED先查verification/release原键
+    APP->>DB: 锁trade根/稳定银行身份/receipt/核验单；allocation与account按号排序
+    APP->>DB: FOR UPDATE当前读有效分配、已释放额、受限余额及未决差异
+    alt 缺真实银行可用依据或范围不符
+    APP->>DB: ROLLBACK；受限保持原值，无event3/凭证
+    APP-->>PAGE: 422 BANK_AVAILABILITY_EVIDENCE_REQUIRED；GET review-context补正
+    else 范围金额及贸易核验均满足
+    APP->>DB: 仅本次部分金额event3桶1到2 + released投影 + voucher/entries原子COMMIT
+    APP-->>PAGE: 返回释放原号和剩余受限；不推断付款成功
+    end
+    Note over APP,DB: RC先查重入/根锁后当前读；资金与账务本地原子；外部I/O事务外

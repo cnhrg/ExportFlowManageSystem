@@ -1,0 +1,178 @@
+syntax = "proto3";
+package trade.logistics.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "trade/contracts/v1/contracts.proto";
+
+// Two audiences of the same monolith. Headers/deadlines/errors follow filing v1.
+service ExternalLogisticsService {
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateShipment(CreateShipmentReqMsg) returns (CreateShipmentRspMsg) {
+    option (google.api.http) = { post: "/api/v1/trades/{trade_number}/shipments" body: "plan" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetShipment(GetShipmentReqMsg) returns (GetShipmentRspMsg) {
+    option (google.api.http) = { get: "/api/v1/shipments/{shipment_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Current planned version only, no actual fact overwrite.
+  rpc ReplaceShipmentPlan(ReplaceShipmentPlanReqMsg) returns (ReplaceShipmentPlanRspMsg) {
+    option (google.api.http) = { put: "/api/v1/shipments/{shipment_number}/plan" body: "plan" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. A claim, never automatic carrier/customs truth.
+  rpc CreateShipmentEvidence(CreateShipmentEvidenceReqMsg) returns (CreateShipmentEvidenceRspMsg) {
+    option (google.api.http) = { post: "/api/v1/shipments/{shipment_number}/evidence-submissions" body: "evidence" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetShipmentEvidence(GetShipmentEvidenceReqMsg) returns (GetShipmentEvidenceRspMsg) {
+    option (google.api.http) = { get: "/api/v1/shipments/{shipment_number}/evidence-submissions/{submission_id}" response_body: "resource" };
+  }
+}
+service InternalLogisticsOperationsService {
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetShipmentReviewContext(GetShipmentReviewContextReqMsg) returns (GetShipmentReviewContextRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/shipments/{shipment_number}/review-context" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Independent verification, real authorization/clearance gates.
+  rpc CreateShipmentEvidenceDecision(CreateShipmentEvidenceDecisionReqMsg) returns (CreateShipmentEvidenceDecisionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/shipments/{shipment_number}/evidence-decisions" body: "decision" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Resolve only original open exception, never erase history.
+  rpc CreateShipmentExceptionDisposition(CreateShipmentExceptionDispositionReqMsg) returns (CreateShipmentExceptionDispositionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/shipments/{shipment_number}/exception-dispositions" body: "disposition" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. No dispatch unknown; booked cancellation requires real confirmation.
+  rpc CreateShipmentCancellation(CreateShipmentCancellationReqMsg) returns (CreateShipmentCancellationRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/shipments/{shipment_number}/cancellation-decisions" body: "cancellation" response_body: "resource" };
+  }
+}
+enum ShipmentStatus {
+  SHIPMENT_STATUS_UNSPECIFIED = 0;
+  SHIPMENT_STATUS_PLANNED = 1;
+  SHIPMENT_STATUS_BOOKED = 2;
+  SHIPMENT_STATUS_PICKED_UP = 3;
+  SHIPMENT_STATUS_IN_TRANSIT = 4;
+  SHIPMENT_STATUS_ARRIVED = 5;
+  SHIPMENT_STATUS_DELIVERED = 6;
+  SHIPMENT_STATUS_EXCEPTION = 7;
+  SHIPMENT_STATUS_CANCELLED = 8;
+  SHIPMENT_STATUS_FAILED = 9;
+}
+enum EvidenceKind {
+  EVIDENCE_KIND_UNSPECIFIED = 0;
+  EVIDENCE_KIND_READINESS = 1;
+  EVIDENCE_KIND_BOOKING = 2;
+  EVIDENCE_KIND_PICKUP = 3;
+  EVIDENCE_KIND_DEPARTURE = 4;
+  EVIDENCE_KIND_ARRIVAL = 5;
+  EVIDENCE_KIND_DELIVERY = 6;
+  EVIDENCE_KIND_EXCEPTION = 7;
+}
+message Allocation {
+  uint32 goods_item_sequence = 1; // 1..65535, exact approved snapshot.
+  string quantity = 2; // Positive DECIMAL(20,6), no exponent.
+  string unit_code = 3;
+  string amount = 4; // DECIMAL(20,2), CNY only; no revaluation.
+  string currency_code = 5;
+}
+message TransportLeg {
+  uint32 sequence = 1; // 1..65535; event reference is shipment_number#sequence, <=40 chars.
+  uint32 mode_code = 2; // 1 sea / 2 air / 3 road / 4 rail.
+  string origin_code = 3;
+  string destination_code = 4;
+  google.protobuf.Timestamp planned_departure_at = 5;
+  google.protobuf.Timestamp planned_arrival_at = 6;
+}
+message ShipmentPlan {
+  string approved_snapshot_number = 1;
+  uint32 trade_revision_number = 2; // Content revision of cause-2 snapshot, NOT plan version.
+  uint32 carrier_participant_sequence = 3; // Role 5, resolved from approved snapshot.
+  string origin_code = 4;
+  string destination_code = 5;
+  string planned_departure_date = 6; // China business date, YYYY-MM-DD.
+  string planned_arrival_date = 7;
+  repeated Allocation allocations = 8;
+  repeated TransportLeg legs = 9;
+}
+message Shipment {
+  string shipment_number = 1;
+  string trade_number = 2;
+  ShipmentStatus status = 3;
+  ShipmentPlan plan = 4;
+  string plan_revision = 5; // Frozen middleware acceptance sequence, not a hidden core version column.
+  string etag = 6;
+  repeated ShipmentEvidence evidence = 7; // Authorized read projection, no writable actual facts.
+}
+message ShipmentReceipt {
+  string shipment_number = 1;
+  ShipmentStatus status = 2;
+  string plan_revision = 3;
+  string etag = 4;
+  string acceptance_id = 5;
+}
+message ShipmentEvidenceInput {
+  EvidenceKind kind = 1;
+  string plan_revision = 2;
+  optional uint32 leg_sequence = 3;
+  google.protobuf.Timestamp occurred_at = 4;
+  string source_reference = 5; // External id or source identifier, not authentication.
+  repeated trade.contracts.v1.FileReference files = 6;
+  string statement = 7;
+  optional string booking_reference = 8; // Required for booking; <=64, scoped to approved carrier.
+  optional string tracking_reference = 9; // <=128, no credentials.
+  optional string location_code = 10;
+  optional string replaces_submission_id = 11; // Correction of a returned submission; original is retained.
+}
+message ShipmentEvidenceReviewResult {
+  trade.contracts.v1.DecisionOutcome outcome = 1;
+  string reason = 2;
+  google.protobuf.Timestamp reviewed_at = 3;
+  string reviewer_reference = 4;
+  repeated trade.contracts.v1.FileReference verification_evidence = 5;
+}
+message ShipmentEvidence {
+  string submission_id = 1;
+  string shipment_number = 2;
+  ShipmentEvidenceInput content = 3;
+  string state = 4; // pending_review / approved / rejected / superseded, derived from immutable decisions.
+  ShipmentEvidenceReviewResult review_result = 5; // Absent before review; immutable result enables correction.
+}
+message ShipmentReviewContext {
+  Shipment shipment = 1;
+  repeated string missing_gate_codes = 2;
+  repeated string open_exception_ids = 3;
+}
+message EvidenceDecisionInput {
+  string submission_id = 1;
+  trade.contracts.v1.DecisionOutcome outcome = 2;
+  string reason = 3;
+  repeated trade.contracts.v1.FileReference verification_evidence = 4;
+}
+message ExceptionDispositionInput {
+  string exception_event_number = 1;
+  string reason = 2;
+  repeated trade.contracts.v1.FileReference evidence = 3;
+  bool final_failure = 4; // Authorized confirmed loss/cancellation obligation, never technical timeout.
+}
+message CancellationInput {
+  string reason = 1;
+  repeated trade.contracts.v1.FileReference evidence = 2;
+}
+message CreateShipmentReqMsg { string trade_number = 1; ShipmentPlan plan = 2; }
+message CreateShipmentRspMsg { ShipmentReceipt resource = 1; }
+message GetShipmentReqMsg { string shipment_number = 1; }
+message GetShipmentRspMsg { Shipment resource = 1; }
+message ReplaceShipmentPlanReqMsg { string shipment_number = 1; ShipmentPlan plan = 2; }
+message ReplaceShipmentPlanRspMsg { ShipmentReceipt resource = 1; }
+message CreateShipmentEvidenceReqMsg { string shipment_number = 1; ShipmentEvidenceInput evidence = 2; }
+message CreateShipmentEvidenceRspMsg { ShipmentEvidence resource = 1; }
+message GetShipmentEvidenceReqMsg { string shipment_number = 1; string submission_id = 2; }
+message GetShipmentEvidenceRspMsg { ShipmentEvidence resource = 1; }
+message GetShipmentReviewContextReqMsg { string shipment_number = 1; }
+message GetShipmentReviewContextRspMsg { ShipmentReviewContext resource = 1; }
+message CreateShipmentEvidenceDecisionReqMsg { string shipment_number = 1; EvidenceDecisionInput decision = 2; }
+message CreateShipmentEvidenceDecisionRspMsg { ShipmentReceipt resource = 1; }
+message CreateShipmentExceptionDispositionReqMsg { string shipment_number = 1; ExceptionDispositionInput disposition = 2; }
+message CreateShipmentExceptionDispositionRspMsg { ShipmentReceipt resource = 1; }
+message CreateShipmentCancellationReqMsg { string shipment_number = 1; CancellationInput cancellation = 2; }
+message CreateShipmentCancellationRspMsg { ShipmentReceipt resource = 1; }

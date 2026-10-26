@@ -1,0 +1,64 @@
+{
+  "tradeNumber": "TRD-S1-DEMO-001",
+  "revisionNumber": 4,
+  "supplierFilingPresent": true,
+  "payerFilingPresent": true,
+  "missingInformation": [
+    {
+      "pointer": "/participant[2,1].receipt_path",
+      "code": "INFORMATION_NOT_PROVIDED",
+      "detail": "供应商后续补充，不视为已批准"
+    },
+    {
+      "pointer": "/participant[2,1].payment_path",
+      "code": "INFORMATION_NOT_PROVIDED",
+      "detail": "供应商后续补充，不视为已批准"
+    },
+    {
+      "pointer": "/participant[2,1].payment_branch_code",
+      "code": "INFORMATION_NOT_PROVIDED",
+      "detail": "供应商后续补充，不视为已批准"
+    },
+    {
+      "pointer": "/participant[5,1].port",
+      "code": "INFORMATION_NOT_PROVIDED",
+      "detail": "供应商后续补充，不视为已批准"
+    },
+    {
+      "pointer": "/participant[5,1].transport_mode_code",
+      "code": "INFORMATION_NOT_PROVIDED",
+      "detail": "供应商后续补充，不视为已批准"
+    },
+    {
+      "pointer": "/participant[5,1].route",
+      "code": "INFORMATION_NOT_PROVIDED",
+      "detail": "供应商后续补充，不视为已批准"
+    },
+    {
+      "pointer": "/participant[6,1].customs_qualification_reference",
+      "code": "INFORMATION_NOT_PROVIDED",
+      "detail": "供应商后续补充，不视为已批准"
+    },
+    {
+      "pointer": "/participant[6,1].quotation_reference",
+      "code": "INFORMATION_NOT_PROVIDED",
+      "detail": "供应商后续补充，不视为已批准"
+    },
+    {
+      "pointer": "/participant[6,1].quoted_amount",
+      "code": "INFORMATION_NOT_PROVIDED",
+      "detail": "供应商后续补充，不视为已批准"
+    },
+    {
+      "pointer": "/participant[6,1].pricing_basis",
+      "code": "INFORMATION_NOT_PROVIDED",
+      "detail": "供应商后续补充，不视为已批准"
+    },
+    {
+      "pointer": "/participant[6,1].currency_code",
+      "code": "INFORMATION_NOT_PROVIDED",
+      "detail": "供应商后续补充，不视为已批准"
+    }
+  ],
+  "etag": "\"s1-overview-TRD-S1-DEMO-001-r4\""
+}

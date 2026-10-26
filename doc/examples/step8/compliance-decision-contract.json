@@ -1,0 +1,233 @@
+{
+  "schema_version": 1,
+  "additional_properties": false,
+  "required": [
+    "action_code",
+    "result_code",
+    "reason_code",
+    "actor_reference",
+    "decided_at",
+    "decision_type",
+    "decision_details"
+  ],
+  "optional": [
+    "approver_reference",
+    "evidence_references",
+    "reason_text"
+  ],
+  "rules": [
+    "通过决定result2必须独立approver_reference；application_reference仅引用同案件原申请",
+    "holdReference为原action2事件号；关案不改变有效原因；多目标解除逐目标applied才完成",
+    "所有源向量、集合、引用及证据分别依照公共§11和本步Proto闭合，不接收自由扩展JSON"
+  ],
+  "decision_details": {
+    "assignment": {
+      "action_code": 1,
+      "result_codes": [
+        1
+      ],
+      "required": [
+        "assigned_to",
+        "due_at",
+        "reason"
+      ],
+      "optional": [],
+      "additional_properties": false
+    },
+    "hold_decision": {
+      "action_code": 2,
+      "result_codes": [
+        2,
+        3
+      ],
+      "required": [
+        "reason",
+        "affected_contexts"
+      ],
+      "optional": [],
+      "additional_properties": false
+    },
+    "gate_acknowledgement": {
+      "action_code": 4,
+      "result_codes": [
+        1
+      ],
+      "required": [
+        "decision_reference",
+        "hold_reference",
+        "phase"
+      ],
+      "optional": [
+        "target_context_code",
+        "target_business_reference",
+        "source_revision_reference",
+        "source_event_reference"
+      ],
+      "additional_properties": false
+    },
+    "remedy": {
+      "action_code": 3,
+      "result_codes": [
+        1
+      ],
+      "required": [
+        "original_disposition_reference",
+        "substantive_dispositions",
+        "evidence_references",
+        "explanation"
+      ],
+      "optional": [],
+      "additional_properties": false
+    },
+    "remedy_decision": {
+      "action_code": 4,
+      "result_codes": [
+        2,
+        3
+      ],
+      "required": [
+        "application_reference",
+        "outcome",
+        "reason",
+        "source_version_vector",
+        "object_sets",
+        "evidence_references"
+      ],
+      "optional": [],
+      "additional_properties": false
+    },
+    "correction_application": {
+      "action_code": 5,
+      "result_codes": [
+        1
+      ],
+      "required": [
+        "original_node",
+        "affected_contexts",
+        "dependency_edges",
+        "source_version_vector",
+        "object_sets",
+        "rule_version",
+        "reason",
+        "evidence_references"
+      ],
+      "optional": [],
+      "additional_properties": false
+    },
+    "correction_decision": {
+      "action_code": 6,
+      "result_codes": [
+        2,
+        3
+      ],
+      "required": [
+        "application_reference",
+        "outcome",
+        "source_version_vector",
+        "object_sets",
+        "rule_version",
+        "invalidated_references",
+        "reentry_node",
+        "propagation_targets",
+        "reason",
+        "evidence_references"
+      ],
+      "optional": [],
+      "additional_properties": false
+    },
+    "release_application": {
+      "action_code": 7,
+      "result_codes": [
+        1
+      ],
+      "required": [
+        "hold_reference",
+        "source_version_vector",
+        "object_sets",
+        "rule_version",
+        "substantive_dispositions",
+        "evidence_references"
+      ],
+      "optional": [],
+      "additional_properties": false
+    },
+    "release_decision": {
+      "action_code": 8,
+      "result_codes": [
+        2,
+        3
+      ],
+      "required": [
+        "hold_reference",
+        "application_reference",
+        "validation_basis",
+        "source_version_vector",
+        "object_sets",
+        "evidence_references"
+      ],
+      "optional": [],
+      "additional_properties": false
+    },
+    "case_closure_application": {
+      "action_code": 9,
+      "result_codes": [
+        1
+      ],
+      "required": [
+        "source_version_vector",
+        "object_sets",
+        "substantive_dispositions",
+        "money_difference_closure",
+        "evidence_references"
+      ],
+      "optional": [],
+      "additional_properties": false
+    },
+    "case_closure_decision": {
+      "action_code": 9,
+      "result_codes": [
+        2,
+        3
+      ],
+      "required": [
+        "application_reference",
+        "scope",
+        "source_version_vector",
+        "object_sets",
+        "evidence_references"
+      ],
+      "optional": [],
+      "additional_properties": false
+    }
+  },
+  "field_types": {
+    "assigned_to": "string",
+    "due_at": "UTC datetime",
+    "reason": "string",
+    "decision_reference": "string",
+    "hold_reference": "string",
+    "phase": "enum received|applied",
+    "target_context_code": "string",
+    "target_business_reference": "string",
+    "source_revision_reference": "string",
+    "source_event_reference": "string",
+    "original_disposition_reference": "string",
+    "substantive_dispositions": "array<SourceReference>",
+    "evidence_references": "array<FileRef>",
+    "explanation": "string",
+    "application_reference": "string",
+    "outcome": "enum APPROVE|RETURN",
+    "source_version_vector": "array<SQLSourceReference>",
+    "object_sets": "array<{type:string,object_ids:array<string>,hash:sha256}>",
+    "rule_version": "string",
+    "original_node": "SourceReference",
+    "affected_contexts": "array<AffectedContext>",
+    "dependency_edges": "array<SourceReference>",
+    "invalidated_references": "array<SourceReference>",
+    "reentry_node": "SourceReference",
+    "propagation_targets": "array<AffectedContext>",
+    "validation_basis": "string",
+    "money_difference_closure": "SourceReference|null (null only when no linked funds difference)",
+    "scope": "string"
+  }
+}

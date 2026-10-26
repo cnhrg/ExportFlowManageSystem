@@ -1,0 +1,23 @@
+.product-toolbar,.product-actions{display:flex;align-items:end;gap:12px;flex-wrap:wrap}
+.product-toolbar{margin-bottom:16px}.product-toolbar label,.product-layout label{display:grid;gap:6px;font-size:14px}
+.product-toolbar select,.product-layout input,.product-layout select,.product-layout textarea{box-sizing:border-box;max-width:100%;min-height:44px;padding:9px;border:1px solid #94a3b8;border-radius:6px;background:#fff;color:#0f172a;font:inherit}
+.product-toolbar a{min-height:44px;display:inline-flex;align-items:center;color:#1d4ed8}
+.product-notice{padding:14px;border-left:3px solid #a16207;background:#fefce8;color:#713f12;line-height:1.7}
+.product-message{min-height:24px;line-height:1.7;color:#334155}.product-message[role=alert],.product-errors{color:#b91c1c}
+.product-layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:24px;align-items:start}
+.product-layout aside{padding:16px;background:#f1f5f9;border-radius:8px}.product-layout aside form{display:grid;gap:10px}
+.product-layout nav{display:grid;gap:6px;margin-top:16px}.product-layout nav button{text-align:left;min-height:56px;padding:10px;background:white;border:1px solid #cbd5e1}
+.product-layout nav button[aria-current=page]{border-color:#2563eb;background:#eff6ff}
+.product-layout nav small{display:block;color:#475569;margin-top:5px}
+.product-layout article{min-width:0;padding:24px;background:#fff;border:1px solid #cbd5e1;border-radius:8px}
+.product-layout h3{margin-top:0}.product-layout p,.product-layout dd{line-height:1.7}
+.product-context{font-size:13px;color:#475569}.product-rules{display:grid;grid-template-columns:85px minmax(0,1fr);gap:10px;font-size:14px}
+.product-rules dt{font-weight:600}.product-rules dd{margin:0}
+.product-layout fieldset{display:grid;gap:16px;margin:20px 0;padding:16px;border:1px solid #cbd5e1}
+.product-layout fieldset:disabled{opacity:.8}.product-layout fieldset small{color:#475569;line-height:1.5}
+.product-layout input[type=checkbox]{min-height:20px;width:20px;vertical-align:middle}
+.product-layout button,.product-toolbar button{min-height:44px;padding:9px 14px;cursor:pointer}
+.product-layout button:disabled{cursor:not-allowed}.product-layout a:focus-visible,.product-layout button:focus-visible,.product-layout input:focus-visible,.product-layout select:focus-visible,.product-layout textarea:focus-visible{outline:3px solid #2563eb;outline-offset:2px}
+.product-actions{margin:14px 0}.product-review,.product-external{padding:16px;border:1px solid #cbd5e1;margin:16px 0;border-radius:6px}.product-review label{margin:10px 0}.product-layout summary{cursor:pointer;min-height:44px;line-height:44px}
+@media(max-width:900px){.product-layout{grid-template-columns:minmax(0,1fr)}.product-layout nav{max-height:280px;overflow-y:auto}.product-layout article{padding:16px}.product-toolbar label{flex:1;min-width:130px}}
+@media print{.product-toolbar,.product-layout aside,.product-actions{display:none}.product-layout{display:block}.product-layout article{border:0;padding:0}}

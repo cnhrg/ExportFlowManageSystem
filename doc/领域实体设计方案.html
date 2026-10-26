@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>领域实体设计已合并至代理出口主方案</title>
+  <style>
+    body{margin:0;background:#f5f8fc;color:#203c59;font:16px/1.8 system-ui,sans-serif}
+    main{max-width:760px;margin:10vh auto;padding:28px}
+    h1{font-size:28px;line-height:1.5}
+    a{color:#174ea6;text-underline-offset:4px}
+    a:focus-visible{outline:3px solid #2563eb;outline-offset:4px}
+    nav{display:flex;gap:20px;flex-wrap:wrap}
+    nav a{display:inline-block;padding:12px 0;min-height:24px}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>领域实体设计已合并至代理出口主方案</h1>
+    <p>实体关系、字段、受控码、状态机、事件、Guard及审计设计统一维护在“代理出口业务流程图”的数据库设计和状态机设计中。本页仅保留旧链接入口，不保留冗余模型。</p>
+    <nav aria-label="打开主方案设计">
+      <a id="database-link" href="../交付成果/代理出口业务流程图.html#database-design/trade">打开数据库设计</a>
+      <a id="state-link" href="../交付成果/代理出口业务流程图.html#state-design/trade">打开状态机设计</a>
+      <a href="领域拆分评估与交易域设计.md">领域边界与JSON结构说明</a>
+    </nav>
+    <p>当前八步骤设计仅人民币；预付款只使用真实到账且已核验可用款，不含垫资、授信或特殊结案。最新47表、702列设计只在隔离库验证，原业务库45表未迁移；不代表生产接口或银行、海关、税务接入已上线。</p>
+  </main>
+  <script>
+    function updateLinks(){
+      const domain=/^#[a-z]+$/.test(location.hash)&&!['top','architecture'].includes(location.hash.slice(1))?location.hash.slice(1):'trade';
+      document.getElementById('database-link').hash='database-design/'+domain;
+      document.getElementById('state-link').hash='state-design/'+domain;
+    }
+    window.addEventListener('hashchange',updateLinks);
+    updateLinks();
+  </script>
+</body>
+</html>

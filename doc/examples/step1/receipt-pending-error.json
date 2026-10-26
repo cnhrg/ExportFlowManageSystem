@@ -1,0 +1,16 @@
+{
+  "type": "https://api.example.invalid/problems/RECEIPT_NOT_READY",
+  "title": "RECEIPT_NOT_READY",
+  "status": 503,
+  "detail": "已受理，原签名回执后台恢复中",
+  "instance": "/synthetic/request",
+  "errors": [
+    {
+      "pointer": "/",
+      "code": "RECEIPT_NOT_READY",
+      "detail": "已受理，原签名回执后台恢复中"
+    }
+  ],
+  "outcomeUnknown": false,
+  "retryAfterMs": 1000
+}

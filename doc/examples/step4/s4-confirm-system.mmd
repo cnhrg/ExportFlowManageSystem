@@ -1,0 +1,7 @@
+sequenceDiagram
+    actor A as 供应商授权确认人
+    participant SYS as 代理出口系统
+    A->>SYS: 查看最终稿和独立审核结论
+    SYS-->>A: 全文、摘要、运输计划、批准依据和书面确认要求
+    A->>SYS: 上传书面确认文件并确认这一版
+    SYS-->>A: 保存该版确认记录；后续内容有变须重新确认

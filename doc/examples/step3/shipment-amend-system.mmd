@@ -1,0 +1,14 @@
+sequenceDiagram
+    actor SUPPLIER as 供应商
+    participant SYSTEM as 代理出口系统
+    actor OPERATOR as 出口代理有权人员
+    SUPPLIER->>SYSTEM: 查看当前未执行计划及标签
+    SYSTEM-->>SUPPLIER: 当前计划、是否待审或执行未知
+    SUPPLIER->>SYSTEM: 明确确认后整体替换本方运输计划
+    SYSTEM-->>SUPPLIER: 保存新计划并保留原版；不能修改时说明原因
+    opt 需要取消而非修改
+      OPERATOR->>SYSTEM: 查看取消条件及真实订舱撤销依据
+      SYSTEM-->>OPERATOR: 是否已提货、是否有未知执行与缺失依据
+      OPERATOR->>SYSTEM: 提交本次授权取消与原版内容确认
+      SYSTEM-->>OPERATOR: 已取消并释放有效分配，或阻断且保持原占量
+    end

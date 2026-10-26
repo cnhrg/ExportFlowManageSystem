@@ -1,0 +1,16 @@
+sequenceDiagram
+    actor OP as 出口代理资金经办人
+    participant SYS as 代理出口系统（单体）
+    actor REVIEWER as 出口代理资金独立复核人
+    OP->>SYS: 查询已核实实收、未匹配余额和批准交易
+    SYS-->>OP: 返回来款原始金额、已分配金额和本次最多可分配金额
+    OP->>SYS: 明确确认具体分配金额、交易和批准版
+    SYS-->>OP: 保存分配并返回编号，等待独立复核；可用资金暂不增加
+    REVIEWER->>SYS: 独立复核同一银行流水和交易快照
+    alt 守恒且金额未超限
+      SYS-->>REVIEWER: 将确切分配版标记有效；待核实金额仍受限
+    else 不匹配或超额
+      SYS-->>REVIEWER: 回滚/退回，不生成负余额或额度
+    end
+    OP->>SYS: 以原分配号读取当前与历史状态
+    SYS-->>OP: 返回不可覆盖的毛额和复核结果

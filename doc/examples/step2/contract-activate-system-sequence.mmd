@@ -1,0 +1,14 @@
+sequenceDiagram
+    actor PERSON as 出口代理有权运营人员
+    participant SYSTEM as 代理出口系统
+    PERSON->>SYSTEM: 查看本方可见的确切资料及当前版本
+    SYSTEM-->>PERSON: 内容、授权操作及当前版本
+    PERSON->>SYSTEM: 核实签署结果及证据，确认生效条件和适用期间，记录生效版本或尚未满足的条件。
+    alt 本方有权且满足本用例条件
+      SYSTEM-->>PERSON: 本次处理结果、对应版本，以及接下来需要谁处理
+    else 原请求已受理
+      SYSTEM-->>PERSON: 原结果，不重复执行业务
+    else 前提不满足或外部结果尚未知
+      SYSTEM-->>PERSON: 说明未满足的条件；结果不明时查询原请求，合同状态暂不推进
+    end
+    Note over PERSON,SYSTEM: HTTPS不是用户签名；合同各方在第三方平台实名确认，不要求供应商设备

@@ -1,0 +1,17 @@
+sequenceDiagram
+    actor PERSON as 案件责任人
+    participant SYSTEM as 代理出口系统
+    PERSON->>SYSTEM: 针对一项暂停原因申请解除
+    SYSTEM-->>PERSON: 显示当前资料版本、涉及事项、缺项和本方可办操作
+    PERSON->>SYSTEM: 核对本次内容并确认提交
+    SYSTEM-->>PERSON: 显示独立复核和各业务落实情况，其他暂停原因继续有效
+    actor REVIEWER as 独立合规复核人
+    REVIEWER->>SYSTEM: 独立查看本次依据、范围与当前事实
+    SYSTEM-->>REVIEWER: 显示原提交和仍未满足的条件
+    REVIEWER->>SYSTEM: 独立批准或退回申请，逐项写明理由
+    SYSTEM-->>REVIEWER: 显示独立复核和各业务落实情况，其他暂停原因继续有效
+    actor OWNER as 所属业务域经办人
+    OWNER->>SYSTEM: 查看本业务需暂停或恢复的具体操作及原因
+    SYSTEM-->>OWNER: 待执行范围及其他仍有效原因
+    OWNER->>SYSTEM: 确认本业务已按原决定落实操作限制或解除
+    SYSTEM-->>OWNER: 显示各项落实结果；其他暂停原因仍有效

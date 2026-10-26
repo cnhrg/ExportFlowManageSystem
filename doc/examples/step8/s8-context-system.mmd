@@ -1,0 +1,7 @@
+sequenceDiagram
+    actor PERSON as 核对经办人
+    participant SYSTEM as 代理出口系统
+    PERSON->>SYSTEM: 查看已批准交易的全部核对资料
+    SYSTEM-->>PERSON: 显示当前资料版本、涉及事项、缺项和本方可办操作
+    PERSON->>SYSTEM: 查看有权读取的资料，不作修改
+    SYSTEM-->>PERSON: 返回有关对象清单、资料版本、适用规则和缺项，尚未作出核对结论

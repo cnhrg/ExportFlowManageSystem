@@ -1,0 +1,11 @@
+sequenceDiagram
+    actor PERSON as 供应商
+    participant SYSTEM as 代理出口系统
+    PERSON->>SYSTEM: 查看本方批次、批准商品及当前计划
+    SYSTEM-->>PERSON: 允许操作、确切版本、证据和待补原因
+    PERSON->>SYSTEM: 查询批次进度与恢复原受理
+    alt 本方有权且本次条件齐备
+      SYSTEM-->>PERSON: 本次处理结果及下一步待办
+    else 前提缺失或外部结果未知
+      SYSTEM-->>PERSON: 明确缺项或原请求恢复方式，不冒充已出运或已签收
+    end

@@ -1,0 +1,67 @@
+{
+  "authority": "doc/领域拆分评估与交易域设计.md §11",
+  "schema_version": 1,
+  "source": "PackageInput is a command, never stored verbatim as domain JSON; server resolves controlled evidence and computes report.",
+  "submission_content_json": {
+    "schema_version": 1,
+    "tax_type_code": 2,
+    "approved_snapshot_number": "SYNTHETIC-APPROVED-SNAPSHOT",
+    "scope_reference": "SYNTHETIC-PREPARATION-SCOPE",
+    "rule_version": "UNCONFIRMED",
+    "responsibility_basis": {
+      "unresolved_items": [
+        "主管机关责任/范围规则待确认"
+      ]
+    },
+    "declaration_references": [],
+    "fields": {
+      "currency_code": "CNY"
+    },
+    "check_report": {
+      "missing_gates": [
+        "SCOPE_RULE_UNCONFIRMED",
+        "TAX_AUTHORITY_UNCONFIRMED"
+      ],
+      "checked_rule_references": []
+    }
+  },
+  "evidence_manifest_json": [
+    {
+      "logical_file_number": "SYNTHETIC-S7-FILE",
+      "revision_number": 1,
+      "content_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "document_purpose_code": 24
+    }
+  ],
+  "review_snapshot_json": {
+    "reviewer_reference": "SYNTHETIC-INDEPENDENT-REVIEWER",
+    "result_code": 3,
+    "reviewed_at": "2026-10-25T00:00:00Z",
+    "content_hash": "e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c",
+    "rule_version": "UNCONFIRMED",
+    "evidence_references": [],
+    "comments": "范围未确认，退回补料"
+  },
+  "event_payload_branches": {
+    "preparation": {
+      "schema_version": 1,
+      "operation_evidence_reference": "SYNTHETIC-PREP-OP",
+      "scope_reference": "SYNTHETIC-PREPARATION-SCOPE",
+      "unresolved_items": [
+        "范围/职责待确认"
+      ]
+    },
+    "package_or_review": {
+      "schema_version": 1,
+      "operation_evidence_reference": "SYNTHETIC-REVIEW-OP",
+      "submission_content_hash": "e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c",
+      "reviewer_reference": "SYNTHETIC-INDEPENDENT-REVIEWER",
+      "reason": "内部退回"
+    }
+  },
+  "unavailable_branches": [
+    "正式办理/结果必须真实源命名空间/机关号/确切文件证据，本例不造成功",
+    "银行核对必须真实受控资金域证据，本例不造到账"
+  ],
+  "hash_profile": "Validation-only canonical sorted-key UTF-8 JSON of {content,manifest}; production must reuse negotiated canonical profile."
+}

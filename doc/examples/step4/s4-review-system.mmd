@@ -1,0 +1,10 @@
+sequenceDiagram
+    actor F as 出口报关代理经办人
+    actor REVIEWER as 独立关务审核员
+    participant SYS as 代理出口系统
+    F->>SYS: 将指定版本和内容摘要送审
+    SYS-->>F: 返回送审号，等待独立审核
+    REVIEWER->>SYS: 查看送审稿、原件、有关主体和计量单位
+    SYS-->>REVIEWER: 显示该版全文、依据和缺项
+    REVIEWER->>SYS: 审核通过或退回，并填写原因
+    SYS-->>REVIEWER: 保存该版审核结论；通过后仍须供应商书面确认及正式授权

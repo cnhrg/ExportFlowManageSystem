@@ -1,0 +1,1146 @@
+[
+  {
+    "codes": [
+      "INVALID_INPUT",
+      "UNKNOWN_FIELD",
+      "INVALID_IF_MATCH",
+      "DEADLINE_REQUIRED"
+    ],
+    "httpStatus": 400,
+    "grpcStatus": "INVALID_ARGUMENT",
+    "retryable": false,
+    "recovery": "修正字段或头，业务变化用新键",
+    "httpBody": {
+      "type": "https://example.invalid/problems/invalid_input",
+      "title": "INVALID_INPUT",
+      "status": 400,
+      "detail": "修正字段或头，业务变化用新键",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "INVALID_INPUT",
+          "detail": "修正字段或头，业务变化用新键"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "INVALID_ARGUMENT",
+        "details": {
+          "code": "INVALID_INPUT",
+          "httpStatus": 400,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "INVALID_INPUT",
+              "detail": "修正字段或头，业务变化用新键"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "UNAUTHENTICATED",
+      "REAUTHENTICATION_REQUIRED",
+      "CONFIRMATION_EXPIRED",
+      "SIGNATURE_REQUIRED",
+      "SIGNATURE_INVALID",
+      "SIGNATURE_EXPIRED"
+    ],
+    "httpStatus": 401,
+    "grpcStatus": "UNAUTHENTICATED",
+    "retryable": false,
+    "recovery": "重新认证；签名错误仅适用已约定机构接入，不要求供应商私钥",
+    "httpBody": {
+      "type": "https://example.invalid/problems/unauthenticated",
+      "title": "UNAUTHENTICATED",
+      "status": 401,
+      "detail": "重新认证；签名错误仅适用已约定机构接入，不要求供应商私钥",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "UNAUTHENTICATED",
+          "detail": "重新认证；签名错误仅适用已约定机构接入，不要求供应商私钥"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "UNAUTHENTICATED",
+        "details": {
+          "code": "UNAUTHENTICATED",
+          "httpStatus": 401,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "UNAUTHENTICATED",
+              "detail": "重新认证；签名错误仅适用已约定机构接入，不要求供应商私钥"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "FORBIDDEN",
+      "CERTIFICATE_REVOKED",
+      "SIGNER_NOT_AUTHORIZED"
+    ],
+    "httpStatus": 403,
+    "grpcStatus": "PERMISSION_DENIED",
+    "retryable": false,
+    "recovery": "恢复合法身份/授权；不能以同键绕过撤销",
+    "httpBody": {
+      "type": "https://example.invalid/problems/forbidden",
+      "title": "FORBIDDEN",
+      "status": 403,
+      "detail": "恢复合法身份/授权；不能以同键绕过撤销",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "FORBIDDEN",
+          "detail": "恢复合法身份/授权；不能以同键绕过撤销"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "PERMISSION_DENIED",
+        "details": {
+          "code": "FORBIDDEN",
+          "httpStatus": 403,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "FORBIDDEN",
+              "detail": "恢复合法身份/授权；不能以同键绕过撤销"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "NOT_FOUND"
+    ],
+    "httpStatus": 404,
+    "grpcStatus": "NOT_FOUND",
+    "retryable": false,
+    "recovery": "不可见与不存在统一处理，不猜号",
+    "httpBody": {
+      "type": "https://example.invalid/problems/not_found",
+      "title": "NOT_FOUND",
+      "status": 404,
+      "detail": "不可见与不存在统一处理，不猜号",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "NOT_FOUND",
+          "detail": "不可见与不存在统一处理，不猜号"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "NOT_FOUND",
+        "details": {
+          "code": "NOT_FOUND",
+          "httpStatus": 404,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "NOT_FOUND",
+              "detail": "不可见与不存在统一处理，不猜号"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "METHOD_NOT_ALLOWED"
+    ],
+    "httpStatus": 405,
+    "grpcStatus": "UNIMPLEMENTED",
+    "retryable": false,
+    "recovery": "使用已声明资源方法；HTTP返回Allow，不自动换方法",
+    "httpBody": {
+      "type": "https://example.invalid/problems/method_not_allowed",
+      "title": "METHOD_NOT_ALLOWED",
+      "status": 405,
+      "detail": "使用已声明资源方法；HTTP返回Allow，不自动换方法",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "METHOD_NOT_ALLOWED",
+          "detail": "使用已声明资源方法；HTTP返回Allow，不自动换方法"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "UNIMPLEMENTED",
+        "details": {
+          "code": "METHOD_NOT_ALLOWED",
+          "httpStatus": 405,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "METHOD_NOT_ALLOWED",
+              "detail": "使用已声明资源方法；HTTP返回Allow，不自动换方法"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "IDEMPOTENCY_CONFLICT",
+      "NONCE_REUSED",
+      "CONFIRMATION_MISMATCH"
+    ],
+    "httpStatus": 409,
+    "grpcStatus": "ALREADY_EXISTS",
+    "retryable": false,
+    "recovery": "停止异文或跨请求移植；原调用允许恢复",
+    "httpBody": {
+      "type": "https://example.invalid/problems/idempotency_conflict",
+      "title": "IDEMPOTENCY_CONFLICT",
+      "status": 409,
+      "detail": "停止异文或跨请求移植；原调用允许恢复",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "IDEMPOTENCY_CONFLICT",
+          "detail": "停止异文或跨请求移植；原调用允许恢复"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "ALREADY_EXISTS",
+        "details": {
+          "code": "IDEMPOTENCY_CONFLICT",
+          "httpStatus": 409,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "IDEMPOTENCY_CONFLICT",
+              "detail": "停止异文或跨请求移植；原调用允许恢复"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "FILING_ALREADY_EXISTS"
+    ],
+    "httpStatus": 409,
+    "grpcStatus": "ALREADY_EXISTS",
+    "retryable": false,
+    "recovery": "GET原资料再PUT",
+    "httpBody": {
+      "type": "https://example.invalid/problems/filing_already_exists",
+      "title": "FILING_ALREADY_EXISTS",
+      "status": 409,
+      "detail": "GET原资料再PUT",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "FILING_ALREADY_EXISTS",
+          "detail": "GET原资料再PUT"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "ALREADY_EXISTS",
+        "details": {
+          "code": "FILING_ALREADY_EXISTS",
+          "httpStatus": 409,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "FILING_ALREADY_EXISTS",
+              "detail": "GET原资料再PUT"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "FILE_NOT_READY"
+    ],
+    "httpStatus": 409,
+    "grpcStatus": "FAILED_PRECONDITION",
+    "retryable": true,
+    "recovery": "按2秒查询原上传资源；不缓存为最终失败",
+    "httpBody": {
+      "type": "https://example.invalid/problems/file_not_ready",
+      "title": "FILE_NOT_READY",
+      "status": 409,
+      "detail": "按2秒查询原上传资源；不缓存为最终失败",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "FILE_NOT_READY",
+          "detail": "按2秒查询原上传资源；不缓存为最终失败"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "FAILED_PRECONDITION",
+        "details": {
+          "code": "FILE_NOT_READY",
+          "httpStatus": 409,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "FILE_NOT_READY",
+              "detail": "按2秒查询原上传资源；不缓存为最终失败"
+            }
+          ],
+          "retryable": true,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "TRADE_NOT_EDITABLE",
+      "DEPENDENT_FILING_CONFLICT"
+    ],
+    "httpStatus": 409,
+    "grpcStatus": "FAILED_PRECONDITION",
+    "retryable": false,
+    "recovery": "后续专门流程，不直接覆盖",
+    "httpBody": {
+      "type": "https://example.invalid/problems/trade_not_editable",
+      "title": "TRADE_NOT_EDITABLE",
+      "status": 409,
+      "detail": "后续专门流程，不直接覆盖",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "TRADE_NOT_EDITABLE",
+          "detail": "后续专门流程，不直接覆盖"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "FAILED_PRECONDITION",
+        "details": {
+          "code": "TRADE_NOT_EDITABLE",
+          "httpStatus": 409,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "TRADE_NOT_EDITABLE",
+              "detail": "后续专门流程，不直接覆盖"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "REVISION_CONFLICT"
+    ],
+    "httpStatus": 412,
+    "grpcStatus": "FAILED_PRECONDITION",
+    "retryable": false,
+    "recovery": "GET合并后新键新标签",
+    "httpBody": {
+      "type": "https://example.invalid/problems/revision_conflict",
+      "title": "REVISION_CONFLICT",
+      "status": 412,
+      "detail": "GET合并后新键新标签",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "REVISION_CONFLICT",
+          "detail": "GET合并后新键新标签"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "FAILED_PRECONDITION",
+        "details": {
+          "code": "REVISION_CONFLICT",
+          "httpStatus": 412,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "REVISION_CONFLICT",
+              "detail": "GET合并后新键新标签"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "UNSUPPORTED_MEDIA_TYPE"
+    ],
+    "httpStatus": 415,
+    "grpcStatus": "INVALID_ARGUMENT",
+    "retryable": false,
+    "recovery": "写接口使用application/json，不自动改写正文",
+    "httpBody": {
+      "type": "https://example.invalid/problems/unsupported_media_type",
+      "title": "UNSUPPORTED_MEDIA_TYPE",
+      "status": 415,
+      "detail": "写接口使用application/json，不自动改写正文",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "UNSUPPORTED_MEDIA_TYPE",
+          "detail": "写接口使用application/json，不自动改写正文"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "INVALID_ARGUMENT",
+        "details": {
+          "code": "UNSUPPORTED_MEDIA_TYPE",
+          "httpStatus": 415,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "UNSUPPORTED_MEDIA_TYPE",
+              "detail": "写接口使用application/json，不自动改写正文"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "CURRENCY_NOT_SUPPORTED",
+      "DOCUMENT_INCONSISTENT",
+      "REQUIRED_MATERIAL",
+      "REQUIRED_EVIDENCE",
+      "FILE_REJECTED",
+      "REQUIRED",
+      "IDENTITY_MISMATCH",
+      "CONFIRMATION_REQUIRED",
+      "INVALID_QUANTITY",
+      "INVALID_AMOUNT",
+      "INVALID_PACKING"
+    ],
+    "httpStatus": 422,
+    "grpcStatus": "INVALID_ARGUMENT",
+    "retryable": false,
+    "recovery": "修正字段/业务/证明；恶意文件和摘要冲突不重试",
+    "httpBody": {
+      "type": "https://example.invalid/problems/currency_not_supported",
+      "title": "CURRENCY_NOT_SUPPORTED",
+      "status": 422,
+      "detail": "修正字段/业务/证明；恶意文件和摘要冲突不重试",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "CURRENCY_NOT_SUPPORTED",
+          "detail": "修正字段/业务/证明；恶意文件和摘要冲突不重试"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "INVALID_ARGUMENT",
+        "details": {
+          "code": "CURRENCY_NOT_SUPPORTED",
+          "httpStatus": 422,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "CURRENCY_NOT_SUPPORTED",
+              "detail": "修正字段/业务/证明；恶意文件和摘要冲突不重试"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "IF_MATCH_REQUIRED"
+    ],
+    "httpStatus": 428,
+    "grpcStatus": "FAILED_PRECONDITION",
+    "retryable": false,
+    "recovery": "先GET本方资源",
+    "httpBody": {
+      "type": "https://example.invalid/problems/if_match_required",
+      "title": "IF_MATCH_REQUIRED",
+      "status": 428,
+      "detail": "先GET本方资源",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "IF_MATCH_REQUIRED",
+          "detail": "先GET本方资源"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "FAILED_PRECONDITION",
+        "details": {
+          "code": "IF_MATCH_REQUIRED",
+          "httpStatus": 428,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "IF_MATCH_REQUIRED",
+              "detail": "先GET本方资源"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "RATE_LIMITED"
+    ],
+    "httpStatus": 429,
+    "grpcStatus": "RESOURCE_EXHAUSTED",
+    "retryable": true,
+    "recovery": "Retry-After或retry_after_ms；原键重试",
+    "httpBody": {
+      "type": "https://example.invalid/problems/rate_limited",
+      "title": "RATE_LIMITED",
+      "status": 429,
+      "detail": "Retry-After或retry_after_ms；原键重试",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "RATE_LIMITED",
+          "detail": "Retry-After或retry_after_ms；原键重试"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "RESOURCE_EXHAUSTED",
+        "details": {
+          "code": "RATE_LIMITED",
+          "httpStatus": 429,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "RATE_LIMITED",
+              "detail": "Retry-After或retry_after_ms；原键重试"
+            }
+          ],
+          "retryable": true,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "DEPENDENCY_UNAVAILABLE",
+      "COMMIT_OUTCOME_UNKNOWN",
+      "RECEIPT_NOT_READY"
+    ],
+    "httpStatus": 503,
+    "grpcStatus": "UNAVAILABLE",
+    "retryable": true,
+    "recovery": "原键查询/恢复；未知不等于未提交",
+    "httpBody": {
+      "type": "https://example.invalid/problems/dependency_unavailable",
+      "title": "DEPENDENCY_UNAVAILABLE",
+      "status": 503,
+      "detail": "原键查询/恢复；未知不等于未提交",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "DEPENDENCY_UNAVAILABLE",
+          "detail": "原键查询/恢复；未知不等于未提交"
+        }
+      ],
+      "outcomeUnknown": true,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "UNAVAILABLE",
+        "details": {
+          "code": "DEPENDENCY_UNAVAILABLE",
+          "httpStatus": 503,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "DEPENDENCY_UNAVAILABLE",
+              "detail": "原键查询/恢复；未知不等于未提交"
+            }
+          ],
+          "retryable": true,
+          "retryAfterMs": 0,
+          "outcomeUnknown": true,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "DEADLINE_EXCEEDED"
+    ],
+    "httpStatus": 504,
+    "grpcStatus": "DEADLINE_EXCEEDED",
+    "retryable": true,
+    "recovery": "端侧超时可能无HTTP响应；写入结果未知先恢复",
+    "httpBody": {
+      "type": "https://example.invalid/problems/deadline_exceeded",
+      "title": "DEADLINE_EXCEEDED",
+      "status": 504,
+      "detail": "端侧超时可能无HTTP响应；写入结果未知先恢复",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "DEADLINE_EXCEEDED",
+          "detail": "端侧超时可能无HTTP响应；写入结果未知先恢复"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "DEADLINE_EXCEEDED",
+        "details": {
+          "code": "DEADLINE_EXCEEDED",
+          "httpStatus": 504,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "DEADLINE_EXCEEDED",
+              "detail": "端侧超时可能无HTTP响应；写入结果未知先恢复"
+            }
+          ],
+          "retryable": true,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "CLIENT_CANCELLED"
+    ],
+    "httpStatus": null,
+    "grpcStatus": "CANCELLED",
+    "retryable": false,
+    "recovery": "客户端终止等待不证明数据库回滚",
+    "rpc": {
+      "error": {
+        "code": "CANCELLED",
+        "details": {
+          "code": "CLIENT_CANCELLED",
+          "httpStatus": 499,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "CLIENT_CANCELLED",
+              "detail": "客户端终止等待不证明数据库回滚"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "INTERNAL_ERROR"
+    ],
+    "httpStatus": 500,
+    "grpcStatus": "INTERNAL",
+    "retryable": false,
+    "recovery": "告警及人工定位；不自动业务重提",
+    "httpBody": {
+      "type": "https://example.invalid/problems/internal_error",
+      "title": "INTERNAL_ERROR",
+      "status": 500,
+      "detail": "告警及人工定位；不自动业务重提",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "INTERNAL_ERROR",
+          "detail": "告警及人工定位；不自动业务重提"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "INTERNAL",
+        "details": {
+          "code": "INTERNAL_ERROR",
+          "httpStatus": 500,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "INTERNAL_ERROR",
+              "detail": "告警及人工定位；不自动业务重提"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "REPORT_STALE",
+      "RULE_VERSION_STALE"
+    ],
+    "httpStatus": 409,
+    "grpcStatus": "FAILED_PRECONDITION",
+    "retryable": false,
+    "recovery": "重读全量上下文生成新报告，不修改旧报告",
+    "httpBody": {
+      "type": "https://example.invalid/problems/report_stale",
+      "title": "REPORT_STALE",
+      "status": 409,
+      "detail": "重读全量上下文生成新报告，不修改旧报告",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "REPORT_STALE",
+          "detail": "重读全量上下文生成新报告，不修改旧报告"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "FAILED_PRECONDITION",
+        "details": {
+          "code": "REPORT_STALE",
+          "httpStatus": 409,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "REPORT_STALE",
+              "detail": "重读全量上下文生成新报告，不修改旧报告"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "HOLD_ACTIVE",
+      "PROPAGATION_PENDING",
+      "OPEN_EXCEPTION",
+      "EXECUTION_UNKNOWN"
+    ],
+    "httpStatus": 409,
+    "grpcStatus": "FAILED_PRECONDITION",
+    "retryable": false,
+    "recovery": "逐原因处置及原域恢复查单，未知不等于失败",
+    "httpBody": {
+      "type": "https://example.invalid/problems/hold_active",
+      "title": "HOLD_ACTIVE",
+      "status": 409,
+      "detail": "逐原因处置及原域恢复查单，未知不等于失败",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "HOLD_ACTIVE",
+          "detail": "逐原因处置及原域恢复查单，未知不等于失败"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "FAILED_PRECONDITION",
+        "details": {
+          "code": "HOLD_ACTIVE",
+          "httpStatus": 409,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "HOLD_ACTIVE",
+              "detail": "逐原因处置及原域恢复查单，未知不等于失败"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "SELF_REVIEW",
+      "SCOPE_MISMATCH",
+      "TERMINAL_TRADE"
+    ],
+    "httpStatus": 409,
+    "grpcStatus": "FAILED_PRECONDITION",
+    "retryable": false,
+    "recovery": "独立复核及原范围；终态仅原受理恢复",
+    "httpBody": {
+      "type": "https://example.invalid/problems/self_review",
+      "title": "SELF_REVIEW",
+      "status": 409,
+      "detail": "独立复核及原范围；终态仅原受理恢复",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "SELF_REVIEW",
+          "detail": "独立复核及原范围；终态仅原受理恢复"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "FAILED_PRECONDITION",
+        "details": {
+          "code": "SELF_REVIEW",
+          "httpStatus": 409,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "SELF_REVIEW",
+              "detail": "独立复核及原范围；终态仅原受理恢复"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "CASE_NOT_FOUND"
+    ],
+    "httpStatus": 404,
+    "grpcStatus": "NOT_FOUND",
+    "retryable": false,
+    "recovery": "当前主体仅可引用本交易可见原案件，不存在与不可见统一拒绝",
+    "httpBody": {
+      "type": "https://example.invalid/problems/case_not_found",
+      "title": "CASE_NOT_FOUND",
+      "status": 404,
+      "detail": "当前主体仅可引用本交易可见原案件，不存在与不可见统一拒绝",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "CASE_NOT_FOUND",
+          "detail": "当前主体仅可引用本交易可见原案件，不存在与不可见统一拒绝"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "NOT_FOUND",
+        "details": {
+          "code": "CASE_NOT_FOUND",
+          "httpStatus": 404,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "CASE_NOT_FOUND",
+              "detail": "当前主体仅可引用本交易可见原案件，不存在与不可见统一拒绝"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "CASE_TERMINAL"
+    ],
+    "httpStatus": 409,
+    "grpcStatus": "FAILED_PRECONDITION",
+    "retryable": false,
+    "recovery": "已关案件不能新建暂停，但原有效原因仍须单独解除",
+    "httpBody": {
+      "type": "https://example.invalid/problems/case_terminal",
+      "title": "CASE_TERMINAL",
+      "status": 409,
+      "detail": "已关案件不能新建暂停，但原有效原因仍须单独解除",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "CASE_TERMINAL",
+          "detail": "已关案件不能新建暂停，但原有效原因仍须单独解除"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "FAILED_PRECONDITION",
+        "details": {
+          "code": "CASE_TERMINAL",
+          "httpStatus": 409,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "CASE_TERMINAL",
+              "detail": "已关案件不能新建暂停，但原有效原因仍须单独解除"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "FUNDS_UNBALANCED",
+      "ACCOUNTING_UNBALANCED",
+      "EXTERNAL_EVIDENCE_MISSING",
+      "SOURCE_UNKNOWN"
+    ],
+    "httpStatus": 422,
+    "grpcStatus": "FAILED_PRECONDITION",
+    "retryable": false,
+    "recovery": "原所属域补正实质事实与正式证据，不用手工通过标志",
+    "httpBody": {
+      "type": "https://example.invalid/problems/funds_unbalanced",
+      "title": "FUNDS_UNBALANCED",
+      "status": 422,
+      "detail": "原所属域补正实质事实与正式证据，不用手工通过标志",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "FUNDS_UNBALANCED",
+          "detail": "原所属域补正实质事实与正式证据，不用手工通过标志"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "FAILED_PRECONDITION",
+        "details": {
+          "code": "FUNDS_UNBALANCED",
+          "httpStatus": 422,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "FUNDS_UNBALANCED",
+              "detail": "原所属域补正实质事实与正式证据，不用手工通过标志"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  },
+  {
+    "codes": [
+      "CASE_NOT_RESOLVED",
+      "MONEY_DIFFERENCE_OPEN"
+    ],
+    "httpStatus": 422,
+    "grpcStatus": "FAILED_PRECONDITION",
+    "retryable": false,
+    "recovery": "案件及资金差异分别独立关闭，不自动解除暂停",
+    "httpBody": {
+      "type": "https://example.invalid/problems/case_not_resolved",
+      "title": "CASE_NOT_RESOLVED",
+      "status": 422,
+      "detail": "案件及资金差异分别独立关闭，不自动解除暂停",
+      "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/reconciliation-context",
+      "errors": [
+        {
+          "pointer": "",
+          "code": "CASE_NOT_RESOLVED",
+          "detail": "案件及资金差异分别独立关闭，不自动解除暂停"
+        }
+      ],
+      "outcomeUnknown": false,
+      "retryAfterMs": 0
+    },
+    "rpc": {
+      "error": {
+        "code": "FAILED_PRECONDITION",
+        "details": {
+          "code": "CASE_NOT_RESOLVED",
+          "httpStatus": 422,
+          "errors": [
+            {
+              "pointer": "",
+              "code": "CASE_NOT_RESOLVED",
+              "detail": "案件及资金差异分别独立关闭，不自动解除暂停"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "S8-SYNTHETIC-REQUEST"
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,1541 @@
+[
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/trades/TRD-S2-DEMO-001/contract-basis",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 外部服务 credential omitted>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s2-trade-r4-approved-v6\""
+      },
+      "body": {
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "approvedTradeRevision": 4,
+        "approvedSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+        "supplierFiling": {
+          "supplier": {
+            "legalName": "示例供应商",
+            "countryCode": "CN",
+            "registeredAddress": "合成注册地址，非真实地点",
+            "contactName": "合成联系人",
+            "contactPhone": "DEMO-NOT-A-PHONE",
+            "contactEmail": "demo@example.invalid",
+            "identityProtectedReference": "DEMO-IDENTITY-SUPPLIER"
+          },
+          "consignee": {
+            "party": {
+              "legalName": "Example Consignee",
+              "countryCode": "SG",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+            },
+            "deliveryAddress": "Synthetic delivery location",
+            "deliveryArrangements": "合成收货安排"
+          },
+          "salesContractNumber": "SC-DEMO-001",
+          "invoiceNumber": "CI-DEMO-001",
+          "packingListNumber": "PL-DEMO-001",
+          "goods": [
+            {
+              "itemSequenceNumber": 1,
+              "productName": "展示用金属支架",
+              "specification": "DEMO-M1",
+              "quantity": "100",
+              "unitCode": "PCS",
+              "unitPrice": {
+                "amount": "125.00",
+                "currencyCode": "CNY"
+              },
+              "total": {
+                "amount": "12500.00",
+                "currencyCode": "CNY"
+              },
+              "originCountryCode": "CN"
+            }
+          ],
+          "packing": [
+            {
+              "goodsItemSequenceNumber": 1,
+              "quantity": "100",
+              "unitCode": "PCS",
+              "cartons": 10,
+              "netWeightKg": "100.000",
+              "grossWeightKg": "120.000"
+            }
+          ],
+          "materials": [
+            {
+              "purpose": "MATERIAL_PURPOSE_SALES_CONTRACT",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "sales-contract"
+            },
+            {
+              "purpose": "MATERIAL_PURPOSE_COMMERCIAL_INVOICE",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "commercial-invoice"
+            },
+            {
+              "purpose": "MATERIAL_PURPOSE_PACKING_LIST",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "packing-list"
+            }
+          ],
+          "contractTotal": {
+            "amount": "12500.00",
+            "currencyCode": "CNY"
+          },
+          "invoiceTotal": {
+            "amount": "12500.00",
+            "currencyCode": "CNY"
+          },
+          "sourceContentsConfirmed": true,
+          "exportAgent": {
+            "party": {
+              "legalName": "示例出口代理",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-EXPORT-AGENT"
+            },
+            "serviceScope": "合成代理出口范围",
+            "agreedInstructions": "供应商事先沟通后填写的代理指示",
+            "exportAgentDetails": {
+              "receiptPath": "合成受限人民币收款路径，实际账户须核实",
+              "paymentPath": "合成向供应商人民币付款路径，实际账户须核实",
+              "paymentBranchCode": 1
+            }
+          },
+          "logisticsProvider": {
+            "party": {
+              "legalName": "示例物流公司",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-LOGISTICS"
+            },
+            "serviceScope": "合成运输范围",
+            "agreedInstructions": "供应商事先沟通后填写；具体运输工具尚待确定"
+          },
+          "customsBroker": {
+            "party": {
+              "legalName": "示例出口报关代理",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-CUSTOMS"
+            },
+            "serviceScope": "合成报关服务范围",
+            "agreedInstructions": "供应商事先沟通后填写；本例无真实资质证明",
+            "customsDetails": {
+              "qualification": {
+                "purpose": "MATERIAL_PURPOSE_CUSTOMS_QUALIFICATION",
+                "logicalFileNumber": "FILE-S2-QUALIFICATION",
+                "revisionNumber": 1,
+                "sha256": "ac8d5734d4089657c9de6f987ea5b31f1fecc9dd14cabc1d1199007af6ef7952"
+              },
+              "quotedAmount": {
+                "amount": "100.00",
+                "currencyCode": "CNY"
+              },
+              "pricingBasis": "合成单笔报价计价说明，不代表真实约定",
+              "quotation": {
+                "purpose": "MATERIAL_PURPOSE_CUSTOMS_QUOTATION",
+                "logicalFileNumber": "FILE-S2-QUOTATION",
+                "revisionNumber": 1,
+                "sha256": "b1d57f7dd3fc422bafb55e3bdd4866422fb424c27bec307962cd902ab0e661d4"
+              }
+            }
+          },
+          "nominatedPayerProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+        },
+        "etag": "\"s2-trade-r4-approved-v6\"",
+        "currentEvidence": {
+          "agreementApplications": [],
+          "customsAuthorizations": [],
+          "customsAgentRecognitions": []
+        }
+      }
+    },
+    "rpc": "GetTradeContractBasis",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetTradeContractBasisReqMsg",
+    "responseType": "GetTradeContractBasisRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s2-trade-r4-approved-v6\"\n\n{\n  \"tradeNumber\": \"TRD-S2-DEMO-001\",\n  \"approvedTradeRevision\": 4,\n  \"approvedSnapshotNumber\": \"SNP-S2-DEMO-APPROVED-001\",\n  \"supplierFiling\": {\n    \"supplier\": {\n      \"legalName\": \"示例供应商\",\n      \"countryCode\": \"CN\",\n      \"registeredAddress\": \"合成注册地址，非真实地点\",\n      \"contactName\": \"合成联系人\",\n      \"contactPhone\": \"DEMO-NOT-A-PHONE\",\n      \"contactEmail\": \"demo@example.invalid\",\n      \"identityProtectedReference\": \"DEMO-IDENTITY-SUPPLIER\"\n    },\n    \"consignee\": {\n      \"party\": {\n        \"legalName\": \"Example Consignee\",\n        \"countryCode\": \"SG\",\n        \"registeredAddress\": \"合成注册地址，非真实地点\",\n        \"contactName\": \"合成联系人\",\n        \"contactPhone\": \"DEMO-NOT-A-PHONE\",\n        \"contactEmail\": \"demo@example.invalid\",\n        \"identityProtectedReference\": \"DEMO-IDENTITY-CONSIGNEE\"\n      },\n      \"deliveryAddress\": \"Synthetic delivery location\",\n      \"deliveryArrangements\": \"合成收货安排\"\n    },\n    \"salesContractNumber\": \"SC-DEMO-001\",\n    \"invoiceNumber\": \"CI-DEMO-001\",\n    \"packingListNumber\": \"PL-DEMO-001\",\n    \"goods\": [\n      {\n        \"itemSequenceNumber\": 1,\n        \"productName\": \"展示用金属支架\",\n        \"specification\": \"DEMO-M1\",\n        \"quantity\": \"100\",\n        \"unitCode\": \"PCS\",\n        \"unitPrice\": {\n          \"amount\": \"125.00\",\n          \"currencyCode\": \"CNY\"\n        },\n        \"total\": {\n          \"amount\": \"12500.00\",\n          \"currencyCode\": \"CNY\"\n        },\n        \"originCountryCode\": \"CN\"\n      }\n    ],\n    \"packing\": [\n      {\n        \"goodsItemSequenceNumber\": 1,\n        \"quantity\": \"100\",\n        \"unitCode\": \"PCS\",\n        \"cartons\": 10,\n        \"netWeightKg\": \"100.000\",\n        \"grossWeightKg\": \"120.000\"\n      }\n    ],\n    \"materials\": [\n      {\n        \"purpose\": \"MATERIAL_PURPOSE_SALES_CONTRACT\",\n        \"logicalFileNumber\": \"FILE-S1-DEMO-001\",\n        \"revisionNumber\": 1,\n        \"sha256\": \"77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284\",\n        \"htmlAnchor\": \"sales-contract\"\n      },\n      {\n        \"purpose\": \"MATERIAL_PURPOSE_COMMERCIAL_INVOICE\",\n        \"logicalFileNumber\": \"FILE-S1-DEMO-001\",\n        \"revisionNumber\": 1,\n        \"sha256\": \"77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284\",\n        \"htmlAnchor\": \"commercial-invoice\"\n      },\n      {\n        \"purpose\": \"MATERIAL_PURPOSE_PACKING_LIST\",\n        \"logicalFileNumber\": \"FILE-S1-DEMO-001\",\n        \"revisionNumber\": 1,\n        \"sha256\": \"77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284\",\n        \"htmlAnchor\": \"packing-list\"\n      }\n    ],\n    \"contractTotal\": {\n      \"amount\": \"12500.00\",\n      \"currencyCode\": \"CNY\"\n    },\n    \"invoiceTotal\": {\n      \"amount\": \"12500.00\",\n      \"currencyCode\": \"CNY\"\n    },\n    \"sourceContentsConfirmed\": true,\n    \"exportAgent\": {\n      \"party\": {\n        \"legalName\": \"示例出口代理\",\n        \"countryCode\": \"CN\",\n        \"registeredAddress\": \"合成注册地址，非真实地点\",\n        \"contactName\": \"合成联系人\",\n        \"contactPhone\": \"DEMO-NOT-A-PHONE\",\n        \"contactEmail\": \"demo@example.invalid\",\n        \"identityProtectedReference\": \"DEMO-IDENTITY-EXPORT-AGENT\"\n      },\n      \"serviceScope\": \"合成代理出口范围\",\n      \"agreedInstructions\": \"供应商事先沟通后填写的代理指示\",\n      \"exportAgentDetails\": {\n        \"receiptPath\": \"合成受限人民币收款路径，实际账户须核实\",\n        \"paymentPath\": \"合成向供应商人民币付款路径，实际账户须核实\",\n        \"paymentBranchCode\": 1\n      }\n    },\n    \"logisticsProvider\": {\n      \"party\": {\n        \"legalName\": \"示例物流公司\",\n        \"countryCode\": \"CN\",\n        \"registeredAddress\": \"合成注册地址，非真实地点\",\n        \"contactName\": \"合成联系人\",\n        \"contactPhone\": \"DEMO-NOT-A-PHONE\",\n        \"contactEmail\": \"demo@example.invalid\",\n        \"identityProtectedReference\": \"DEMO-IDENTITY-LOGISTICS\"\n      },\n      \"serviceScope\": \"合成运输范围\",\n      \"agreedInstructions\": \"供应商事先沟通后填写；具体运输工具尚待确定\"\n    },\n    \"customsBroker\": {\n      \"party\": {\n        \"legalName\": \"示例出口报关代理\",\n        \"countryCode\": \"CN\",\n        \"registeredAddress\": \"合成注册地址，非真实地点\",\n        \"contactName\": \"合成联系人\",\n        \"contactPhone\": \"DEMO-NOT-A-PHONE\",\n        \"contactEmail\": \"demo@example.invalid\",\n        \"identityProtectedReference\": \"DEMO-IDENTITY-CUSTOMS\"\n      },\n      \"serviceScope\": \"合成报关服务范围\",\n      \"agreedInstructions\": \"供应商事先沟通后填写；本例无真实资质证明\",\n      \"customsDetails\": {\n        \"qualification\": {\n          \"purpose\": \"MATERIAL_PURPOSE_CUSTOMS_QUALIFICATION\",\n          \"logicalFileNumber\": \"FILE-S2-QUALIFICATION\",\n          \"revisionNumber\": 1,\n          \"sha256\": \"ac8d5734d4089657c9de6f987ea5b31f1fecc9dd14cabc1d1199007af6ef7952\"\n        },\n        \"quotedAmount\": {\n          \"amount\": \"100.00\",\n          \"currencyCode\": \"CNY\"\n        },\n        \"pricingBasis\": \"合成单笔报价计价说明，不代表真实约定\",\n        \"quotation\": {\n          \"purpose\": \"MATERIAL_PURPOSE_CUSTOMS_QUOTATION\",\n          \"logicalFileNumber\": \"FILE-S2-QUOTATION\",\n          \"revisionNumber\": 1,\n          \"sha256\": \"b1d57f7dd3fc422bafb55e3bdd4866422fb424c27bec307962cd902ab0e661d4\"\n        }\n      }\n    },\n    \"nominatedPayerProtectedReference\": \"DEMO-IDENTITY-CONSIGNEE\"\n  },\n  \"etag\": \"\\\"s2-trade-r4-approved-v6\\\"\",\n  \"currentEvidence\": {\n    \"agreementApplications\": [],\n    \"customsAuthorizations\": [],\n    \"customsAgentRecognitions\": []\n  }\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/trades/TRD-S2-DEMO-001/contract-basis\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "GET",
+      "path": "/internal/v1/trades/TRD-S2-DEMO-001/review-context?submitted_snapshot_number=SNP-S2-SUBMITTED-001",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 内部运营 credential omitted>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s2-trade-r4-review-v5\""
+      },
+      "body": {
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "tradeRevision": 4,
+        "lifecycle": "reviewing",
+        "supplierFiling": {
+          "supplier": {
+            "legalName": "示例供应商",
+            "countryCode": "CN",
+            "registeredAddress": "合成注册地址，非真实地点",
+            "contactName": "合成联系人",
+            "contactPhone": "DEMO-NOT-A-PHONE",
+            "contactEmail": "demo@example.invalid",
+            "identityProtectedReference": "DEMO-IDENTITY-SUPPLIER"
+          },
+          "consignee": {
+            "party": {
+              "legalName": "Example Consignee",
+              "countryCode": "SG",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+            },
+            "deliveryAddress": "Synthetic delivery location",
+            "deliveryArrangements": "合成收货安排"
+          },
+          "salesContractNumber": "SC-DEMO-001",
+          "invoiceNumber": "CI-DEMO-001",
+          "packingListNumber": "PL-DEMO-001",
+          "goods": [
+            {
+              "itemSequenceNumber": 1,
+              "productName": "展示用金属支架",
+              "specification": "DEMO-M1",
+              "quantity": "100",
+              "unitCode": "PCS",
+              "unitPrice": {
+                "amount": "125.00",
+                "currencyCode": "CNY"
+              },
+              "total": {
+                "amount": "12500.00",
+                "currencyCode": "CNY"
+              },
+              "originCountryCode": "CN"
+            }
+          ],
+          "packing": [
+            {
+              "goodsItemSequenceNumber": 1,
+              "quantity": "100",
+              "unitCode": "PCS",
+              "cartons": 10,
+              "netWeightKg": "100.000",
+              "grossWeightKg": "120.000"
+            }
+          ],
+          "materials": [
+            {
+              "purpose": "MATERIAL_PURPOSE_SALES_CONTRACT",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "sales-contract"
+            },
+            {
+              "purpose": "MATERIAL_PURPOSE_COMMERCIAL_INVOICE",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "commercial-invoice"
+            },
+            {
+              "purpose": "MATERIAL_PURPOSE_PACKING_LIST",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "packing-list"
+            }
+          ],
+          "contractTotal": {
+            "amount": "12500.00",
+            "currencyCode": "CNY"
+          },
+          "invoiceTotal": {
+            "amount": "12500.00",
+            "currencyCode": "CNY"
+          },
+          "sourceContentsConfirmed": true,
+          "exportAgent": {
+            "party": {
+              "legalName": "示例出口代理",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-EXPORT-AGENT"
+            },
+            "serviceScope": "合成代理出口范围",
+            "agreedInstructions": "供应商事先沟通后填写的代理指示",
+            "exportAgentDetails": {
+              "receiptPath": "合成受限人民币收款路径，实际账户须核实",
+              "paymentPath": "合成向供应商人民币付款路径，实际账户须核实",
+              "paymentBranchCode": 1
+            }
+          },
+          "logisticsProvider": {
+            "party": {
+              "legalName": "示例物流公司",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-LOGISTICS"
+            },
+            "serviceScope": "合成运输范围",
+            "agreedInstructions": "供应商事先沟通后填写；具体运输工具尚待确定"
+          },
+          "customsBroker": {
+            "party": {
+              "legalName": "示例出口报关代理",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-CUSTOMS"
+            },
+            "serviceScope": "合成报关服务范围",
+            "agreedInstructions": "供应商事先沟通后填写；本例无真实资质证明",
+            "customsDetails": {
+              "qualification": {
+                "purpose": "MATERIAL_PURPOSE_CUSTOMS_QUALIFICATION",
+                "logicalFileNumber": "FILE-S2-QUALIFICATION",
+                "revisionNumber": 1,
+                "sha256": "ac8d5734d4089657c9de6f987ea5b31f1fecc9dd14cabc1d1199007af6ef7952"
+              },
+              "quotedAmount": {
+                "amount": "100.00",
+                "currencyCode": "CNY"
+              },
+              "pricingBasis": "合成单笔报价计价说明，不代表真实约定",
+              "quotation": {
+                "purpose": "MATERIAL_PURPOSE_CUSTOMS_QUOTATION",
+                "logicalFileNumber": "FILE-S2-QUOTATION",
+                "revisionNumber": 1,
+                "sha256": "b1d57f7dd3fc422bafb55e3bdd4866422fb424c27bec307962cd902ab0e661d4"
+              }
+            }
+          },
+          "nominatedPayerProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+        },
+        "payerFiling": {
+          "payer": {
+            "legalName": "Example Consignee",
+            "countryCode": "SG",
+            "registeredAddress": "合成注册地址，非真实地点",
+            "contactName": "合成联系人",
+            "contactPhone": "DEMO-NOT-A-PHONE",
+            "contactEmail": "demo@example.invalid",
+            "identityProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+          },
+          "relationship": "PAYER_RELATIONSHIP_SAME_LEGAL_ENTITY",
+          "paymentPurpose": "支付本笔合成出口交易货款",
+          "relationshipEvidence": [],
+          "sourceContentsConfirmed": true
+        },
+        "missingItems": [],
+        "submittedSnapshotNumber": "SNP-S2-SUBMITTED-001",
+        "etag": "\"s2-trade-r4-review-v5\"",
+        "evidence": {
+          "agreementApplications": [],
+          "customsAuthorizations": [],
+          "customsAgentRecognitions": []
+        }
+      }
+    },
+    "rpc": "GetTradeReviewContext",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetTradeReviewContextReqMsg",
+    "responseType": "GetTradeReviewContextRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s2-trade-r4-review-v5\"\n\n{\n  \"tradeNumber\": \"TRD-S2-DEMO-001\",\n  \"tradeRevision\": 4,\n  \"lifecycle\": \"reviewing\",\n  \"supplierFiling\": {\n    \"supplier\": {\n      \"legalName\": \"示例供应商\",\n      \"countryCode\": \"CN\",\n      \"registeredAddress\": \"合成注册地址，非真实地点\",\n      \"contactName\": \"合成联系人\",\n      \"contactPhone\": \"DEMO-NOT-A-PHONE\",\n      \"contactEmail\": \"demo@example.invalid\",\n      \"identityProtectedReference\": \"DEMO-IDENTITY-SUPPLIER\"\n    },\n    \"consignee\": {\n      \"party\": {\n        \"legalName\": \"Example Consignee\",\n        \"countryCode\": \"SG\",\n        \"registeredAddress\": \"合成注册地址，非真实地点\",\n        \"contactName\": \"合成联系人\",\n        \"contactPhone\": \"DEMO-NOT-A-PHONE\",\n        \"contactEmail\": \"demo@example.invalid\",\n        \"identityProtectedReference\": \"DEMO-IDENTITY-CONSIGNEE\"\n      },\n      \"deliveryAddress\": \"Synthetic delivery location\",\n      \"deliveryArrangements\": \"合成收货安排\"\n    },\n    \"salesContractNumber\": \"SC-DEMO-001\",\n    \"invoiceNumber\": \"CI-DEMO-001\",\n    \"packingListNumber\": \"PL-DEMO-001\",\n    \"goods\": [\n      {\n        \"itemSequenceNumber\": 1,\n        \"productName\": \"展示用金属支架\",\n        \"specification\": \"DEMO-M1\",\n        \"quantity\": \"100\",\n        \"unitCode\": \"PCS\",\n        \"unitPrice\": {\n          \"amount\": \"125.00\",\n          \"currencyCode\": \"CNY\"\n        },\n        \"total\": {\n          \"amount\": \"12500.00\",\n          \"currencyCode\": \"CNY\"\n        },\n        \"originCountryCode\": \"CN\"\n      }\n    ],\n    \"packing\": [\n      {\n        \"goodsItemSequenceNumber\": 1,\n        \"quantity\": \"100\",\n        \"unitCode\": \"PCS\",\n        \"cartons\": 10,\n        \"netWeightKg\": \"100.000\",\n        \"grossWeightKg\": \"120.000\"\n      }\n    ],\n    \"materials\": [\n      {\n        \"purpose\": \"MATERIAL_PURPOSE_SALES_CONTRACT\",\n        \"logicalFileNumber\": \"FILE-S1-DEMO-001\",\n        \"revisionNumber\": 1,\n        \"sha256\": \"77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284\",\n        \"htmlAnchor\": \"sales-contract\"\n      },\n      {\n        \"purpose\": \"MATERIAL_PURPOSE_COMMERCIAL_INVOICE\",\n        \"logicalFileNumber\": \"FILE-S1-DEMO-001\",\n        \"revisionNumber\": 1,\n        \"sha256\": \"77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284\",\n        \"htmlAnchor\": \"commercial-invoice\"\n      },\n      {\n        \"purpose\": \"MATERIAL_PURPOSE_PACKING_LIST\",\n        \"logicalFileNumber\": \"FILE-S1-DEMO-001\",\n        \"revisionNumber\": 1,\n        \"sha256\": \"77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284\",\n        \"htmlAnchor\": \"packing-list\"\n      }\n    ],\n    \"contractTotal\": {\n      \"amount\": \"12500.00\",\n      \"currencyCode\": \"CNY\"\n    },\n    \"invoiceTotal\": {\n      \"amount\": \"12500.00\",\n      \"currencyCode\": \"CNY\"\n    },\n    \"sourceContentsConfirmed\": true,\n    \"exportAgent\": {\n      \"party\": {\n        \"legalName\": \"示例出口代理\",\n        \"countryCode\": \"CN\",\n        \"registeredAddress\": \"合成注册地址，非真实地点\",\n        \"contactName\": \"合成联系人\",\n        \"contactPhone\": \"DEMO-NOT-A-PHONE\",\n        \"contactEmail\": \"demo@example.invalid\",\n        \"identityProtectedReference\": \"DEMO-IDENTITY-EXPORT-AGENT\"\n      },\n      \"serviceScope\": \"合成代理出口范围\",\n      \"agreedInstructions\": \"供应商事先沟通后填写的代理指示\",\n      \"exportAgentDetails\": {\n        \"receiptPath\": \"合成受限人民币收款路径，实际账户须核实\",\n        \"paymentPath\": \"合成向供应商人民币付款路径，实际账户须核实\",\n        \"paymentBranchCode\": 1\n      }\n    },\n    \"logisticsProvider\": {\n      \"party\": {\n        \"legalName\": \"示例物流公司\",\n        \"countryCode\": \"CN\",\n        \"registeredAddress\": \"合成注册地址，非真实地点\",\n        \"contactName\": \"合成联系人\",\n        \"contactPhone\": \"DEMO-NOT-A-PHONE\",\n        \"contactEmail\": \"demo@example.invalid\",\n        \"identityProtectedReference\": \"DEMO-IDENTITY-LOGISTICS\"\n      },\n      \"serviceScope\": \"合成运输范围\",\n      \"agreedInstructions\": \"供应商事先沟通后填写；具体运输工具尚待确定\"\n    },\n    \"customsBroker\": {\n      \"party\": {\n        \"legalName\": \"示例出口报关代理\",\n        \"countryCode\": \"CN\",\n        \"registeredAddress\": \"合成注册地址，非真实地点\",\n        \"contactName\": \"合成联系人\",\n        \"contactPhone\": \"DEMO-NOT-A-PHONE\",\n        \"contactEmail\": \"demo@example.invalid\",\n        \"identityProtectedReference\": \"DEMO-IDENTITY-CUSTOMS\"\n      },\n      \"serviceScope\": \"合成报关服务范围\",\n      \"agreedInstructions\": \"供应商事先沟通后填写；本例无真实资质证明\",\n      \"customsDetails\": {\n        \"qualification\": {\n          \"purpose\": \"MATERIAL_PURPOSE_CUSTOMS_QUALIFICATION\",\n          \"logicalFileNumber\": \"FILE-S2-QUALIFICATION\",\n          \"revisionNumber\": 1,\n          \"sha256\": \"ac8d5734d4089657c9de6f987ea5b31f1fecc9dd14cabc1d1199007af6ef7952\"\n        },\n        \"quotedAmount\": {\n          \"amount\": \"100.00\",\n          \"currencyCode\": \"CNY\"\n        },\n        \"pricingBasis\": \"合成单笔报价计价说明，不代表真实约定\",\n        \"quotation\": {\n          \"purpose\": \"MATERIAL_PURPOSE_CUSTOMS_QUOTATION\",\n          \"logicalFileNumber\": \"FILE-S2-QUOTATION\",\n          \"revisionNumber\": 1,\n          \"sha256\": \"b1d57f7dd3fc422bafb55e3bdd4866422fb424c27bec307962cd902ab0e661d4\"\n        }\n      }\n    },\n    \"nominatedPayerProtectedReference\": \"DEMO-IDENTITY-CONSIGNEE\"\n  },\n  \"payerFiling\": {\n    \"payer\": {\n      \"legalName\": \"Example Consignee\",\n      \"countryCode\": \"SG\",\n      \"registeredAddress\": \"合成注册地址，非真实地点\",\n      \"contactName\": \"合成联系人\",\n      \"contactPhone\": \"DEMO-NOT-A-PHONE\",\n      \"contactEmail\": \"demo@example.invalid\",\n      \"identityProtectedReference\": \"DEMO-IDENTITY-CONSIGNEE\"\n    },\n    \"relationship\": \"PAYER_RELATIONSHIP_SAME_LEGAL_ENTITY\",\n    \"paymentPurpose\": \"支付本笔合成出口交易货款\",\n    \"relationshipEvidence\": [],\n    \"sourceContentsConfirmed\": true\n  },\n  \"missingItems\": [],\n  \"submittedSnapshotNumber\": \"SNP-S2-SUBMITTED-001\",\n  \"etag\": \"\\\"s2-trade-r4-review-v5\\\"\",\n  \"evidence\": {\n    \"agreementApplications\": [],\n    \"customsAuthorizations\": [],\n    \"customsAgentRecognitions\": []\n  }\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/internal/v1/trades/TRD-S2-DEMO-001/review-context?submitted_snapshot_number=SNP-S2-SUBMITTED-001\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/trades/TRD-S2-DEMO-001/revisions",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 内部运营 credential omitted>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "0ea255d0-0000-4000-8000-000000000003",
+        "X-Confirmation-Id": "<synthetic per-intent confirmation; NOT-VALID>",
+        "If-Match": "\"s2-trade-r4-returned-v6\""
+      },
+      "body": {
+        "expectedTradeRevision": 4,
+        "reason": "终审退回后开始补充，仅打开工作版，不替供应商写资料",
+        "evidence": []
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s2-trade-r5-v7\"",
+        "Location": "/internal/v1/trades/TRD-S2-DEMO-001/revisions/5",
+        "X-Receipt-Proof": "<platform receipt; SYNTHETIC-NOT-VALID>"
+      },
+      "body": {
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "tradeRevision": 5,
+        "lifecycle": "editing",
+        "etag": "\"s2-trade-r5-v7\""
+      }
+    },
+    "rpc": "CreateTradeRevision",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateTradeRevisionReqMsg",
+    "responseType": "CreateTradeRevisionRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s2-trade-r5-v7\"\nLocation: /internal/v1/trades/TRD-S2-DEMO-001/revisions/5\nX-Receipt-Proof: <platform receipt; SYNTHETIC-NOT-VALID>\n\n{\n  \"tradeNumber\": \"TRD-S2-DEMO-001\",\n  \"tradeRevision\": 5,\n  \"lifecycle\": \"editing\",\n  \"etag\": \"\\\"s2-trade-r5-v7\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/trades/TRD-S2-DEMO-001/revisions\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 0ea255d0-0000-4000-8000-000000000003' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --header 'If-Match: \"s2-trade-r4-returned-v6\"' \\\n  --data-raw '{\"expectedTradeRevision\":4,\"reason\":\"终审退回后开始补充，仅打开工作版，不替供应商写资料\",\"evidence\":[]}'"
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "GET",
+      "path": "/internal/v1/contracts/CON-S2-DEMO-001/revisions/1",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 内部运营 credential omitted>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s2-demo-working-1-state-4-v4\""
+      },
+      "body": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "status": "REVISION_STATUS_AWAITING_SIGNATURE",
+        "content": {
+          "tradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+          "parties": [
+            {
+              "contractPartySequence": 1,
+              "partyRoleCode": 1,
+              "participantSequenceNumber": 1
+            },
+            {
+              "contractPartySequence": 2,
+              "partyRoleCode": 2,
+              "participantSequenceNumber": 1
+            }
+          ],
+          "reviewFile": {
+            "logicalFileNumber": "FILE-S2-REVIEW-001",
+            "revisionNumber": 1,
+            "sha256": "54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175",
+            "documentTypeCode": 10
+          },
+          "effectiveFrom": "2026-10-25",
+          "effectiveTo": "2027-10-25"
+        },
+        "etag": "\"s2-demo-working-1-state-4-v4\"",
+        "currentRevisionNumber": 1,
+        "signatureRequest": {
+          "signatureRequestId": "SIG-S2-DEMO-001",
+          "clientReference": "SIGREF-S2-DEMO-001",
+          "contractNumber": "CON-S2-DEMO-001",
+          "revisionNumber": 1,
+          "state": "awaiting_signers",
+          "attemptCount": 0,
+          "lastErrorCode": "",
+          "etag": "\"s2-signature-request-awaiting-signers-v2\"",
+          "providerTaskReference": "NOT-A-REAL-PLATFORM-TASK"
+        },
+        "reviewResult": {
+          "outcome": "DECISION_OUTCOME_APPROVE",
+          "reason": "合成通过推演，真实审核/证据须另核实",
+          "ruleVersion": "S2-RULES-1",
+          "reviewedAt": "2026-10-25T08:20:00.123Z",
+          "reviewerReference": "SYNTHETIC-INDEPENDENT-REVIEWER",
+          "evidenceReferences": []
+        }
+      }
+    },
+    "rpc": "GetInternalContractRevision",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetInternalContractRevisionReqMsg",
+    "responseType": "GetInternalContractRevisionRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s2-demo-working-1-state-4-v4\"\n\n{\n  \"contractNumber\": \"CON-S2-DEMO-001\",\n  \"revisionNumber\": 1,\n  \"status\": \"REVISION_STATUS_AWAITING_SIGNATURE\",\n  \"content\": {\n    \"tradeSnapshotNumber\": \"SNP-S2-DEMO-APPROVED-001\",\n    \"parties\": [\n      {\n        \"contractPartySequence\": 1,\n        \"partyRoleCode\": 1,\n        \"participantSequenceNumber\": 1\n      },\n      {\n        \"contractPartySequence\": 2,\n        \"partyRoleCode\": 2,\n        \"participantSequenceNumber\": 1\n      }\n    ],\n    \"reviewFile\": {\n      \"logicalFileNumber\": \"FILE-S2-REVIEW-001\",\n      \"revisionNumber\": 1,\n      \"sha256\": \"54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175\",\n      \"documentTypeCode\": 10\n    },\n    \"effectiveFrom\": \"2026-10-25\",\n    \"effectiveTo\": \"2027-10-25\"\n  },\n  \"etag\": \"\\\"s2-demo-working-1-state-4-v4\\\"\",\n  \"currentRevisionNumber\": 1,\n  \"signatureRequest\": {\n    \"signatureRequestId\": \"SIG-S2-DEMO-001\",\n    \"clientReference\": \"SIGREF-S2-DEMO-001\",\n    \"contractNumber\": \"CON-S2-DEMO-001\",\n    \"revisionNumber\": 1,\n    \"state\": \"awaiting_signers\",\n    \"attemptCount\": 0,\n    \"lastErrorCode\": \"\",\n    \"etag\": \"\\\"s2-signature-request-awaiting-signers-v2\\\"\",\n    \"providerTaskReference\": \"NOT-A-REAL-PLATFORM-TASK\"\n  },\n  \"reviewResult\": {\n    \"outcome\": \"DECISION_OUTCOME_APPROVE\",\n    \"reason\": \"合成通过推演，真实审核/证据须另核实\",\n    \"ruleVersion\": \"S2-RULES-1\",\n    \"reviewedAt\": \"2026-10-25T08:20:00.123Z\",\n    \"reviewerReference\": \"SYNTHETIC-INDEPENDENT-REVIEWER\",\n    \"evidenceReferences\": []\n  }\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/internal/v1/contracts/CON-S2-DEMO-001/revisions/1\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/contracts/CON-S2-DEMO-001/revisions/1/termination-decisions",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 内部运营 credential omitted>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "0ea255d0-0000-4000-8000-000000000005",
+        "X-Confirmation-Id": "<synthetic per-intent confirmation; NOT-VALID>",
+        "If-Match": "\"s2-demo-working-1-state-4-v4\""
+      },
+      "body": {
+        "reasonCode": 1,
+        "reason": "未签旧工作版正式撤回，须确认无活跃或未知签署任务",
+        "legalEvidence": [
+          {
+            "logicalFileNumber": "REQUIRED-EXTERNAL-TERMINATION-AUTHORITY",
+            "revisionNumber": 1,
+            "sha256": "<no-real-evidence-in-this-design-fixture>",
+            "documentTypeCode": 10
+          }
+        ]
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s2-demo-working-1-state-8-v6\"",
+        "Location": "/internal/v1/contracts/CON-S2-DEMO-001/revisions/1/termination-decisions/ACCEPT-S2-REVISION_STATUS_TERMINATED-1",
+        "X-Receipt-Proof": "<platform receipt; SYNTHETIC-NOT-VALID>"
+      },
+      "body": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "status": "REVISION_STATUS_TERMINATED",
+        "etag": "\"s2-demo-working-1-state-8-v6\"",
+        "acceptanceId": "ACCEPT-S2-REVISION_STATUS_TERMINATED-1"
+      }
+    },
+    "rpc": "CreateContractTermination",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateContractTerminationReqMsg",
+    "responseType": "CreateContractTerminationRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s2-demo-working-1-state-8-v6\"\nLocation: /internal/v1/contracts/CON-S2-DEMO-001/revisions/1/termination-decisions/ACCEPT-S2-REVISION_STATUS_TERMINATED-1\nX-Receipt-Proof: <platform receipt; SYNTHETIC-NOT-VALID>\n\n{\n  \"contractNumber\": \"CON-S2-DEMO-001\",\n  \"revisionNumber\": 1,\n  \"status\": \"REVISION_STATUS_TERMINATED\",\n  \"etag\": \"\\\"s2-demo-working-1-state-8-v6\\\"\",\n  \"acceptanceId\": \"ACCEPT-S2-REVISION_STATUS_TERMINATED-1\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/contracts/CON-S2-DEMO-001/revisions/1/termination-decisions\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 0ea255d0-0000-4000-8000-000000000005' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --header 'If-Match: \"s2-demo-working-1-state-4-v4\"' \\\n  --data-raw '{\"reasonCode\":1,\"reason\":\"未签旧工作版正式撤回，须确认无活跃或未知签署任务\",\"legalEvidence\":[{\"logicalFileNumber\":\"REQUIRED-EXTERNAL-TERMINATION-AUTHORITY\",\"revisionNumber\":1,\"sha256\":\"<no-real-evidence-in-this-design-fixture>\",\"documentTypeCode\":10}]}'"
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/operation-confirmations",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 内部运营 credential omitted>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "0ea255d0-0000-4000-8000-000000000006"
+      },
+      "body": {
+        "method": "POST",
+        "resourcePath": "/internal/v1/trades/TRD-S2-DEMO-001/review-submissions",
+        "idempotencyKey": "0ea255d0-0000-4000-8000-000000000008",
+        "ifMatch": "\"s2-trade-r4-v4\"",
+        "bodySha256": "1a5637ef97288b6710fe2452839da52d1823509433a17c0f551299bdf7f44758"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/internal/v1/operation-confirmations/S2-INTERNAL-CONFIRMATION-NOT-VALID"
+      },
+      "body": {
+        "confirmationId": "S2-INTERNAL-CONFIRMATION-NOT-VALID",
+        "requestDigest": "2ca15adcc98ba0d8c092516b4f51e9cb560df260be4f2f5a194a1a1a398e14a7",
+        "expiresAt": "2026-10-25T08:29:00.000Z",
+        "state": "available"
+      }
+    },
+    "rpc": "CreateInternalOperationConfirmation",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateInternalOperationConfirmationReqMsg",
+    "responseType": "CreateInternalOperationConfirmationRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /internal/v1/operation-confirmations/S2-INTERNAL-CONFIRMATION-NOT-VALID\n\n{\n  \"confirmationId\": \"S2-INTERNAL-CONFIRMATION-NOT-VALID\",\n  \"requestDigest\": \"2ca15adcc98ba0d8c092516b4f51e9cb560df260be4f2f5a194a1a1a398e14a7\",\n  \"expiresAt\": \"2026-10-25T08:29:00.000Z\",\n  \"state\": \"available\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/operation-confirmations\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 0ea255d0-0000-4000-8000-000000000006' \\\n  --data-raw '{\"method\":\"POST\",\"resourcePath\":\"/internal/v1/trades/TRD-S2-DEMO-001/review-submissions\",\"idempotencyKey\":\"0ea255d0-0000-4000-8000-000000000008\",\"ifMatch\":\"\\\"s2-trade-r4-v4\\\"\",\"bodySha256\":\"1a5637ef97288b6710fe2452839da52d1823509433a17c0f551299bdf7f44758\"}'"
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "GET",
+      "path": "/internal/v1/operation-confirmations/S2-INTERNAL-CONFIRMATION-NOT-VALID",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 内部运营 credential omitted>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "confirmationId": "S2-INTERNAL-CONFIRMATION-NOT-VALID",
+        "requestDigest": "2ca15adcc98ba0d8c092516b4f51e9cb560df260be4f2f5a194a1a1a398e14a7",
+        "expiresAt": "2026-10-25T08:29:00.000Z",
+        "state": "available"
+      }
+    },
+    "rpc": "GetInternalOperationConfirmation",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetInternalOperationConfirmationReqMsg",
+    "responseType": "GetInternalOperationConfirmationRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\n\n{\n  \"confirmationId\": \"S2-INTERNAL-CONFIRMATION-NOT-VALID\",\n  \"requestDigest\": \"2ca15adcc98ba0d8c092516b4f51e9cb560df260be4f2f5a194a1a1a398e14a7\",\n  \"expiresAt\": \"2026-10-25T08:29:00.000Z\",\n  \"state\": \"available\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/internal/v1/operation-confirmations/S2-INTERNAL-CONFIRMATION-NOT-VALID\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/trades/TRD-S2-DEMO-001/review-submissions",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 内部运营 credential omitted>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "0ea255d0-0000-4000-8000-000000000008",
+        "X-Confirmation-Id": "<synthetic per-intent confirmation; NOT-VALID>",
+        "If-Match": "\"s2-trade-r4-v4\""
+      },
+      "body": {
+        "expectedTradeRevision": 4,
+        "supportingEvidence": [],
+        "summary": "未执行的合成设计例；本阶段必需资料应已核实，实际步骤一库不具备此批准事实"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s2-trade-r4-review-v5\"",
+        "Location": "/internal/v1/trades/TRD-S2-DEMO-001/review-submissions/REVIEW-S2-DEMO-001",
+        "X-Receipt-Proof": "<platform receipt; SYNTHETIC-NOT-VALID>"
+      },
+      "body": {
+        "submissionId": "REVIEW-S2-DEMO-001",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "tradeRevision": 4,
+        "submittedSnapshotNumber": "SNP-S2-SUBMITTED-001",
+        "etag": "\"s2-trade-r4-review-v5\""
+      }
+    },
+    "rpc": "CreateTradeReviewSubmission",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateTradeReviewSubmissionReqMsg",
+    "responseType": "CreateTradeReviewSubmissionRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s2-trade-r4-review-v5\"\nLocation: /internal/v1/trades/TRD-S2-DEMO-001/review-submissions/REVIEW-S2-DEMO-001\nX-Receipt-Proof: <platform receipt; SYNTHETIC-NOT-VALID>\n\n{\n  \"submissionId\": \"REVIEW-S2-DEMO-001\",\n  \"tradeNumber\": \"TRD-S2-DEMO-001\",\n  \"tradeRevision\": 4,\n  \"submittedSnapshotNumber\": \"SNP-S2-SUBMITTED-001\",\n  \"etag\": \"\\\"s2-trade-r4-review-v5\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/trades/TRD-S2-DEMO-001/review-submissions\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 0ea255d0-0000-4000-8000-000000000008' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --header 'If-Match: \"s2-trade-r4-v4\"' \\\n  --data-raw '{\"expectedTradeRevision\":4,\"supportingEvidence\":[],\"summary\":\"未执行的合成设计例；本阶段必需资料应已核实，实际步骤一库不具备此批准事实\"}'"
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/trades/TRD-S2-DEMO-001/review-decisions",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 内部运营 credential omitted>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "0ea255d0-0000-4000-8000-000000000009",
+        "X-Confirmation-Id": "<synthetic per-intent confirmation; NOT-VALID>",
+        "If-Match": "\"s2-trade-r4-review-v5\""
+      },
+      "body": {
+        "submissionId": "REVIEW-S2-DEMO-001",
+        "outcome": "DECISION_OUTCOME_APPROVE",
+        "reason": "仅设计推演：须由独立审核员真实核实本阶段规则后才可批准",
+        "missingItems": []
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/internal/v1/trades/TRD-S2-DEMO-001/review-decisions/DECISION-S2-DEMO-001",
+        "X-Receipt-Proof": "<platform receipt; SYNTHETIC-NOT-VALID>"
+      },
+      "body": {
+        "decisionId": "DECISION-S2-DEMO-001",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "approvedSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+        "tradeRevision": 4,
+        "lifecycle": "approved"
+      }
+    },
+    "rpc": "CreateTradeReviewDecision",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateTradeReviewDecisionReqMsg",
+    "responseType": "CreateTradeReviewDecisionRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /internal/v1/trades/TRD-S2-DEMO-001/review-decisions/DECISION-S2-DEMO-001\nX-Receipt-Proof: <platform receipt; SYNTHETIC-NOT-VALID>\n\n{\n  \"decisionId\": \"DECISION-S2-DEMO-001\",\n  \"tradeNumber\": \"TRD-S2-DEMO-001\",\n  \"approvedSnapshotNumber\": \"SNP-S2-DEMO-APPROVED-001\",\n  \"tradeRevision\": 4,\n  \"lifecycle\": \"approved\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/trades/TRD-S2-DEMO-001/review-decisions\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 0ea255d0-0000-4000-8000-000000000009' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --header 'If-Match: \"s2-trade-r4-review-v5\"' \\\n  --data-raw '{\"submissionId\":\"REVIEW-S2-DEMO-001\",\"outcome\":\"DECISION_OUTCOME_APPROVE\",\"reason\":\"仅设计推演：须由独立审核员真实核实本阶段规则后才可批准\",\"missingItems\":[]}'"
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/contracts",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 外部服务 credential omitted>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "0ea255d0-0000-4000-8000-000000000010",
+        "X-Confirmation-Id": "<synthetic per-intent confirmation; NOT-VALID>"
+      },
+      "body": {
+        "scope": "CONTRACT_SCOPE_PER_TRADE",
+        "purpose": "CONTRACT_PURPOSE_EXPORT_AGENCY",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "content": {
+          "tradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+          "parties": [
+            {
+              "contractPartySequence": 1,
+              "partyRoleCode": 1,
+              "participantSequenceNumber": 1
+            },
+            {
+              "contractPartySequence": 2,
+              "partyRoleCode": 2,
+              "participantSequenceNumber": 1
+            }
+          ],
+          "reviewFile": {
+            "logicalFileNumber": "FILE-S2-REVIEW-001",
+            "revisionNumber": 1,
+            "sha256": "54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175",
+            "documentTypeCode": 10
+          },
+          "effectiveFrom": "2026-10-25",
+          "effectiveTo": "2027-10-25"
+        }
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s2-demo-working-1-state-1-v1\"",
+        "Location": "/api/v1/contracts/CON-S2-DEMO-001",
+        "X-Receipt-Proof": "<platform receipt; SYNTHETIC-NOT-VALID>"
+      },
+      "body": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "scope": "CONTRACT_SCOPE_PER_TRADE",
+        "purpose": "CONTRACT_PURPOSE_EXPORT_AGENCY",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "currentRevisionNumber": 1,
+        "etag": "\"s2-demo-working-1-state-1-v1\""
+      }
+    },
+    "rpc": "CreateContract",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateContractReqMsg",
+    "responseType": "CreateContractRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s2-demo-working-1-state-1-v1\"\nLocation: /api/v1/contracts/CON-S2-DEMO-001\nX-Receipt-Proof: <platform receipt; SYNTHETIC-NOT-VALID>\n\n{\n  \"contractNumber\": \"CON-S2-DEMO-001\",\n  \"scope\": \"CONTRACT_SCOPE_PER_TRADE\",\n  \"purpose\": \"CONTRACT_PURPOSE_EXPORT_AGENCY\",\n  \"tradeNumber\": \"TRD-S2-DEMO-001\",\n  \"currentRevisionNumber\": 1,\n  \"etag\": \"\\\"s2-demo-working-1-state-1-v1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/contracts\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 0ea255d0-0000-4000-8000-000000000010' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"scope\":\"CONTRACT_SCOPE_PER_TRADE\",\"purpose\":\"CONTRACT_PURPOSE_EXPORT_AGENCY\",\"tradeNumber\":\"TRD-S2-DEMO-001\",\"content\":{\"tradeSnapshotNumber\":\"SNP-S2-DEMO-APPROVED-001\",\"parties\":[{\"contractPartySequence\":1,\"partyRoleCode\":1,\"participantSequenceNumber\":1},{\"contractPartySequence\":2,\"partyRoleCode\":2,\"participantSequenceNumber\":1}],\"reviewFile\":{\"logicalFileNumber\":\"FILE-S2-REVIEW-001\",\"revisionNumber\":1,\"sha256\":\"54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175\",\"documentTypeCode\":10},\"effectiveFrom\":\"2026-10-25\",\"effectiveTo\":\"2027-10-25\"}}'"
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/contracts/CON-S2-DEMO-001",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 外部服务 credential omitted>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s2-demo-working-1-state-1-v1\""
+      },
+      "body": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "scope": "CONTRACT_SCOPE_PER_TRADE",
+        "purpose": "CONTRACT_PURPOSE_EXPORT_AGENCY",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "currentRevisionNumber": 1,
+        "etag": "\"s2-demo-working-1-state-1-v1\""
+      }
+    },
+    "rpc": "GetContract",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetContractReqMsg",
+    "responseType": "GetContractRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s2-demo-working-1-state-1-v1\"\n\n{\n  \"contractNumber\": \"CON-S2-DEMO-001\",\n  \"scope\": \"CONTRACT_SCOPE_PER_TRADE\",\n  \"purpose\": \"CONTRACT_PURPOSE_EXPORT_AGENCY\",\n  \"tradeNumber\": \"TRD-S2-DEMO-001\",\n  \"currentRevisionNumber\": 1,\n  \"etag\": \"\\\"s2-demo-working-1-state-1-v1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/contracts/CON-S2-DEMO-001\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/contracts/CON-S2-DEMO-001/revisions/1",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 外部服务 credential omitted>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s2-demo-working-1-state-3-v4\""
+      },
+      "body": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "status": "REVISION_STATUS_RETURNED",
+        "content": {
+          "tradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+          "parties": [
+            {
+              "contractPartySequence": 1,
+              "partyRoleCode": 1,
+              "participantSequenceNumber": 1
+            },
+            {
+              "contractPartySequence": 2,
+              "partyRoleCode": 2,
+              "participantSequenceNumber": 1
+            }
+          ],
+          "reviewFile": {
+            "logicalFileNumber": "FILE-S2-REVIEW-001",
+            "revisionNumber": 1,
+            "sha256": "54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175",
+            "documentTypeCode": 10
+          },
+          "effectiveFrom": "2026-10-25",
+          "effectiveTo": "2027-10-25"
+        },
+        "etag": "\"s2-demo-working-1-state-3-v4\"",
+        "currentRevisionNumber": 1,
+        "reviewResult": {
+          "outcome": "DECISION_OUTCOME_RETURN",
+          "reason": "合成补正意见：补齐正文范围与正式授权对应关系",
+          "ruleVersion": "S2-RULES-1",
+          "reviewedAt": "2026-10-25T08:20:00.123Z",
+          "reviewerReference": "SYNTHETIC-INDEPENDENT-REVIEWER",
+          "evidenceReferences": []
+        }
+      }
+    },
+    "rpc": "GetContractRevision",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetContractRevisionReqMsg",
+    "responseType": "GetContractRevisionRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s2-demo-working-1-state-3-v4\"\n\n{\n  \"contractNumber\": \"CON-S2-DEMO-001\",\n  \"revisionNumber\": 1,\n  \"status\": \"REVISION_STATUS_RETURNED\",\n  \"content\": {\n    \"tradeSnapshotNumber\": \"SNP-S2-DEMO-APPROVED-001\",\n    \"parties\": [\n      {\n        \"contractPartySequence\": 1,\n        \"partyRoleCode\": 1,\n        \"participantSequenceNumber\": 1\n      },\n      {\n        \"contractPartySequence\": 2,\n        \"partyRoleCode\": 2,\n        \"participantSequenceNumber\": 1\n      }\n    ],\n    \"reviewFile\": {\n      \"logicalFileNumber\": \"FILE-S2-REVIEW-001\",\n      \"revisionNumber\": 1,\n      \"sha256\": \"54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175\",\n      \"documentTypeCode\": 10\n    },\n    \"effectiveFrom\": \"2026-10-25\",\n    \"effectiveTo\": \"2027-10-25\"\n  },\n  \"etag\": \"\\\"s2-demo-working-1-state-3-v4\\\"\",\n  \"currentRevisionNumber\": 1,\n  \"reviewResult\": {\n    \"outcome\": \"DECISION_OUTCOME_RETURN\",\n    \"reason\": \"合成补正意见：补齐正文范围与正式授权对应关系\",\n    \"ruleVersion\": \"S2-RULES-1\",\n    \"reviewedAt\": \"2026-10-25T08:20:00.123Z\",\n    \"reviewerReference\": \"SYNTHETIC-INDEPENDENT-REVIEWER\",\n    \"evidenceReferences\": []\n  }\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/contracts/CON-S2-DEMO-001/revisions/1\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "PUT",
+      "path": "/api/v1/contracts/CON-S2-DEMO-001/revisions/1",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 外部服务 credential omitted>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "0ea255d0-0000-4000-8000-000000000013",
+        "X-Confirmation-Id": "<synthetic per-intent confirmation; NOT-VALID>",
+        "If-Match": "\"s2-demo-working-1-state-1-v1\""
+      },
+      "body": {
+        "tradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+        "parties": [
+          {
+            "contractPartySequence": 1,
+            "partyRoleCode": 1,
+            "participantSequenceNumber": 1
+          },
+          {
+            "contractPartySequence": 2,
+            "partyRoleCode": 2,
+            "participantSequenceNumber": 1
+          }
+        ],
+        "reviewFile": {
+          "logicalFileNumber": "FILE-S2-REVIEW-001",
+          "revisionNumber": 1,
+          "sha256": "54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175",
+          "documentTypeCode": 10
+        },
+        "effectiveFrom": "2026-10-25",
+        "effectiveTo": "2027-10-25"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s2-demo-working-1-state-1-v2\"",
+        "X-Receipt-Proof": "<platform receipt; SYNTHETIC-NOT-VALID>"
+      },
+      "body": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "status": "REVISION_STATUS_DRAFT",
+        "etag": "\"s2-demo-working-1-state-1-v2\"",
+        "acceptanceId": "ACCEPT-S2-REVISION_STATUS_DRAFT-1"
+      }
+    },
+    "rpc": "ReplaceContractDraft",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "ReplaceContractDraftReqMsg",
+    "responseType": "ReplaceContractDraftRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s2-demo-working-1-state-1-v2\"\nX-Receipt-Proof: <platform receipt; SYNTHETIC-NOT-VALID>\n\n{\n  \"contractNumber\": \"CON-S2-DEMO-001\",\n  \"revisionNumber\": 1,\n  \"status\": \"REVISION_STATUS_DRAFT\",\n  \"etag\": \"\\\"s2-demo-working-1-state-1-v2\\\"\",\n  \"acceptanceId\": \"ACCEPT-S2-REVISION_STATUS_DRAFT-1\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request PUT \"${BASE_URL:?Set BASE_URL}/api/v1/contracts/CON-S2-DEMO-001/revisions/1\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 0ea255d0-0000-4000-8000-000000000013' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --header 'If-Match: \"s2-demo-working-1-state-1-v1\"' \\\n  --data-raw '{\"tradeSnapshotNumber\":\"SNP-S2-DEMO-APPROVED-001\",\"parties\":[{\"contractPartySequence\":1,\"partyRoleCode\":1,\"participantSequenceNumber\":1},{\"contractPartySequence\":2,\"partyRoleCode\":2,\"participantSequenceNumber\":1}],\"reviewFile\":{\"logicalFileNumber\":\"FILE-S2-REVIEW-001\",\"revisionNumber\":1,\"sha256\":\"54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175\",\"documentTypeCode\":10},\"effectiveFrom\":\"2026-10-25\",\"effectiveTo\":\"2027-10-25\"}'"
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/contracts/CON-S2-DEMO-001/revisions",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 外部服务 credential omitted>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "0ea255d0-0000-4000-8000-000000000014",
+        "X-Confirmation-Id": "<synthetic per-intent confirmation; NOT-VALID>",
+        "If-Match": "\"s2-demo-working-1-state-3-v4\""
+      },
+      "body": {
+        "previousWorkingRevision": 1,
+        "correctionReason": "仅推演：正式任务已查清，待补条款另起版",
+        "content": {
+          "tradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+          "parties": [
+            {
+              "contractPartySequence": 1,
+              "partyRoleCode": 1,
+              "participantSequenceNumber": 1
+            },
+            {
+              "contractPartySequence": 2,
+              "partyRoleCode": 2,
+              "participantSequenceNumber": 1
+            }
+          ],
+          "reviewFile": {
+            "logicalFileNumber": "FILE-S2-REVIEW-001",
+            "revisionNumber": 1,
+            "sha256": "54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175",
+            "documentTypeCode": 10
+          },
+          "effectiveFrom": "2026-10-25",
+          "effectiveTo": "2027-10-25"
+        }
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s2-demo-working-2-state-1-v1\"",
+        "Location": "/api/v1/contracts/CON-S2-DEMO-001/revisions/2",
+        "X-Receipt-Proof": "<platform receipt; SYNTHETIC-NOT-VALID>"
+      },
+      "body": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 2,
+        "status": "REVISION_STATUS_DRAFT",
+        "etag": "\"s2-demo-working-2-state-1-v1\"",
+        "acceptanceId": "ACCEPT-S2-REVISION_STATUS_DRAFT-2"
+      }
+    },
+    "rpc": "CreateContractRevision",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateContractRevisionReqMsg",
+    "responseType": "CreateContractRevisionRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s2-demo-working-2-state-1-v1\"\nLocation: /api/v1/contracts/CON-S2-DEMO-001/revisions/2\nX-Receipt-Proof: <platform receipt; SYNTHETIC-NOT-VALID>\n\n{\n  \"contractNumber\": \"CON-S2-DEMO-001\",\n  \"revisionNumber\": 2,\n  \"status\": \"REVISION_STATUS_DRAFT\",\n  \"etag\": \"\\\"s2-demo-working-2-state-1-v1\\\"\",\n  \"acceptanceId\": \"ACCEPT-S2-REVISION_STATUS_DRAFT-2\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/contracts/CON-S2-DEMO-001/revisions\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 0ea255d0-0000-4000-8000-000000000014' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --header 'If-Match: \"s2-demo-working-1-state-3-v4\"' \\\n  --data-raw '{\"previousWorkingRevision\":1,\"correctionReason\":\"仅推演：正式任务已查清，待补条款另起版\",\"content\":{\"tradeSnapshotNumber\":\"SNP-S2-DEMO-APPROVED-001\",\"parties\":[{\"contractPartySequence\":1,\"partyRoleCode\":1,\"participantSequenceNumber\":1},{\"contractPartySequence\":2,\"partyRoleCode\":2,\"participantSequenceNumber\":1}],\"reviewFile\":{\"logicalFileNumber\":\"FILE-S2-REVIEW-001\",\"revisionNumber\":1,\"sha256\":\"54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175\",\"documentTypeCode\":10},\"effectiveFrom\":\"2026-10-25\",\"effectiveTo\":\"2027-10-25\"}}'"
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/contracts/CON-S2-DEMO-001/revisions/1/review-submissions",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 外部服务 credential omitted>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "0ea255d0-0000-4000-8000-000000000015",
+        "X-Confirmation-Id": "<synthetic per-intent confirmation; NOT-VALID>",
+        "If-Match": "\"s2-demo-working-1-state-1-v2\""
+      },
+      "body": {
+        "declaration": "确认送审确切正文与主体/依据，尚未签署"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s2-demo-working-1-state-2-v3\"",
+        "Location": "/api/v1/contracts/CON-S2-DEMO-001/revisions/1/review-submissions/ACCEPT-S2-REVISION_STATUS_IN_REVIEW-1",
+        "X-Receipt-Proof": "<platform receipt; SYNTHETIC-NOT-VALID>"
+      },
+      "body": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "status": "REVISION_STATUS_IN_REVIEW",
+        "etag": "\"s2-demo-working-1-state-2-v3\"",
+        "acceptanceId": "ACCEPT-S2-REVISION_STATUS_IN_REVIEW-1"
+      }
+    },
+    "rpc": "CreateContractReviewSubmission",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateContractReviewSubmissionReqMsg",
+    "responseType": "CreateContractReviewSubmissionRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s2-demo-working-1-state-2-v3\"\nLocation: /api/v1/contracts/CON-S2-DEMO-001/revisions/1/review-submissions/ACCEPT-S2-REVISION_STATUS_IN_REVIEW-1\nX-Receipt-Proof: <platform receipt; SYNTHETIC-NOT-VALID>\n\n{\n  \"contractNumber\": \"CON-S2-DEMO-001\",\n  \"revisionNumber\": 1,\n  \"status\": \"REVISION_STATUS_IN_REVIEW\",\n  \"etag\": \"\\\"s2-demo-working-1-state-2-v3\\\"\",\n  \"acceptanceId\": \"ACCEPT-S2-REVISION_STATUS_IN_REVIEW-1\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/contracts/CON-S2-DEMO-001/revisions/1/review-submissions\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 0ea255d0-0000-4000-8000-000000000015' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --header 'If-Match: \"s2-demo-working-1-state-1-v2\"' \\\n  --data-raw '{\"declaration\":\"确认送审确切正文与主体/依据，尚未签署\"}'"
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/contracts/CON-S2-DEMO-001/revisions/1/review-decisions",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 内部运营 credential omitted>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "0ea255d0-0000-4000-8000-000000000016",
+        "X-Confirmation-Id": "<synthetic per-intent confirmation; NOT-VALID>",
+        "If-Match": "\"s2-demo-working-1-state-2-v3\""
+      },
+      "body": {
+        "outcome": "DECISION_OUTCOME_APPROVE",
+        "reason": "仅推演：须独立核实条款/委托链/收费与付款条件",
+        "ruleVersion": "S2-RULES-1",
+        "evidence": []
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s2-demo-working-1-state-4-v4\"",
+        "Location": "/internal/v1/contracts/CON-S2-DEMO-001/revisions/1/review-decisions/ACCEPT-S2-REVISION_STATUS_AWAITING_SIGNATURE-1",
+        "X-Receipt-Proof": "<platform receipt; SYNTHETIC-NOT-VALID>"
+      },
+      "body": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "status": "REVISION_STATUS_AWAITING_SIGNATURE",
+        "etag": "\"s2-demo-working-1-state-4-v4\"",
+        "acceptanceId": "ACCEPT-S2-REVISION_STATUS_AWAITING_SIGNATURE-1"
+      }
+    },
+    "rpc": "CreateContractReviewDecision",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateContractReviewDecisionReqMsg",
+    "responseType": "CreateContractReviewDecisionRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s2-demo-working-1-state-4-v4\"\nLocation: /internal/v1/contracts/CON-S2-DEMO-001/revisions/1/review-decisions/ACCEPT-S2-REVISION_STATUS_AWAITING_SIGNATURE-1\nX-Receipt-Proof: <platform receipt; SYNTHETIC-NOT-VALID>\n\n{\n  \"contractNumber\": \"CON-S2-DEMO-001\",\n  \"revisionNumber\": 1,\n  \"status\": \"REVISION_STATUS_AWAITING_SIGNATURE\",\n  \"etag\": \"\\\"s2-demo-working-1-state-4-v4\\\"\",\n  \"acceptanceId\": \"ACCEPT-S2-REVISION_STATUS_AWAITING_SIGNATURE-1\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/contracts/CON-S2-DEMO-001/revisions/1/review-decisions\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 0ea255d0-0000-4000-8000-000000000016' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --header 'If-Match: \"s2-demo-working-1-state-2-v3\"' \\\n  --data-raw '{\"outcome\":\"DECISION_OUTCOME_APPROVE\",\"reason\":\"仅推演：须独立核实条款/委托链/收费与付款条件\",\"ruleVersion\":\"S2-RULES-1\",\"evidence\":[]}'"
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/contracts/CON-S2-DEMO-001/revisions/1/signature-requests",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 外部服务 credential omitted>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "0ea255d0-0000-4000-8000-000000000017",
+        "X-Confirmation-Id": "<synthetic per-intent confirmation; NOT-VALID>",
+        "If-Match": "\"s2-demo-working-1-state-4-v4\""
+      },
+      "body": {
+        "providerCode": "UNSELECTED-PROVIDER-DESIGN-ONLY",
+        "reviewedDocumentSha256": "54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s2-signature-request-pending-dispatch-v1\"",
+        "Location": "/api/v1/signature-requests/SIG-S2-DEMO-001",
+        "X-Receipt-Proof": "<platform receipt; SYNTHETIC-NOT-VALID>"
+      },
+      "body": {
+        "signatureRequestId": "SIG-S2-DEMO-001",
+        "clientReference": "SIGREF-S2-DEMO-001",
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "state": "pending_dispatch",
+        "attemptCount": 0,
+        "lastErrorCode": "",
+        "etag": "\"s2-signature-request-pending-dispatch-v1\""
+      }
+    },
+    "rpc": "CreateSignatureRequest",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateSignatureRequestReqMsg",
+    "responseType": "CreateSignatureRequestRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s2-signature-request-pending-dispatch-v1\"\nLocation: /api/v1/signature-requests/SIG-S2-DEMO-001\nX-Receipt-Proof: <platform receipt; SYNTHETIC-NOT-VALID>\n\n{\n  \"signatureRequestId\": \"SIG-S2-DEMO-001\",\n  \"clientReference\": \"SIGREF-S2-DEMO-001\",\n  \"contractNumber\": \"CON-S2-DEMO-001\",\n  \"revisionNumber\": 1,\n  \"state\": \"pending_dispatch\",\n  \"attemptCount\": 0,\n  \"lastErrorCode\": \"\",\n  \"etag\": \"\\\"s2-signature-request-pending-dispatch-v1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/contracts/CON-S2-DEMO-001/revisions/1/signature-requests\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 0ea255d0-0000-4000-8000-000000000017' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --header 'If-Match: \"s2-demo-working-1-state-4-v4\"' \\\n  --data-raw '{\"providerCode\":\"UNSELECTED-PROVIDER-DESIGN-ONLY\",\"reviewedDocumentSha256\":\"54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175\"}'"
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/signature-requests/SIG-S2-DEMO-001",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 外部服务 credential omitted>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s2-signature-request-awaiting-signers-v2\""
+      },
+      "body": {
+        "signatureRequestId": "SIG-S2-DEMO-001",
+        "clientReference": "SIGREF-S2-DEMO-001",
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "state": "awaiting_signers",
+        "attemptCount": 0,
+        "lastErrorCode": "",
+        "etag": "\"s2-signature-request-awaiting-signers-v2\"",
+        "providerTaskReference": "NOT-A-REAL-PLATFORM-TASK"
+      }
+    },
+    "rpc": "GetSignatureRequest",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetSignatureRequestReqMsg",
+    "responseType": "GetSignatureRequestRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s2-signature-request-awaiting-signers-v2\"\n\n{\n  \"signatureRequestId\": \"SIG-S2-DEMO-001\",\n  \"clientReference\": \"SIGREF-S2-DEMO-001\",\n  \"contractNumber\": \"CON-S2-DEMO-001\",\n  \"revisionNumber\": 1,\n  \"state\": \"awaiting_signers\",\n  \"attemptCount\": 0,\n  \"lastErrorCode\": \"\",\n  \"etag\": \"\\\"s2-signature-request-awaiting-signers-v2\\\"\",\n  \"providerTaskReference\": \"NOT-A-REAL-PLATFORM-TASK\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/signature-requests/SIG-S2-DEMO-001\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/signature-requests/SIG-S2-DEMO-001/signing-sessions",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 外部服务 credential omitted>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "0ea255d0-0000-4000-8000-000000000019",
+        "X-Confirmation-Id": "<synthetic per-intent confirmation; NOT-VALID>",
+        "If-Match": "\"s2-signature-request-awaiting-signers-v2\""
+      },
+      "body": {
+        "returnRoute": "/contracts/signature-result"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/api/v1/signing-sessions/SESSION-S2-DEMO-001",
+        "X-Receipt-Proof": "<platform receipt; SYNTHETIC-NOT-VALID>"
+      },
+      "body": {
+        "signingSessionId": "SESSION-S2-DEMO-001",
+        "signatureRequestId": "SIG-S2-DEMO-001",
+        "state": "pending"
+      }
+    },
+    "rpc": "CreateSigningSession",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateSigningSessionReqMsg",
+    "responseType": "CreateSigningSessionRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /api/v1/signing-sessions/SESSION-S2-DEMO-001\nX-Receipt-Proof: <platform receipt; SYNTHETIC-NOT-VALID>\n\n{\n  \"signingSessionId\": \"SESSION-S2-DEMO-001\",\n  \"signatureRequestId\": \"SIG-S2-DEMO-001\",\n  \"state\": \"pending\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/signature-requests/SIG-S2-DEMO-001/signing-sessions\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 0ea255d0-0000-4000-8000-000000000019' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --header 'If-Match: \"s2-signature-request-awaiting-signers-v2\"' \\\n  --data-raw '{\"returnRoute\":\"/contracts/signature-result\"}'"
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/signing-sessions/SESSION-S2-DEMO-001",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 外部服务 credential omitted>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "signingSessionId": "SESSION-S2-DEMO-001",
+        "signatureRequestId": "SIG-S2-DEMO-001",
+        "state": "ready",
+        "redirectUrl": "https://esign.example.invalid/session/NOT-A-REAL-SESSION",
+        "expiresAt": "2026-10-25T08:35:00.123Z"
+      }
+    },
+    "rpc": "GetSigningSession",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetSigningSessionReqMsg",
+    "responseType": "GetSigningSessionRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\n\n{\n  \"signingSessionId\": \"SESSION-S2-DEMO-001\",\n  \"signatureRequestId\": \"SIG-S2-DEMO-001\",\n  \"state\": \"ready\",\n  \"redirectUrl\": \"https://esign.example.invalid/session/NOT-A-REAL-SESSION\",\n  \"expiresAt\": \"2026-10-25T08:35:00.123Z\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/signing-sessions/SESSION-S2-DEMO-001\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/signature-notifications",
+      "headers": {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "X-Provider-Signature": "<provider raw-body signature; NOT-VALID>"
+      },
+      "body": {
+        "providerCode": "UNSELECTED-PROVIDER-DESIGN-ONLY",
+        "providerEventId": "NOTICE-S2-DEMO-001",
+        "clientReference": "SIGREF-S2-DEMO-001",
+        "providerTaskReference": "NOT-A-REAL-PLATFORM-TASK",
+        "reportedState": "completed",
+        "occurredAt": "2026-10-25T08:30:00.123Z"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/api/v1/signature-notifications/NOTICE-S2-DEMO-001"
+      },
+      "body": {
+        "notificationId": "NOTICE-S2-DEMO-001",
+        "state": "received"
+      }
+    },
+    "rpc": "CreateSignatureNotification",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateSignatureNotificationReqMsg",
+    "responseType": "CreateSignatureNotificationRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /api/v1/signature-notifications/NOTICE-S2-DEMO-001\n\n{\n  \"notificationId\": \"NOTICE-S2-DEMO-001\",\n  \"state\": \"received\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/signature-notifications\" \\\n  --header 'Accept: application/json' \\\n  --header 'Content-Type: application/json' \\\n  --header \"X-Provider-Signature: ${PROVIDER_SIGNATURE:?Sign these exact raw bytes per registered provider profile}\" \\\n  --data-raw '{\"providerCode\":\"UNSELECTED-PROVIDER-DESIGN-ONLY\",\"providerEventId\":\"NOTICE-S2-DEMO-001\",\"clientReference\":\"SIGREF-S2-DEMO-001\",\"providerTaskReference\":\"NOT-A-REAL-PLATFORM-TASK\",\"reportedState\":\"completed\",\"occurredAt\":\"2026-10-25T08:30:00.123Z\"}'"
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/contracts/CON-S2-DEMO-001/revisions/1/activation-decisions",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 内部运营 credential omitted>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "0ea255d0-0000-4000-8000-000000000022",
+        "X-Confirmation-Id": "<synthetic per-intent confirmation; NOT-VALID>",
+        "If-Match": "\"s2-demo-working-1-state-5-v5\""
+      },
+      "body": {
+        "conditionEvidence": [
+          {
+            "logicalFileNumber": "REQUIRED-EXTERNAL-ACTIVATION-AUTHORITY",
+            "revisionNumber": 1,
+            "sha256": "<no-real-evidence-in-this-design-fixture>",
+            "documentTypeCode": 10
+          }
+        ],
+        "reason": "未执行推演：必须先取得真实全部签署/归档证据并满足条件，不能用本例激活"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s2-demo-working-1-state-6-v6\"",
+        "Location": "/internal/v1/contracts/CON-S2-DEMO-001/revisions/1/activation-decisions/ACCEPT-S2-REVISION_STATUS_EFFECTIVE-1",
+        "X-Receipt-Proof": "<platform receipt; SYNTHETIC-NOT-VALID>"
+      },
+      "body": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "status": "REVISION_STATUS_EFFECTIVE",
+        "etag": "\"s2-demo-working-1-state-6-v6\"",
+        "acceptanceId": "ACCEPT-S2-REVISION_STATUS_EFFECTIVE-1"
+      }
+    },
+    "rpc": "CreateContractActivation",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateContractActivationReqMsg",
+    "responseType": "CreateContractActivationRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s2-demo-working-1-state-6-v6\"\nLocation: /internal/v1/contracts/CON-S2-DEMO-001/revisions/1/activation-decisions/ACCEPT-S2-REVISION_STATUS_EFFECTIVE-1\nX-Receipt-Proof: <platform receipt; SYNTHETIC-NOT-VALID>\n\n{\n  \"contractNumber\": \"CON-S2-DEMO-001\",\n  \"revisionNumber\": 1,\n  \"status\": \"REVISION_STATUS_EFFECTIVE\",\n  \"etag\": \"\\\"s2-demo-working-1-state-6-v6\\\"\",\n  \"acceptanceId\": \"ACCEPT-S2-REVISION_STATUS_EFFECTIVE-1\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/contracts/CON-S2-DEMO-001/revisions/1/activation-decisions\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 0ea255d0-0000-4000-8000-000000000022' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --header 'If-Match: \"s2-demo-working-1-state-5-v5\"' \\\n  --data-raw '{\"conditionEvidence\":[{\"logicalFileNumber\":\"REQUIRED-EXTERNAL-ACTIVATION-AUTHORITY\",\"revisionNumber\":1,\"sha256\":\"<no-real-evidence-in-this-design-fixture>\",\"documentTypeCode\":10}],\"reason\":\"未执行推演：必须先取得真实全部签署/归档证据并满足条件，不能用本例激活\"}'"
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/trades/TRD-S2-DEMO-001/agreement-applications",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 外部服务 credential omitted>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "0ea255d0-0000-4000-8000-000000000023",
+        "X-Confirmation-Id": "<synthetic per-intent confirmation; NOT-VALID>",
+        "If-Match": "\"s2-trade-r4-v4\""
+      },
+      "body": {
+        "contractNumber": "CON-S2-FRAMEWORK-LOGISTICS",
+        "contractRevisionNumber": 2,
+        "approvedTradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+        "partyMappings": [
+          {
+            "contractPartySequence": 1,
+            "partyRoleCode": 1,
+            "participantSequenceNumber": 1
+          },
+          {
+            "contractPartySequence": 2,
+            "partyRoleCode": 5,
+            "participantSequenceNumber": 1
+          }
+        ],
+        "serviceOrder": {
+          "logicalFileNumber": "REQUIRED-EXTERNAL-SERVICE-ORDER",
+          "revisionNumber": 1,
+          "sha256": "<no-real-evidence-in-this-design-fixture>",
+          "documentTypeCode": 11
+        },
+        "useDate": "2026-10-25"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/api/v1/trades/TRD-S2-DEMO-001/agreement-applications/APPLICATION-S2-DEMO-001",
+        "X-Receipt-Proof": "<platform receipt; SYNTHETIC-NOT-VALID>"
+      },
+      "body": {
+        "applicationId": "APPLICATION-S2-DEMO-001",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "contractNumber": "CON-S2-FRAMEWORK-LOGISTICS",
+        "contractRevisionNumber": 2,
+        "tradeRevision": 6,
+        "state": "pending_review"
+      }
+    },
+    "rpc": "CreateAgreementApplication",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateAgreementApplicationReqMsg",
+    "responseType": "CreateAgreementApplicationRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /api/v1/trades/TRD-S2-DEMO-001/agreement-applications/APPLICATION-S2-DEMO-001\nX-Receipt-Proof: <platform receipt; SYNTHETIC-NOT-VALID>\n\n{\n  \"applicationId\": \"APPLICATION-S2-DEMO-001\",\n  \"tradeNumber\": \"TRD-S2-DEMO-001\",\n  \"contractNumber\": \"CON-S2-FRAMEWORK-LOGISTICS\",\n  \"contractRevisionNumber\": 2,\n  \"tradeRevision\": 6,\n  \"state\": \"pending_review\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/trades/TRD-S2-DEMO-001/agreement-applications\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 0ea255d0-0000-4000-8000-000000000023' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --header 'If-Match: \"s2-trade-r4-v4\"' \\\n  --data-raw '{\"contractNumber\":\"CON-S2-FRAMEWORK-LOGISTICS\",\"contractRevisionNumber\":2,\"approvedTradeSnapshotNumber\":\"SNP-S2-DEMO-APPROVED-001\",\"partyMappings\":[{\"contractPartySequence\":1,\"partyRoleCode\":1,\"participantSequenceNumber\":1},{\"contractPartySequence\":2,\"partyRoleCode\":5,\"participantSequenceNumber\":1}],\"serviceOrder\":{\"logicalFileNumber\":\"REQUIRED-EXTERNAL-SERVICE-ORDER\",\"revisionNumber\":1,\"sha256\":\"<no-real-evidence-in-this-design-fixture>\",\"documentTypeCode\":11},\"useDate\":\"2026-10-25\"}'"
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/trades/TRD-S2-DEMO-001/agreement-applications/APPLICATION-S2-DEMO-001",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 外部服务 credential omitted>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "applicationId": "APPLICATION-S2-DEMO-001",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "contractNumber": "CON-S2-FRAMEWORK-LOGISTICS",
+        "contractRevisionNumber": 2,
+        "tradeRevision": 6,
+        "state": "pending_review"
+      }
+    },
+    "rpc": "GetAgreementApplication",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetAgreementApplicationReqMsg",
+    "responseType": "GetAgreementApplicationRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\n\n{\n  \"applicationId\": \"APPLICATION-S2-DEMO-001\",\n  \"tradeNumber\": \"TRD-S2-DEMO-001\",\n  \"contractNumber\": \"CON-S2-FRAMEWORK-LOGISTICS\",\n  \"contractRevisionNumber\": 2,\n  \"tradeRevision\": 6,\n  \"state\": \"pending_review\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/trades/TRD-S2-DEMO-001/agreement-applications/APPLICATION-S2-DEMO-001\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/trades/TRD-S2-DEMO-001/customs-authorizations",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 外部服务 credential omitted>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "0ea255d0-0000-4000-8000-000000000025",
+        "X-Confirmation-Id": "<synthetic per-intent confirmation; NOT-VALID>",
+        "If-Match": "\"s2-trade-r4-v4\""
+      },
+      "body": {
+        "approvedTradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+        "officialAuthorization": {
+          "logicalFileNumber": "REQUIRED-EXTERNAL-OFFICIAL-AUTHORIZATION",
+          "revisionNumber": 1,
+          "sha256": "<no-real-evidence-in-this-design-fixture>",
+          "documentTypeCode": 13
+        },
+        "customsParticipantSequence": 1,
+        "validFrom": "2026-10-25",
+        "validTo": "2027-10-25",
+        "scopeDescription": "本笔明确货物/报关范围；示例不代表已办理官方委托"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/api/v1/trades/TRD-S2-DEMO-001/customs-authorizations/AUTHORITY-S2-DEMO-001",
+        "X-Receipt-Proof": "<platform receipt; SYNTHETIC-NOT-VALID>"
+      },
+      "body": {
+        "authorizationId": "AUTHORITY-S2-DEMO-001",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "state": "pending_review",
+        "tradeRevision": 6
+      }
+    },
+    "rpc": "CreateCustomsAuthorization",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateCustomsAuthorizationReqMsg",
+    "responseType": "CreateCustomsAuthorizationRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /api/v1/trades/TRD-S2-DEMO-001/customs-authorizations/AUTHORITY-S2-DEMO-001\nX-Receipt-Proof: <platform receipt; SYNTHETIC-NOT-VALID>\n\n{\n  \"authorizationId\": \"AUTHORITY-S2-DEMO-001\",\n  \"tradeNumber\": \"TRD-S2-DEMO-001\",\n  \"state\": \"pending_review\",\n  \"tradeRevision\": 6\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/trades/TRD-S2-DEMO-001/customs-authorizations\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 0ea255d0-0000-4000-8000-000000000025' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --header 'If-Match: \"s2-trade-r4-v4\"' \\\n  --data-raw '{\"approvedTradeSnapshotNumber\":\"SNP-S2-DEMO-APPROVED-001\",\"officialAuthorization\":{\"logicalFileNumber\":\"REQUIRED-EXTERNAL-OFFICIAL-AUTHORIZATION\",\"revisionNumber\":1,\"sha256\":\"<no-real-evidence-in-this-design-fixture>\",\"documentTypeCode\":13},\"customsParticipantSequence\":1,\"validFrom\":\"2026-10-25\",\"validTo\":\"2027-10-25\",\"scopeDescription\":\"本笔明确货物/报关范围；示例不代表已办理官方委托\"}'"
+  },
+  {
+    "scenario": "Independent unexecuted fixture: prerequisite states/permissions/evidence must be established; not a runnable success trace.",
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/trades/TRD-S2-DEMO-001/customs-agent-recognitions",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "<synthetic 内部运营 credential omitted>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "0ea255d0-0000-4000-8000-000000000026",
+        "X-Confirmation-Id": "<synthetic per-intent confirmation; NOT-VALID>",
+        "If-Match": "\"s2-trade-r4-v4\""
+      },
+      "body": {
+        "approvedTradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+        "customsParticipantSequence": 1,
+        "writtenRecognition": {
+          "logicalFileNumber": "REQUIRED-EXTERNAL-WRITTEN-RECOGNITION",
+          "revisionNumber": 1,
+          "sha256": "<no-real-evidence-in-this-design-fixture>",
+          "documentTypeCode": 13
+        },
+        "validFrom": "2026-10-25",
+        "validTo": "2027-10-25"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/internal/v1/trades/TRD-S2-DEMO-001/customs-agent-recognitions/RECOGNITION-S2-DEMO-001",
+        "X-Receipt-Proof": "<platform receipt; SYNTHETIC-NOT-VALID>"
+      },
+      "body": {
+        "recognitionId": "RECOGNITION-S2-DEMO-001",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "state": "pending_review",
+        "tradeRevision": 6
+      }
+    },
+    "rpc": "CreateCustomsAgentRecognition",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateCustomsAgentRecognitionReqMsg",
+    "responseType": "CreateCustomsAgentRecognitionRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /internal/v1/trades/TRD-S2-DEMO-001/customs-agent-recognitions/RECOGNITION-S2-DEMO-001\nX-Receipt-Proof: <platform receipt; SYNTHETIC-NOT-VALID>\n\n{\n  \"recognitionId\": \"RECOGNITION-S2-DEMO-001\",\n  \"tradeNumber\": \"TRD-S2-DEMO-001\",\n  \"state\": \"pending_review\",\n  \"tradeRevision\": 6\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/trades/TRD-S2-DEMO-001/customs-agent-recognitions\" \\\n  --header 'Accept: application/json' \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 0ea255d0-0000-4000-8000-000000000026' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --header 'If-Match: \"s2-trade-r4-v4\"' \\\n  --data-raw '{\"approvedTradeSnapshotNumber\":\"SNP-S2-DEMO-APPROVED-001\",\"customsParticipantSequence\":1,\"writtenRecognition\":{\"logicalFileNumber\":\"REQUIRED-EXTERNAL-WRITTEN-RECOGNITION\",\"revisionNumber\":1,\"sha256\":\"<no-real-evidence-in-this-design-fixture>\",\"documentTypeCode\":13},\"validFrom\":\"2026-10-25\",\"validTo\":\"2027-10-25\"}'"
+  }
+]

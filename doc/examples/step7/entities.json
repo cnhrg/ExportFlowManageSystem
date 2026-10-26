@@ -1,0 +1,74 @@
+{
+  "syntheticOnly": true,
+  "warning": "只含准备及内部合成数据；没有税务机关/银行成功夹具",
+  "tax_case_tab": {
+    "tax_case_number": "SYNTHETIC-S7-CASE",
+    "trade_number": "SYNTHETIC-S7-TRADE",
+    "tax_type_code": 2,
+    "case_status": 1,
+    "scope_reference": "SYNTHETIC-PREPARATION-SCOPE",
+    "version": 1,
+    "claimed_amount": null,
+    "currency_code": "CNY"
+  },
+  "tax_submission_tab": {
+    "tax_case_number": "SYNTHETIC-S7-CASE",
+    "submission_revision_number": 1,
+    "package_hash": "e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c",
+    "submission_status": 1,
+    "submission_content_json": {
+      "schema_version": 1,
+      "tax_type_code": 2,
+      "approved_snapshot_number": "SYNTHETIC-APPROVED-SNAPSHOT",
+      "scope_reference": "SYNTHETIC-PREPARATION-SCOPE",
+      "rule_version": "UNCONFIRMED",
+      "responsibility_basis": {
+        "unresolved_items": [
+          "主管机关责任/范围规则待确认"
+        ]
+      },
+      "declaration_references": [],
+      "fields": {
+        "currency_code": "CNY"
+      },
+      "check_report": {
+        "missing_gates": [
+          "SCOPE_RULE_UNCONFIRMED",
+          "TAX_AUTHORITY_UNCONFIRMED"
+        ],
+        "checked_rule_references": []
+      }
+    },
+    "evidence_manifest_json": [
+      {
+        "logical_file_number": "SYNTHETIC-S7-FILE",
+        "revision_number": 1,
+        "content_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "document_purpose_code": 24
+      }
+    ],
+    "review_snapshot_json": null,
+    "previous_submission_revision_number": null,
+    "correction_event_number": null,
+    "dispatch_reference": null,
+    "execution_status": 1,
+    "version": 1
+  },
+  "tax_event_tab": {
+    "event_number": "SYNTHETIC-S7-PREP-EVENT",
+    "tax_case_number": "SYNTHETIC-S7-CASE",
+    "submission_revision_number": null,
+    "external_event_key": null,
+    "event_type_code": 1,
+    "result_code": 1,
+    "event_payload_json": {
+      "schema_version": 1,
+      "operation_evidence_reference": "SYNTHETIC-PREP-OP",
+      "scope_reference": "SYNTHETIC-PREPARATION-SCOPE",
+      "unresolved_items": [
+        "主管机关责任/范围规则待确认"
+      ]
+    },
+    "actor_reference": "SYNTHETIC-A-OPERATOR"
+  }
+}

@@ -1,0 +1,1263 @@
+[
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/trades/TRD-S5-SYNTHETIC/funds",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s5-synthetic-revision-1\""
+      },
+      "body": {
+        "tradeNumber": "TRD-S5-SYNTHETIC",
+        "approvedTradeRevisionNumber": 1,
+        "balances": {
+          "restricted": {
+            "amount": "0.00",
+            "currencyCode": "CNY"
+          },
+          "available": {
+            "amount": "0.00",
+            "currencyCode": "CNY"
+          },
+          "paymentLocked": {
+            "amount": "0.00",
+            "currencyCode": "CNY"
+          }
+        },
+        "matchedReceipts": {
+          "amount": "0.00",
+          "currencyCode": "CNY"
+        },
+        "unmatchedRestricted": {
+          "amount": "0.00",
+          "currencyCode": "CNY"
+        },
+        "allocatedGross": {
+          "amount": "0.00",
+          "currencyCode": "CNY"
+        },
+        "released": {
+          "amount": "0.00",
+          "currencyCode": "CNY"
+        },
+        "occupied": {
+          "amount": "0.00",
+          "currencyCode": "CNY"
+        },
+        "openGateCodes": [
+          "FUND_EVIDENCE_MISSING"
+        ],
+        "openDifferenceNumbers": [],
+        "etag": "\"s5-synthetic-revision-1\""
+      }
+    },
+    "rpc": "GetTradeFundsOverview",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetTradeFundsOverviewReqMsg",
+    "responseType": "GetTradeFundsOverviewRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s5-synthetic-revision-1\"\n\n{\n  \"tradeNumber\": \"TRD-S5-SYNTHETIC\",\n  \"approvedTradeRevisionNumber\": 1,\n  \"balances\": {\n    \"restricted\": {\n      \"amount\": \"0.00\",\n      \"currencyCode\": \"CNY\"\n    },\n    \"available\": {\n      \"amount\": \"0.00\",\n      \"currencyCode\": \"CNY\"\n    },\n    \"paymentLocked\": {\n      \"amount\": \"0.00\",\n      \"currencyCode\": \"CNY\"\n    }\n  },\n  \"matchedReceipts\": {\n    \"amount\": \"0.00\",\n    \"currencyCode\": \"CNY\"\n  },\n  \"unmatchedRestricted\": {\n    \"amount\": \"0.00\",\n    \"currencyCode\": \"CNY\"\n  },\n  \"allocatedGross\": {\n    \"amount\": \"0.00\",\n    \"currencyCode\": \"CNY\"\n  },\n  \"released\": {\n    \"amount\": \"0.00\",\n    \"currencyCode\": \"CNY\"\n  },\n  \"occupied\": {\n    \"amount\": \"0.00\",\n    \"currencyCode\": \"CNY\"\n  },\n  \"openGateCodes\": [\n    \"FUND_EVIDENCE_MISSING\"\n  ],\n  \"openDifferenceNumbers\": [],\n  \"etag\": \"\\\"s5-synthetic-revision-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/trades/TRD-S5-SYNTHETIC/funds\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/fund-receipts/FLOW-S5-ABSENT",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 404,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:export-trade:funds:not_found",
+        "title": "真实证据或资源不足，操作未完成",
+        "status": 404,
+        "detail": "仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。",
+        "instance": "/api/v1/fund-receipts/FLOW-S5-ABSENT",
+        "errors": [
+          {
+            "pointer": "/resource",
+            "code": "NOT_FOUND",
+            "detail": "补充真实证据后按原号查询/补正，不盲重新付款"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "rpc": "GetFundReceipt",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetFundReceiptReqMsg",
+    "responseType": "GetFundReceiptRspMsg",
+    "httpResponse": "HTTP/1.1 404 Error\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:funds:not_found\",\n  \"title\": \"真实证据或资源不足，操作未完成\",\n  \"status\": 404,\n  \"detail\": \"仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。\",\n  \"instance\": \"/api/v1/fund-receipts/FLOW-S5-ABSENT\",\n  \"errors\": [\n    {\n      \"pointer\": \"/resource\",\n      \"code\": \"NOT_FOUND\",\n      \"detail\": \"补充真实证据后按原号查询/补正，不盲重新付款\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/fund-receipts/FLOW-S5-ABSENT\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/trades/TRD-S5-SYNTHETIC/invoice-declarations",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7050000-0000-4000-8000-000000000003",
+        "If-Match": "\"s5-synthetic-revision-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "invoiceNumber": "INV-S5-SYNTHETIC",
+        "declaredAmount": {
+          "amount": "1000.00",
+          "currencyCode": "CNY"
+        },
+        "approvedTradeRevisionNumber": 1,
+        "invoiceFiles": [
+          {
+            "logicalFileNumber": "FILE-S5-SYNTHETIC",
+            "revisionNumber": 1,
+            "sha256": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+            "documentTypeCode": 14
+          }
+        ],
+        "allocationNumbers": [],
+        "sourceContentsConfirmed": true
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s5-synthetic-revision-1\"",
+        "Location": "/api/v1/trades/TRD-S5-SYNTHETIC/invoice-declarations/S5-SYNTHETIC-ACCEPTANCE"
+      },
+      "body": {
+        "invoiceNumber": "INV-S5-SYNTHETIC",
+        "tradeNumber": "TRD-S5-SYNTHETIC",
+        "declaredAmount": {
+          "amount": "1000.00",
+          "currencyCode": "CNY"
+        },
+        "approvedTradeRevisionNumber": 1,
+        "status": "FUNDS_TRANSACTION_STATUS_PENDING_APPROVAL",
+        "invoiceFiles": [
+          {
+            "logicalFileNumber": "FILE-S5-SYNTHETIC",
+            "revisionNumber": 1,
+            "sha256": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+            "documentTypeCode": 14
+          }
+        ],
+        "missingGateCodes": [
+          "FUND_EVIDENCE_MISSING"
+        ],
+        "etag": "\"s5-synthetic-revision-1\""
+      }
+    },
+    "rpc": "CreateInvoiceDeclaration",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateInvoiceDeclarationReqMsg",
+    "responseType": "CreateInvoiceDeclarationRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s5-synthetic-revision-1\"\nLocation: /api/v1/trades/TRD-S5-SYNTHETIC/invoice-declarations/S5-SYNTHETIC-ACCEPTANCE\n\n{\n  \"invoiceNumber\": \"INV-S5-SYNTHETIC\",\n  \"tradeNumber\": \"TRD-S5-SYNTHETIC\",\n  \"declaredAmount\": {\n    \"amount\": \"1000.00\",\n    \"currencyCode\": \"CNY\"\n  },\n  \"approvedTradeRevisionNumber\": 1,\n  \"status\": \"FUNDS_TRANSACTION_STATUS_PENDING_APPROVAL\",\n  \"invoiceFiles\": [\n    {\n      \"logicalFileNumber\": \"FILE-S5-SYNTHETIC\",\n      \"revisionNumber\": 1,\n      \"sha256\": \"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\n      \"documentTypeCode\": 14\n    }\n  ],\n  \"missingGateCodes\": [\n    \"FUND_EVIDENCE_MISSING\"\n  ],\n  \"etag\": \"\\\"s5-synthetic-revision-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/trades/TRD-S5-SYNTHETIC/invoice-declarations\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7050000-0000-4000-8000-000000000003' \\\n  --header 'If-Match: \"s5-synthetic-revision-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"invoiceNumber\":\"INV-S5-SYNTHETIC\",\"declaredAmount\":{\"amount\":\"1000.00\",\"currencyCode\":\"CNY\"},\"approvedTradeRevisionNumber\":1,\"invoiceFiles\":[{\"logicalFileNumber\":\"FILE-S5-SYNTHETIC\",\"revisionNumber\":1,\"sha256\":\"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\"documentTypeCode\":14}],\"allocationNumbers\":[],\"sourceContentsConfirmed\":true}'"
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/trades/TRD-S5-SYNTHETIC/invoice-declarations/INV-S5-SYNTHETIC",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s5-synthetic-revision-1\""
+      },
+      "body": {
+        "invoiceNumber": "INV-S5-SYNTHETIC",
+        "tradeNumber": "TRD-S5-SYNTHETIC",
+        "declaredAmount": {
+          "amount": "1000.00",
+          "currencyCode": "CNY"
+        },
+        "approvedTradeRevisionNumber": 1,
+        "status": "FUNDS_TRANSACTION_STATUS_PENDING_APPROVAL",
+        "invoiceFiles": [
+          {
+            "logicalFileNumber": "FILE-S5-SYNTHETIC",
+            "revisionNumber": 1,
+            "sha256": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+            "documentTypeCode": 14
+          }
+        ],
+        "missingGateCodes": [
+          "FUND_EVIDENCE_MISSING"
+        ],
+        "etag": "\"s5-synthetic-revision-1\""
+      }
+    },
+    "rpc": "GetInvoiceDeclaration",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetInvoiceDeclarationReqMsg",
+    "responseType": "GetInvoiceDeclarationRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s5-synthetic-revision-1\"\n\n{\n  \"invoiceNumber\": \"INV-S5-SYNTHETIC\",\n  \"tradeNumber\": \"TRD-S5-SYNTHETIC\",\n  \"declaredAmount\": {\n    \"amount\": \"1000.00\",\n    \"currencyCode\": \"CNY\"\n  },\n  \"approvedTradeRevisionNumber\": 1,\n  \"status\": \"FUNDS_TRANSACTION_STATUS_PENDING_APPROVAL\",\n  \"invoiceFiles\": [\n    {\n      \"logicalFileNumber\": \"FILE-S5-SYNTHETIC\",\n      \"revisionNumber\": 1,\n      \"sha256\": \"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\n      \"documentTypeCode\": 14\n    }\n  ],\n  \"missingGateCodes\": [\n    \"FUND_EVIDENCE_MISSING\"\n  ],\n  \"etag\": \"\\\"s5-synthetic-revision-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/trades/TRD-S5-SYNTHETIC/invoice-declarations/INV-S5-SYNTHETIC\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/trades/TRD-S5-SYNTHETIC/agency-service-fee",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 404,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:export-trade:funds:not_found",
+        "title": "真实证据或资源不足，操作未完成",
+        "status": 404,
+        "detail": "仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。",
+        "instance": "/api/v1/trades/TRD-S5-SYNTHETIC/agency-service-fee",
+        "errors": [
+          {
+            "pointer": "/resource",
+            "code": "NOT_FOUND",
+            "detail": "补充真实证据后按原号查询/补正，不盲重新付款"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "rpc": "GetAgencyServiceFeeSettlement",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetAgencyServiceFeeSettlementReqMsg",
+    "responseType": "GetAgencyServiceFeeSettlementRspMsg",
+    "httpResponse": "HTTP/1.1 404 Error\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:funds:not_found\",\n  \"title\": \"真实证据或资源不足，操作未完成\",\n  \"status\": 404,\n  \"detail\": \"仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。\",\n  \"instance\": \"/api/v1/trades/TRD-S5-SYNTHETIC/agency-service-fee\",\n  \"errors\": [\n    {\n      \"pointer\": \"/resource\",\n      \"code\": \"NOT_FOUND\",\n      \"detail\": \"补充真实证据后按原号查询/补正，不盲重新付款\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/trades/TRD-S5-SYNTHETIC/agency-service-fee\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/internal/v1/fund-receipts/FLOW-S5-ABSENT/allocation-context",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 404,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:export-trade:funds:not_found",
+        "title": "真实证据或资源不足，操作未完成",
+        "status": 404,
+        "detail": "仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。",
+        "instance": "/internal/v1/fund-receipts/FLOW-S5-ABSENT/allocation-context",
+        "errors": [
+          {
+            "pointer": "/resource",
+            "code": "NOT_FOUND",
+            "detail": "补充真实证据后按原号查询/补正，不盲重新付款"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "rpc": "GetFundAllocationContext",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetFundAllocationContextReqMsg",
+    "responseType": "GetFundAllocationContextRspMsg",
+    "httpResponse": "HTTP/1.1 404 Error\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:funds:not_found\",\n  \"title\": \"真实证据或资源不足，操作未完成\",\n  \"status\": 404,\n  \"detail\": \"仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。\",\n  \"instance\": \"/internal/v1/fund-receipts/FLOW-S5-ABSENT/allocation-context\",\n  \"errors\": [\n    {\n      \"pointer\": \"/resource\",\n      \"code\": \"NOT_FOUND\",\n      \"detail\": \"补充真实证据后按原号查询/补正，不盲重新付款\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/internal/v1/fund-receipts/FLOW-S5-ABSENT/allocation-context\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/fund-receipts/FLOW-S5-ABSENT/allocations",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7050000-0000-4000-8000-000000000007",
+        "If-Match": "\"s5-synthetic-revision-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "tradeNumber": "TRD-S5-SYNTHETIC",
+        "approvedTradeRevisionNumber": 1,
+        "allocatedAmount": {
+          "amount": "1000.00",
+          "currencyCode": "CNY"
+        },
+        "sourceTypeCode": "invoice",
+        "sourceNumber": "INV-S5-SYNTHETIC",
+        "reason": "合成结构例，无真实实收不可受理"
+      }
+    },
+    "response": {
+      "status": 422,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:export-trade:funds:fund_evidence_missing",
+        "title": "真实证据或资源不足，操作未完成",
+        "status": 422,
+        "detail": "仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。",
+        "instance": "/internal/v1/fund-receipts/FLOW-S5-ABSENT/allocations",
+        "errors": [
+          {
+            "pointer": "/resource",
+            "code": "FUND_EVIDENCE_MISSING",
+            "detail": "补充真实证据后按原号查询/补正，不盲重新付款"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "rpc": "CreateFundAllocation",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateFundAllocationReqMsg",
+    "responseType": "CreateFundAllocationRspMsg",
+    "httpResponse": "HTTP/1.1 422 Unprocessable Content\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:funds:fund_evidence_missing\",\n  \"title\": \"真实证据或资源不足，操作未完成\",\n  \"status\": 422,\n  \"detail\": \"仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。\",\n  \"instance\": \"/internal/v1/fund-receipts/FLOW-S5-ABSENT/allocations\",\n  \"errors\": [\n    {\n      \"pointer\": \"/resource\",\n      \"code\": \"FUND_EVIDENCE_MISSING\",\n      \"detail\": \"补充真实证据后按原号查询/补正，不盲重新付款\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/fund-receipts/FLOW-S5-ABSENT/allocations\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7050000-0000-4000-8000-000000000007' \\\n  --header 'If-Match: \"s5-synthetic-revision-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"tradeNumber\":\"TRD-S5-SYNTHETIC\",\"approvedTradeRevisionNumber\":1,\"allocatedAmount\":{\"amount\":\"1000.00\",\"currencyCode\":\"CNY\"},\"sourceTypeCode\":\"invoice\",\"sourceNumber\":\"INV-S5-SYNTHETIC\",\"reason\":\"合成结构例，无真实实收不可受理\"}'"
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/internal/v1/fund-allocations/ALLOC-S5-SYNTHETIC",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 404,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:export-trade:funds:not_found",
+        "title": "真实证据或资源不足，操作未完成",
+        "status": 404,
+        "detail": "仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。",
+        "instance": "/internal/v1/fund-allocations/ALLOC-S5-SYNTHETIC",
+        "errors": [
+          {
+            "pointer": "/resource",
+            "code": "NOT_FOUND",
+            "detail": "补充真实证据后按原号查询/补正，不盲重新付款"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "rpc": "GetFundAllocation",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetFundAllocationReqMsg",
+    "responseType": "GetFundAllocationRspMsg",
+    "httpResponse": "HTTP/1.1 404 Error\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:funds:not_found\",\n  \"title\": \"真实证据或资源不足，操作未完成\",\n  \"status\": 404,\n  \"detail\": \"仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。\",\n  \"instance\": \"/internal/v1/fund-allocations/ALLOC-S5-SYNTHETIC\",\n  \"errors\": [\n    {\n      \"pointer\": \"/resource\",\n      \"code\": \"NOT_FOUND\",\n      \"detail\": \"补充真实证据后按原号查询/补正，不盲重新付款\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/internal/v1/fund-allocations/ALLOC-S5-SYNTHETIC\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/fund-allocations/ALLOC-S5-SYNTHETIC/decisions",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7050000-0000-4000-8000-000000000009",
+        "If-Match": "\"s5-synthetic-revision-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "outcome": "DECISION_OUTCOME_RETURN",
+        "reason": "缺真实银行及商业证据，退回补正；不推进资金状态",
+        "evidence": []
+      }
+    },
+    "response": {
+      "status": 404,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:export-trade:funds:not_found",
+        "title": "真实证据或资源不足，操作未完成",
+        "status": 404,
+        "detail": "仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。",
+        "instance": "/internal/v1/fund-allocations/ALLOC-S5-SYNTHETIC/decisions",
+        "errors": [
+          {
+            "pointer": "/resource",
+            "code": "NOT_FOUND",
+            "detail": "补充真实证据后按原号查询/补正，不盲重新付款"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "rpc": "CreateFundAllocationDecision",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateFundAllocationDecisionReqMsg",
+    "responseType": "CreateFundAllocationDecisionRspMsg",
+    "httpResponse": "HTTP/1.1 404 Error\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:funds:not_found\",\n  \"title\": \"真实证据或资源不足，操作未完成\",\n  \"status\": 404,\n  \"detail\": \"仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。\",\n  \"instance\": \"/internal/v1/fund-allocations/ALLOC-S5-SYNTHETIC/decisions\",\n  \"errors\": [\n    {\n      \"pointer\": \"/resource\",\n      \"code\": \"NOT_FOUND\",\n      \"detail\": \"补充真实证据后按原号查询/补正，不盲重新付款\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/fund-allocations/ALLOC-S5-SYNTHETIC/decisions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7050000-0000-4000-8000-000000000009' \\\n  --header 'If-Match: \"s5-synthetic-revision-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"outcome\":\"DECISION_OUTCOME_RETURN\",\"reason\":\"缺真实银行及商业证据，退回补正；不推进资金状态\",\"evidence\":[]}'"
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/bank-receipt-evidence",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7050000-0000-4000-8000-000000000010",
+        "If-Match": "\"s5-synthetic-revision-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "accountNumber": "BANK-S5-SYNTHETIC",
+        "accountFingerprint": "SYNTHETIC-NOT-A-BANK-IDENTITY",
+        "bankEventKey": "SYNTHETIC-NOT-A-BANK-EVENT",
+        "amount": {
+          "amount": "1000.00",
+          "currencyCode": "CNY"
+        },
+        "occurredAt": "2026-10-25T01:00:00Z",
+        "valueDate": "2026-10-25T01:00:00Z",
+        "sourceEvidence": {
+          "logicalFileNumber": "FILE-S5-SYNTHETIC",
+          "revisionNumber": 1,
+          "sha256": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+          "documentTypeCode": 14
+        },
+        "evidenceHash": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+        "manualEvidenceIntake": true,
+        "eventType": "BANK_EVIDENCE_KIND_CARGO_RECEIPT",
+        "payerPartyRoleCode": 4,
+        "independentPayment": false
+      }
+    },
+    "response": {
+      "status": 422,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:export-trade:funds:bank_evidence_required",
+        "title": "真实证据或资源不足，操作未完成",
+        "status": 422,
+        "detail": "仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。",
+        "instance": "/internal/v1/bank-receipt-evidence",
+        "errors": [
+          {
+            "pointer": "/resource",
+            "code": "BANK_EVIDENCE_REQUIRED",
+            "detail": "补充真实证据后按原号查询/补正，不盲重新付款"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "rpc": "CreateBankReceiptEvidence",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateBankReceiptEvidenceReqMsg",
+    "responseType": "CreateBankReceiptEvidenceRspMsg",
+    "httpResponse": "HTTP/1.1 422 Unprocessable Content\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:funds:bank_evidence_required\",\n  \"title\": \"真实证据或资源不足，操作未完成\",\n  \"status\": 422,\n  \"detail\": \"仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。\",\n  \"instance\": \"/internal/v1/bank-receipt-evidence\",\n  \"errors\": [\n    {\n      \"pointer\": \"/resource\",\n      \"code\": \"BANK_EVIDENCE_REQUIRED\",\n      \"detail\": \"补充真实证据后按原号查询/补正，不盲重新付款\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/bank-receipt-evidence\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7050000-0000-4000-8000-000000000010' \\\n  --header 'If-Match: \"s5-synthetic-revision-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"accountNumber\":\"BANK-S5-SYNTHETIC\",\"accountFingerprint\":\"SYNTHETIC-NOT-A-BANK-IDENTITY\",\"bankEventKey\":\"SYNTHETIC-NOT-A-BANK-EVENT\",\"amount\":{\"amount\":\"1000.00\",\"currencyCode\":\"CNY\"},\"occurredAt\":\"2026-10-25T01:00:00Z\",\"valueDate\":\"2026-10-25T01:00:00Z\",\"sourceEvidence\":{\"logicalFileNumber\":\"FILE-S5-SYNTHETIC\",\"revisionNumber\":1,\"sha256\":\"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\"documentTypeCode\":14},\"evidenceHash\":\"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\"manualEvidenceIntake\":true,\"eventType\":\"BANK_EVIDENCE_KIND_CARGO_RECEIPT\",\"payerPartyRoleCode\":4,\"independentPayment\":false}'"
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/internal/v1/trades/TRD-S5-SYNTHETIC/funds-review-context",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s5-synthetic-revision-1\""
+      },
+      "body": {
+        "tradeNumber": "TRD-S5-SYNTHETIC",
+        "approvedTradeRevisionNumber": 1,
+        "invoices": [
+          {
+            "invoiceNumber": "INV-S5-SYNTHETIC",
+            "tradeNumber": "TRD-S5-SYNTHETIC",
+            "declaredAmount": {
+              "amount": "1000.00",
+              "currencyCode": "CNY"
+            },
+            "approvedTradeRevisionNumber": 1,
+            "status": "FUNDS_TRANSACTION_STATUS_PENDING_APPROVAL",
+            "invoiceFiles": [
+              {
+                "logicalFileNumber": "FILE-S5-SYNTHETIC",
+                "revisionNumber": 1,
+                "sha256": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+                "documentTypeCode": 14
+              }
+            ],
+            "missingGateCodes": [
+              "FUND_EVIDENCE_MISSING"
+            ],
+            "etag": "\"s5-synthetic-revision-1\""
+          }
+        ],
+        "receipts": [],
+        "allocations": [],
+        "missingGateCodes": [
+          "BANK_AVAILABILITY_EVIDENCE_REQUIRED"
+        ],
+        "openDifferenceNumbers": [],
+        "etag": "\"s5-synthetic-revision-1\""
+      }
+    },
+    "rpc": "GetFundsReviewContext",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetFundsReviewContextReqMsg",
+    "responseType": "GetFundsReviewContextRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s5-synthetic-revision-1\"\n\n{\n  \"tradeNumber\": \"TRD-S5-SYNTHETIC\",\n  \"approvedTradeRevisionNumber\": 1,\n  \"invoices\": [\n    {\n      \"invoiceNumber\": \"INV-S5-SYNTHETIC\",\n      \"tradeNumber\": \"TRD-S5-SYNTHETIC\",\n      \"declaredAmount\": {\n        \"amount\": \"1000.00\",\n        \"currencyCode\": \"CNY\"\n      },\n      \"approvedTradeRevisionNumber\": 1,\n      \"status\": \"FUNDS_TRANSACTION_STATUS_PENDING_APPROVAL\",\n      \"invoiceFiles\": [\n        {\n          \"logicalFileNumber\": \"FILE-S5-SYNTHETIC\",\n          \"revisionNumber\": 1,\n          \"sha256\": \"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\n          \"documentTypeCode\": 14\n        }\n      ],\n      \"missingGateCodes\": [\n        \"FUND_EVIDENCE_MISSING\"\n      ],\n      \"etag\": \"\\\"s5-synthetic-revision-1\\\"\"\n    }\n  ],\n  \"receipts\": [],\n  \"allocations\": [],\n  \"missingGateCodes\": [\n    \"BANK_AVAILABILITY_EVIDENCE_REQUIRED\"\n  ],\n  \"openDifferenceNumbers\": [],\n  \"etag\": \"\\\"s5-synthetic-revision-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/internal/v1/trades/TRD-S5-SYNTHETIC/funds-review-context\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/trades/TRD-S5-SYNTHETIC/funds-verifications",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7050000-0000-4000-8000-000000000012",
+        "If-Match": "\"s5-synthetic-revision-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "approvedTradeRevisionNumber": 1,
+        "invoiceNumbers": [
+          "INV-S5-SYNTHETIC"
+        ],
+        "allocationNumbers": [],
+        "verificationEvidence": [],
+        "outcome": "DECISION_OUTCOME_RETURN",
+        "reason": "缺真实银行及商业证据，退回补正；不推进资金状态"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s5-synthetic-revision-1\"",
+        "Location": "/internal/v1/trades/TRD-S5-SYNTHETIC/funds-verifications/S5-SYNTHETIC-ACCEPTANCE"
+      },
+      "body": {
+        "transactionNumber": "VERIFY-S5-SYNTHETIC",
+        "tradeNumber": "TRD-S5-SYNTHETIC",
+        "status": "FUNDS_TRANSACTION_STATUS_RETURNED",
+        "verifiedAmount": {
+          "amount": "0.00",
+          "currencyCode": "CNY"
+        },
+        "verificationScopeHash": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+        "missingGateCodes": [
+          "FUND_EVIDENCE_MISSING"
+        ],
+        "etag": "\"s5-synthetic-revision-1\""
+      }
+    },
+    "rpc": "CreateTradeFundsVerification",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateTradeFundsVerificationReqMsg",
+    "responseType": "CreateTradeFundsVerificationRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s5-synthetic-revision-1\"\nLocation: /internal/v1/trades/TRD-S5-SYNTHETIC/funds-verifications/S5-SYNTHETIC-ACCEPTANCE\n\n{\n  \"transactionNumber\": \"VERIFY-S5-SYNTHETIC\",\n  \"tradeNumber\": \"TRD-S5-SYNTHETIC\",\n  \"status\": \"FUNDS_TRANSACTION_STATUS_RETURNED\",\n  \"verifiedAmount\": {\n    \"amount\": \"0.00\",\n    \"currencyCode\": \"CNY\"\n  },\n  \"verificationScopeHash\": \"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\n  \"missingGateCodes\": [\n    \"FUND_EVIDENCE_MISSING\"\n  ],\n  \"etag\": \"\\\"s5-synthetic-revision-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/trades/TRD-S5-SYNTHETIC/funds-verifications\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7050000-0000-4000-8000-000000000012' \\\n  --header 'If-Match: \"s5-synthetic-revision-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"approvedTradeRevisionNumber\":1,\"invoiceNumbers\":[\"INV-S5-SYNTHETIC\"],\"allocationNumbers\":[],\"verificationEvidence\":[],\"outcome\":\"DECISION_OUTCOME_RETURN\",\"reason\":\"缺真实银行及商业证据，退回补正；不推进资金状态\"}'"
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/trades/TRD-S5-SYNTHETIC/fund-releases",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7050000-0000-4000-8000-000000000013",
+        "If-Match": "\"s5-synthetic-revision-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "receiptFlowNumber": "FLOW-S5-ABSENT",
+        "allocationNumber": "ALLOC-S5-SYNTHETIC",
+        "releaseAmount": {
+          "amount": "500.00",
+          "currencyCode": "CNY"
+        },
+        "bankAvailableEvidence": {
+          "logicalFileNumber": "FILE-S5-SYNTHETIC",
+          "revisionNumber": 1,
+          "sha256": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+          "documentTypeCode": 14
+        },
+        "bankAvailableEvidenceHash": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+        "verificationTransactionNumber": "VERIFY-S5-SYNTHETIC",
+        "reason": "原创合成文件不是银行可用证据，应拒绝"
+      }
+    },
+    "response": {
+      "status": 422,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:export-trade:funds:bank_availability_evidence_required",
+        "title": "真实证据或资源不足，操作未完成",
+        "status": 422,
+        "detail": "仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。",
+        "instance": "/internal/v1/trades/TRD-S5-SYNTHETIC/fund-releases",
+        "errors": [
+          {
+            "pointer": "/resource",
+            "code": "BANK_AVAILABILITY_EVIDENCE_REQUIRED",
+            "detail": "补充真实证据后按原号查询/补正，不盲重新付款"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "rpc": "CreateFundsAvailabilityRelease",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateFundsAvailabilityReleaseReqMsg",
+    "responseType": "CreateFundsAvailabilityReleaseRspMsg",
+    "httpResponse": "HTTP/1.1 422 Unprocessable Content\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:funds:bank_availability_evidence_required\",\n  \"title\": \"真实证据或资源不足，操作未完成\",\n  \"status\": 422,\n  \"detail\": \"仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。\",\n  \"instance\": \"/internal/v1/trades/TRD-S5-SYNTHETIC/fund-releases\",\n  \"errors\": [\n    {\n      \"pointer\": \"/resource\",\n      \"code\": \"BANK_AVAILABILITY_EVIDENCE_REQUIRED\",\n      \"detail\": \"补充真实证据后按原号查询/补正，不盲重新付款\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/trades/TRD-S5-SYNTHETIC/fund-releases\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7050000-0000-4000-8000-000000000013' \\\n  --header 'If-Match: \"s5-synthetic-revision-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"receiptFlowNumber\":\"FLOW-S5-ABSENT\",\"allocationNumber\":\"ALLOC-S5-SYNTHETIC\",\"releaseAmount\":{\"amount\":\"500.00\",\"currencyCode\":\"CNY\"},\"bankAvailableEvidence\":{\"logicalFileNumber\":\"FILE-S5-SYNTHETIC\",\"revisionNumber\":1,\"sha256\":\"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\"documentTypeCode\":14},\"bankAvailableEvidenceHash\":\"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\"verificationTransactionNumber\":\"VERIFY-S5-SYNTHETIC\",\"reason\":\"原创合成文件不是银行可用证据，应拒绝\"}'"
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/trades/TRD-S5-SYNTHETIC/settlements",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7050000-0000-4000-8000-000000000014",
+        "If-Match": "\"s5-synthetic-revision-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "paymentBranch": "PAYMENT_BRANCH_PREPAYMENT",
+        "approvedTradeRevisionNumber": 1,
+        "invoiceNumbers": [
+          "INV-S5-SYNTHETIC"
+        ],
+        "allocationNumbers": [],
+        "payableAmount": {
+          "amount": "1000.00",
+          "currencyCode": "CNY"
+        },
+        "alreadyPaidAmount": {
+          "amount": "0.00",
+          "currencyCode": "CNY"
+        },
+        "authorizedDeductions": [],
+        "proposedAmount": {
+          "amount": "1000.00",
+          "currencyCode": "CNY"
+        },
+        "supplierConfirmation": {
+          "logicalFileNumber": "FILE-S5-SYNTHETIC",
+          "revisionNumber": 1,
+          "sha256": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+          "documentTypeCode": 14
+        },
+        "requiredEvidence": [],
+        "contractReferences": [],
+        "ruleVersion": "s5-design-1"
+      }
+    },
+    "response": {
+      "status": 422,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:export-trade:funds:payment_gate_incomplete",
+        "title": "真实证据或资源不足，操作未完成",
+        "status": 422,
+        "detail": "仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。",
+        "instance": "/internal/v1/trades/TRD-S5-SYNTHETIC/settlements",
+        "errors": [
+          {
+            "pointer": "/resource",
+            "code": "PAYMENT_GATE_INCOMPLETE",
+            "detail": "补充真实证据后按原号查询/补正，不盲重新付款"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "rpc": "CreateSettlement",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateSettlementReqMsg",
+    "responseType": "CreateSettlementRspMsg",
+    "httpResponse": "HTTP/1.1 422 Unprocessable Content\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:funds:payment_gate_incomplete\",\n  \"title\": \"真实证据或资源不足，操作未完成\",\n  \"status\": 422,\n  \"detail\": \"仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。\",\n  \"instance\": \"/internal/v1/trades/TRD-S5-SYNTHETIC/settlements\",\n  \"errors\": [\n    {\n      \"pointer\": \"/resource\",\n      \"code\": \"PAYMENT_GATE_INCOMPLETE\",\n      \"detail\": \"补充真实证据后按原号查询/补正，不盲重新付款\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/trades/TRD-S5-SYNTHETIC/settlements\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7050000-0000-4000-8000-000000000014' \\\n  --header 'If-Match: \"s5-synthetic-revision-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"paymentBranch\":\"PAYMENT_BRANCH_PREPAYMENT\",\"approvedTradeRevisionNumber\":1,\"invoiceNumbers\":[\"INV-S5-SYNTHETIC\"],\"allocationNumbers\":[],\"payableAmount\":{\"amount\":\"1000.00\",\"currencyCode\":\"CNY\"},\"alreadyPaidAmount\":{\"amount\":\"0.00\",\"currencyCode\":\"CNY\"},\"authorizedDeductions\":[],\"proposedAmount\":{\"amount\":\"1000.00\",\"currencyCode\":\"CNY\"},\"supplierConfirmation\":{\"logicalFileNumber\":\"FILE-S5-SYNTHETIC\",\"revisionNumber\":1,\"sha256\":\"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\"documentTypeCode\":14},\"requiredEvidence\":[],\"contractReferences\":[],\"ruleVersion\":\"s5-design-1\"}'"
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/internal/v1/settlements/PAY-S5-SYNTHETIC",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 404,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:export-trade:funds:not_found",
+        "title": "真实证据或资源不足，操作未完成",
+        "status": 404,
+        "detail": "仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。",
+        "instance": "/internal/v1/settlements/PAY-S5-SYNTHETIC",
+        "errors": [
+          {
+            "pointer": "/resource",
+            "code": "NOT_FOUND",
+            "detail": "补充真实证据后按原号查询/补正，不盲重新付款"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "rpc": "GetSettlement",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetSettlementReqMsg",
+    "responseType": "GetSettlementRspMsg",
+    "httpResponse": "HTTP/1.1 404 Error\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:funds:not_found\",\n  \"title\": \"真实证据或资源不足，操作未完成\",\n  \"status\": 404,\n  \"detail\": \"仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。\",\n  \"instance\": \"/internal/v1/settlements/PAY-S5-SYNTHETIC\",\n  \"errors\": [\n    {\n      \"pointer\": \"/resource\",\n      \"code\": \"NOT_FOUND\",\n      \"detail\": \"补充真实证据后按原号查询/补正，不盲重新付款\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/internal/v1/settlements/PAY-S5-SYNTHETIC\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/settlements/PAY-S5-SYNTHETIC/decisions",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7050000-0000-4000-8000-000000000016",
+        "If-Match": "\"s5-synthetic-revision-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "outcome": "DECISION_OUTCOME_RETURN",
+        "reason": "缺真实银行及商业证据，退回补正；不推进资金状态",
+        "verifiedEvidence": []
+      }
+    },
+    "response": {
+      "status": 404,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:export-trade:funds:not_found",
+        "title": "真实证据或资源不足，操作未完成",
+        "status": 404,
+        "detail": "仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。",
+        "instance": "/internal/v1/settlements/PAY-S5-SYNTHETIC/decisions",
+        "errors": [
+          {
+            "pointer": "/resource",
+            "code": "NOT_FOUND",
+            "detail": "补充真实证据后按原号查询/补正，不盲重新付款"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "rpc": "CreateSettlementDecision",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateSettlementDecisionReqMsg",
+    "responseType": "CreateSettlementDecisionRspMsg",
+    "httpResponse": "HTTP/1.1 404 Error\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:funds:not_found\",\n  \"title\": \"真实证据或资源不足，操作未完成\",\n  \"status\": 404,\n  \"detail\": \"仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。\",\n  \"instance\": \"/internal/v1/settlements/PAY-S5-SYNTHETIC/decisions\",\n  \"errors\": [\n    {\n      \"pointer\": \"/resource\",\n      \"code\": \"NOT_FOUND\",\n      \"detail\": \"补充真实证据后按原号查询/补正，不盲重新付款\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/settlements/PAY-S5-SYNTHETIC/decisions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7050000-0000-4000-8000-000000000016' \\\n  --header 'If-Match: \"s5-synthetic-revision-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"outcome\":\"DECISION_OUTCOME_RETURN\",\"reason\":\"缺真实银行及商业证据，退回补正；不推进资金状态\",\"verifiedEvidence\":[]}'"
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/settlements/PAY-S5-SYNTHETIC/payment-approvals",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7050000-0000-4000-8000-000000000017",
+        "If-Match": "\"s5-synthetic-revision-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "amount": {
+          "amount": "1000.00",
+          "currencyCode": "CNY"
+        },
+        "beneficiaryAccountNumber": "BENEFICIARY-S5-UNVERIFIED",
+        "beneficiaryAccountFingerprint": "SYNTHETIC-UNVERIFIED",
+        "beneficiaryAccountRevisionNumber": 1,
+        "allocationNumbers": [],
+        "approvalEvidence": [],
+        "reason": "缺有效结算及受益方核实，不得锁额"
+      }
+    },
+    "response": {
+      "status": 422,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:export-trade:funds:beneficiary_unverified",
+        "title": "真实证据或资源不足，操作未完成",
+        "status": 422,
+        "detail": "仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。",
+        "instance": "/internal/v1/settlements/PAY-S5-SYNTHETIC/payment-approvals",
+        "errors": [
+          {
+            "pointer": "/resource",
+            "code": "BENEFICIARY_UNVERIFIED",
+            "detail": "补充真实证据后按原号查询/补正，不盲重新付款"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "rpc": "CreatePaymentApproval",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreatePaymentApprovalReqMsg",
+    "responseType": "CreatePaymentApprovalRspMsg",
+    "httpResponse": "HTTP/1.1 422 Unprocessable Content\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:funds:beneficiary_unverified\",\n  \"title\": \"真实证据或资源不足，操作未完成\",\n  \"status\": 422,\n  \"detail\": \"仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。\",\n  \"instance\": \"/internal/v1/settlements/PAY-S5-SYNTHETIC/payment-approvals\",\n  \"errors\": [\n    {\n      \"pointer\": \"/resource\",\n      \"code\": \"BENEFICIARY_UNVERIFIED\",\n      \"detail\": \"补充真实证据后按原号查询/补正，不盲重新付款\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/settlements/PAY-S5-SYNTHETIC/payment-approvals\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7050000-0000-4000-8000-000000000017' \\\n  --header 'If-Match: \"s5-synthetic-revision-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"amount\":{\"amount\":\"1000.00\",\"currencyCode\":\"CNY\"},\"beneficiaryAccountNumber\":\"BENEFICIARY-S5-UNVERIFIED\",\"beneficiaryAccountFingerprint\":\"SYNTHETIC-UNVERIFIED\",\"beneficiaryAccountRevisionNumber\":1,\"allocationNumbers\":[],\"approvalEvidence\":[],\"reason\":\"缺有效结算及受益方核实，不得锁额\"}'"
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/payment-transactions/PAY-S5-SYNTHETIC/execution-intents",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7050000-0000-4000-8000-000000000018",
+        "If-Match": "\"s5-synthetic-revision-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "executionIntentReference": "INTENT-S5-SYNTHETIC",
+        "reason": "无真实银行适配器，不可执行"
+      }
+    },
+    "response": {
+      "status": 422,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:export-trade:funds:bank_evidence_required",
+        "title": "真实证据或资源不足，操作未完成",
+        "status": 422,
+        "detail": "仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。",
+        "instance": "/internal/v1/payment-transactions/PAY-S5-SYNTHETIC/execution-intents",
+        "errors": [
+          {
+            "pointer": "/resource",
+            "code": "BANK_EVIDENCE_REQUIRED",
+            "detail": "补充真实证据后按原号查询/补正，不盲重新付款"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "rpc": "CreatePaymentExecutionIntent",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreatePaymentExecutionIntentReqMsg",
+    "responseType": "CreatePaymentExecutionIntentRspMsg",
+    "httpResponse": "HTTP/1.1 422 Unprocessable Content\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:funds:bank_evidence_required\",\n  \"title\": \"真实证据或资源不足，操作未完成\",\n  \"status\": 422,\n  \"detail\": \"仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。\",\n  \"instance\": \"/internal/v1/payment-transactions/PAY-S5-SYNTHETIC/execution-intents\",\n  \"errors\": [\n    {\n      \"pointer\": \"/resource\",\n      \"code\": \"BANK_EVIDENCE_REQUIRED\",\n      \"detail\": \"补充真实证据后按原号查询/补正，不盲重新付款\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/payment-transactions/PAY-S5-SYNTHETIC/execution-intents\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7050000-0000-4000-8000-000000000018' \\\n  --header 'If-Match: \"s5-synthetic-revision-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"executionIntentReference\":\"INTENT-S5-SYNTHETIC\",\"reason\":\"无真实银行适配器，不可执行\"}'"
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/internal/v1/payment-transactions/PAY-S5-SYNTHETIC/execution",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s5-synthetic-revision-1\""
+      },
+      "body": {
+        "transactionNumber": "PAY-S5-SYNTHETIC",
+        "amount": {
+          "amount": "1000.00",
+          "currencyCode": "CNY"
+        },
+        "executionStatus": "EXECUTION_STATUS_NOT_SUBMITTED",
+        "transactionStatus": "FUNDS_TRANSACTION_STATUS_DRAFT",
+        "balances": {
+          "restricted": {
+            "amount": "0.00",
+            "currencyCode": "CNY"
+          },
+          "available": {
+            "amount": "0.00",
+            "currencyCode": "CNY"
+          },
+          "paymentLocked": {
+            "amount": "0.00",
+            "currencyCode": "CNY"
+          }
+        },
+        "attempts": [],
+        "missingEvidenceCodes": [
+          "BANK_EVIDENCE_REQUIRED"
+        ],
+        "acceptanceId": "S5-INTERNAL-SYNTHETIC-ONLY",
+        "etag": "\"s5-synthetic-revision-1\""
+      }
+    },
+    "rpc": "GetPaymentExecution",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetPaymentExecutionReqMsg",
+    "responseType": "GetPaymentExecutionRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s5-synthetic-revision-1\"\n\n{\n  \"transactionNumber\": \"PAY-S5-SYNTHETIC\",\n  \"amount\": {\n    \"amount\": \"1000.00\",\n    \"currencyCode\": \"CNY\"\n  },\n  \"executionStatus\": \"EXECUTION_STATUS_NOT_SUBMITTED\",\n  \"transactionStatus\": \"FUNDS_TRANSACTION_STATUS_DRAFT\",\n  \"balances\": {\n    \"restricted\": {\n      \"amount\": \"0.00\",\n      \"currencyCode\": \"CNY\"\n    },\n    \"available\": {\n      \"amount\": \"0.00\",\n      \"currencyCode\": \"CNY\"\n    },\n    \"paymentLocked\": {\n      \"amount\": \"0.00\",\n      \"currencyCode\": \"CNY\"\n    }\n  },\n  \"attempts\": [],\n  \"missingEvidenceCodes\": [\n    \"BANK_EVIDENCE_REQUIRED\"\n  ],\n  \"acceptanceId\": \"S5-INTERNAL-SYNTHETIC-ONLY\",\n  \"etag\": \"\\\"s5-synthetic-revision-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/internal/v1/payment-transactions/PAY-S5-SYNTHETIC/execution\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/payment-transactions/PAY-S5-SYNTHETIC/beneficiary-receipt-confirmations",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7050000-0000-4000-8000-000000000020",
+        "If-Match": "\"s5-synthetic-revision-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "receivedAmount": {
+          "amount": "1000.00",
+          "currencyCode": "CNY"
+        },
+        "receivedAt": "2026-10-25T01:00:00Z",
+        "bankReceiptEvidence": {
+          "logicalFileNumber": "FILE-S5-SYNTHETIC",
+          "revisionNumber": 1,
+          "sha256": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+          "documentTypeCode": 14
+        },
+        "bankReference": "SYNTHETIC-NOT-ARRIVAL",
+        "reason": "合成文件不证明A到账"
+      }
+    },
+    "response": {
+      "status": 422,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:export-trade:funds:payee_receipt_unverified",
+        "title": "真实证据或资源不足，操作未完成",
+        "status": 422,
+        "detail": "仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。",
+        "instance": "/api/v1/payment-transactions/PAY-S5-SYNTHETIC/beneficiary-receipt-confirmations",
+        "errors": [
+          {
+            "pointer": "/resource",
+            "code": "PAYEE_RECEIPT_UNVERIFIED",
+            "detail": "补充真实证据后按原号查询/补正，不盲重新付款"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "rpc": "CreateBeneficiaryReceiptConfirmation",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateBeneficiaryReceiptConfirmationReqMsg",
+    "responseType": "CreateBeneficiaryReceiptConfirmationRspMsg",
+    "httpResponse": "HTTP/1.1 422 Unprocessable Content\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:export-trade:funds:payee_receipt_unverified\",\n  \"title\": \"真实证据或资源不足，操作未完成\",\n  \"status\": 422,\n  \"detail\": \"仅合成设计例；没有真实银行接入或成功事实，资金桶及锁额不变。\",\n  \"instance\": \"/api/v1/payment-transactions/PAY-S5-SYNTHETIC/beneficiary-receipt-confirmations\",\n  \"errors\": [\n    {\n      \"pointer\": \"/resource\",\n      \"code\": \"PAYEE_RECEIPT_UNVERIFIED\",\n      \"detail\": \"补充真实证据后按原号查询/补正，不盲重新付款\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/payment-transactions/PAY-S5-SYNTHETIC/beneficiary-receipt-confirmations\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7050000-0000-4000-8000-000000000020' \\\n  --header 'If-Match: \"s5-synthetic-revision-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"receivedAmount\":{\"amount\":\"1000.00\",\"currencyCode\":\"CNY\"},\"receivedAt\":\"2026-10-25T01:00:00Z\",\"bankReceiptEvidence\":{\"logicalFileNumber\":\"FILE-S5-SYNTHETIC\",\"revisionNumber\":1,\"sha256\":\"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\"documentTypeCode\":14},\"bankReference\":\"SYNTHETIC-NOT-ARRIVAL\",\"reason\":\"合成文件不证明A到账\"}'"
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/funds-reconciliation-differences",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7050000-0000-4000-8000-000000000021",
+        "If-Match": "\"s5-synthetic-revision-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "differenceType": "DIFFERENCE_TYPE_STATUS",
+        "bankAccountNumber": "BANK-S5-SYNTHETIC",
+        "bankEventKey": "SYNTHETIC-UNVERIFIED",
+        "transactionNumber": "PAY-S5-SYNTHETIC",
+        "evidence": [
+          {
+            "logicalFileNumber": "FILE-S5-SYNTHETIC",
+            "revisionNumber": 1,
+            "sha256": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+            "documentTypeCode": 14
+          }
+        ],
+        "reason": "内部合成差异，无银行金额，未知侧省略而非0"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s5-synthetic-revision-1\"",
+        "Location": "/internal/v1/funds-reconciliation-differences/S5-SYNTHETIC-ACCEPTANCE"
+      },
+      "body": {
+        "differenceNumber": "DIFF-S5-SYNTHETIC",
+        "differenceType": "DIFFERENCE_TYPE_STATUS",
+        "status": "DIFFERENCE_STATUS_OPEN",
+        "bankEventKey": "SYNTHETIC-UNVERIFIED",
+        "transactionNumber": "PAY-S5-SYNTHETIC",
+        "ownerReference": "SYNTHETIC-INTERNAL-OPERATOR",
+        "evidence": [
+          {
+            "logicalFileNumber": "FILE-S5-SYNTHETIC",
+            "revisionNumber": 1,
+            "sha256": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+            "documentTypeCode": 14
+          }
+        ],
+        "etag": "\"s5-synthetic-revision-1\""
+      }
+    },
+    "rpc": "CreateFundsReconciliationDifference",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateFundsReconciliationDifferenceReqMsg",
+    "responseType": "CreateFundsReconciliationDifferenceRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s5-synthetic-revision-1\"\nLocation: /internal/v1/funds-reconciliation-differences/S5-SYNTHETIC-ACCEPTANCE\n\n{\n  \"differenceNumber\": \"DIFF-S5-SYNTHETIC\",\n  \"differenceType\": \"DIFFERENCE_TYPE_STATUS\",\n  \"status\": \"DIFFERENCE_STATUS_OPEN\",\n  \"bankEventKey\": \"SYNTHETIC-UNVERIFIED\",\n  \"transactionNumber\": \"PAY-S5-SYNTHETIC\",\n  \"ownerReference\": \"SYNTHETIC-INTERNAL-OPERATOR\",\n  \"evidence\": [\n    {\n      \"logicalFileNumber\": \"FILE-S5-SYNTHETIC\",\n      \"revisionNumber\": 1,\n      \"sha256\": \"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\n      \"documentTypeCode\": 14\n    }\n  ],\n  \"etag\": \"\\\"s5-synthetic-revision-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/funds-reconciliation-differences\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7050000-0000-4000-8000-000000000021' \\\n  --header 'If-Match: \"s5-synthetic-revision-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"differenceType\":\"DIFFERENCE_TYPE_STATUS\",\"bankAccountNumber\":\"BANK-S5-SYNTHETIC\",\"bankEventKey\":\"SYNTHETIC-UNVERIFIED\",\"transactionNumber\":\"PAY-S5-SYNTHETIC\",\"evidence\":[{\"logicalFileNumber\":\"FILE-S5-SYNTHETIC\",\"revisionNumber\":1,\"sha256\":\"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\"documentTypeCode\":14}],\"reason\":\"内部合成差异，无银行金额，未知侧省略而非0\"}'"
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/internal/v1/funds-reconciliation-differences/DIFF-S5-SYNTHETIC",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s5-synthetic-revision-1\""
+      },
+      "body": {
+        "differenceNumber": "DIFF-S5-SYNTHETIC",
+        "differenceType": "DIFFERENCE_TYPE_STATUS",
+        "status": "DIFFERENCE_STATUS_OPEN",
+        "bankEventKey": "SYNTHETIC-UNVERIFIED",
+        "transactionNumber": "PAY-S5-SYNTHETIC",
+        "ownerReference": "SYNTHETIC-INTERNAL-OPERATOR",
+        "evidence": [
+          {
+            "logicalFileNumber": "FILE-S5-SYNTHETIC",
+            "revisionNumber": 1,
+            "sha256": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+            "documentTypeCode": 14
+          }
+        ],
+        "etag": "\"s5-synthetic-revision-1\""
+      }
+    },
+    "rpc": "GetFundsReconciliationDifference",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetFundsReconciliationDifferenceReqMsg",
+    "responseType": "GetFundsReconciliationDifferenceRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s5-synthetic-revision-1\"\n\n{\n  \"differenceNumber\": \"DIFF-S5-SYNTHETIC\",\n  \"differenceType\": \"DIFFERENCE_TYPE_STATUS\",\n  \"status\": \"DIFFERENCE_STATUS_OPEN\",\n  \"bankEventKey\": \"SYNTHETIC-UNVERIFIED\",\n  \"transactionNumber\": \"PAY-S5-SYNTHETIC\",\n  \"ownerReference\": \"SYNTHETIC-INTERNAL-OPERATOR\",\n  \"evidence\": [\n    {\n      \"logicalFileNumber\": \"FILE-S5-SYNTHETIC\",\n      \"revisionNumber\": 1,\n      \"sha256\": \"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\n      \"documentTypeCode\": 14\n    }\n  ],\n  \"etag\": \"\\\"s5-synthetic-revision-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/internal/v1/funds-reconciliation-differences/DIFF-S5-SYNTHETIC\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/funds-reconciliation-differences/DIFF-S5-SYNTHETIC/dispositions",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7050000-0000-4000-8000-000000000023",
+        "If-Match": "\"s5-synthetic-revision-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "reason": "请求补充真实证据，不改余额、不关闭差异",
+        "evidence": [
+          {
+            "logicalFileNumber": "FILE-S5-SYNTHETIC",
+            "revisionNumber": 1,
+            "sha256": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+            "documentTypeCode": 14
+          }
+        ]
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s5-synthetic-revision-1\"",
+        "Location": "/internal/v1/funds-reconciliation-differences/DIFF-S5-SYNTHETIC/dispositions/S5-SYNTHETIC-ACCEPTANCE"
+      },
+      "body": {
+        "differenceNumber": "DIFF-S5-SYNTHETIC",
+        "differenceType": "DIFFERENCE_TYPE_STATUS",
+        "status": "DIFFERENCE_STATUS_PROCESSING",
+        "bankEventKey": "SYNTHETIC-UNVERIFIED",
+        "transactionNumber": "PAY-S5-SYNTHETIC",
+        "ownerReference": "SYNTHETIC-INTERNAL-OPERATOR",
+        "evidence": [
+          {
+            "logicalFileNumber": "FILE-S5-SYNTHETIC",
+            "revisionNumber": 1,
+            "sha256": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+            "documentTypeCode": 14
+          }
+        ],
+        "etag": "\"s5-synthetic-revision-1\""
+      }
+    },
+    "rpc": "CreateFundsDifferenceDisposition",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateFundsDifferenceDispositionReqMsg",
+    "responseType": "CreateFundsDifferenceDispositionRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s5-synthetic-revision-1\"\nLocation: /internal/v1/funds-reconciliation-differences/DIFF-S5-SYNTHETIC/dispositions/S5-SYNTHETIC-ACCEPTANCE\n\n{\n  \"differenceNumber\": \"DIFF-S5-SYNTHETIC\",\n  \"differenceType\": \"DIFFERENCE_TYPE_STATUS\",\n  \"status\": \"DIFFERENCE_STATUS_PROCESSING\",\n  \"bankEventKey\": \"SYNTHETIC-UNVERIFIED\",\n  \"transactionNumber\": \"PAY-S5-SYNTHETIC\",\n  \"ownerReference\": \"SYNTHETIC-INTERNAL-OPERATOR\",\n  \"evidence\": [\n    {\n      \"logicalFileNumber\": \"FILE-S5-SYNTHETIC\",\n      \"revisionNumber\": 1,\n      \"sha256\": \"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\n      \"documentTypeCode\": 14\n    }\n  ],\n  \"etag\": \"\\\"s5-synthetic-revision-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/funds-reconciliation-differences/DIFF-S5-SYNTHETIC/dispositions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7050000-0000-4000-8000-000000000023' \\\n  --header 'If-Match: \"s5-synthetic-revision-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"reason\":\"请求补充真实证据，不改余额、不关闭差异\",\"evidence\":[{\"logicalFileNumber\":\"FILE-S5-SYNTHETIC\",\"revisionNumber\":1,\"sha256\":\"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\"documentTypeCode\":14}]}'"
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/funds-reconciliation-differences/DIFF-S5-SYNTHETIC/reviews",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7050000-0000-4000-8000-000000000024",
+        "If-Match": "\"s5-synthetic-revision-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "outcome": "DECISION_OUTCOME_RETURN",
+        "reason": "缺真实银行及商业证据，退回补正；不推进资金状态",
+        "evidence": []
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s5-synthetic-revision-1\"",
+        "Location": "/internal/v1/funds-reconciliation-differences/DIFF-S5-SYNTHETIC/reviews/S5-SYNTHETIC-ACCEPTANCE"
+      },
+      "body": {
+        "differenceNumber": "DIFF-S5-SYNTHETIC",
+        "differenceType": "DIFFERENCE_TYPE_STATUS",
+        "status": "DIFFERENCE_STATUS_PROCESSING",
+        "bankEventKey": "SYNTHETIC-UNVERIFIED",
+        "transactionNumber": "PAY-S5-SYNTHETIC",
+        "ownerReference": "SYNTHETIC-INTERNAL-OPERATOR",
+        "evidence": [
+          {
+            "logicalFileNumber": "FILE-S5-SYNTHETIC",
+            "revisionNumber": 1,
+            "sha256": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+            "documentTypeCode": 14
+          }
+        ],
+        "etag": "\"s5-synthetic-revision-1\"",
+        "reviewOutcome": "DECISION_OUTCOME_RETURN"
+      }
+    },
+    "rpc": "CreateFundsDifferenceReview",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateFundsDifferenceReviewReqMsg",
+    "responseType": "CreateFundsDifferenceReviewRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s5-synthetic-revision-1\"\nLocation: /internal/v1/funds-reconciliation-differences/DIFF-S5-SYNTHETIC/reviews/S5-SYNTHETIC-ACCEPTANCE\n\n{\n  \"differenceNumber\": \"DIFF-S5-SYNTHETIC\",\n  \"differenceType\": \"DIFFERENCE_TYPE_STATUS\",\n  \"status\": \"DIFFERENCE_STATUS_PROCESSING\",\n  \"bankEventKey\": \"SYNTHETIC-UNVERIFIED\",\n  \"transactionNumber\": \"PAY-S5-SYNTHETIC\",\n  \"ownerReference\": \"SYNTHETIC-INTERNAL-OPERATOR\",\n  \"evidence\": [\n    {\n      \"logicalFileNumber\": \"FILE-S5-SYNTHETIC\",\n      \"revisionNumber\": 1,\n      \"sha256\": \"a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a\",\n      \"documentTypeCode\": 14\n    }\n  ],\n  \"etag\": \"\\\"s5-synthetic-revision-1\\\"\",\n  \"reviewOutcome\": \"DECISION_OUTCOME_RETURN\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/funds-reconciliation-differences/DIFF-S5-SYNTHETIC/reviews\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7050000-0000-4000-8000-000000000024' \\\n  --header 'If-Match: \"s5-synthetic-revision-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"outcome\":\"DECISION_OUTCOME_RETURN\",\"reason\":\"缺真实银行及商业证据，退回补正；不推进资金状态\",\"evidence\":[]}'"
+  }
+]

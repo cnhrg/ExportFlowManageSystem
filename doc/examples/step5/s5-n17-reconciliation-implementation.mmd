@@ -1,0 +1,25 @@
+sequenceDiagram
+    autonumber
+    actor PAGE as 出口代理资金差异处理人
+    actor ACTOR1 as 出口代理资金独立复核人
+    actor ACTOR2 as 出口代理资金经办人
+    participant APP as 单体资金应用
+    participant DB as MySQL资金及账务
+    participant STORE as 私有S3确切版本
+    participant SCAN as ClamAV
+    participant BANK as 银行事实边界（未接入）
+    PAGE->>APP: GET当前资源/强ETag，再确认具体正文及原幂等键
+    APP->>STORE: 事务外读取两侧原始对账及处置证据固定版本
+    APP->>BANK: 事务外仅原号查单；无接入则未知侧保持NULL
+    APP->>DB: BEGIN READ COMMITTED先查difference/disposition/review原键
+    APP->>DB: 锁trade根/差异行/相关单据/银行身份；排序锁allocation/account
+    APP->>DB: FOR UPDATE当前读原flow/凭证/执行观测与未决门禁
+    APP->>APP: 检查缺失/重复/金额/状态及独立复核；未知不是0
+    alt 有真实依据且需补账
+    APP->>DB: 追加更正event及平衡voucher/entries；禁止更新原flow/余额捷径
+    else 缺证据
+    APP->>DB: 仅追加待补证处置/退回意见；不关闭，不解锁
+    end
+    APP->>DB: 差异事实/更正资金账务/确认消费同一COMMIT
+    APP-->>PAGE: GET原差异显示历史；异人核实闭环才关闭并重评门禁
+    Note over APP,DB: RC先查重入/根锁后当前读；资金与账务本地原子；外部I/O事务外

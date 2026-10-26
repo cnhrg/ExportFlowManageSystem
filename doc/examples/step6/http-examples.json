@@ -1,0 +1,1207 @@
+[
+  {
+    "id": "s6-basis",
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/trades/TRD-S6-SYNTHETIC-001/tax-proof-preparation",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-0",
+        "ETag": "\"s6-case-1\""
+      },
+      "body": {
+        "tradeNumber": "TRD-S6-SYNTHETIC-001",
+        "tradeRevisionNumber": 1,
+        "missingRequirements": [
+          "SCOPE_RULE_UNCONFIRMED",
+          "RESPONSIBILITY_UNCONFIRMED",
+          "OFFICIAL_CHANNEL_UNAVAILABLE"
+        ],
+        "confirmedRules": [],
+        "eligibleScopeItems": [],
+        "etag": "\"s6-case-1\"",
+        "formalApplicationAvailable": false
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "GetTaxProofPreparation",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetTaxProofPreparationReqMsg",
+    "responseType": "GetTaxProofPreparationRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-0\nETag: \"s6-case-1\"\n\n{\n  \"tradeNumber\": \"TRD-S6-SYNTHETIC-001\",\n  \"tradeRevisionNumber\": 1,\n  \"missingRequirements\": [\n    \"SCOPE_RULE_UNCONFIRMED\",\n    \"RESPONSIBILITY_UNCONFIRMED\",\n    \"OFFICIAL_CHANNEL_UNAVAILABLE\"\n  ],\n  \"confirmedRules\": [],\n  \"eligibleScopeItems\": [],\n  \"etag\": \"\\\"s6-case-1\\\"\",\n  \"formalApplicationAvailable\": false\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/trades/TRD-S6-SYNTHETIC-001/tax-proof-preparation\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "id": "s6-case-create",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/trades/TRD-S6-SYNTHETIC-001/tax-proof-cases",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7060000-0000-4000-8000-000000000002",
+        "If-Match": "\"s6-case-1\"",
+        "X-Confirmation-Id": "<INVALID-EXACT-INTENT-CONFIRMATION>"
+      },
+      "body": {
+        "tradeRevisionNumber": 1,
+        "scopeRule": {
+          "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+          "ruleVersion": "1",
+          "authorityEvidence": {
+            "fileNumber": "FILE-S6-SYNTHETIC-001",
+            "versionId": "SYNTHETIC-NOT-STORED",
+            "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+            "purposeCode": 21
+          }
+        },
+        "scopeItems": [
+          {
+            "declarationNumber": "SYNTHETIC-NOT-OFFICIAL-DECLARATION",
+            "declarationRevisionNumber": 1,
+            "goodsItemSequence": 1,
+            "quantity": "10.000000",
+            "unitCode": "PCS",
+            "officialDeclaration": {
+              "fileNumber": "FILE-S6-SYNTHETIC-001",
+              "versionId": "SYNTHETIC-NOT-STORED",
+              "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+              "purposeCode": 20
+            }
+          }
+        ],
+        "supplierParticipantSequenceNumber": 1
+      }
+    },
+    "response": {
+      "status": 409,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-1"
+      },
+      "body": {
+        "type": "urn:trade:problem:scope_rule_unconfirmed",
+        "title": "SCOPE_RULE_UNCONFIRMED",
+        "status": 409,
+        "detail": "合成输入缺正式证据；必须阻断，不是官方成功",
+        "instance": "/api/v1/trades/TRD-S6-SYNTHETIC-001/tax-proof-cases",
+        "errors": [
+          {
+            "pointer": "/case_input",
+            "code": "SCOPE_RULE_UNCONFIRMED",
+            "detail": "补齐本意图真实权威依据，或查询本方可见原资源"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "CreateTaxProofCase",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateTaxProofCaseReqMsg",
+    "responseType": "CreateTaxProofCaseRspMsg",
+    "httpResponse": "HTTP/1.1 409 Conflict\nContent-Type: application/problem+json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-1\n\n{\n  \"type\": \"urn:trade:problem:scope_rule_unconfirmed\",\n  \"title\": \"SCOPE_RULE_UNCONFIRMED\",\n  \"status\": 409,\n  \"detail\": \"合成输入缺正式证据；必须阻断，不是官方成功\",\n  \"instance\": \"/api/v1/trades/TRD-S6-SYNTHETIC-001/tax-proof-cases\",\n  \"errors\": [\n    {\n      \"pointer\": \"/case_input\",\n      \"code\": \"SCOPE_RULE_UNCONFIRMED\",\n      \"detail\": \"补齐本意图真实权威依据，或查询本方可见原资源\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/trades/TRD-S6-SYNTHETIC-001/tax-proof-cases\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7060000-0000-4000-8000-000000000002' \\\n  --header 'If-Match: \"s6-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"tradeRevisionNumber\":1,\"scopeRule\":{\"ruleReference\":\"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\"ruleVersion\":\"1\",\"authorityEvidence\":{\"fileNumber\":\"FILE-S6-SYNTHETIC-001\",\"versionId\":\"SYNTHETIC-NOT-STORED\",\"sha256\":\"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\"purposeCode\":21}},\"scopeItems\":[{\"declarationNumber\":\"SYNTHETIC-NOT-OFFICIAL-DECLARATION\",\"declarationRevisionNumber\":1,\"goodsItemSequence\":1,\"quantity\":\"10.000000\",\"unitCode\":\"PCS\",\"officialDeclaration\":{\"fileNumber\":\"FILE-S6-SYNTHETIC-001\",\"versionId\":\"SYNTHETIC-NOT-STORED\",\"sha256\":\"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\"purposeCode\":20}}],\"supplierParticipantSequenceNumber\":1}'"
+  },
+  {
+    "id": "s6-case-read",
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-2",
+        "ETag": "\"s6-case-1\""
+      },
+      "body": {
+        "taxCaseNumber": "TPC-S6-SYNTHETIC-001",
+        "tradeNumber": "TRD-S6-SYNTHETIC-001",
+        "tradeRevisionNumber": 1,
+        "scopeReference": "pending:server-controlled-preparation-only",
+        "caseStatus": "PROOF_CASE_STATUS_PREPARING",
+        "currentSubmissionRevisionNumber": 1,
+        "etag": "\"s6-case-1\"",
+        "blockers": [
+          "SCOPE_RULE_UNCONFIRMED",
+          "RESPONSIBILITY_UNCONFIRMED",
+          "OFFICIAL_CHANNEL_UNAVAILABLE"
+        ],
+        "taxTypeCode": 1,
+        "currencyCode": "CNY"
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "GetTaxProofCase",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetTaxProofCaseReqMsg",
+    "responseType": "GetTaxProofCaseRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-2\nETag: \"s6-case-1\"\n\n{\n  \"taxCaseNumber\": \"TPC-S6-SYNTHETIC-001\",\n  \"tradeNumber\": \"TRD-S6-SYNTHETIC-001\",\n  \"tradeRevisionNumber\": 1,\n  \"scopeReference\": \"pending:server-controlled-preparation-only\",\n  \"caseStatus\": \"PROOF_CASE_STATUS_PREPARING\",\n  \"currentSubmissionRevisionNumber\": 1,\n  \"etag\": \"\\\"s6-case-1\\\"\",\n  \"blockers\": [\n    \"SCOPE_RULE_UNCONFIRMED\",\n    \"RESPONSIBILITY_UNCONFIRMED\",\n    \"OFFICIAL_CHANNEL_UNAVAILABLE\"\n  ],\n  \"taxTypeCode\": 1,\n  \"currencyCode\": \"CNY\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "id": "s6-submission-create",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/submissions",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7060000-0000-4000-8000-000000000004",
+        "If-Match": "\"s6-case-1\"",
+        "X-Confirmation-Id": "<INVALID-EXACT-INTENT-CONFIRMATION>"
+      },
+      "body": {
+        "tradeRevisionNumber": 1,
+        "scopeRule": {
+          "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+          "ruleVersion": "1",
+          "authorityEvidence": {
+            "fileNumber": "FILE-S6-SYNTHETIC-001",
+            "versionId": "SYNTHETIC-NOT-STORED",
+            "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+            "purposeCode": 21
+          }
+        },
+        "responsibilityRule": {
+          "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+          "ruleVersion": "1",
+          "authorityEvidence": {
+            "fileNumber": "FILE-S6-SYNTHETIC-001",
+            "versionId": "SYNTHETIC-NOT-STORED",
+            "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+            "purposeCode": 21
+          }
+        },
+        "deadlineRule": {
+          "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+          "ruleVersion": "1",
+          "authorityEvidence": {
+            "fileNumber": "FILE-S6-SYNTHETIC-001",
+            "versionId": "SYNTHETIC-NOT-STORED",
+            "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+            "purposeCode": 21
+          }
+        },
+        "scopeItems": [
+          {
+            "declarationNumber": "SYNTHETIC-NOT-OFFICIAL-DECLARATION",
+            "declarationRevisionNumber": 1,
+            "goodsItemSequence": 1,
+            "quantity": "10.000000",
+            "unitCode": "PCS",
+            "officialDeclaration": {
+              "fileNumber": "FILE-S6-SYNTHETIC-001",
+              "versionId": "SYNTHETIC-NOT-STORED",
+              "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+              "purposeCode": 20
+            }
+          }
+        ],
+        "materialVersions": [
+          {
+            "fileNumber": "FILE-S6-SYNTHETIC-001",
+            "versionId": "SYNTHETIC-NOT-STORED",
+            "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+            "purposeCode": 22
+          }
+        ],
+        "preparationNote": "仅内部合成准备；正式职责、范围、渠道未确认"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-3",
+        "ETag": "\"s6-case-1\"",
+        "Location": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/submissions/1"
+      },
+      "body": {
+        "taxCaseNumber": "TPC-S6-SYNTHETIC-001",
+        "submissionRevisionNumber": 1,
+        "packageHash": "3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d",
+        "content": {
+          "tradeRevisionNumber": 1,
+          "scopeRule": {
+            "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+            "ruleVersion": "1",
+            "authorityEvidence": {
+              "fileNumber": "FILE-S6-SYNTHETIC-001",
+              "versionId": "SYNTHETIC-NOT-STORED",
+              "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+              "purposeCode": 21
+            }
+          },
+          "responsibilityRule": {
+            "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+            "ruleVersion": "1",
+            "authorityEvidence": {
+              "fileNumber": "FILE-S6-SYNTHETIC-001",
+              "versionId": "SYNTHETIC-NOT-STORED",
+              "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+              "purposeCode": 21
+            }
+          },
+          "deadlineRule": {
+            "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+            "ruleVersion": "1",
+            "authorityEvidence": {
+              "fileNumber": "FILE-S6-SYNTHETIC-001",
+              "versionId": "SYNTHETIC-NOT-STORED",
+              "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+              "purposeCode": 21
+            }
+          },
+          "scopeItems": [
+            {
+              "declarationNumber": "SYNTHETIC-NOT-OFFICIAL-DECLARATION",
+              "declarationRevisionNumber": 1,
+              "goodsItemSequence": 1,
+              "quantity": "10.000000",
+              "unitCode": "PCS",
+              "officialDeclaration": {
+                "fileNumber": "FILE-S6-SYNTHETIC-001",
+                "versionId": "SYNTHETIC-NOT-STORED",
+                "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                "purposeCode": 20
+              }
+            }
+          ],
+          "materialVersions": [
+            {
+              "fileNumber": "FILE-S6-SYNTHETIC-001",
+              "versionId": "SYNTHETIC-NOT-STORED",
+              "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+              "purposeCode": 22
+            }
+          ],
+          "preparationNote": "仅内部合成准备；正式职责、范围、渠道未确认"
+        },
+        "executionStatus": "not_sent",
+        "etag": "\"s6-case-1\""
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "CreateTaxProofSubmission",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateTaxProofSubmissionReqMsg",
+    "responseType": "CreateTaxProofSubmissionRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-3\nETag: \"s6-case-1\"\nLocation: /api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/submissions/1\n\n{\n  \"taxCaseNumber\": \"TPC-S6-SYNTHETIC-001\",\n  \"submissionRevisionNumber\": 1,\n  \"packageHash\": \"3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d\",\n  \"content\": {\n    \"tradeRevisionNumber\": 1,\n    \"scopeRule\": {\n      \"ruleReference\": \"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\n      \"ruleVersion\": \"1\",\n      \"authorityEvidence\": {\n        \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n        \"versionId\": \"SYNTHETIC-NOT-STORED\",\n        \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n        \"purposeCode\": 21\n      }\n    },\n    \"responsibilityRule\": {\n      \"ruleReference\": \"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\n      \"ruleVersion\": \"1\",\n      \"authorityEvidence\": {\n        \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n        \"versionId\": \"SYNTHETIC-NOT-STORED\",\n        \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n        \"purposeCode\": 21\n      }\n    },\n    \"deadlineRule\": {\n      \"ruleReference\": \"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\n      \"ruleVersion\": \"1\",\n      \"authorityEvidence\": {\n        \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n        \"versionId\": \"SYNTHETIC-NOT-STORED\",\n        \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n        \"purposeCode\": 21\n      }\n    },\n    \"scopeItems\": [\n      {\n        \"declarationNumber\": \"SYNTHETIC-NOT-OFFICIAL-DECLARATION\",\n        \"declarationRevisionNumber\": 1,\n        \"goodsItemSequence\": 1,\n        \"quantity\": \"10.000000\",\n        \"unitCode\": \"PCS\",\n        \"officialDeclaration\": {\n          \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n          \"versionId\": \"SYNTHETIC-NOT-STORED\",\n          \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n          \"purposeCode\": 20\n        }\n      }\n    ],\n    \"materialVersions\": [\n      {\n        \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n        \"versionId\": \"SYNTHETIC-NOT-STORED\",\n        \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n        \"purposeCode\": 22\n      }\n    ],\n    \"preparationNote\": \"仅内部合成准备；正式职责、范围、渠道未确认\"\n  },\n  \"executionStatus\": \"not_sent\",\n  \"etag\": \"\\\"s6-case-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/submissions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7060000-0000-4000-8000-000000000004' \\\n  --header 'If-Match: \"s6-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"tradeRevisionNumber\":1,\"scopeRule\":{\"ruleReference\":\"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\"ruleVersion\":\"1\",\"authorityEvidence\":{\"fileNumber\":\"FILE-S6-SYNTHETIC-001\",\"versionId\":\"SYNTHETIC-NOT-STORED\",\"sha256\":\"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\"purposeCode\":21}},\"responsibilityRule\":{\"ruleReference\":\"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\"ruleVersion\":\"1\",\"authorityEvidence\":{\"fileNumber\":\"FILE-S6-SYNTHETIC-001\",\"versionId\":\"SYNTHETIC-NOT-STORED\",\"sha256\":\"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\"purposeCode\":21}},\"deadlineRule\":{\"ruleReference\":\"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\"ruleVersion\":\"1\",\"authorityEvidence\":{\"fileNumber\":\"FILE-S6-SYNTHETIC-001\",\"versionId\":\"SYNTHETIC-NOT-STORED\",\"sha256\":\"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\"purposeCode\":21}},\"scopeItems\":[{\"declarationNumber\":\"SYNTHETIC-NOT-OFFICIAL-DECLARATION\",\"declarationRevisionNumber\":1,\"goodsItemSequence\":1,\"quantity\":\"10.000000\",\"unitCode\":\"PCS\",\"officialDeclaration\":{\"fileNumber\":\"FILE-S6-SYNTHETIC-001\",\"versionId\":\"SYNTHETIC-NOT-STORED\",\"sha256\":\"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\"purposeCode\":20}}],\"materialVersions\":[{\"fileNumber\":\"FILE-S6-SYNTHETIC-001\",\"versionId\":\"SYNTHETIC-NOT-STORED\",\"sha256\":\"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\"purposeCode\":22}],\"preparationNote\":\"仅内部合成准备；正式职责、范围、渠道未确认\"}'"
+  },
+  {
+    "id": "s6-submission-read",
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/submissions/1",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-4",
+        "ETag": "\"s6-case-1\""
+      },
+      "body": {
+        "taxCaseNumber": "TPC-S6-SYNTHETIC-001",
+        "submissionRevisionNumber": 1,
+        "packageHash": "3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d",
+        "content": {
+          "tradeRevisionNumber": 1,
+          "scopeRule": {
+            "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+            "ruleVersion": "1",
+            "authorityEvidence": {
+              "fileNumber": "FILE-S6-SYNTHETIC-001",
+              "versionId": "SYNTHETIC-NOT-STORED",
+              "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+              "purposeCode": 21
+            }
+          },
+          "responsibilityRule": {
+            "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+            "ruleVersion": "1",
+            "authorityEvidence": {
+              "fileNumber": "FILE-S6-SYNTHETIC-001",
+              "versionId": "SYNTHETIC-NOT-STORED",
+              "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+              "purposeCode": 21
+            }
+          },
+          "deadlineRule": {
+            "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+            "ruleVersion": "1",
+            "authorityEvidence": {
+              "fileNumber": "FILE-S6-SYNTHETIC-001",
+              "versionId": "SYNTHETIC-NOT-STORED",
+              "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+              "purposeCode": 21
+            }
+          },
+          "scopeItems": [
+            {
+              "declarationNumber": "SYNTHETIC-NOT-OFFICIAL-DECLARATION",
+              "declarationRevisionNumber": 1,
+              "goodsItemSequence": 1,
+              "quantity": "10.000000",
+              "unitCode": "PCS",
+              "officialDeclaration": {
+                "fileNumber": "FILE-S6-SYNTHETIC-001",
+                "versionId": "SYNTHETIC-NOT-STORED",
+                "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                "purposeCode": 20
+              }
+            }
+          ],
+          "materialVersions": [
+            {
+              "fileNumber": "FILE-S6-SYNTHETIC-001",
+              "versionId": "SYNTHETIC-NOT-STORED",
+              "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+              "purposeCode": 22
+            }
+          ],
+          "preparationNote": "仅内部合成准备；正式职责、范围、渠道未确认"
+        },
+        "executionStatus": "not_sent",
+        "etag": "\"s6-case-1\""
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "GetTaxProofSubmission",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetTaxProofSubmissionReqMsg",
+    "responseType": "GetTaxProofSubmissionRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-4\nETag: \"s6-case-1\"\n\n{\n  \"taxCaseNumber\": \"TPC-S6-SYNTHETIC-001\",\n  \"submissionRevisionNumber\": 1,\n  \"packageHash\": \"3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d\",\n  \"content\": {\n    \"tradeRevisionNumber\": 1,\n    \"scopeRule\": {\n      \"ruleReference\": \"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\n      \"ruleVersion\": \"1\",\n      \"authorityEvidence\": {\n        \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n        \"versionId\": \"SYNTHETIC-NOT-STORED\",\n        \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n        \"purposeCode\": 21\n      }\n    },\n    \"responsibilityRule\": {\n      \"ruleReference\": \"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\n      \"ruleVersion\": \"1\",\n      \"authorityEvidence\": {\n        \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n        \"versionId\": \"SYNTHETIC-NOT-STORED\",\n        \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n        \"purposeCode\": 21\n      }\n    },\n    \"deadlineRule\": {\n      \"ruleReference\": \"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\n      \"ruleVersion\": \"1\",\n      \"authorityEvidence\": {\n        \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n        \"versionId\": \"SYNTHETIC-NOT-STORED\",\n        \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n        \"purposeCode\": 21\n      }\n    },\n    \"scopeItems\": [\n      {\n        \"declarationNumber\": \"SYNTHETIC-NOT-OFFICIAL-DECLARATION\",\n        \"declarationRevisionNumber\": 1,\n        \"goodsItemSequence\": 1,\n        \"quantity\": \"10.000000\",\n        \"unitCode\": \"PCS\",\n        \"officialDeclaration\": {\n          \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n          \"versionId\": \"SYNTHETIC-NOT-STORED\",\n          \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n          \"purposeCode\": 20\n        }\n      }\n    ],\n    \"materialVersions\": [\n      {\n        \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n        \"versionId\": \"SYNTHETIC-NOT-STORED\",\n        \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n        \"purposeCode\": 22\n      }\n    ],\n    \"preparationNote\": \"仅内部合成准备；正式职责、范围、渠道未确认\"\n  },\n  \"executionStatus\": \"not_sent\",\n  \"etag\": \"\\\"s6-case-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/submissions/1\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "id": "s6-review-context",
+    "request": {
+      "method": "GET",
+      "path": "/internal/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/review-context",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-5",
+        "ETag": "\"s6-case-1\""
+      },
+      "body": {
+        "caseResource": {
+          "taxCaseNumber": "TPC-S6-SYNTHETIC-001",
+          "tradeNumber": "TRD-S6-SYNTHETIC-001",
+          "tradeRevisionNumber": 1,
+          "scopeReference": "pending:server-controlled-preparation-only",
+          "caseStatus": "PROOF_CASE_STATUS_PREPARING",
+          "currentSubmissionRevisionNumber": 1,
+          "etag": "\"s6-case-1\"",
+          "blockers": [
+            "SCOPE_RULE_UNCONFIRMED",
+            "RESPONSIBILITY_UNCONFIRMED",
+            "OFFICIAL_CHANNEL_UNAVAILABLE"
+          ],
+          "taxTypeCode": 1,
+          "currencyCode": "CNY"
+        },
+        "submission": {
+          "taxCaseNumber": "TPC-S6-SYNTHETIC-001",
+          "submissionRevisionNumber": 1,
+          "packageHash": "3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d",
+          "content": {
+            "tradeRevisionNumber": 1,
+            "scopeRule": {
+              "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+              "ruleVersion": "1",
+              "authorityEvidence": {
+                "fileNumber": "FILE-S6-SYNTHETIC-001",
+                "versionId": "SYNTHETIC-NOT-STORED",
+                "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                "purposeCode": 21
+              }
+            },
+            "responsibilityRule": {
+              "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+              "ruleVersion": "1",
+              "authorityEvidence": {
+                "fileNumber": "FILE-S6-SYNTHETIC-001",
+                "versionId": "SYNTHETIC-NOT-STORED",
+                "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                "purposeCode": 21
+              }
+            },
+            "deadlineRule": {
+              "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+              "ruleVersion": "1",
+              "authorityEvidence": {
+                "fileNumber": "FILE-S6-SYNTHETIC-001",
+                "versionId": "SYNTHETIC-NOT-STORED",
+                "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                "purposeCode": 21
+              }
+            },
+            "scopeItems": [
+              {
+                "declarationNumber": "SYNTHETIC-NOT-OFFICIAL-DECLARATION",
+                "declarationRevisionNumber": 1,
+                "goodsItemSequence": 1,
+                "quantity": "10.000000",
+                "unitCode": "PCS",
+                "officialDeclaration": {
+                  "fileNumber": "FILE-S6-SYNTHETIC-001",
+                  "versionId": "SYNTHETIC-NOT-STORED",
+                  "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                  "purposeCode": 20
+                }
+              }
+            ],
+            "materialVersions": [
+              {
+                "fileNumber": "FILE-S6-SYNTHETIC-001",
+                "versionId": "SYNTHETIC-NOT-STORED",
+                "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                "purposeCode": 22
+              }
+            ],
+            "preparationNote": "仅内部合成准备；正式职责、范围、渠道未确认"
+          },
+          "executionStatus": "not_sent",
+          "etag": "\"s6-case-1\""
+        },
+        "blockers": [
+          "SCOPE_RULE_UNCONFIRMED",
+          "RESPONSIBILITY_UNCONFIRMED",
+          "OFFICIAL_CHANNEL_UNAVAILABLE"
+        ],
+        "etag": "\"s6-case-1\""
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "GetTaxProofReviewContext",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetTaxProofReviewContextReqMsg",
+    "responseType": "GetTaxProofReviewContextRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-5\nETag: \"s6-case-1\"\n\n{\n  \"caseResource\": {\n    \"taxCaseNumber\": \"TPC-S6-SYNTHETIC-001\",\n    \"tradeNumber\": \"TRD-S6-SYNTHETIC-001\",\n    \"tradeRevisionNumber\": 1,\n    \"scopeReference\": \"pending:server-controlled-preparation-only\",\n    \"caseStatus\": \"PROOF_CASE_STATUS_PREPARING\",\n    \"currentSubmissionRevisionNumber\": 1,\n    \"etag\": \"\\\"s6-case-1\\\"\",\n    \"blockers\": [\n      \"SCOPE_RULE_UNCONFIRMED\",\n      \"RESPONSIBILITY_UNCONFIRMED\",\n      \"OFFICIAL_CHANNEL_UNAVAILABLE\"\n    ],\n    \"taxTypeCode\": 1,\n    \"currencyCode\": \"CNY\"\n  },\n  \"submission\": {\n    \"taxCaseNumber\": \"TPC-S6-SYNTHETIC-001\",\n    \"submissionRevisionNumber\": 1,\n    \"packageHash\": \"3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d\",\n    \"content\": {\n      \"tradeRevisionNumber\": 1,\n      \"scopeRule\": {\n        \"ruleReference\": \"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\n        \"ruleVersion\": \"1\",\n        \"authorityEvidence\": {\n          \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n          \"versionId\": \"SYNTHETIC-NOT-STORED\",\n          \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n          \"purposeCode\": 21\n        }\n      },\n      \"responsibilityRule\": {\n        \"ruleReference\": \"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\n        \"ruleVersion\": \"1\",\n        \"authorityEvidence\": {\n          \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n          \"versionId\": \"SYNTHETIC-NOT-STORED\",\n          \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n          \"purposeCode\": 21\n        }\n      },\n      \"deadlineRule\": {\n        \"ruleReference\": \"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\n        \"ruleVersion\": \"1\",\n        \"authorityEvidence\": {\n          \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n          \"versionId\": \"SYNTHETIC-NOT-STORED\",\n          \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n          \"purposeCode\": 21\n        }\n      },\n      \"scopeItems\": [\n        {\n          \"declarationNumber\": \"SYNTHETIC-NOT-OFFICIAL-DECLARATION\",\n          \"declarationRevisionNumber\": 1,\n          \"goodsItemSequence\": 1,\n          \"quantity\": \"10.000000\",\n          \"unitCode\": \"PCS\",\n          \"officialDeclaration\": {\n            \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n            \"versionId\": \"SYNTHETIC-NOT-STORED\",\n            \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n            \"purposeCode\": 20\n          }\n        }\n      ],\n      \"materialVersions\": [\n        {\n          \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n          \"versionId\": \"SYNTHETIC-NOT-STORED\",\n          \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n          \"purposeCode\": 22\n        }\n      ],\n      \"preparationNote\": \"仅内部合成准备；正式职责、范围、渠道未确认\"\n    },\n    \"executionStatus\": \"not_sent\",\n    \"etag\": \"\\\"s6-case-1\\\"\"\n  },\n  \"blockers\": [\n    \"SCOPE_RULE_UNCONFIRMED\",\n    \"RESPONSIBILITY_UNCONFIRMED\",\n    \"OFFICIAL_CHANNEL_UNAVAILABLE\"\n  ],\n  \"etag\": \"\\\"s6-case-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/internal/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/review-context\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "id": "s6-review-create",
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/reviews",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7060000-0000-4000-8000-000000000007",
+        "If-Match": "\"s6-case-1\"",
+        "X-Confirmation-Id": "<INVALID-EXACT-INTENT-CONFIRMATION>"
+      },
+      "body": {
+        "submissionRevisionNumber": 1,
+        "packageHash": "3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d",
+        "outcome": "REVIEW_OUTCOME_RETURNED",
+        "reason": "职责/范围/渠道未确认，退回备料，不得正式申请"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-6",
+        "ETag": "\"s6-case-1\"",
+        "Location": "/internal/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/reviews/S6-SYNTHETIC-REVIEW"
+      },
+      "body": {
+        "eventNumber": "S6-SYNTHETIC-REVIEW",
+        "taxCaseNumber": "TPC-S6-SYNTHETIC-001",
+        "submissionRevisionNumber": 1,
+        "actorReference": "SYNTHETIC-INDEPENDENT-REVIEWER",
+        "review": {
+          "submissionRevisionNumber": 1,
+          "packageHash": "3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d",
+          "outcome": "REVIEW_OUTCOME_RETURNED",
+          "reason": "职责/范围/渠道未确认，退回备料，不得正式申请"
+        },
+        "etag": "\"s6-case-1\""
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "CreateTaxProofReview",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateTaxProofReviewReqMsg",
+    "responseType": "CreateTaxProofReviewRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-6\nETag: \"s6-case-1\"\nLocation: /internal/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/reviews/S6-SYNTHETIC-REVIEW\n\n{\n  \"eventNumber\": \"S6-SYNTHETIC-REVIEW\",\n  \"taxCaseNumber\": \"TPC-S6-SYNTHETIC-001\",\n  \"submissionRevisionNumber\": 1,\n  \"actorReference\": \"SYNTHETIC-INDEPENDENT-REVIEWER\",\n  \"review\": {\n    \"submissionRevisionNumber\": 1,\n    \"packageHash\": \"3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d\",\n    \"outcome\": \"REVIEW_OUTCOME_RETURNED\",\n    \"reason\": \"职责/范围/渠道未确认，退回备料，不得正式申请\"\n  },\n  \"etag\": \"\\\"s6-case-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/reviews\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7060000-0000-4000-8000-000000000007' \\\n  --header 'If-Match: \"s6-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"submissionRevisionNumber\":1,\"packageHash\":\"3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d\",\"outcome\":\"REVIEW_OUTCOME_RETURNED\",\"reason\":\"职责/范围/渠道未确认，退回备料，不得正式申请\"}'"
+  },
+  {
+    "id": "s6-dispatch-create",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/dispatch-intents",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7060000-0000-4000-8000-000000000008",
+        "If-Match": "\"s6-case-1\"",
+        "X-Confirmation-Id": "<INVALID-EXACT-INTENT-CONFIRMATION>"
+      },
+      "body": {
+        "submissionRevisionNumber": 1,
+        "reviewEventNumber": "SYNTHETIC-NOT-APPROVED",
+        "packageHash": "3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d"
+      }
+    },
+    "response": {
+      "status": 409,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-7"
+      },
+      "body": {
+        "type": "urn:trade:problem:responsibility_unconfirmed",
+        "title": "RESPONSIBILITY_UNCONFIRMED",
+        "status": 409,
+        "detail": "合成输入缺正式证据；必须阻断，不是官方成功",
+        "instance": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/dispatch-intents",
+        "errors": [
+          {
+            "pointer": "/dispatch",
+            "code": "RESPONSIBILITY_UNCONFIRMED",
+            "detail": "补齐本意图真实权威依据，或查询本方可见原资源"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "CreateTaxProofDispatch",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateTaxProofDispatchReqMsg",
+    "responseType": "CreateTaxProofDispatchRspMsg",
+    "httpResponse": "HTTP/1.1 409 Conflict\nContent-Type: application/problem+json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-7\n\n{\n  \"type\": \"urn:trade:problem:responsibility_unconfirmed\",\n  \"title\": \"RESPONSIBILITY_UNCONFIRMED\",\n  \"status\": 409,\n  \"detail\": \"合成输入缺正式证据；必须阻断，不是官方成功\",\n  \"instance\": \"/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/dispatch-intents\",\n  \"errors\": [\n    {\n      \"pointer\": \"/dispatch\",\n      \"code\": \"RESPONSIBILITY_UNCONFIRMED\",\n      \"detail\": \"补齐本意图真实权威依据，或查询本方可见原资源\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/dispatch-intents\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7060000-0000-4000-8000-000000000008' \\\n  --header 'If-Match: \"s6-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"submissionRevisionNumber\":1,\"reviewEventNumber\":\"SYNTHETIC-NOT-APPROVED\",\"packageHash\":\"3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d\"}'"
+  },
+  {
+    "id": "s6-dispatch-read",
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/dispatch-intents/SYNTHETIC-UNKNOWN-RECOVERY-ONLY",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-8",
+        "ETag": "\"s6-case-1\""
+      },
+      "body": {
+        "dispatchReference": "SYNTHETIC-UNKNOWN-RECOVERY-ONLY",
+        "taxCaseNumber": "TPC-S6-SYNTHETIC-001",
+        "submissionRevisionNumber": 1,
+        "executionStatus": "unknown",
+        "blockers": [
+          "DISPATCH_UNKNOWN",
+          "OFFICIAL_EVIDENCE_REQUIRED"
+        ],
+        "etag": "\"s6-case-1\""
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "GetTaxProofDispatch",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetTaxProofDispatchReqMsg",
+    "responseType": "GetTaxProofDispatchRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-8\nETag: \"s6-case-1\"\n\n{\n  \"dispatchReference\": \"SYNTHETIC-UNKNOWN-RECOVERY-ONLY\",\n  \"taxCaseNumber\": \"TPC-S6-SYNTHETIC-001\",\n  \"submissionRevisionNumber\": 1,\n  \"executionStatus\": \"unknown\",\n  \"blockers\": [\n    \"DISPATCH_UNKNOWN\",\n    \"OFFICIAL_EVIDENCE_REQUIRED\"\n  ],\n  \"etag\": \"\\\"s6-case-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/dispatch-intents/SYNTHETIC-UNKNOWN-RECOVERY-ONLY\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "id": "s6-claim-create",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/official-evidence-claims",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7060000-0000-4000-8000-000000000010",
+        "If-Match": "\"s6-case-1\"",
+        "X-Confirmation-Id": "<INVALID-EXACT-INTENT-CONFIRMATION>"
+      },
+      "body": {
+        "submissionRevisionNumber": 1,
+        "dispatchReference": "SYNTHETIC-NOT-DISPATCHED",
+        "factKind": "OFFICIAL_FACT_KIND_ISSUED",
+        "externalEventKey": "INVALID-NOT-AUTHORITY-KEY",
+        "authorityReferenceNumber": "INVALID-NOT-OFFICIAL",
+        "sourceReference": "INVALID-NOT-AUTHORITY",
+        "officialFile": {
+          "fileNumber": "FILE-S6-SYNTHETIC-001",
+          "versionId": "SYNTHETIC-NOT-STORED",
+          "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+          "purposeCode": 21
+        },
+        "occurredAt": "2026-10-25T01:00:00.123Z"
+      }
+    },
+    "response": {
+      "status": 409,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-9"
+      },
+      "body": {
+        "type": "urn:trade:problem:official_evidence_required",
+        "title": "OFFICIAL_EVIDENCE_REQUIRED",
+        "status": 409,
+        "detail": "合成输入缺正式证据；必须阻断，不是官方成功",
+        "instance": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/official-evidence-claims",
+        "errors": [
+          {
+            "pointer": "/claim",
+            "code": "OFFICIAL_EVIDENCE_REQUIRED",
+            "detail": "补齐本意图真实权威依据，或查询本方可见原资源"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "CreateTaxProofOfficialClaim",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateTaxProofOfficialClaimReqMsg",
+    "responseType": "CreateTaxProofOfficialClaimRspMsg",
+    "httpResponse": "HTTP/1.1 409 Conflict\nContent-Type: application/problem+json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-9\n\n{\n  \"type\": \"urn:trade:problem:official_evidence_required\",\n  \"title\": \"OFFICIAL_EVIDENCE_REQUIRED\",\n  \"status\": 409,\n  \"detail\": \"合成输入缺正式证据；必须阻断，不是官方成功\",\n  \"instance\": \"/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/official-evidence-claims\",\n  \"errors\": [\n    {\n      \"pointer\": \"/claim\",\n      \"code\": \"OFFICIAL_EVIDENCE_REQUIRED\",\n      \"detail\": \"补齐本意图真实权威依据，或查询本方可见原资源\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/official-evidence-claims\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7060000-0000-4000-8000-000000000010' \\\n  --header 'If-Match: \"s6-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"submissionRevisionNumber\":1,\"dispatchReference\":\"SYNTHETIC-NOT-DISPATCHED\",\"factKind\":\"OFFICIAL_FACT_KIND_ISSUED\",\"externalEventKey\":\"INVALID-NOT-AUTHORITY-KEY\",\"authorityReferenceNumber\":\"INVALID-NOT-OFFICIAL\",\"sourceReference\":\"INVALID-NOT-AUTHORITY\",\"officialFile\":{\"fileNumber\":\"FILE-S6-SYNTHETIC-001\",\"versionId\":\"SYNTHETIC-NOT-STORED\",\"sha256\":\"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\"purposeCode\":21},\"occurredAt\":\"2026-10-25T01:00:00.123Z\"}'"
+  },
+  {
+    "id": "s6-claim-read",
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/official-evidence-claims/S6-SYNTHETIC-CLAIM",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 404,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-10"
+      },
+      "body": {
+        "type": "urn:trade:problem:not_found",
+        "title": "NOT_FOUND",
+        "status": 404,
+        "detail": "合成输入缺正式证据；必须阻断，不是官方成功",
+        "instance": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/official-evidence-claims/S6-SYNTHETIC-CLAIM",
+        "errors": [
+          {
+            "pointer": "",
+            "code": "NOT_FOUND",
+            "detail": "补齐本意图真实权威依据，或查询本方可见原资源"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "GetTaxProofOfficialClaim",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetTaxProofOfficialClaimReqMsg",
+    "responseType": "GetTaxProofOfficialClaimRspMsg",
+    "httpResponse": "HTTP/1.1 404 Error\nContent-Type: application/problem+json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-10\n\n{\n  \"type\": \"urn:trade:problem:not_found\",\n  \"title\": \"NOT_FOUND\",\n  \"status\": 404,\n  \"detail\": \"合成输入缺正式证据；必须阻断，不是官方成功\",\n  \"instance\": \"/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/official-evidence-claims/S6-SYNTHETIC-CLAIM\",\n  \"errors\": [\n    {\n      \"pointer\": \"\",\n      \"code\": \"NOT_FOUND\",\n      \"detail\": \"补齐本意图真实权威依据，或查询本方可见原资源\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/official-evidence-claims/S6-SYNTHETIC-CLAIM\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "id": "s6-verification-create",
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/official-verifications",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7060000-0000-4000-8000-000000000012",
+        "If-Match": "\"s6-case-1\"",
+        "X-Confirmation-Id": "<INVALID-EXACT-INTENT-CONFIRMATION>"
+      },
+      "body": {
+        "claimNumber": "S6-SYNTHETIC-CLAIM",
+        "submissionRevisionNumber": 1,
+        "sourceVerificationReference": "INVALID-NOT-VERIFIED",
+        "verified": true,
+        "reason": "负例：无真实官方来源，必须拒绝"
+      }
+    },
+    "response": {
+      "status": 409,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-11"
+      },
+      "body": {
+        "type": "urn:trade:problem:official_evidence_required",
+        "title": "OFFICIAL_EVIDENCE_REQUIRED",
+        "status": 409,
+        "detail": "合成输入缺正式证据；必须阻断，不是官方成功",
+        "instance": "/internal/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/official-verifications",
+        "errors": [
+          {
+            "pointer": "/verification",
+            "code": "OFFICIAL_EVIDENCE_REQUIRED",
+            "detail": "补齐本意图真实权威依据，或查询本方可见原资源"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "CreateTaxProofOfficialVerification",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateTaxProofOfficialVerificationReqMsg",
+    "responseType": "CreateTaxProofOfficialVerificationRspMsg",
+    "httpResponse": "HTTP/1.1 409 Conflict\nContent-Type: application/problem+json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-11\n\n{\n  \"type\": \"urn:trade:problem:official_evidence_required\",\n  \"title\": \"OFFICIAL_EVIDENCE_REQUIRED\",\n  \"status\": 409,\n  \"detail\": \"合成输入缺正式证据；必须阻断，不是官方成功\",\n  \"instance\": \"/internal/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/official-verifications\",\n  \"errors\": [\n    {\n      \"pointer\": \"/verification\",\n      \"code\": \"OFFICIAL_EVIDENCE_REQUIRED\",\n      \"detail\": \"补齐本意图真实权威依据，或查询本方可见原资源\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/official-verifications\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7060000-0000-4000-8000-000000000012' \\\n  --header 'If-Match: \"s6-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"claimNumber\":\"S6-SYNTHETIC-CLAIM\",\"submissionRevisionNumber\":1,\"sourceVerificationReference\":\"INVALID-NOT-VERIFIED\",\"verified\":true,\"reason\":\"负例：无真实官方来源，必须拒绝\"}'"
+  },
+  {
+    "id": "s6-delivery-create",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/deliveries",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7060000-0000-4000-8000-000000000013",
+        "If-Match": "\"s6-case-1\"",
+        "X-Confirmation-Id": "<INVALID-EXACT-INTENT-CONFIRMATION>"
+      },
+      "body": {
+        "certificateEventNumber": "SYNTHETIC-NOT-ISSUED",
+        "certificateVersion": {
+          "fileNumber": "FILE-S6-SYNTHETIC-001",
+          "versionId": "SYNTHETIC-NOT-STORED",
+          "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+          "purposeCode": 22
+        },
+        "supplierParticipantSequenceNumber": 1,
+        "dispatchEvidence": {
+          "fileNumber": "FILE-S6-SYNTHETIC-001",
+          "versionId": "SYNTHETIC-NOT-STORED",
+          "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+          "purposeCode": 23
+        },
+        "deliveryChannel": "private-portal"
+      }
+    },
+    "response": {
+      "status": 409,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-12"
+      },
+      "body": {
+        "type": "urn:trade:problem:certificate_not_verified",
+        "title": "CERTIFICATE_NOT_VERIFIED",
+        "status": 409,
+        "detail": "合成输入缺正式证据；必须阻断，不是官方成功",
+        "instance": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/deliveries",
+        "errors": [
+          {
+            "pointer": "/delivery",
+            "code": "CERTIFICATE_NOT_VERIFIED",
+            "detail": "补齐本意图真实权威依据，或查询本方可见原资源"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "CreateTaxProofDelivery",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateTaxProofDeliveryReqMsg",
+    "responseType": "CreateTaxProofDeliveryRspMsg",
+    "httpResponse": "HTTP/1.1 409 Conflict\nContent-Type: application/problem+json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-12\n\n{\n  \"type\": \"urn:trade:problem:certificate_not_verified\",\n  \"title\": \"CERTIFICATE_NOT_VERIFIED\",\n  \"status\": 409,\n  \"detail\": \"合成输入缺正式证据；必须阻断，不是官方成功\",\n  \"instance\": \"/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/deliveries\",\n  \"errors\": [\n    {\n      \"pointer\": \"/delivery\",\n      \"code\": \"CERTIFICATE_NOT_VERIFIED\",\n      \"detail\": \"补齐本意图真实权威依据，或查询本方可见原资源\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/deliveries\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7060000-0000-4000-8000-000000000013' \\\n  --header 'If-Match: \"s6-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"certificateEventNumber\":\"SYNTHETIC-NOT-ISSUED\",\"certificateVersion\":{\"fileNumber\":\"FILE-S6-SYNTHETIC-001\",\"versionId\":\"SYNTHETIC-NOT-STORED\",\"sha256\":\"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\"purposeCode\":22},\"supplierParticipantSequenceNumber\":1,\"dispatchEvidence\":{\"fileNumber\":\"FILE-S6-SYNTHETIC-001\",\"versionId\":\"SYNTHETIC-NOT-STORED\",\"sha256\":\"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\"purposeCode\":23},\"deliveryChannel\":\"private-portal\"}'"
+  },
+  {
+    "id": "s6-receipt-create",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/receipts",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7060000-0000-4000-8000-000000000014",
+        "If-Match": "\"s6-case-1\"",
+        "X-Confirmation-Id": "<INVALID-EXACT-INTENT-CONFIRMATION>"
+      },
+      "body": {
+        "deliveryEventNumber": "SYNTHETIC-NOT-DELIVERED",
+        "certificateVersion": {
+          "fileNumber": "FILE-S6-SYNTHETIC-001",
+          "versionId": "SYNTHETIC-NOT-STORED",
+          "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+          "purposeCode": 22
+        },
+        "outcome": "RECEIPT_OUTCOME_CHECKED",
+        "reason": "负例：无正式证明及交付不得完成核对",
+        "receiptEvidence": {
+          "fileNumber": "FILE-S6-SYNTHETIC-001",
+          "versionId": "SYNTHETIC-NOT-STORED",
+          "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+          "purposeCode": 23
+        }
+      }
+    },
+    "response": {
+      "status": 409,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-13"
+      },
+      "body": {
+        "type": "urn:trade:problem:certificate_not_verified",
+        "title": "CERTIFICATE_NOT_VERIFIED",
+        "status": 409,
+        "detail": "合成输入缺正式证据；必须阻断，不是官方成功",
+        "instance": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/receipts",
+        "errors": [
+          {
+            "pointer": "/receipt",
+            "code": "CERTIFICATE_NOT_VERIFIED",
+            "detail": "补齐本意图真实权威依据，或查询本方可见原资源"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "CreateTaxProofReceipt",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateTaxProofReceiptReqMsg",
+    "responseType": "CreateTaxProofReceiptRspMsg",
+    "httpResponse": "HTTP/1.1 409 Conflict\nContent-Type: application/problem+json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-13\n\n{\n  \"type\": \"urn:trade:problem:certificate_not_verified\",\n  \"title\": \"CERTIFICATE_NOT_VERIFIED\",\n  \"status\": 409,\n  \"detail\": \"合成输入缺正式证据；必须阻断，不是官方成功\",\n  \"instance\": \"/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/receipts\",\n  \"errors\": [\n    {\n      \"pointer\": \"/receipt\",\n      \"code\": \"CERTIFICATE_NOT_VERIFIED\",\n      \"detail\": \"补齐本意图真实权威依据，或查询本方可见原资源\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/receipts\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7060000-0000-4000-8000-000000000014' \\\n  --header 'If-Match: \"s6-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"deliveryEventNumber\":\"SYNTHETIC-NOT-DELIVERED\",\"certificateVersion\":{\"fileNumber\":\"FILE-S6-SYNTHETIC-001\",\"versionId\":\"SYNTHETIC-NOT-STORED\",\"sha256\":\"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\"purposeCode\":22},\"outcome\":\"RECEIPT_OUTCOME_CHECKED\",\"reason\":\"负例：无正式证明及交付不得完成核对\",\"receiptEvidence\":{\"fileNumber\":\"FILE-S6-SYNTHETIC-001\",\"versionId\":\"SYNTHETIC-NOT-STORED\",\"sha256\":\"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\"purposeCode\":23}}'"
+  },
+  {
+    "id": "s6-disposition-create",
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/objection-dispositions",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7060000-0000-4000-8000-000000000015",
+        "If-Match": "\"s6-case-1\"",
+        "X-Confirmation-Id": "<INVALID-EXACT-INTENT-CONFIRMATION>"
+      },
+      "body": {
+        "objectionEventNumber": "SYNTHETIC-OBJECTION",
+        "dispositionEvidence": [
+          {
+            "fileNumber": "FILE-S6-SYNTHETIC-001",
+            "versionId": "SYNTHETIC-NOT-STORED",
+            "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+            "purposeCode": 22
+          }
+        ],
+        "resolution": "缺正式更正证据，不能实质关闭"
+      }
+    },
+    "response": {
+      "status": 409,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-14"
+      },
+      "body": {
+        "type": "urn:trade:problem:objection_unresolved",
+        "title": "OBJECTION_UNRESOLVED",
+        "status": 409,
+        "detail": "合成输入缺正式证据；必须阻断，不是官方成功",
+        "instance": "/internal/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/objection-dispositions",
+        "errors": [
+          {
+            "pointer": "/disposition",
+            "code": "OBJECTION_UNRESOLVED",
+            "detail": "补齐本意图真实权威依据，或查询本方可见原资源"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "CreateTaxProofObjectionDisposition",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateTaxProofObjectionDispositionReqMsg",
+    "responseType": "CreateTaxProofObjectionDispositionRspMsg",
+    "httpResponse": "HTTP/1.1 409 Conflict\nContent-Type: application/problem+json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-14\n\n{\n  \"type\": \"urn:trade:problem:objection_unresolved\",\n  \"title\": \"OBJECTION_UNRESOLVED\",\n  \"status\": 409,\n  \"detail\": \"合成输入缺正式证据；必须阻断，不是官方成功\",\n  \"instance\": \"/internal/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/objection-dispositions\",\n  \"errors\": [\n    {\n      \"pointer\": \"/disposition\",\n      \"code\": \"OBJECTION_UNRESOLVED\",\n      \"detail\": \"补齐本意图真实权威依据，或查询本方可见原资源\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/objection-dispositions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7060000-0000-4000-8000-000000000015' \\\n  --header 'If-Match: \"s6-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"objectionEventNumber\":\"SYNTHETIC-OBJECTION\",\"dispositionEvidence\":[{\"fileNumber\":\"FILE-S6-SYNTHETIC-001\",\"versionId\":\"SYNTHETIC-NOT-STORED\",\"sha256\":\"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\"purposeCode\":22}],\"resolution\":\"缺正式更正证据，不能实质关闭\"}'"
+  },
+  {
+    "id": "s6-history",
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/history",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-15",
+        "ETag": "\"s6-case-1\""
+      },
+      "body": {
+        "submissions": [
+          {
+            "taxCaseNumber": "TPC-S6-SYNTHETIC-001",
+            "submissionRevisionNumber": 1,
+            "packageHash": "3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d",
+            "content": {
+              "tradeRevisionNumber": 1,
+              "scopeRule": {
+                "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+                "ruleVersion": "1",
+                "authorityEvidence": {
+                  "fileNumber": "FILE-S6-SYNTHETIC-001",
+                  "versionId": "SYNTHETIC-NOT-STORED",
+                  "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                  "purposeCode": 21
+                }
+              },
+              "responsibilityRule": {
+                "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+                "ruleVersion": "1",
+                "authorityEvidence": {
+                  "fileNumber": "FILE-S6-SYNTHETIC-001",
+                  "versionId": "SYNTHETIC-NOT-STORED",
+                  "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                  "purposeCode": 21
+                }
+              },
+              "deadlineRule": {
+                "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+                "ruleVersion": "1",
+                "authorityEvidence": {
+                  "fileNumber": "FILE-S6-SYNTHETIC-001",
+                  "versionId": "SYNTHETIC-NOT-STORED",
+                  "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                  "purposeCode": 21
+                }
+              },
+              "scopeItems": [
+                {
+                  "declarationNumber": "SYNTHETIC-NOT-OFFICIAL-DECLARATION",
+                  "declarationRevisionNumber": 1,
+                  "goodsItemSequence": 1,
+                  "quantity": "10.000000",
+                  "unitCode": "PCS",
+                  "officialDeclaration": {
+                    "fileNumber": "FILE-S6-SYNTHETIC-001",
+                    "versionId": "SYNTHETIC-NOT-STORED",
+                    "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                    "purposeCode": 20
+                  }
+                }
+              ],
+              "materialVersions": [
+                {
+                  "fileNumber": "FILE-S6-SYNTHETIC-001",
+                  "versionId": "SYNTHETIC-NOT-STORED",
+                  "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                  "purposeCode": 22
+                }
+              ],
+              "preparationNote": "仅内部合成准备；正式职责、范围、渠道未确认"
+            },
+            "executionStatus": "not_sent",
+            "etag": "\"s6-case-1\""
+          }
+        ],
+        "events": [
+          {
+            "eventNumber": "S6-SYNTHETIC-REVIEW",
+            "taxCaseNumber": "TPC-S6-SYNTHETIC-001",
+            "submissionRevisionNumber": 1,
+            "actorReference": "SYNTHETIC-INDEPENDENT-REVIEWER",
+            "review": {
+              "submissionRevisionNumber": 1,
+              "packageHash": "3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d",
+              "outcome": "REVIEW_OUTCOME_RETURNED",
+              "reason": "职责/范围/渠道未确认，退回备料，不得正式申请"
+            },
+            "etag": "\"s6-case-1\""
+          }
+        ],
+        "etag": "\"s6-case-1\""
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "GetTaxProofHistory",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetTaxProofHistoryReqMsg",
+    "responseType": "GetTaxProofHistoryRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-15\nETag: \"s6-case-1\"\n\n{\n  \"submissions\": [\n    {\n      \"taxCaseNumber\": \"TPC-S6-SYNTHETIC-001\",\n      \"submissionRevisionNumber\": 1,\n      \"packageHash\": \"3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d\",\n      \"content\": {\n        \"tradeRevisionNumber\": 1,\n        \"scopeRule\": {\n          \"ruleReference\": \"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\n          \"ruleVersion\": \"1\",\n          \"authorityEvidence\": {\n            \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n            \"versionId\": \"SYNTHETIC-NOT-STORED\",\n            \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n            \"purposeCode\": 21\n          }\n        },\n        \"responsibilityRule\": {\n          \"ruleReference\": \"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\n          \"ruleVersion\": \"1\",\n          \"authorityEvidence\": {\n            \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n            \"versionId\": \"SYNTHETIC-NOT-STORED\",\n            \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n            \"purposeCode\": 21\n          }\n        },\n        \"deadlineRule\": {\n          \"ruleReference\": \"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\n          \"ruleVersion\": \"1\",\n          \"authorityEvidence\": {\n            \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n            \"versionId\": \"SYNTHETIC-NOT-STORED\",\n            \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n            \"purposeCode\": 21\n          }\n        },\n        \"scopeItems\": [\n          {\n            \"declarationNumber\": \"SYNTHETIC-NOT-OFFICIAL-DECLARATION\",\n            \"declarationRevisionNumber\": 1,\n            \"goodsItemSequence\": 1,\n            \"quantity\": \"10.000000\",\n            \"unitCode\": \"PCS\",\n            \"officialDeclaration\": {\n              \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n              \"versionId\": \"SYNTHETIC-NOT-STORED\",\n              \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n              \"purposeCode\": 20\n            }\n          }\n        ],\n        \"materialVersions\": [\n          {\n            \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n            \"versionId\": \"SYNTHETIC-NOT-STORED\",\n            \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n            \"purposeCode\": 22\n          }\n        ],\n        \"preparationNote\": \"仅内部合成准备；正式职责、范围、渠道未确认\"\n      },\n      \"executionStatus\": \"not_sent\",\n      \"etag\": \"\\\"s6-case-1\\\"\"\n    }\n  ],\n  \"events\": [\n    {\n      \"eventNumber\": \"S6-SYNTHETIC-REVIEW\",\n      \"taxCaseNumber\": \"TPC-S6-SYNTHETIC-001\",\n      \"submissionRevisionNumber\": 1,\n      \"actorReference\": \"SYNTHETIC-INDEPENDENT-REVIEWER\",\n      \"review\": {\n        \"submissionRevisionNumber\": 1,\n        \"packageHash\": \"3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d\",\n        \"outcome\": \"REVIEW_OUTCOME_RETURNED\",\n        \"reason\": \"职责/范围/渠道未确认，退回备料，不得正式申请\"\n      },\n      \"etag\": \"\\\"s6-case-1\\\"\"\n    }\n  ],\n  \"etag\": \"\\\"s6-case-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/history\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "id": "s6-result",
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/tax-proof-command-results/d7060000-0000-4000-8000-000000000001",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "X-Request-Id": "S6-DESIGN-16",
+        "ETag": "\"s6-case-1\""
+      },
+      "body": {
+        "requestKey": "d7060000-0000-4000-8000-000000000001",
+        "acceptanceReference": "S6-SYNTHETIC-ORIGINAL",
+        "resourceLocation": "/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/submissions/1",
+        "originalEtag": "\"s6-case-1\"",
+        "submission": {
+          "taxCaseNumber": "TPC-S6-SYNTHETIC-001",
+          "submissionRevisionNumber": 1,
+          "packageHash": "3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d",
+          "content": {
+            "tradeRevisionNumber": 1,
+            "scopeRule": {
+              "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+              "ruleVersion": "1",
+              "authorityEvidence": {
+                "fileNumber": "FILE-S6-SYNTHETIC-001",
+                "versionId": "SYNTHETIC-NOT-STORED",
+                "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                "purposeCode": 21
+              }
+            },
+            "responsibilityRule": {
+              "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+              "ruleVersion": "1",
+              "authorityEvidence": {
+                "fileNumber": "FILE-S6-SYNTHETIC-001",
+                "versionId": "SYNTHETIC-NOT-STORED",
+                "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                "purposeCode": 21
+              }
+            },
+            "deadlineRule": {
+              "ruleReference": "SYNTHETIC-INTERNAL-PREPARATION-ONLY",
+              "ruleVersion": "1",
+              "authorityEvidence": {
+                "fileNumber": "FILE-S6-SYNTHETIC-001",
+                "versionId": "SYNTHETIC-NOT-STORED",
+                "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                "purposeCode": 21
+              }
+            },
+            "scopeItems": [
+              {
+                "declarationNumber": "SYNTHETIC-NOT-OFFICIAL-DECLARATION",
+                "declarationRevisionNumber": 1,
+                "goodsItemSequence": 1,
+                "quantity": "10.000000",
+                "unitCode": "PCS",
+                "officialDeclaration": {
+                  "fileNumber": "FILE-S6-SYNTHETIC-001",
+                  "versionId": "SYNTHETIC-NOT-STORED",
+                  "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                  "purposeCode": 20
+                }
+              }
+            ],
+            "materialVersions": [
+              {
+                "fileNumber": "FILE-S6-SYNTHETIC-001",
+                "versionId": "SYNTHETIC-NOT-STORED",
+                "sha256": "5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6",
+                "purposeCode": 22
+              }
+            ],
+            "preparationNote": "仅内部合成准备；正式职责、范围、渠道未确认"
+          },
+          "executionStatus": "not_sent",
+          "etag": "\"s6-case-1\""
+        }
+      }
+    },
+    "note": "设计/合成数据；相互独立时间切片，不构成正式申请成功链",
+    "rpc": "GetTaxProofCommandResult",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetTaxProofCommandResultReqMsg",
+    "responseType": "GetTaxProofCommandResultRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nX-Request-Id: S6-DESIGN-16\nETag: \"s6-case-1\"\n\n{\n  \"requestKey\": \"d7060000-0000-4000-8000-000000000001\",\n  \"acceptanceReference\": \"S6-SYNTHETIC-ORIGINAL\",\n  \"resourceLocation\": \"/api/v1/tax-proof-cases/TPC-S6-SYNTHETIC-001/submissions/1\",\n  \"originalEtag\": \"\\\"s6-case-1\\\"\",\n  \"submission\": {\n    \"taxCaseNumber\": \"TPC-S6-SYNTHETIC-001\",\n    \"submissionRevisionNumber\": 1,\n    \"packageHash\": \"3b5ee87dbb5bc24073fa2d44b7ecb458f1a9ad9d1a632ed9a992204da547824d\",\n    \"content\": {\n      \"tradeRevisionNumber\": 1,\n      \"scopeRule\": {\n        \"ruleReference\": \"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\n        \"ruleVersion\": \"1\",\n        \"authorityEvidence\": {\n          \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n          \"versionId\": \"SYNTHETIC-NOT-STORED\",\n          \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n          \"purposeCode\": 21\n        }\n      },\n      \"responsibilityRule\": {\n        \"ruleReference\": \"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\n        \"ruleVersion\": \"1\",\n        \"authorityEvidence\": {\n          \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n          \"versionId\": \"SYNTHETIC-NOT-STORED\",\n          \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n          \"purposeCode\": 21\n        }\n      },\n      \"deadlineRule\": {\n        \"ruleReference\": \"SYNTHETIC-INTERNAL-PREPARATION-ONLY\",\n        \"ruleVersion\": \"1\",\n        \"authorityEvidence\": {\n          \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n          \"versionId\": \"SYNTHETIC-NOT-STORED\",\n          \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n          \"purposeCode\": 21\n        }\n      },\n      \"scopeItems\": [\n        {\n          \"declarationNumber\": \"SYNTHETIC-NOT-OFFICIAL-DECLARATION\",\n          \"declarationRevisionNumber\": 1,\n          \"goodsItemSequence\": 1,\n          \"quantity\": \"10.000000\",\n          \"unitCode\": \"PCS\",\n          \"officialDeclaration\": {\n            \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n            \"versionId\": \"SYNTHETIC-NOT-STORED\",\n            \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n            \"purposeCode\": 20\n          }\n        }\n      ],\n      \"materialVersions\": [\n        {\n          \"fileNumber\": \"FILE-S6-SYNTHETIC-001\",\n          \"versionId\": \"SYNTHETIC-NOT-STORED\",\n          \"sha256\": \"5358baeb3a0ed044f9737c03a81b05fc3d419f700e2c695eb945e0804a89ecc6\",\n          \"purposeCode\": 22\n        }\n      ],\n      \"preparationNote\": \"仅内部合成准备；正式职责、范围、渠道未确认\"\n    },\n    \"executionStatus\": \"not_sent\",\n    \"etag\": \"\\\"s6-case-1\\\"\"\n  }\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/tax-proof-command-results/d7060000-0000-4000-8000-000000000001\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  }
+]

@@ -1,0 +1,28 @@
+syntax = "proto3";
+package trade.filing.operations.v1;
+
+import "google/api/annotations.proto";
+import "trade/filing/v1/filing.proto";
+
+// Same application as external ingress; only audience, credential and routes differ.
+// Read-only operations projection, outside step one's two submitter use cases.
+// No operation may create a trade or write on behalf of a supplier/payer.
+service InternalFilingOperationsService {
+  // Deadline client/server: 5000/4000 ms. No module-to-module RPC.
+  rpc GetFilingOverview(GetFilingOverviewReqMsg) returns (GetFilingOverviewRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/trades/{trade_number}/filing-overview" response_body: "resource" };
+  }
+}
+message GetFilingOverviewReqMsg { string trade_number = 1; }
+message FilingOverview {
+  string trade_number = 1;
+  uint32 revision_number = 2;
+  bool supplier_filing_present = 3;
+  bool payer_filing_present = 4;
+  repeated trade.filing.v1.FieldError missing_information = 5;
+  string etag = 6;
+}
+
+// Explicit per-method transport messages. HTTP response_body maps only resource;
+// RPC returns this typed envelope. Errors use non-OK Status, never a success flag.
+message GetFilingOverviewRspMsg { FilingOverview resource = 1; }

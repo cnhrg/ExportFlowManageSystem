@@ -1,0 +1,14 @@
+sequenceDiagram
+    actor F as 出口报关代理经办人
+    actor A as 供应商授权确认人
+    actor B as 出口代理授权接收人
+    actor REVIEWER as 独立关务审核员
+    participant SYS as 代理出口系统
+    F->>SYS: 查看当前稿、旧稿及原办理号
+    SYS-->>F: 显示各版全文、审核、供应商确认、待核凭据和交接记录
+    A->>SYS: 查看本方确认过的版本和附件接收记录
+    B->>SYS: 查看本方附件2交付和接收记录
+    REVIEWER->>SYS: 用内部身份查看审核依据
+    SYS-->>REVIEWER: 显示当前限制和历史记录，不泄露他方凭据
+    F->>SYS: 用原编号、原内容和原版本标记查询丢失的提交结果
+    SYS-->>F: 已受理且内容相同则返回原回执；同号异文拒绝，未受理才检查能否新提交

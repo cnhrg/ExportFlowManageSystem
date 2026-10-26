@@ -1,0 +1,33 @@
+[
+  {
+    "designOnly": true,
+    "rpc": "CreateBankReceiptEvidence",
+    "request": {
+      "evidence": {
+        "accountNumber": "BANK-S5-SYNTHETIC",
+        "accountFingerprint": "SYNTHETIC-NOT-A-BANK-IDENTITY",
+        "bankEventKey": "SYNTHETIC-NOT-A-BANK-EVENT",
+        "amount": {
+          "amount": "5.00",
+          "currencyCode": "CNY"
+        },
+        "occurredAt": "2026-10-25T01:00:00Z",
+        "valueDate": "2026-10-25T01:00:00Z",
+        "sourceEvidence": {
+          "logicalFileNumber": "FILE-S5-SYNTHETIC",
+          "revisionNumber": 1,
+          "sha256": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+          "documentTypeCode": 14
+        },
+        "evidenceHash": "a4c7f99241eb4be457854e4dbdac2ca529b8125a3568f0da0c429486faf6c34a",
+        "manualEvidenceIntake": true,
+        "eventType": "BANK_EVIDENCE_KIND_BANK_FEE_DEBIT",
+        "payerPartyRoleCode": 2,
+        "independentPayment": false,
+        "transactionNumber": "PAY-S5-SYNTHETIC"
+      }
+    },
+    "expectedError": "BANK_EVIDENCE_REQUIRED",
+    "cargoBucketsUnchanged": true
+  }
+]

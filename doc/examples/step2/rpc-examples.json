@@ -1,0 +1,1306 @@
+[
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.ExternalContractService",
+    "method": "GetTradeContractBasis",
+    "requestType": "GetTradeContractBasisReqMsg",
+    "responseType": "GetTradeContractBasisRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic 外部服务 credential omitted>"
+    },
+    "request": {
+      "tradeNumber": "TRD-S2-DEMO-001"
+    },
+    "response": {
+      "resource": {
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "approvedTradeRevision": 4,
+        "approvedSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+        "supplierFiling": {
+          "supplier": {
+            "legalName": "示例供应商",
+            "countryCode": "CN",
+            "registeredAddress": "合成注册地址，非真实地点",
+            "contactName": "合成联系人",
+            "contactPhone": "DEMO-NOT-A-PHONE",
+            "contactEmail": "demo@example.invalid",
+            "identityProtectedReference": "DEMO-IDENTITY-SUPPLIER"
+          },
+          "consignee": {
+            "party": {
+              "legalName": "Example Consignee",
+              "countryCode": "SG",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+            },
+            "deliveryAddress": "Synthetic delivery location",
+            "deliveryArrangements": "合成收货安排"
+          },
+          "salesContractNumber": "SC-DEMO-001",
+          "invoiceNumber": "CI-DEMO-001",
+          "packingListNumber": "PL-DEMO-001",
+          "goods": [
+            {
+              "itemSequenceNumber": 1,
+              "productName": "展示用金属支架",
+              "specification": "DEMO-M1",
+              "quantity": "100",
+              "unitCode": "PCS",
+              "unitPrice": {
+                "amount": "125.00",
+                "currencyCode": "CNY"
+              },
+              "total": {
+                "amount": "12500.00",
+                "currencyCode": "CNY"
+              },
+              "originCountryCode": "CN"
+            }
+          ],
+          "packing": [
+            {
+              "goodsItemSequenceNumber": 1,
+              "quantity": "100",
+              "unitCode": "PCS",
+              "cartons": 10,
+              "netWeightKg": "100.000",
+              "grossWeightKg": "120.000"
+            }
+          ],
+          "materials": [
+            {
+              "purpose": "MATERIAL_PURPOSE_SALES_CONTRACT",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "sales-contract"
+            },
+            {
+              "purpose": "MATERIAL_PURPOSE_COMMERCIAL_INVOICE",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "commercial-invoice"
+            },
+            {
+              "purpose": "MATERIAL_PURPOSE_PACKING_LIST",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "packing-list"
+            }
+          ],
+          "contractTotal": {
+            "amount": "12500.00",
+            "currencyCode": "CNY"
+          },
+          "invoiceTotal": {
+            "amount": "12500.00",
+            "currencyCode": "CNY"
+          },
+          "sourceContentsConfirmed": true,
+          "exportAgent": {
+            "party": {
+              "legalName": "示例出口代理",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-EXPORT-AGENT"
+            },
+            "serviceScope": "合成代理出口范围",
+            "agreedInstructions": "供应商事先沟通后填写的代理指示",
+            "exportAgentDetails": {
+              "receiptPath": "合成受限人民币收款路径，实际账户须核实",
+              "paymentPath": "合成向供应商人民币付款路径，实际账户须核实",
+              "paymentBranchCode": 1
+            }
+          },
+          "logisticsProvider": {
+            "party": {
+              "legalName": "示例物流公司",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-LOGISTICS"
+            },
+            "serviceScope": "合成运输范围",
+            "agreedInstructions": "供应商事先沟通后填写；具体运输工具尚待确定"
+          },
+          "customsBroker": {
+            "party": {
+              "legalName": "示例出口报关代理",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-CUSTOMS"
+            },
+            "serviceScope": "合成报关服务范围",
+            "agreedInstructions": "供应商事先沟通后填写；本例无真实资质证明",
+            "customsDetails": {
+              "qualification": {
+                "purpose": "MATERIAL_PURPOSE_CUSTOMS_QUALIFICATION",
+                "logicalFileNumber": "FILE-S2-QUALIFICATION",
+                "revisionNumber": 1,
+                "sha256": "ac8d5734d4089657c9de6f987ea5b31f1fecc9dd14cabc1d1199007af6ef7952"
+              },
+              "quotedAmount": {
+                "amount": "100.00",
+                "currencyCode": "CNY"
+              },
+              "pricingBasis": "合成单笔报价计价说明，不代表真实约定",
+              "quotation": {
+                "purpose": "MATERIAL_PURPOSE_CUSTOMS_QUOTATION",
+                "logicalFileNumber": "FILE-S2-QUOTATION",
+                "revisionNumber": 1,
+                "sha256": "b1d57f7dd3fc422bafb55e3bdd4866422fb424c27bec307962cd902ab0e661d4"
+              }
+            }
+          },
+          "nominatedPayerProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+        },
+        "etag": "\"s2-trade-r4-approved-v6\"",
+        "currentEvidence": {
+          "agreementApplications": [],
+          "customsAuthorizations": [],
+          "customsAgentRecognitions": []
+        }
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.InternalContractOperationsService",
+    "method": "GetTradeReviewContext",
+    "requestType": "GetTradeReviewContextReqMsg",
+    "responseType": "GetTradeReviewContextRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic 内部运营 credential omitted>"
+    },
+    "request": {
+      "tradeNumber": "TRD-S2-DEMO-001",
+      "submittedSnapshotNumber": "SNP-S2-SUBMITTED-001"
+    },
+    "response": {
+      "resource": {
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "tradeRevision": 4,
+        "lifecycle": "reviewing",
+        "supplierFiling": {
+          "supplier": {
+            "legalName": "示例供应商",
+            "countryCode": "CN",
+            "registeredAddress": "合成注册地址，非真实地点",
+            "contactName": "合成联系人",
+            "contactPhone": "DEMO-NOT-A-PHONE",
+            "contactEmail": "demo@example.invalid",
+            "identityProtectedReference": "DEMO-IDENTITY-SUPPLIER"
+          },
+          "consignee": {
+            "party": {
+              "legalName": "Example Consignee",
+              "countryCode": "SG",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+            },
+            "deliveryAddress": "Synthetic delivery location",
+            "deliveryArrangements": "合成收货安排"
+          },
+          "salesContractNumber": "SC-DEMO-001",
+          "invoiceNumber": "CI-DEMO-001",
+          "packingListNumber": "PL-DEMO-001",
+          "goods": [
+            {
+              "itemSequenceNumber": 1,
+              "productName": "展示用金属支架",
+              "specification": "DEMO-M1",
+              "quantity": "100",
+              "unitCode": "PCS",
+              "unitPrice": {
+                "amount": "125.00",
+                "currencyCode": "CNY"
+              },
+              "total": {
+                "amount": "12500.00",
+                "currencyCode": "CNY"
+              },
+              "originCountryCode": "CN"
+            }
+          ],
+          "packing": [
+            {
+              "goodsItemSequenceNumber": 1,
+              "quantity": "100",
+              "unitCode": "PCS",
+              "cartons": 10,
+              "netWeightKg": "100.000",
+              "grossWeightKg": "120.000"
+            }
+          ],
+          "materials": [
+            {
+              "purpose": "MATERIAL_PURPOSE_SALES_CONTRACT",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "sales-contract"
+            },
+            {
+              "purpose": "MATERIAL_PURPOSE_COMMERCIAL_INVOICE",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "commercial-invoice"
+            },
+            {
+              "purpose": "MATERIAL_PURPOSE_PACKING_LIST",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "packing-list"
+            }
+          ],
+          "contractTotal": {
+            "amount": "12500.00",
+            "currencyCode": "CNY"
+          },
+          "invoiceTotal": {
+            "amount": "12500.00",
+            "currencyCode": "CNY"
+          },
+          "sourceContentsConfirmed": true,
+          "exportAgent": {
+            "party": {
+              "legalName": "示例出口代理",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-EXPORT-AGENT"
+            },
+            "serviceScope": "合成代理出口范围",
+            "agreedInstructions": "供应商事先沟通后填写的代理指示",
+            "exportAgentDetails": {
+              "receiptPath": "合成受限人民币收款路径，实际账户须核实",
+              "paymentPath": "合成向供应商人民币付款路径，实际账户须核实",
+              "paymentBranchCode": 1
+            }
+          },
+          "logisticsProvider": {
+            "party": {
+              "legalName": "示例物流公司",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-LOGISTICS"
+            },
+            "serviceScope": "合成运输范围",
+            "agreedInstructions": "供应商事先沟通后填写；具体运输工具尚待确定"
+          },
+          "customsBroker": {
+            "party": {
+              "legalName": "示例出口报关代理",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-CUSTOMS"
+            },
+            "serviceScope": "合成报关服务范围",
+            "agreedInstructions": "供应商事先沟通后填写；本例无真实资质证明",
+            "customsDetails": {
+              "qualification": {
+                "purpose": "MATERIAL_PURPOSE_CUSTOMS_QUALIFICATION",
+                "logicalFileNumber": "FILE-S2-QUALIFICATION",
+                "revisionNumber": 1,
+                "sha256": "ac8d5734d4089657c9de6f987ea5b31f1fecc9dd14cabc1d1199007af6ef7952"
+              },
+              "quotedAmount": {
+                "amount": "100.00",
+                "currencyCode": "CNY"
+              },
+              "pricingBasis": "合成单笔报价计价说明，不代表真实约定",
+              "quotation": {
+                "purpose": "MATERIAL_PURPOSE_CUSTOMS_QUOTATION",
+                "logicalFileNumber": "FILE-S2-QUOTATION",
+                "revisionNumber": 1,
+                "sha256": "b1d57f7dd3fc422bafb55e3bdd4866422fb424c27bec307962cd902ab0e661d4"
+              }
+            }
+          },
+          "nominatedPayerProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+        },
+        "payerFiling": {
+          "payer": {
+            "legalName": "Example Consignee",
+            "countryCode": "SG",
+            "registeredAddress": "合成注册地址，非真实地点",
+            "contactName": "合成联系人",
+            "contactPhone": "DEMO-NOT-A-PHONE",
+            "contactEmail": "demo@example.invalid",
+            "identityProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+          },
+          "relationship": "PAYER_RELATIONSHIP_SAME_LEGAL_ENTITY",
+          "paymentPurpose": "支付本笔合成出口交易货款",
+          "relationshipEvidence": [],
+          "sourceContentsConfirmed": true
+        },
+        "missingItems": [],
+        "submittedSnapshotNumber": "SNP-S2-SUBMITTED-001",
+        "etag": "\"s2-trade-r4-review-v5\"",
+        "evidence": {
+          "agreementApplications": [],
+          "customsAuthorizations": [],
+          "customsAgentRecognitions": []
+        }
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.InternalContractOperationsService",
+    "method": "CreateTradeRevision",
+    "requestType": "CreateTradeRevisionReqMsg",
+    "responseType": "CreateTradeRevisionRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<synthetic 内部运营 credential omitted>",
+      "idempotency-key": "0ea255d0-0000-4000-8000-000000000003",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>",
+      "if-match": "\"s2-trade-r4-returned-v6\""
+    },
+    "request": {
+      "tradeNumber": "TRD-S2-DEMO-001",
+      "revision": {
+        "expectedTradeRevision": 4,
+        "reason": "终审退回后开始补充，仅打开工作版，不替供应商写资料",
+        "evidence": []
+      }
+    },
+    "response": {
+      "resource": {
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "tradeRevision": 5,
+        "lifecycle": "editing",
+        "etag": "\"s2-trade-r5-v7\""
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.InternalContractOperationsService",
+    "method": "GetInternalContractRevision",
+    "requestType": "GetInternalContractRevisionReqMsg",
+    "responseType": "GetInternalContractRevisionRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic 内部运营 credential omitted>"
+    },
+    "request": {
+      "contractNumber": "CON-S2-DEMO-001",
+      "revisionNumber": 1
+    },
+    "response": {
+      "resource": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "status": "REVISION_STATUS_AWAITING_SIGNATURE",
+        "content": {
+          "tradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+          "parties": [
+            {
+              "contractPartySequence": 1,
+              "partyRoleCode": 1,
+              "participantSequenceNumber": 1
+            },
+            {
+              "contractPartySequence": 2,
+              "partyRoleCode": 2,
+              "participantSequenceNumber": 1
+            }
+          ],
+          "reviewFile": {
+            "logicalFileNumber": "FILE-S2-REVIEW-001",
+            "revisionNumber": 1,
+            "sha256": "54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175",
+            "documentTypeCode": 10
+          },
+          "effectiveFrom": "2026-10-25",
+          "effectiveTo": "2027-10-25"
+        },
+        "etag": "\"s2-demo-working-1-state-4-v4\"",
+        "currentRevisionNumber": 1,
+        "signatureRequest": {
+          "signatureRequestId": "SIG-S2-DEMO-001",
+          "clientReference": "SIGREF-S2-DEMO-001",
+          "contractNumber": "CON-S2-DEMO-001",
+          "revisionNumber": 1,
+          "state": "awaiting_signers",
+          "attemptCount": 0,
+          "lastErrorCode": "",
+          "etag": "\"s2-signature-request-awaiting-signers-v2\"",
+          "providerTaskReference": "NOT-A-REAL-PLATFORM-TASK"
+        },
+        "reviewResult": {
+          "outcome": "DECISION_OUTCOME_APPROVE",
+          "reason": "合成通过推演，真实审核/证据须另核实",
+          "ruleVersion": "S2-RULES-1",
+          "reviewedAt": "2026-10-25T08:20:00.123Z",
+          "reviewerReference": "SYNTHETIC-INDEPENDENT-REVIEWER",
+          "evidenceReferences": []
+        }
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.InternalContractOperationsService",
+    "method": "CreateContractTermination",
+    "requestType": "CreateContractTerminationReqMsg",
+    "responseType": "CreateContractTerminationRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<synthetic 内部运营 credential omitted>",
+      "idempotency-key": "0ea255d0-0000-4000-8000-000000000005",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>",
+      "if-match": "\"s2-demo-working-1-state-4-v4\""
+    },
+    "request": {
+      "contractNumber": "CON-S2-DEMO-001",
+      "revisionNumber": 1,
+      "termination": {
+        "reasonCode": 1,
+        "reason": "未签旧工作版正式撤回，须确认无活跃或未知签署任务",
+        "legalEvidence": [
+          {
+            "logicalFileNumber": "REQUIRED-EXTERNAL-TERMINATION-AUTHORITY",
+            "revisionNumber": 1,
+            "sha256": "<no-real-evidence-in-this-design-fixture>",
+            "documentTypeCode": 10
+          }
+        ]
+      }
+    },
+    "response": {
+      "resource": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "status": "REVISION_STATUS_TERMINATED",
+        "etag": "\"s2-demo-working-1-state-8-v6\"",
+        "acceptanceId": "ACCEPT-S2-REVISION_STATUS_TERMINATED-1"
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.InternalContractOperationsService",
+    "method": "CreateInternalOperationConfirmation",
+    "requestType": "CreateInternalOperationConfirmationReqMsg",
+    "responseType": "CreateInternalOperationConfirmationRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<synthetic 内部运营 credential omitted>",
+      "idempotency-key": "0ea255d0-0000-4000-8000-000000000006"
+    },
+    "request": {
+      "intent": {
+        "method": "POST",
+        "resourcePath": "/internal/v1/trades/TRD-S2-DEMO-001/review-submissions",
+        "idempotencyKey": "0ea255d0-0000-4000-8000-000000000008",
+        "ifMatch": "\"s2-trade-r4-v4\"",
+        "bodySha256": "1a5637ef97288b6710fe2452839da52d1823509433a17c0f551299bdf7f44758"
+      }
+    },
+    "response": {
+      "resource": {
+        "confirmationId": "S2-INTERNAL-CONFIRMATION-NOT-VALID",
+        "requestDigest": "2ca15adcc98ba0d8c092516b4f51e9cb560df260be4f2f5a194a1a1a398e14a7",
+        "expiresAt": "2026-10-25T08:29:00.000Z",
+        "state": "available"
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.InternalContractOperationsService",
+    "method": "GetInternalOperationConfirmation",
+    "requestType": "GetInternalOperationConfirmationReqMsg",
+    "responseType": "GetInternalOperationConfirmationRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic 内部运营 credential omitted>"
+    },
+    "request": {
+      "confirmationId": "S2-INTERNAL-CONFIRMATION-NOT-VALID"
+    },
+    "response": {
+      "resource": {
+        "confirmationId": "S2-INTERNAL-CONFIRMATION-NOT-VALID",
+        "requestDigest": "2ca15adcc98ba0d8c092516b4f51e9cb560df260be4f2f5a194a1a1a398e14a7",
+        "expiresAt": "2026-10-25T08:29:00.000Z",
+        "state": "available"
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.InternalContractOperationsService",
+    "method": "CreateTradeReviewSubmission",
+    "requestType": "CreateTradeReviewSubmissionReqMsg",
+    "responseType": "CreateTradeReviewSubmissionRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<synthetic 内部运营 credential omitted>",
+      "idempotency-key": "0ea255d0-0000-4000-8000-000000000008",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>",
+      "if-match": "\"s2-trade-r4-v4\""
+    },
+    "request": {
+      "tradeNumber": "TRD-S2-DEMO-001",
+      "submission": {
+        "expectedTradeRevision": 4,
+        "supportingEvidence": [],
+        "summary": "未执行的合成设计例；本阶段必需资料应已核实，实际步骤一库不具备此批准事实"
+      }
+    },
+    "response": {
+      "resource": {
+        "submissionId": "REVIEW-S2-DEMO-001",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "tradeRevision": 4,
+        "submittedSnapshotNumber": "SNP-S2-SUBMITTED-001",
+        "etag": "\"s2-trade-r4-review-v5\""
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.InternalContractOperationsService",
+    "method": "CreateTradeReviewDecision",
+    "requestType": "CreateTradeReviewDecisionReqMsg",
+    "responseType": "CreateTradeReviewDecisionRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<synthetic 内部运营 credential omitted>",
+      "idempotency-key": "0ea255d0-0000-4000-8000-000000000009",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>",
+      "if-match": "\"s2-trade-r4-review-v5\""
+    },
+    "request": {
+      "tradeNumber": "TRD-S2-DEMO-001",
+      "decision": {
+        "submissionId": "REVIEW-S2-DEMO-001",
+        "outcome": "DECISION_OUTCOME_APPROVE",
+        "reason": "仅设计推演：须由独立审核员真实核实本阶段规则后才可批准",
+        "missingItems": []
+      }
+    },
+    "response": {
+      "resource": {
+        "decisionId": "DECISION-S2-DEMO-001",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "approvedSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+        "tradeRevision": 4,
+        "lifecycle": "approved"
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.ExternalContractService",
+    "method": "CreateContract",
+    "requestType": "CreateContractReqMsg",
+    "responseType": "CreateContractRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<synthetic 外部服务 credential omitted>",
+      "idempotency-key": "0ea255d0-0000-4000-8000-000000000010",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>"
+    },
+    "request": {
+      "contract": {
+        "scope": "CONTRACT_SCOPE_PER_TRADE",
+        "purpose": "CONTRACT_PURPOSE_EXPORT_AGENCY",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "content": {
+          "tradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+          "parties": [
+            {
+              "contractPartySequence": 1,
+              "partyRoleCode": 1,
+              "participantSequenceNumber": 1
+            },
+            {
+              "contractPartySequence": 2,
+              "partyRoleCode": 2,
+              "participantSequenceNumber": 1
+            }
+          ],
+          "reviewFile": {
+            "logicalFileNumber": "FILE-S2-REVIEW-001",
+            "revisionNumber": 1,
+            "sha256": "54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175",
+            "documentTypeCode": 10
+          },
+          "effectiveFrom": "2026-10-25",
+          "effectiveTo": "2027-10-25"
+        }
+      }
+    },
+    "response": {
+      "resource": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "scope": "CONTRACT_SCOPE_PER_TRADE",
+        "purpose": "CONTRACT_PURPOSE_EXPORT_AGENCY",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "currentRevisionNumber": 1,
+        "etag": "\"s2-demo-working-1-state-1-v1\""
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.ExternalContractService",
+    "method": "GetContract",
+    "requestType": "GetContractReqMsg",
+    "responseType": "GetContractRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic 外部服务 credential omitted>"
+    },
+    "request": {
+      "contractNumber": "CON-S2-DEMO-001"
+    },
+    "response": {
+      "resource": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "scope": "CONTRACT_SCOPE_PER_TRADE",
+        "purpose": "CONTRACT_PURPOSE_EXPORT_AGENCY",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "currentRevisionNumber": 1,
+        "etag": "\"s2-demo-working-1-state-1-v1\""
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.ExternalContractService",
+    "method": "GetContractRevision",
+    "requestType": "GetContractRevisionReqMsg",
+    "responseType": "GetContractRevisionRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic 外部服务 credential omitted>"
+    },
+    "request": {
+      "contractNumber": "CON-S2-DEMO-001",
+      "revisionNumber": 1
+    },
+    "response": {
+      "resource": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "status": "REVISION_STATUS_RETURNED",
+        "content": {
+          "tradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+          "parties": [
+            {
+              "contractPartySequence": 1,
+              "partyRoleCode": 1,
+              "participantSequenceNumber": 1
+            },
+            {
+              "contractPartySequence": 2,
+              "partyRoleCode": 2,
+              "participantSequenceNumber": 1
+            }
+          ],
+          "reviewFile": {
+            "logicalFileNumber": "FILE-S2-REVIEW-001",
+            "revisionNumber": 1,
+            "sha256": "54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175",
+            "documentTypeCode": 10
+          },
+          "effectiveFrom": "2026-10-25",
+          "effectiveTo": "2027-10-25"
+        },
+        "etag": "\"s2-demo-working-1-state-3-v4\"",
+        "currentRevisionNumber": 1,
+        "reviewResult": {
+          "outcome": "DECISION_OUTCOME_RETURN",
+          "reason": "合成补正意见：补齐正文范围与正式授权对应关系",
+          "ruleVersion": "S2-RULES-1",
+          "reviewedAt": "2026-10-25T08:20:00.123Z",
+          "reviewerReference": "SYNTHETIC-INDEPENDENT-REVIEWER",
+          "evidenceReferences": []
+        }
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.ExternalContractService",
+    "method": "ReplaceContractDraft",
+    "requestType": "ReplaceContractDraftReqMsg",
+    "responseType": "ReplaceContractDraftRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<synthetic 外部服务 credential omitted>",
+      "idempotency-key": "0ea255d0-0000-4000-8000-000000000013",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>",
+      "if-match": "\"s2-demo-working-1-state-1-v1\""
+    },
+    "request": {
+      "contractNumber": "CON-S2-DEMO-001",
+      "revisionNumber": 1,
+      "content": {
+        "tradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+        "parties": [
+          {
+            "contractPartySequence": 1,
+            "partyRoleCode": 1,
+            "participantSequenceNumber": 1
+          },
+          {
+            "contractPartySequence": 2,
+            "partyRoleCode": 2,
+            "participantSequenceNumber": 1
+          }
+        ],
+        "reviewFile": {
+          "logicalFileNumber": "FILE-S2-REVIEW-001",
+          "revisionNumber": 1,
+          "sha256": "54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175",
+          "documentTypeCode": 10
+        },
+        "effectiveFrom": "2026-10-25",
+        "effectiveTo": "2027-10-25"
+      }
+    },
+    "response": {
+      "resource": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "status": "REVISION_STATUS_DRAFT",
+        "etag": "\"s2-demo-working-1-state-1-v2\"",
+        "acceptanceId": "ACCEPT-S2-REVISION_STATUS_DRAFT-1"
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.ExternalContractService",
+    "method": "CreateContractRevision",
+    "requestType": "CreateContractRevisionReqMsg",
+    "responseType": "CreateContractRevisionRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<synthetic 外部服务 credential omitted>",
+      "idempotency-key": "0ea255d0-0000-4000-8000-000000000014",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>",
+      "if-match": "\"s2-demo-working-1-state-3-v4\""
+    },
+    "request": {
+      "contractNumber": "CON-S2-DEMO-001",
+      "revision": {
+        "previousWorkingRevision": 1,
+        "correctionReason": "仅推演：正式任务已查清，待补条款另起版",
+        "content": {
+          "tradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+          "parties": [
+            {
+              "contractPartySequence": 1,
+              "partyRoleCode": 1,
+              "participantSequenceNumber": 1
+            },
+            {
+              "contractPartySequence": 2,
+              "partyRoleCode": 2,
+              "participantSequenceNumber": 1
+            }
+          ],
+          "reviewFile": {
+            "logicalFileNumber": "FILE-S2-REVIEW-001",
+            "revisionNumber": 1,
+            "sha256": "54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175",
+            "documentTypeCode": 10
+          },
+          "effectiveFrom": "2026-10-25",
+          "effectiveTo": "2027-10-25"
+        }
+      }
+    },
+    "response": {
+      "resource": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 2,
+        "status": "REVISION_STATUS_DRAFT",
+        "etag": "\"s2-demo-working-2-state-1-v1\"",
+        "acceptanceId": "ACCEPT-S2-REVISION_STATUS_DRAFT-2"
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.ExternalContractService",
+    "method": "CreateContractReviewSubmission",
+    "requestType": "CreateContractReviewSubmissionReqMsg",
+    "responseType": "CreateContractReviewSubmissionRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<synthetic 外部服务 credential omitted>",
+      "idempotency-key": "0ea255d0-0000-4000-8000-000000000015",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>",
+      "if-match": "\"s2-demo-working-1-state-1-v2\""
+    },
+    "request": {
+      "contractNumber": "CON-S2-DEMO-001",
+      "revisionNumber": 1,
+      "submission": {
+        "declaration": "确认送审确切正文与主体/依据，尚未签署"
+      }
+    },
+    "response": {
+      "resource": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "status": "REVISION_STATUS_IN_REVIEW",
+        "etag": "\"s2-demo-working-1-state-2-v3\"",
+        "acceptanceId": "ACCEPT-S2-REVISION_STATUS_IN_REVIEW-1"
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.InternalContractOperationsService",
+    "method": "CreateContractReviewDecision",
+    "requestType": "CreateContractReviewDecisionReqMsg",
+    "responseType": "CreateContractReviewDecisionRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<synthetic 内部运营 credential omitted>",
+      "idempotency-key": "0ea255d0-0000-4000-8000-000000000016",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>",
+      "if-match": "\"s2-demo-working-1-state-2-v3\""
+    },
+    "request": {
+      "contractNumber": "CON-S2-DEMO-001",
+      "revisionNumber": 1,
+      "decision": {
+        "outcome": "DECISION_OUTCOME_APPROVE",
+        "reason": "仅推演：须独立核实条款/委托链/收费与付款条件",
+        "ruleVersion": "S2-RULES-1",
+        "evidence": []
+      }
+    },
+    "response": {
+      "resource": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "status": "REVISION_STATUS_AWAITING_SIGNATURE",
+        "etag": "\"s2-demo-working-1-state-4-v4\"",
+        "acceptanceId": "ACCEPT-S2-REVISION_STATUS_AWAITING_SIGNATURE-1"
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.ExternalContractService",
+    "method": "CreateSignatureRequest",
+    "requestType": "CreateSignatureRequestReqMsg",
+    "responseType": "CreateSignatureRequestRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<synthetic 外部服务 credential omitted>",
+      "idempotency-key": "0ea255d0-0000-4000-8000-000000000017",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>",
+      "if-match": "\"s2-demo-working-1-state-4-v4\""
+    },
+    "request": {
+      "contractNumber": "CON-S2-DEMO-001",
+      "revisionNumber": 1,
+      "signature": {
+        "providerCode": "UNSELECTED-PROVIDER-DESIGN-ONLY",
+        "reviewedDocumentSha256": "54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175"
+      }
+    },
+    "response": {
+      "resource": {
+        "signatureRequestId": "SIG-S2-DEMO-001",
+        "clientReference": "SIGREF-S2-DEMO-001",
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "state": "pending_dispatch",
+        "attemptCount": 0,
+        "lastErrorCode": "",
+        "etag": "\"s2-signature-request-pending-dispatch-v1\""
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.ExternalContractService",
+    "method": "GetSignatureRequest",
+    "requestType": "GetSignatureRequestReqMsg",
+    "responseType": "GetSignatureRequestRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic 外部服务 credential omitted>"
+    },
+    "request": {
+      "signatureRequestId": "SIG-S2-DEMO-001"
+    },
+    "response": {
+      "resource": {
+        "signatureRequestId": "SIG-S2-DEMO-001",
+        "clientReference": "SIGREF-S2-DEMO-001",
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "state": "awaiting_signers",
+        "attemptCount": 0,
+        "lastErrorCode": "",
+        "etag": "\"s2-signature-request-awaiting-signers-v2\"",
+        "providerTaskReference": "NOT-A-REAL-PLATFORM-TASK"
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.ExternalContractService",
+    "method": "CreateSigningSession",
+    "requestType": "CreateSigningSessionReqMsg",
+    "responseType": "CreateSigningSessionRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<synthetic 外部服务 credential omitted>",
+      "idempotency-key": "0ea255d0-0000-4000-8000-000000000019",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>",
+      "if-match": "\"s2-signature-request-awaiting-signers-v2\""
+    },
+    "request": {
+      "signatureRequestId": "SIG-S2-DEMO-001",
+      "session": {
+        "returnRoute": "/contracts/signature-result"
+      }
+    },
+    "response": {
+      "resource": {
+        "signingSessionId": "SESSION-S2-DEMO-001",
+        "signatureRequestId": "SIG-S2-DEMO-001",
+        "state": "pending"
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.ExternalContractService",
+    "method": "GetSigningSession",
+    "requestType": "GetSigningSessionReqMsg",
+    "responseType": "GetSigningSessionRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic 外部服务 credential omitted>"
+    },
+    "request": {
+      "signingSessionId": "SESSION-S2-DEMO-001"
+    },
+    "response": {
+      "resource": {
+        "signingSessionId": "SESSION-S2-DEMO-001",
+        "signatureRequestId": "SIG-S2-DEMO-001",
+        "state": "ready",
+        "redirectUrl": "https://esign.example.invalid/session/NOT-A-REAL-SESSION",
+        "expiresAt": "2026-10-25T08:35:00.123Z"
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.ExternalContractService",
+    "method": "CreateSignatureNotification",
+    "requestType": "CreateSignatureNotificationReqMsg",
+    "responseType": "CreateSignatureNotificationRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "provider-auth-profile": "<negotiated profile required; RPC disabled until agreed>"
+    },
+    "request": {
+      "notification": {
+        "providerCode": "UNSELECTED-PROVIDER-DESIGN-ONLY",
+        "providerEventId": "NOTICE-S2-DEMO-001",
+        "clientReference": "SIGREF-S2-DEMO-001",
+        "providerTaskReference": "NOT-A-REAL-PLATFORM-TASK",
+        "reportedState": "completed",
+        "occurredAt": "2026-10-25T08:30:00.123Z"
+      }
+    },
+    "response": {
+      "resource": {
+        "notificationId": "NOTICE-S2-DEMO-001",
+        "state": "received"
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.InternalContractOperationsService",
+    "method": "CreateContractActivation",
+    "requestType": "CreateContractActivationReqMsg",
+    "responseType": "CreateContractActivationRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<synthetic 内部运营 credential omitted>",
+      "idempotency-key": "0ea255d0-0000-4000-8000-000000000022",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>",
+      "if-match": "\"s2-demo-working-1-state-5-v5\""
+    },
+    "request": {
+      "contractNumber": "CON-S2-DEMO-001",
+      "revisionNumber": 1,
+      "activation": {
+        "conditionEvidence": [
+          {
+            "logicalFileNumber": "REQUIRED-EXTERNAL-ACTIVATION-AUTHORITY",
+            "revisionNumber": 1,
+            "sha256": "<no-real-evidence-in-this-design-fixture>",
+            "documentTypeCode": 10
+          }
+        ],
+        "reason": "未执行推演：必须先取得真实全部签署/归档证据并满足条件，不能用本例激活"
+      }
+    },
+    "response": {
+      "resource": {
+        "contractNumber": "CON-S2-DEMO-001",
+        "revisionNumber": 1,
+        "status": "REVISION_STATUS_EFFECTIVE",
+        "etag": "\"s2-demo-working-1-state-6-v6\"",
+        "acceptanceId": "ACCEPT-S2-REVISION_STATUS_EFFECTIVE-1"
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.ExternalContractService",
+    "method": "CreateAgreementApplication",
+    "requestType": "CreateAgreementApplicationReqMsg",
+    "responseType": "CreateAgreementApplicationRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<synthetic 外部服务 credential omitted>",
+      "idempotency-key": "0ea255d0-0000-4000-8000-000000000023",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>",
+      "if-match": "\"s2-trade-r4-v4\""
+    },
+    "request": {
+      "tradeNumber": "TRD-S2-DEMO-001",
+      "application": {
+        "contractNumber": "CON-S2-FRAMEWORK-LOGISTICS",
+        "contractRevisionNumber": 2,
+        "approvedTradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+        "partyMappings": [
+          {
+            "contractPartySequence": 1,
+            "partyRoleCode": 1,
+            "participantSequenceNumber": 1
+          },
+          {
+            "contractPartySequence": 2,
+            "partyRoleCode": 5,
+            "participantSequenceNumber": 1
+          }
+        ],
+        "serviceOrder": {
+          "logicalFileNumber": "REQUIRED-EXTERNAL-SERVICE-ORDER",
+          "revisionNumber": 1,
+          "sha256": "<no-real-evidence-in-this-design-fixture>",
+          "documentTypeCode": 11
+        },
+        "useDate": "2026-10-25"
+      }
+    },
+    "response": {
+      "resource": {
+        "applicationId": "APPLICATION-S2-DEMO-001",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "contractNumber": "CON-S2-FRAMEWORK-LOGISTICS",
+        "contractRevisionNumber": 2,
+        "tradeRevision": 6,
+        "state": "pending_review"
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.ExternalContractService",
+    "method": "GetAgreementApplication",
+    "requestType": "GetAgreementApplicationReqMsg",
+    "responseType": "GetAgreementApplicationRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic 外部服务 credential omitted>"
+    },
+    "request": {
+      "tradeNumber": "TRD-S2-DEMO-001",
+      "applicationId": "APPLICATION-S2-DEMO-001"
+    },
+    "response": {
+      "resource": {
+        "applicationId": "APPLICATION-S2-DEMO-001",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "contractNumber": "CON-S2-FRAMEWORK-LOGISTICS",
+        "contractRevisionNumber": 2,
+        "tradeRevision": 6,
+        "state": "pending_review"
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.ExternalContractService",
+    "method": "CreateCustomsAuthorization",
+    "requestType": "CreateCustomsAuthorizationReqMsg",
+    "responseType": "CreateCustomsAuthorizationRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<synthetic 外部服务 credential omitted>",
+      "idempotency-key": "0ea255d0-0000-4000-8000-000000000025",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>",
+      "if-match": "\"s2-trade-r4-v4\""
+    },
+    "request": {
+      "tradeNumber": "TRD-S2-DEMO-001",
+      "authorization": {
+        "approvedTradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+        "officialAuthorization": {
+          "logicalFileNumber": "REQUIRED-EXTERNAL-OFFICIAL-AUTHORIZATION",
+          "revisionNumber": 1,
+          "sha256": "<no-real-evidence-in-this-design-fixture>",
+          "documentTypeCode": 13
+        },
+        "customsParticipantSequence": 1,
+        "validFrom": "2026-10-25",
+        "validTo": "2027-10-25",
+        "scopeDescription": "本笔明确货物/报关范围；示例不代表已办理官方委托"
+      }
+    },
+    "response": {
+      "resource": {
+        "authorizationId": "AUTHORITY-S2-DEMO-001",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "state": "pending_review",
+        "tradeRevision": 6
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.contracts.v1.InternalContractOperationsService",
+    "method": "CreateCustomsAgentRecognition",
+    "requestType": "CreateCustomsAgentRecognitionReqMsg",
+    "responseType": "CreateCustomsAgentRecognitionRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "<synthetic 内部运营 credential omitted>",
+      "idempotency-key": "0ea255d0-0000-4000-8000-000000000026",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>",
+      "if-match": "\"s2-trade-r4-v4\""
+    },
+    "request": {
+      "tradeNumber": "TRD-S2-DEMO-001",
+      "recognition": {
+        "approvedTradeSnapshotNumber": "SNP-S2-DEMO-APPROVED-001",
+        "customsParticipantSequence": 1,
+        "writtenRecognition": {
+          "logicalFileNumber": "REQUIRED-EXTERNAL-WRITTEN-RECOGNITION",
+          "revisionNumber": 1,
+          "sha256": "<no-real-evidence-in-this-design-fixture>",
+          "documentTypeCode": 13
+        },
+        "validFrom": "2026-10-25",
+        "validTo": "2027-10-25"
+      }
+    },
+    "response": {
+      "resource": {
+        "recognitionId": "RECOGNITION-S2-DEMO-001",
+        "tradeNumber": "TRD-S2-DEMO-001",
+        "state": "pending_review",
+        "tradeRevision": 6
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  }
+]

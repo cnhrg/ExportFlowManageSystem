@@ -1,0 +1,20 @@
+sequenceDiagram
+    autonumber
+    actor PAGE as 出口代理商业发票申报经办人
+    actor ACTOR1 as 中国供应商财务经办人
+    actor ACTOR2 as 出口代理资金独立审核人
+    participant APP as 单体资金应用
+    participant DB as MySQL资金及账务
+    participant STORE as 私有S3确切版本
+    participant SCAN as ClamAV
+    participant BANK as 银行事实边界（未接入）
+    PAGE->>APP: GET当前资源/强ETag，再确认具体正文及原幂等键
+    APP->>STORE: 事务外校验INVOICE确切VersionId/长度/hash
+    APP->>SCAN: 扫描确切文件；不认可合成文件为商业依据
+    APP->>DB: BEGIN READ COMMITTED；先查INVOICE原键，同文恢复异文409
+    APP->>DB: 锁trade根；FOR UPDATE当前读批准版/原INVOICE
+    APP->>APP: 核对CNY/金额/文件及补正前版，已提交内容不可覆盖
+    APP->>DB: 仅追加INVOICE申报及审核版本，不触发服务费结算
+    APP->>DB: 受理/确认消费原子COMMIT
+    APP-->>PAGE: 返回INVOICE申报状态；服务费待首次获批分账处理
+    Note over APP,DB: RC先查重入/根锁后当前读；资金与账务本地原子；外部I/O事务外

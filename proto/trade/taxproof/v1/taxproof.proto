@@ -1,0 +1,320 @@
+syntax = "proto3";
+package trade.taxproof.v1;
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+// Same monolith, distinct audiences. Every mutation requires original intent confirmation,
+// Idempotency-Key and strong If-Match; deadlines client/server 10000/8000ms, reads 5000/4000ms.
+// Rule/evidence gaps fail closed. No RPC fabricates an official submission or certificate.
+service ExternalTaxProofService {
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetTaxProofPreparation(GetTaxProofPreparationReqMsg) returns (GetTaxProofPreparationRspMsg) {
+    option (google.api.http) = {get:"/api/v1/trades/{trade_number}/tax-proof-preparation" response_body:"resource"};
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateTaxProofCase(CreateTaxProofCaseReqMsg) returns (CreateTaxProofCaseRspMsg) {
+    option (google.api.http) = {post:"/api/v1/trades/{trade_number}/tax-proof-cases" body:"case_input" response_body:"resource"};
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetTaxProofCase(GetTaxProofCaseReqMsg) returns (GetTaxProofCaseRspMsg) {
+    option (google.api.http) = {get:"/api/v1/tax-proof-cases/{tax_case_number}" response_body:"resource"};
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateTaxProofSubmission(CreateTaxProofSubmissionReqMsg) returns (CreateTaxProofSubmissionRspMsg) {
+    option (google.api.http) = {post:"/api/v1/tax-proof-cases/{tax_case_number}/submissions" body:"submission" response_body:"resource"};
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetTaxProofSubmission(GetTaxProofSubmissionReqMsg) returns (GetTaxProofSubmissionRspMsg) {
+    option (google.api.http) = {get:"/api/v1/tax-proof-cases/{tax_case_number}/submissions/{submission_revision_number}" response_body:"resource"};
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateTaxProofDispatch(CreateTaxProofDispatchReqMsg) returns (CreateTaxProofDispatchRspMsg) {
+    option (google.api.http) = {post:"/api/v1/tax-proof-cases/{tax_case_number}/dispatch-intents" body:"dispatch" response_body:"resource"};
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetTaxProofDispatch(GetTaxProofDispatchReqMsg) returns (GetTaxProofDispatchRspMsg) {
+    option (google.api.http) = {get:"/api/v1/tax-proof-cases/{tax_case_number}/dispatch-intents/{dispatch_reference}" response_body:"resource"};
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateTaxProofOfficialClaim(CreateTaxProofOfficialClaimReqMsg) returns (CreateTaxProofOfficialClaimRspMsg) {
+    option (google.api.http) = {post:"/api/v1/tax-proof-cases/{tax_case_number}/official-evidence-claims" body:"claim" response_body:"resource"};
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetTaxProofOfficialClaim(GetTaxProofOfficialClaimReqMsg) returns (GetTaxProofOfficialClaimRspMsg) {
+    option (google.api.http) = {get:"/api/v1/tax-proof-cases/{tax_case_number}/official-evidence-claims/{claim_number}" response_body:"resource"};
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateTaxProofDelivery(CreateTaxProofDeliveryReqMsg) returns (CreateTaxProofDeliveryRspMsg) {
+    option (google.api.http) = {post:"/api/v1/tax-proof-cases/{tax_case_number}/deliveries" body:"delivery" response_body:"resource"};
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateTaxProofReceipt(CreateTaxProofReceiptReqMsg) returns (CreateTaxProofReceiptRspMsg) {
+    option (google.api.http) = {post:"/api/v1/tax-proof-cases/{tax_case_number}/receipts" body:"receipt" response_body:"resource"};
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetTaxProofHistory(GetTaxProofHistoryReqMsg) returns (GetTaxProofHistoryRspMsg) {
+    option (google.api.http) = {get:"/api/v1/tax-proof-cases/{tax_case_number}/history" response_body:"resource"};
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetTaxProofCommandResult(GetTaxProofCommandResultReqMsg) returns (GetTaxProofCommandResultRspMsg) {
+    option (google.api.http) = {get:"/api/v1/tax-proof-command-results/{request_key}" response_body:"resource"};
+  }
+}
+service InternalTaxProofOperationsService {
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetTaxProofReviewContext(GetTaxProofReviewContextReqMsg) returns (GetTaxProofReviewContextRspMsg) {
+    option (google.api.http) = {get:"/internal/v1/tax-proof-cases/{tax_case_number}/review-context" response_body:"resource"};
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateTaxProofReview(CreateTaxProofReviewReqMsg) returns (CreateTaxProofReviewRspMsg) {
+    option (google.api.http) = {post:"/internal/v1/tax-proof-cases/{tax_case_number}/reviews" body:"review" response_body:"resource"};
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateTaxProofOfficialVerification(CreateTaxProofOfficialVerificationReqMsg) returns (CreateTaxProofOfficialVerificationRspMsg) {
+    option (google.api.http) = {post:"/internal/v1/tax-proof-cases/{tax_case_number}/official-verifications" body:"verification" response_body:"resource"};
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateTaxProofObjectionDisposition(CreateTaxProofObjectionDispositionReqMsg) returns (CreateTaxProofObjectionDispositionRspMsg) {
+    option (google.api.http) = {post:"/internal/v1/tax-proof-cases/{tax_case_number}/objection-dispositions" body:"disposition" response_body:"resource"};
+  }
+}
+enum ProofCaseStatus {
+  PROOF_CASE_STATUS_UNSPECIFIED = 0;
+  PROOF_CASE_STATUS_PREPARING = 1;
+  PROOF_CASE_STATUS_REVIEW_PENDING = 2;
+  PROOF_CASE_STATUS_READY = 3;
+  PROOF_CASE_STATUS_SUBMITTED = 4;
+  PROOF_CASE_STATUS_ACCEPTED = 5;
+  PROOF_CASE_STATUS_CORRECTION = 6;
+  PROOF_CASE_STATUS_PROCESSING = 7;
+  PROOF_CASE_STATUS_OFFICIAL_COMPLETE = 8;
+  PROOF_CASE_STATUS_HANDOVER_COMPLETE = 9;
+  PROOF_CASE_STATUS_FINAL_REJECTED = 10;
+  PROOF_CASE_STATUS_REVOKED = 11;
+}
+enum OfficialFactKind {
+  OFFICIAL_FACT_KIND_UNSPECIFIED = 0;
+  OFFICIAL_FACT_KIND_SUBMITTED = 1;
+  OFFICIAL_FACT_KIND_ACCEPTED = 2;
+  OFFICIAL_FACT_KIND_CORRECTION = 3;
+  OFFICIAL_FACT_KIND_PROCESSING = 4;
+  OFFICIAL_FACT_KIND_ISSUED = 5;
+  OFFICIAL_FACT_KIND_CORRECTED = 6;
+  OFFICIAL_FACT_KIND_REVOKED = 7;
+  OFFICIAL_FACT_KIND_FINAL_REJECTED = 8;
+}
+enum ReviewOutcome {
+  REVIEW_OUTCOME_UNSPECIFIED = 0;
+  REVIEW_OUTCOME_APPROVED = 1;
+  REVIEW_OUTCOME_RETURNED = 2;
+}
+enum ReceiptOutcome {
+  RECEIPT_OUTCOME_UNSPECIFIED = 0;
+  RECEIPT_OUTCOME_RECEIVED = 1;
+  RECEIPT_OUTCOME_CHECKED = 2;
+  RECEIPT_OUTCOME_OBJECTED = 3;
+}
+message FileVersion {
+  string file_number = 1;
+  string version_id = 2;
+  string sha256 = 3;
+  uint32 purpose_code = 4;
+}
+message RuleReference {
+  string rule_reference = 1;
+  string rule_version = 2;
+  FileVersion authority_evidence = 3;
+}
+message ScopeItem {
+  string declaration_number = 1;
+  uint32 declaration_revision_number = 2;
+  uint32 goods_item_sequence = 3;
+  string quantity = 4; // Exact DECIMAL(20,6); no float/exponent/implicit conversion.
+  string unit_code = 5;
+  FileVersion official_declaration = 6;
+}
+message CaseInput {
+  uint32 trade_revision_number = 1;
+  RuleReference scope_rule = 2; // Server resolves scope_reference from a confirmed applicable rule.
+  repeated ScopeItem scope_items = 3;
+  uint32 supplier_participant_sequence_number = 4;
+}
+message SubmissionInput {
+  uint32 trade_revision_number = 1;
+  RuleReference scope_rule = 2;
+  RuleReference responsibility_rule = 3;
+  RuleReference deadline_rule = 4;
+  repeated ScopeItem scope_items = 5;
+  repeated FileVersion material_versions = 6;
+  optional uint32 previous_submission_revision_number = 7;
+  optional string correction_event_number = 8;
+  string preparation_note = 9;
+}
+message ReviewInput {
+  uint32 submission_revision_number = 1;
+  string package_hash = 2;
+  ReviewOutcome outcome = 3;
+  string reason = 4;
+}
+message DispatchInput {
+  uint32 submission_revision_number = 1;
+  string review_event_number = 2;
+  string package_hash = 3;
+}
+message OfficialClaimInput {
+  uint32 submission_revision_number = 1;
+  string dispatch_reference = 2;
+  OfficialFactKind fact_kind = 3;
+  string external_event_key = 4;
+  string authority_reference_number = 5;
+  string source_reference = 6;
+  FileVersion official_file = 7;
+  optional string previous_certificate_event_number = 8;
+  google.protobuf.Timestamp occurred_at = 9; // Claimed source time, independently verified before official event.
+}
+message VerificationInput {
+  string claim_number = 1;
+  uint32 submission_revision_number = 2;
+  string source_verification_reference = 3;
+  bool verified = 4; // A false verdict records rejection of the claim, not authority rejection.
+  string reason = 5;
+}
+message DeliveryInput {
+  string certificate_event_number = 1;
+  FileVersion certificate_version = 2;
+  uint32 supplier_participant_sequence_number = 3;
+  FileVersion dispatch_evidence = 4;
+  string delivery_channel = 5;
+}
+message ReceiptInput {
+  string delivery_event_number = 1;
+  FileVersion certificate_version = 2;
+  ReceiptOutcome outcome = 3;
+  string reason = 4;
+  FileVersion receipt_evidence = 5;
+}
+message DispositionInput {
+  string objection_event_number = 1;
+  repeated FileVersion disposition_evidence = 2;
+  optional string corrected_certificate_event_number = 3;
+  string resolution = 4;
+}
+message PreparationContext {
+  string trade_number = 1;
+  uint32 trade_revision_number = 2;
+  repeated string missing_requirements = 3;
+  repeated RuleReference confirmed_rules = 4;
+  repeated ScopeItem eligible_scope_items = 5;
+  string etag = 6;
+  bool formal_application_available = 7;
+}
+message TaxProofCase {
+  string tax_case_number = 1;
+  string trade_number = 2;
+  uint32 trade_revision_number = 3;
+  string scope_reference = 4;
+  ProofCaseStatus case_status = 5;
+  uint32 current_submission_revision_number = 6;
+  string etag = 7;
+  repeated string blockers = 8;
+  uint32 tax_type_code = 9; // Always 1; proof has no claimed_amount field, DB NULL.
+  string currency_code = 10; // CNY.
+}
+message TaxProofSubmission {
+  string tax_case_number = 1;
+  uint32 submission_revision_number = 2;
+  string package_hash = 3;
+  SubmissionInput content = 4;
+  optional string review_event_number = 5;
+  optional string dispatch_reference = 6;
+  string execution_status = 7;
+  string etag = 8;
+}
+message TaxProofEvent {
+  string event_number = 1;
+  string tax_case_number = 2;
+  optional uint32 submission_revision_number = 3;
+  string actor_reference = 4;
+  oneof payload {
+    ReviewInput review = 5;
+    OfficialClaimInput official_fact = 6;
+    DeliveryInput delivery = 7;
+    ReceiptInput receipt = 8;
+    DispositionInput disposition = 9;
+  }
+  string etag = 10;
+}
+message ReviewContext {
+  TaxProofCase case_resource = 1;
+  TaxProofSubmission submission = 2;
+  repeated string blockers = 3;
+  string etag = 4;
+}
+message DispatchIntent {
+  string dispatch_reference = 1;
+  string tax_case_number = 2;
+  uint32 submission_revision_number = 3;
+  string execution_status = 4; // Local intent/unknown is NOT official submitted.
+  repeated string blockers = 5;
+  string etag = 6;
+}
+message OfficialEvidenceClaim {
+  string claim_number = 1;
+  string tax_case_number = 2;
+  OfficialClaimInput claim = 3;
+  string verification_status = 4; // pending/verified/rejected, not official case status.
+  optional string verified_event_number = 5;
+  string etag = 6;
+}
+message TaxProofHistory {
+  repeated TaxProofSubmission submissions = 1;
+  repeated TaxProofEvent events = 2;
+  string etag = 3;
+}
+message CommandResult {
+  string request_key = 1;
+  string acceptance_reference = 2;
+  string resource_location = 3;
+  string original_etag = 4;
+  oneof original_resource {
+    TaxProofCase case_resource = 5;
+    TaxProofSubmission submission = 6;
+    TaxProofEvent event = 7;
+    DispatchIntent dispatch = 8;
+    OfficialEvidenceClaim claim = 9;
+  }
+}
+message GetTaxProofPreparationReqMsg { string trade_number = 1; }
+message GetTaxProofPreparationRspMsg { PreparationContext resource = 1; }
+message CreateTaxProofCaseReqMsg { string trade_number = 1; CaseInput case_input = 2; }
+message CreateTaxProofCaseRspMsg { TaxProofCase resource = 1; }
+message GetTaxProofCaseReqMsg { string tax_case_number = 1; }
+message GetTaxProofCaseRspMsg { TaxProofCase resource = 1; }
+message CreateTaxProofSubmissionReqMsg { string tax_case_number = 1; SubmissionInput submission = 2; }
+message CreateTaxProofSubmissionRspMsg { TaxProofSubmission resource = 1; }
+message GetTaxProofSubmissionReqMsg { string tax_case_number = 1; uint32 submission_revision_number = 2; }
+message GetTaxProofSubmissionRspMsg { TaxProofSubmission resource = 1; }
+message GetTaxProofReviewContextReqMsg { string tax_case_number = 1; }
+message GetTaxProofReviewContextRspMsg { ReviewContext resource = 1; }
+message CreateTaxProofReviewReqMsg { string tax_case_number = 1; ReviewInput review = 2; }
+message CreateTaxProofReviewRspMsg { TaxProofEvent resource = 1; }
+message CreateTaxProofDispatchReqMsg { string tax_case_number = 1; DispatchInput dispatch = 2; }
+message CreateTaxProofDispatchRspMsg { DispatchIntent resource = 1; }
+message GetTaxProofDispatchReqMsg { string tax_case_number = 1; string dispatch_reference = 2; }
+message GetTaxProofDispatchRspMsg { DispatchIntent resource = 1; }
+message CreateTaxProofOfficialClaimReqMsg { string tax_case_number = 1; OfficialClaimInput claim = 2; }
+message CreateTaxProofOfficialClaimRspMsg { OfficialEvidenceClaim resource = 1; }
+message GetTaxProofOfficialClaimReqMsg { string tax_case_number = 1; string claim_number = 2; }
+message GetTaxProofOfficialClaimRspMsg { OfficialEvidenceClaim resource = 1; }
+message CreateTaxProofOfficialVerificationReqMsg { string tax_case_number = 1; VerificationInput verification = 2; }
+message CreateTaxProofOfficialVerificationRspMsg { TaxProofEvent resource = 1; }
+message CreateTaxProofDeliveryReqMsg { string tax_case_number = 1; DeliveryInput delivery = 2; }
+message CreateTaxProofDeliveryRspMsg { TaxProofEvent resource = 1; }
+message CreateTaxProofReceiptReqMsg { string tax_case_number = 1; ReceiptInput receipt = 2; }
+message CreateTaxProofReceiptRspMsg { TaxProofEvent resource = 1; }
+message CreateTaxProofObjectionDispositionReqMsg { string tax_case_number = 1; DispositionInput disposition = 2; }
+message CreateTaxProofObjectionDispositionRspMsg { TaxProofEvent resource = 1; }
+message GetTaxProofHistoryReqMsg { string tax_case_number = 1; }
+message GetTaxProofHistoryRspMsg { TaxProofHistory resource = 1; }
+message GetTaxProofCommandResultReqMsg { string request_key = 1; }
+message GetTaxProofCommandResultRspMsg { CommandResult resource = 1; }

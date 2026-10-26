@@ -1,0 +1,939 @@
+[
+  {
+    "designOnly": true,
+    "service": "trade.filing.v1.ExternalTradeFilingService",
+    "method": "CreateTradeNumberReservation",
+    "requestType": "CreateTradeNumberReservationReqMsg",
+    "responseType": "CreateTradeNumberReservationRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "idempotency-key": "ea8cf811-f9fb-48dd-a9b1-8f47a5444200",
+      "authorization": "<synthetic credential omitted>",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>"
+    },
+    "request": {
+      "reservation": {
+        "purpose": "supplier-trade-filing"
+      }
+    },
+    "response": {
+      "resource": {
+        "reservationId": "RES-DEMO-001",
+        "tradeNumber": "TRD-S1-DEMO-001",
+        "createdAt": "2026-10-25T08:00:00Z"
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.filing.v1.ExternalTradeFilingService",
+    "method": "CreateFileUpload",
+    "requestType": "CreateFileUploadReqMsg",
+    "responseType": "CreateFileUploadRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "idempotency-key": "ea8cf811-f9fb-48dd-a9b1-8f47a5444210",
+      "authorization": "<synthetic credential omitted>",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>"
+    },
+    "request": {
+      "upload": {
+        "reservationId": "RES-DEMO-001",
+        "purpose": "MATERIAL_PURPOSE_FILING_BUNDLE",
+        "displayName": "material-bundle.html",
+        "mediaType": "text/html",
+        "sizeBytes": "1528",
+        "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284"
+      }
+    },
+    "response": {
+      "resource": {
+        "uploadId": "UPLOAD-DEMO-001",
+        "state": "awaiting_upload",
+        "signedUpload": {
+          "url": "https://s3.example.invalid/private-staging/UPLOAD-DEMO-001?SIGNATURE-NOT-USABLE",
+          "method": "PUT",
+          "requiredHeaders": [
+            {
+              "name": "Content-Type",
+              "value": "text/html"
+            },
+            {
+              "name": "x-amz-checksum-sha256",
+              "value": "d8o3HEiVpScvnpv2qhgFzNSXiqJbBdtU9uZ8++JB8oQ="
+            }
+          ],
+          "expiresAt": "2026-10-25T08:20:00Z"
+        }
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.filing.v1.ExternalTradeFilingService",
+    "method": "CreateFile",
+    "requestType": "CreateFileReqMsg",
+    "responseType": "CreateFileRspMsg",
+    "deadlineMs": 15000,
+    "metadata": {
+      "idempotency-key": "ea8cf811-f9fb-48dd-a9b1-8f47a5444211",
+      "authorization": "<synthetic credential omitted>",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>"
+    },
+    "request": {
+      "uploadId": "UPLOAD-DEMO-001",
+      "file": {
+        "expectedSha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+        "expectedSizeBytes": "1528"
+      }
+    },
+    "response": {
+      "resource": {
+        "logicalFileNumber": "FILE-S1-DEMO-001",
+        "revisionNumber": 1,
+        "purpose": "MATERIAL_PURPOSE_FILING_BUNDLE",
+        "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+        "sizeBytes": "1528",
+        "referenceEligible": true
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.filing.v1.ExternalTradeFilingService",
+    "method": "CreateTrade",
+    "requestType": "CreateTradeReqMsg",
+    "responseType": "CreateTradeRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "idempotency-key": "TRD-S1-DEMO-001",
+      "authorization": "<synthetic credential omitted>",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>"
+    },
+    "request": {
+      "trade": {
+        "tradeNumber": "TRD-S1-DEMO-001",
+        "reservationId": "RES-DEMO-001",
+        "supplierFiling": {
+          "supplier": {
+            "legalName": "示例供应商",
+            "countryCode": "CN",
+            "registeredAddress": "合成注册地址，非真实地点",
+            "contactName": "合成联系人",
+            "contactPhone": "DEMO-NOT-A-PHONE",
+            "contactEmail": "demo@example.invalid",
+            "identityProtectedReference": "DEMO-IDENTITY-SUPPLIER"
+          },
+          "consignee": {
+            "party": {
+              "legalName": "Example Consignee",
+              "countryCode": "SG",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+            },
+            "deliveryAddress": "Synthetic delivery location",
+            "deliveryArrangements": "合成收货安排"
+          },
+          "salesContractNumber": "SC-DEMO-001",
+          "invoiceNumber": "CI-DEMO-001",
+          "packingListNumber": "PL-DEMO-001",
+          "goods": [
+            {
+              "itemSequenceNumber": 1,
+              "productName": "展示用金属支架",
+              "specification": "DEMO-M1",
+              "quantity": "100",
+              "unitCode": "PCS",
+              "unitPrice": {
+                "amount": "125.00",
+                "currencyCode": "CNY"
+              },
+              "total": {
+                "amount": "12500.00",
+                "currencyCode": "CNY"
+              },
+              "originCountryCode": "CN"
+            }
+          ],
+          "packing": [
+            {
+              "goodsItemSequenceNumber": 1,
+              "quantity": "100",
+              "unitCode": "PCS",
+              "cartons": 10,
+              "netWeightKg": "100.000",
+              "grossWeightKg": "120.000"
+            }
+          ],
+          "materials": [
+            {
+              "purpose": "MATERIAL_PURPOSE_SALES_CONTRACT",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "sales-contract"
+            },
+            {
+              "purpose": "MATERIAL_PURPOSE_COMMERCIAL_INVOICE",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "commercial-invoice"
+            },
+            {
+              "purpose": "MATERIAL_PURPOSE_PACKING_LIST",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "packing-list"
+            }
+          ],
+          "contractTotal": {
+            "amount": "12500.00",
+            "currencyCode": "CNY"
+          },
+          "invoiceTotal": {
+            "amount": "12500.00",
+            "currencyCode": "CNY"
+          },
+          "sourceContentsConfirmed": true,
+          "exportAgent": {
+            "party": {
+              "legalName": "示例出口代理",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-EXPORT-AGENT"
+            },
+            "serviceScope": "合成代理出口范围",
+            "agreedInstructions": "供应商事先沟通后填写的代理指示"
+          },
+          "logisticsProvider": {
+            "party": {
+              "legalName": "示例物流公司",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-LOGISTICS"
+            },
+            "serviceScope": "合成运输范围",
+            "agreedInstructions": "供应商事先沟通后填写；具体运输工具尚待确定"
+          },
+          "customsBroker": {
+            "party": {
+              "legalName": "示例出口报关代理",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-CUSTOMS"
+            },
+            "serviceScope": "合成报关服务范围",
+            "agreedInstructions": "供应商事先沟通后填写；本例无真实资质证明"
+          },
+          "nominatedPayerProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+        }
+      }
+    },
+    "response": {
+      "resource": {
+        "tradeNumber": "TRD-S1-DEMO-001",
+        "revisionNumber": 1,
+        "lifecycle": "editing",
+        "supplierFilingUri": "/api/v1/trades/TRD-S1-DEMO-001/supplier-filing",
+        "etag": "\"s1-trade-TRD-S1-DEMO-001-r1\""
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.filing.v1.ExternalTradeFilingService",
+    "method": "CreatePayerFiling",
+    "requestType": "CreatePayerFilingReqMsg",
+    "responseType": "CreatePayerFilingRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "idempotency-key": "ea8cf811-f9fb-48dd-a9b1-8f47a5444202",
+      "authorization": "<synthetic credential omitted>",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>"
+    },
+    "request": {
+      "tradeNumber": "TRD-S1-DEMO-001",
+      "payerFiling": {
+        "payer": {
+          "legalName": "Example Consignee",
+          "countryCode": "SG",
+          "registeredAddress": "合成注册地址，非真实地点",
+          "contactName": "合成联系人",
+          "contactPhone": "DEMO-NOT-A-PHONE",
+          "contactEmail": "demo@example.invalid",
+          "identityProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+        },
+        "relationship": "PAYER_RELATIONSHIP_SAME_LEGAL_ENTITY",
+        "paymentPurpose": "支付本笔合成出口交易货款",
+        "relationshipEvidence": [],
+        "sourceContentsConfirmed": true
+      }
+    },
+    "response": {
+      "resource": {
+        "tradeNumber": "TRD-S1-DEMO-001",
+        "payerFilingId": "primary",
+        "revisionNumber": 2,
+        "etag": "\"s1-payer-TRD-S1-DEMO-001-r2\""
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.filing.v1.ExternalTradeFilingService",
+    "method": "ReplaceSupplierFiling",
+    "requestType": "ReplaceSupplierFilingReqMsg",
+    "responseType": "ReplaceSupplierFilingRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "idempotency-key": "ea8cf811-f9fb-48dd-a9b1-8f47a5444203",
+      "if-match": "\"s1-supplier-TRD-S1-DEMO-001-r2\"",
+      "authorization": "<synthetic credential omitted>",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>"
+    },
+    "request": {
+      "tradeNumber": "TRD-S1-DEMO-001",
+      "supplierFiling": {
+        "supplier": {
+          "legalName": "示例供应商",
+          "countryCode": "CN",
+          "registeredAddress": "合成注册地址，非真实地点",
+          "contactName": "合成联系人",
+          "contactPhone": "DEMO-NOT-A-PHONE",
+          "contactEmail": "demo@example.invalid",
+          "identityProtectedReference": "DEMO-IDENTITY-SUPPLIER"
+        },
+        "consignee": {
+          "party": {
+            "legalName": "Example Consignee",
+            "countryCode": "SG",
+            "registeredAddress": "合成注册地址，非真实地点",
+            "contactName": "合成联系人",
+            "contactPhone": "DEMO-NOT-A-PHONE",
+            "contactEmail": "demo@example.invalid",
+            "identityProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+          },
+          "deliveryAddress": "Synthetic delivery location",
+          "deliveryArrangements": "供应商修改后的合成送货安排"
+        },
+        "salesContractNumber": "SC-DEMO-001",
+        "invoiceNumber": "CI-DEMO-001",
+        "packingListNumber": "PL-DEMO-001",
+        "goods": [
+          {
+            "itemSequenceNumber": 1,
+            "productName": "展示用金属支架",
+            "specification": "DEMO-M1",
+            "quantity": "100",
+            "unitCode": "PCS",
+            "unitPrice": {
+              "amount": "125.00",
+              "currencyCode": "CNY"
+            },
+            "total": {
+              "amount": "12500.00",
+              "currencyCode": "CNY"
+            },
+            "originCountryCode": "CN"
+          }
+        ],
+        "packing": [
+          {
+            "goodsItemSequenceNumber": 1,
+            "quantity": "100",
+            "unitCode": "PCS",
+            "cartons": 10,
+            "netWeightKg": "100.000",
+            "grossWeightKg": "120.000"
+          }
+        ],
+        "materials": [
+          {
+            "purpose": "MATERIAL_PURPOSE_SALES_CONTRACT",
+            "logicalFileNumber": "FILE-S1-DEMO-001",
+            "revisionNumber": 1,
+            "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+            "htmlAnchor": "sales-contract"
+          },
+          {
+            "purpose": "MATERIAL_PURPOSE_COMMERCIAL_INVOICE",
+            "logicalFileNumber": "FILE-S1-DEMO-001",
+            "revisionNumber": 1,
+            "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+            "htmlAnchor": "commercial-invoice"
+          },
+          {
+            "purpose": "MATERIAL_PURPOSE_PACKING_LIST",
+            "logicalFileNumber": "FILE-S1-DEMO-001",
+            "revisionNumber": 1,
+            "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+            "htmlAnchor": "packing-list"
+          }
+        ],
+        "contractTotal": {
+          "amount": "12500.00",
+          "currencyCode": "CNY"
+        },
+        "invoiceTotal": {
+          "amount": "12500.00",
+          "currencyCode": "CNY"
+        },
+        "sourceContentsConfirmed": true,
+        "exportAgent": {
+          "party": {
+            "legalName": "示例出口代理",
+            "countryCode": "CN",
+            "registeredAddress": "合成注册地址，非真实地点",
+            "contactName": "合成联系人",
+            "contactPhone": "DEMO-NOT-A-PHONE",
+            "contactEmail": "demo@example.invalid",
+            "identityProtectedReference": "DEMO-IDENTITY-EXPORT-AGENT"
+          },
+          "serviceScope": "合成代理出口范围",
+          "agreedInstructions": "供应商事先沟通后填写的代理指示"
+        },
+        "logisticsProvider": {
+          "party": {
+            "legalName": "示例物流公司",
+            "countryCode": "CN",
+            "registeredAddress": "合成注册地址，非真实地点",
+            "contactName": "合成联系人",
+            "contactPhone": "DEMO-NOT-A-PHONE",
+            "contactEmail": "demo@example.invalid",
+            "identityProtectedReference": "DEMO-IDENTITY-LOGISTICS"
+          },
+          "serviceScope": "合成运输范围",
+          "agreedInstructions": "供应商事先沟通后填写；具体运输工具尚待确定"
+        },
+        "customsBroker": {
+          "party": {
+            "legalName": "示例出口报关代理",
+            "countryCode": "CN",
+            "registeredAddress": "合成注册地址，非真实地点",
+            "contactName": "合成联系人",
+            "contactPhone": "DEMO-NOT-A-PHONE",
+            "contactEmail": "demo@example.invalid",
+            "identityProtectedReference": "DEMO-IDENTITY-CUSTOMS"
+          },
+          "serviceScope": "合成报关服务范围",
+          "agreedInstructions": "供应商事先沟通后填写；本例无真实资质证明"
+        },
+        "nominatedPayerProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+      }
+    },
+    "response": {
+      "resource": {
+        "tradeNumber": "TRD-S1-DEMO-001",
+        "revisionNumber": 3,
+        "etag": "\"s1-supplier-TRD-S1-DEMO-001-r3\""
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.filing.v1.ExternalTradeFilingService",
+    "method": "ReplacePayerFiling",
+    "requestType": "ReplacePayerFilingReqMsg",
+    "responseType": "ReplacePayerFilingRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "idempotency-key": "ea8cf811-f9fb-48dd-a9b1-8f47a5444204",
+      "if-match": "\"s1-payer-TRD-S1-DEMO-001-r3\"",
+      "authorization": "<synthetic credential omitted>",
+      "confirmation-id": "<synthetic per-intent confirmation; NOT-VALID>"
+    },
+    "request": {
+      "tradeNumber": "TRD-S1-DEMO-001",
+      "payerFilingId": "primary",
+      "payerFiling": {
+        "payer": {
+          "legalName": "Example Consignee",
+          "countryCode": "SG",
+          "registeredAddress": "合成注册地址，非真实地点",
+          "contactName": "合成联系人",
+          "contactPhone": "DEMO-NOT-A-PHONE",
+          "contactEmail": "demo@example.invalid",
+          "identityProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+        },
+        "relationship": "PAYER_RELATIONSHIP_SAME_LEGAL_ENTITY",
+        "paymentPurpose": "付款方修改后的合成付款说明",
+        "relationshipEvidence": [],
+        "sourceContentsConfirmed": true
+      }
+    },
+    "response": {
+      "resource": {
+        "tradeNumber": "TRD-S1-DEMO-001",
+        "payerFilingId": "primary",
+        "revisionNumber": 4,
+        "etag": "\"s1-payer-TRD-S1-DEMO-001-r4\""
+      }
+    },
+    "successTrailers": {
+      "receipt-proof-bin": "<platform receipt bytes; SYNTHETIC-NOT-VALID>"
+    }
+  },
+  {
+    "designOnly": true,
+    "service": "trade.filing.v1.ExternalTradeFilingService",
+    "method": "GetTradeNumberReservation",
+    "requestType": "GetTradeNumberReservationReqMsg",
+    "responseType": "GetTradeNumberReservationRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic credential omitted>"
+    },
+    "request": {
+      "reservationId": "RES-DEMO-001"
+    },
+    "response": {
+      "resource": {
+        "reservationId": "RES-DEMO-001",
+        "tradeNumber": "TRD-S1-DEMO-001",
+        "createdAt": "2026-10-25T08:00:00Z"
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.filing.v1.ExternalTradeFilingService",
+    "method": "GetTrade",
+    "requestType": "GetTradeReqMsg",
+    "responseType": "GetTradeRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic credential omitted>"
+    },
+    "request": {
+      "tradeNumber": "TRD-S1-DEMO-001"
+    },
+    "response": {
+      "resource": {
+        "tradeNumber": "TRD-S1-DEMO-001",
+        "revisionNumber": 4,
+        "lifecycle": "editing",
+        "supplierFilingUri": "/api/v1/trades/TRD-S1-DEMO-001/supplier-filing",
+        "etag": "\"s1-trade-TRD-S1-DEMO-001-r4\"",
+        "payerFilingUri": "/api/v1/trades/TRD-S1-DEMO-001/payer-filings/primary"
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.filing.v1.ExternalTradeFilingService",
+    "method": "GetSupplierFiling",
+    "requestType": "GetSupplierFilingReqMsg",
+    "responseType": "GetSupplierFilingRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic credential omitted>"
+    },
+    "request": {
+      "tradeNumber": "TRD-S1-DEMO-001"
+    },
+    "response": {
+      "resource": {
+        "tradeNumber": "TRD-S1-DEMO-001",
+        "content": {
+          "supplier": {
+            "legalName": "示例供应商",
+            "countryCode": "CN",
+            "registeredAddress": "合成注册地址，非真实地点",
+            "contactName": "合成联系人",
+            "contactPhone": "DEMO-NOT-A-PHONE",
+            "contactEmail": "demo@example.invalid",
+            "identityProtectedReference": "DEMO-IDENTITY-SUPPLIER"
+          },
+          "consignee": {
+            "party": {
+              "legalName": "Example Consignee",
+              "countryCode": "SG",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+            },
+            "deliveryAddress": "Synthetic delivery location",
+            "deliveryArrangements": "供应商修改后的合成送货安排"
+          },
+          "salesContractNumber": "SC-DEMO-001",
+          "invoiceNumber": "CI-DEMO-001",
+          "packingListNumber": "PL-DEMO-001",
+          "goods": [
+            {
+              "itemSequenceNumber": 1,
+              "productName": "展示用金属支架",
+              "specification": "DEMO-M1",
+              "quantity": "100",
+              "unitCode": "PCS",
+              "unitPrice": {
+                "amount": "125.00",
+                "currencyCode": "CNY"
+              },
+              "total": {
+                "amount": "12500.00",
+                "currencyCode": "CNY"
+              },
+              "originCountryCode": "CN"
+            }
+          ],
+          "packing": [
+            {
+              "goodsItemSequenceNumber": 1,
+              "quantity": "100",
+              "unitCode": "PCS",
+              "cartons": 10,
+              "netWeightKg": "100.000",
+              "grossWeightKg": "120.000"
+            }
+          ],
+          "materials": [
+            {
+              "purpose": "MATERIAL_PURPOSE_SALES_CONTRACT",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "sales-contract"
+            },
+            {
+              "purpose": "MATERIAL_PURPOSE_COMMERCIAL_INVOICE",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "commercial-invoice"
+            },
+            {
+              "purpose": "MATERIAL_PURPOSE_PACKING_LIST",
+              "logicalFileNumber": "FILE-S1-DEMO-001",
+              "revisionNumber": 1,
+              "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+              "htmlAnchor": "packing-list"
+            }
+          ],
+          "contractTotal": {
+            "amount": "12500.00",
+            "currencyCode": "CNY"
+          },
+          "invoiceTotal": {
+            "amount": "12500.00",
+            "currencyCode": "CNY"
+          },
+          "sourceContentsConfirmed": true,
+          "exportAgent": {
+            "party": {
+              "legalName": "示例出口代理",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-EXPORT-AGENT"
+            },
+            "serviceScope": "合成代理出口范围",
+            "agreedInstructions": "供应商事先沟通后填写的代理指示"
+          },
+          "logisticsProvider": {
+            "party": {
+              "legalName": "示例物流公司",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-LOGISTICS"
+            },
+            "serviceScope": "合成运输范围",
+            "agreedInstructions": "供应商事先沟通后填写；具体运输工具尚待确定"
+          },
+          "customsBroker": {
+            "party": {
+              "legalName": "示例出口报关代理",
+              "countryCode": "CN",
+              "registeredAddress": "合成注册地址，非真实地点",
+              "contactName": "合成联系人",
+              "contactPhone": "DEMO-NOT-A-PHONE",
+              "contactEmail": "demo@example.invalid",
+              "identityProtectedReference": "DEMO-IDENTITY-CUSTOMS"
+            },
+            "serviceScope": "合成报关服务范围",
+            "agreedInstructions": "供应商事先沟通后填写；本例无真实资质证明"
+          },
+          "nominatedPayerProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+        },
+        "revisionNumber": 4,
+        "etag": "\"s1-supplier-TRD-S1-DEMO-001-r4\""
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.filing.v1.ExternalTradeFilingService",
+    "method": "GetPayerFiling",
+    "requestType": "GetPayerFilingReqMsg",
+    "responseType": "GetPayerFilingRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic credential omitted>"
+    },
+    "request": {
+      "tradeNumber": "TRD-S1-DEMO-001",
+      "payerFilingId": "primary"
+    },
+    "response": {
+      "resource": {
+        "tradeNumber": "TRD-S1-DEMO-001",
+        "payerFilingId": "primary",
+        "revisionNumber": 4,
+        "etag": "\"s1-payer-TRD-S1-DEMO-001-r4\"",
+        "content": {
+          "payer": {
+            "legalName": "Example Consignee",
+            "countryCode": "SG",
+            "registeredAddress": "合成注册地址，非真实地点",
+            "contactName": "合成联系人",
+            "contactPhone": "DEMO-NOT-A-PHONE",
+            "contactEmail": "demo@example.invalid",
+            "identityProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+          },
+          "relationship": "PAYER_RELATIONSHIP_SAME_LEGAL_ENTITY",
+          "paymentPurpose": "付款方修改后的合成付款说明",
+          "relationshipEvidence": [],
+          "sourceContentsConfirmed": true
+        }
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.filing.v1.ExternalTradeFilingService",
+    "method": "GetFileUpload",
+    "requestType": "GetFileUploadReqMsg",
+    "responseType": "GetFileUploadRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic credential omitted>"
+    },
+    "request": {
+      "uploadId": "UPLOAD-DEMO-001"
+    },
+    "response": {
+      "resource": {
+        "uploadId": "UPLOAD-DEMO-001",
+        "state": "awaiting_upload",
+        "signedUpload": {
+          "url": "https://s3.example.invalid/private-staging/UPLOAD-DEMO-001?SIGNATURE-NOT-USABLE",
+          "method": "PUT",
+          "requiredHeaders": [
+            {
+              "name": "Content-Type",
+              "value": "text/html"
+            },
+            {
+              "name": "x-amz-checksum-sha256",
+              "value": "d8o3HEiVpScvnpv2qhgFzNSXiqJbBdtU9uZ8++JB8oQ="
+            }
+          ],
+          "expiresAt": "2026-10-25T08:20:00Z"
+        }
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.filing.v1.ExternalTradeFilingService",
+    "method": "GetFileRevision",
+    "requestType": "GetFileRevisionReqMsg",
+    "responseType": "GetFileRevisionRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic credential omitted>"
+    },
+    "request": {
+      "fileNumber": "FILE-S1-DEMO-001",
+      "revisionNumber": 1
+    },
+    "response": {
+      "resource": {
+        "logicalFileNumber": "FILE-S1-DEMO-001",
+        "revisionNumber": 1,
+        "purpose": "MATERIAL_PURPOSE_FILING_BUNDLE",
+        "sha256": "77ca371c4895a5272f9e9bf6aa1805ccd4978aa25b05db54f6e67cfbe241f284",
+        "sizeBytes": "1528",
+        "referenceEligible": true
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.filing.operations.v1.InternalFilingOperationsService",
+    "method": "GetFilingOverview",
+    "requestType": "GetFilingOverviewReqMsg",
+    "responseType": "GetFilingOverviewRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic credential omitted>"
+    },
+    "request": {
+      "tradeNumber": "TRD-S1-DEMO-001"
+    },
+    "response": {
+      "resource": {
+        "tradeNumber": "TRD-S1-DEMO-001",
+        "revisionNumber": 4,
+        "supplierFilingPresent": true,
+        "payerFilingPresent": true,
+        "missingInformation": [
+          {
+            "pointer": "/participant[2,1].receipt_path",
+            "code": "INFORMATION_NOT_PROVIDED",
+            "detail": "供应商后续补充，不视为已批准"
+          },
+          {
+            "pointer": "/participant[2,1].payment_path",
+            "code": "INFORMATION_NOT_PROVIDED",
+            "detail": "供应商后续补充，不视为已批准"
+          },
+          {
+            "pointer": "/participant[2,1].payment_branch_code",
+            "code": "INFORMATION_NOT_PROVIDED",
+            "detail": "供应商后续补充，不视为已批准"
+          },
+          {
+            "pointer": "/participant[5,1].port",
+            "code": "INFORMATION_NOT_PROVIDED",
+            "detail": "供应商后续补充，不视为已批准"
+          },
+          {
+            "pointer": "/participant[5,1].transport_mode_code",
+            "code": "INFORMATION_NOT_PROVIDED",
+            "detail": "供应商后续补充，不视为已批准"
+          },
+          {
+            "pointer": "/participant[5,1].route",
+            "code": "INFORMATION_NOT_PROVIDED",
+            "detail": "供应商后续补充，不视为已批准"
+          },
+          {
+            "pointer": "/participant[6,1].customs_qualification_reference",
+            "code": "INFORMATION_NOT_PROVIDED",
+            "detail": "供应商后续补充，不视为已批准"
+          },
+          {
+            "pointer": "/participant[6,1].quotation_reference",
+            "code": "INFORMATION_NOT_PROVIDED",
+            "detail": "供应商后续补充，不视为已批准"
+          },
+          {
+            "pointer": "/participant[6,1].quoted_amount",
+            "code": "INFORMATION_NOT_PROVIDED",
+            "detail": "供应商后续补充，不视为已批准"
+          },
+          {
+            "pointer": "/participant[6,1].pricing_basis",
+            "code": "INFORMATION_NOT_PROVIDED",
+            "detail": "供应商后续补充，不视为已批准"
+          },
+          {
+            "pointer": "/participant[6,1].currency_code",
+            "code": "INFORMATION_NOT_PROVIDED",
+            "detail": "供应商后续补充，不视为已批准"
+          }
+        ],
+        "etag": "\"s1-overview-TRD-S1-DEMO-001-r4\""
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.filing.v1.ExternalTradeFilingService",
+    "method": "CreateOperationConfirmation",
+    "requestType": "CreateOperationConfirmationReqMsg",
+    "responseType": "CreateOperationConfirmationRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "idempotency-key": "ea8cf811-f9fb-48dd-a9b1-8f47a5444230",
+      "authorization": "<synthetic credential omitted>"
+    },
+    "request": {
+      "intent": {
+        "method": "POST",
+        "resourcePath": "/api/v1/trades",
+        "idempotencyKey": "TRD-S1-DEMO-001",
+        "ifMatch": "",
+        "bodySha256": "46d8a1b7d28cacfb4b27a08a468dfdbb65ee62ada98ed850cc804e9b094119da"
+      }
+    },
+    "response": {
+      "resource": {
+        "confirmationId": "CONFIRMATION-S1-SYNTHETIC-NOT-VALID",
+        "requestDigest": "2c7b7b7f832a0a1836edbbce100bcc5b8fdc17a1094aee256ccd8eb1426f5742",
+        "expiresAt": "2026-10-25T08:29:00.000Z",
+        "state": "available"
+      }
+    },
+    "successTrailers": {}
+  },
+  {
+    "designOnly": true,
+    "service": "trade.filing.v1.ExternalTradeFilingService",
+    "method": "GetOperationConfirmation",
+    "requestType": "GetOperationConfirmationReqMsg",
+    "responseType": "GetOperationConfirmationRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "<synthetic credential omitted>"
+    },
+    "request": {
+      "confirmationId": "CONFIRMATION-S1-SYNTHETIC-NOT-VALID"
+    },
+    "response": {
+      "resource": {
+        "confirmationId": "CONFIRMATION-S1-SYNTHETIC-NOT-VALID",
+        "requestDigest": "2c7b7b7f832a0a1836edbbce100bcc5b8fdc17a1094aee256ccd8eb1426f5742",
+        "expiresAt": "2026-10-25T08:29:00.000Z",
+        "state": "available"
+      }
+    },
+    "successTrailers": {}
+  }
+]

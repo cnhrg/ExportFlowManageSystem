@@ -1,0 +1,7 @@
+{
+  "method": "POST",
+  "resourcePath": "/api/v1/trades",
+  "idempotencyKey": "TRD-S1-DEMO-001",
+  "ifMatch": "",
+  "bodySha256": "46d8a1b7d28cacfb4b27a08a468dfdbb65ee62ada98ed850cc804e9b094119da"
+}

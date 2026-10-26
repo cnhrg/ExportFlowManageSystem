@@ -1,0 +1,200 @@
+[
+  {
+    "method": "CreateTradeClosureApplication",
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/trades/TRD-S8-SYNTHETIC/closure-applications",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d8080000-0000-4000-8000-000000000018",
+        "If-Match": "\"s8-context-synthetic-1\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "reportNumber": "RPT-S8-SYNTHETIC",
+        "reportHash": "f21b61ebfb49a9935d675d846d88a353e096c823f861545fb968398c169320e8",
+        "expectedVector": {
+          "sources": [
+            {
+              "type": "trade",
+              "id": "TRD-S8-SYNTHETIC",
+              "revision": "1",
+              "hash": "09374aec203ba430c53b9fcf46759cb154699ba852d41fb3fd2fdb226d142f72",
+              "sourceEventTail": "EVT-S8-SYNTHETIC-BASE"
+            }
+          ],
+          "objectSets": [
+            {
+              "type": "trade",
+              "objectIds": [
+                "TRD-S8-SYNTHETIC"
+              ],
+              "hash": "28c0b28c134c7ef66afdcadcb9dca9e062e5244aeb6840fbea66c2c721207ddc"
+            },
+            {
+              "type": "shipment",
+              "objectIds": [],
+              "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            },
+            {
+              "type": "customs",
+              "objectIds": [],
+              "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            },
+            {
+              "type": "payment",
+              "objectIds": [],
+              "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            },
+            {
+              "type": "accounting",
+              "objectIds": [],
+              "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            },
+            {
+              "type": "certificate",
+              "objectIds": [],
+              "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            },
+            {
+              "type": "taxrefund",
+              "objectIds": [],
+              "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            },
+            {
+              "type": "compliance",
+              "objectIds": [],
+              "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ],
+          "ruleVersion": "S8-RECONCILIATION-1",
+          "hash": "1058a396e57dea147da35c229791294e3ae70432544db21e0ad2c533be4adef7"
+        },
+        "reason": "独立协议结构例：须另有当前真实证据完整报告；未建立前置，不执行、不证明受理成功"
+      }
+    },
+    "response": {
+      "status": 422,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "https://example.invalid/problems/external-evidence-missing",
+        "title": "EXTERNAL_EVIDENCE_MISSING",
+        "status": 422,
+        "detail": "当前报告包含unknown，缺真实外部证据，不受理正常结案申请",
+        "instance": "/internal/v1/trades/TRD-S8-SYNTHETIC/closure-applications",
+        "errors": [
+          {
+            "pointer": "/reportNumber",
+            "code": "EXTERNAL_EVIDENCE_MISSING",
+            "detail": "补齐原所属域真实证据后生成新报告"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "rpc": {
+      "designOnly": true,
+      "service": "trade.reconciliation.v1.InternalReconciliationService",
+      "method": "CreateTradeClosureApplication",
+      "requestType": "CreateTradeClosureApplicationReqMsg",
+      "responseType": "CreateTradeClosureApplicationRspMsg",
+      "deadlineMs": 10000,
+      "metadata": {
+        "authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "idempotency-key": "d8080000-0000-4000-8000-000000000018",
+        "if-match": "\"s8-context-synthetic-1\"",
+        "confirmation-id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "request": {
+        "tradeNumber": "TRD-S8-SYNTHETIC",
+        "application": {
+          "reportNumber": "RPT-S8-SYNTHETIC",
+          "reportHash": "f21b61ebfb49a9935d675d846d88a353e096c823f861545fb968398c169320e8",
+          "expectedVector": {
+            "sources": [
+              {
+                "type": "trade",
+                "id": "TRD-S8-SYNTHETIC",
+                "revision": "1",
+                "hash": "09374aec203ba430c53b9fcf46759cb154699ba852d41fb3fd2fdb226d142f72",
+                "sourceEventTail": "EVT-S8-SYNTHETIC-BASE"
+              }
+            ],
+            "objectSets": [
+              {
+                "type": "trade",
+                "objectIds": [
+                  "TRD-S8-SYNTHETIC"
+                ],
+                "hash": "28c0b28c134c7ef66afdcadcb9dca9e062e5244aeb6840fbea66c2c721207ddc"
+              },
+              {
+                "type": "shipment",
+                "objectIds": [],
+                "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+              },
+              {
+                "type": "customs",
+                "objectIds": [],
+                "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+              },
+              {
+                "type": "payment",
+                "objectIds": [],
+                "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+              },
+              {
+                "type": "accounting",
+                "objectIds": [],
+                "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+              },
+              {
+                "type": "certificate",
+                "objectIds": [],
+                "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+              },
+              {
+                "type": "taxrefund",
+                "objectIds": [],
+                "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+              },
+              {
+                "type": "compliance",
+                "objectIds": [],
+                "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+              }
+            ],
+            "ruleVersion": "S8-RECONCILIATION-1",
+            "hash": "1058a396e57dea147da35c229791294e3ae70432544db21e0ad2c533be4adef7"
+          },
+          "reason": "独立协议结构例：须另有当前真实证据完整报告；未建立前置，不执行、不证明受理成功"
+        }
+      },
+      "successTrailers": {},
+      "error": {
+        "code": "FAILED_PRECONDITION",
+        "details": {
+          "code": "EXTERNAL_EVIDENCE_MISSING",
+          "httpStatus": 422,
+          "errors": [
+            {
+              "pointer": "/reportNumber",
+              "code": "EXTERNAL_EVIDENCE_MISSING",
+              "detail": "补齐原所属域真实证据后生成新报告"
+            }
+          ],
+          "retryable": false,
+          "retryAfterMs": 0,
+          "outcomeUnknown": false,
+          "requestReference": "d8080000-0000-4000-8000-000000000018"
+        }
+      }
+    },
+    "persistedApplication": false
+  }
+]

@@ -21,5 +21,52 @@
 .protocol-usecases{overflow:auto;border:1px solid #e0e7f1;border-radius:9px;background:#fff;margin:20px 0}
 .protocol-usecases svg{display:block;width:100%;min-width:700px;max-height:820px}
 .protocol-usecases text{font:12px system-ui,sans-serif;fill:#385a85}.protocol-usecases .protocol-svg-title{font-size:16px;font-weight:600}
+#view-protocol-design{min-width:0}
+#view-protocol-design .management-heading{flex-wrap:wrap;gap:16px}
+#view-protocol-design :is(button,a,input,select,summary,[tabindex]):focus-visible{outline:3px solid #007b79;outline-offset:3px}
+#view-protocol-design .protocol-tabs button{min-height:44px;font:inherit;cursor:pointer}
+#protocol-panel{line-height:1.7;color:#29475e}
+#protocol-panel h3{margin:0 0 12px}
+#protocol-panel h4{font-size:18px;margin:20px 0 12px}
+#protocol-panel p{overflow-wrap:anywhere}
+#protocol-panel summary{min-height:44px;padding:10px 4px;font-size:14px;overflow-wrap:anywhere}
+#protocol-panel .protocol-notice{color:#73551e;font-size:14px}
+#protocol-panel .protocol-section-heading>span{color:#456486;font-size:13px}
+#protocol-panel .protocol-cards p{color:#4b6580;font-size:14px}
+.protocol-filters{display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap;margin:24px 0 12px}
+.protocol-filters label{display:flex;flex:1 1 260px;flex-direction:column;gap:6px;min-width:0;font-size:14px}
+.protocol-filters :is(input,select){width:100%;min-width:0;min-height:44px;font:inherit;padding:10px 12px;border:1px solid #a9bdcc;border-radius:6px;background:#fff;color:#29475e}
+.protocol-filters button,.protocol-case-links button,.protocol-download{min-height:44px;font:inherit;padding:10px 12px;border:1px solid #c9d8e4;border-radius:6px;background:#fff;color:#29475e;cursor:pointer}
+.protocol-case-links{display:flex;gap:8px;flex-wrap:wrap}
+#protocol-panel [data-protocol-case]{min-height:44px;white-space:normal;text-align:left;overflow-wrap:anywhere}
+#protocol-results{min-width:0}
+#protocol-panel .protocol-api{border:1px solid #d9e3eb;border-radius:8px;margin:12px 0}
+#protocol-panel .protocol-api>summary{padding:14px;line-height:1.7}
+.protocol-api>summary>code{font:14px/1.7 ui-monospace,SFMono-Regular,monospace;overflow-wrap:anywhere}
+.protocol-method{display:inline-block;padding:2px 8px;margin-right:8px;border-radius:4px;background:#edf3fc;color:#244d88;font-weight:700;font-size:12px}
+.protocol-api-description{display:block;margin-top:8px;font-weight:500;color:#29475e}
+.protocol-api>summary>small{display:block;font-size:13px;color:#4b6580;font-weight:400;overflow-wrap:anywhere}
+.protocol-api[open]>summary{border-bottom:1px solid #d9e3eb;background:#f6f9fc}
+.protocol-api-content{padding:16px;min-width:0}
+#protocol-panel .s1-endpoint{margin:16px 0;padding:0;border:0}
+#protocol-panel .s1-endpoint h4{overflow-wrap:anywhere}
+#protocol-panel .s1-endpoint h4 code{white-space:normal}
+#protocol-panel .database-table-wrap{max-width:100%;overflow:auto;margin:16px 0}
+#protocol-panel table{width:100%;border-collapse:collapse;min-width:640px}
+#protocol-panel :is(th,td){padding:12px;border-bottom:1px solid #e0e8ef;text-align:left;vertical-align:top;font-size:14px}
+#protocol-panel th{background:#f1f6fa}
+#protocol-panel .protocol-download{display:inline-flex;align-items:center;max-width:100%;overflow-wrap:anywhere}
+.protocol-empty{padding:24px;border:1px dashed #a9bdcc;border-radius:8px}
+#protocol-result-count{font-size:14px}
 @media(max-width:1000px){.protocol-customs-layout{grid-template-columns:1fr}.protocol-cards{grid-template-columns:1fr}.protocol-panel{padding:16px}}
 @media(max-width:600px){#protocol-customs-form fieldset{grid-template-columns:1fr}.protocol-section-heading{align-items:flex-start;flex-direction:column}.protocol-tabs button{padding:9px 12px;font-size:12px}.protocol-panel{padding:12px}}
+@media(max-width:640px){
+  #protocol-panel{font-size:16px}
+  #protocol-panel summary,.protocol-filters label{font-size:16px}
+  #protocol-panel .protocol-cards p{font-size:16px}
+  .protocol-api-content{padding:12px}
+  .protocol-filters{gap:12px}
+  .protocol-filters label{flex-basis:100%}
+  #view-protocol-design .protocol-tabs button{flex:1 1 100%}
+}
+@media(prefers-reduced-motion:reduce){#view-protocol-design *{scroll-behavior:auto;transition:none;animation:none}}

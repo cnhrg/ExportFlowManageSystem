@@ -1,0 +1,19 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 出口报关代理经办人前端
+    participant APP as 单体应用两受众受限入口
+    participant DB as 同一MySQL业务及技术中间件
+    participant FILE as 私有S3与ClamAV文件工作流
+    participant CHANNEL as 正式监管渠道未接入
+    PAGE->>APP: GET申报/确切revision/原filing/evidence/delivery，读预算5000/4000ms
+    APP->>DB: 当前对象及受众授权；按明确资源键读当前根/不可变修订/业务事件
+    APP-->>PAGE: 200本方历史和当前标签，无消费确认/状态写入
+    opt 原写响应丢失
+    PAGE->>APP: 原方法/路径/键/原文/标签/确认重入，禁止换键重办
+    APP->>DB: BEGIN RC先查受理；验证当前权限及HMAC同文
+    alt 原受理存在
+    APP-->>PAGE: 200原冻结投影和原Location；优先于当前新标签/已消费确认
+    else 尚未受理
+    APP->>DB: 锁交易根/批次/申报，再次当前读受理；仍无才验证完整新命令
+    end
+    end

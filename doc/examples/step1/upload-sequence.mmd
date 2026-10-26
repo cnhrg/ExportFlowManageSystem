@@ -1,0 +1,40 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 本方资料前端
+    participant APP as 单体应用的对外接入接口
+    participant DATABASE as 同一MySQL的上传任务与文件表
+    participant STORE as 私有Amazon S3兼容对象存储
+    Note over APP,DATABASE: 文件模块与定时恢复任务在同一应用内，不是独立服务或消息队列
+    PAGE->>APP: 创建上传资源（所属预留或交易、长度、摘要、确认凭据）
+    APP->>APP: 校验实名会话、确认绑定、文件用途及对象权限
+    APP->>DATABASE: BEGIN；先查幂等上传任务及已确认文件；同文返回原绑定
+    APP->>DATABASE: 新请求才核验/消费确认，保存暂存键、稳定文件号、最终键及预期摘要；COMMIT
+    APP-->>PAGE: 201或200原上传资源及短期签名地址
+    loop 仅网络中断或可重试服务错误，原字节最多3次
+      PAGE->>STORE: PUT原暂存对象，连接5秒、单次60秒、无进度15秒
+      STORE-->>PAGE: 成功或明确可重试错误；退避1秒/3秒加抖动
+    end
+    PAGE->>APP: 请求确认原上传资源（原键原预期摘要）
+    APP->>DATABASE: BEGIN；先查询任务/原回执；新请求核验并消费本次确认，文件确认意图持久化同COMMIT
+    APP->>APP: 进程内唤起处理；启动与每5秒定时扫描也能恢复
+    loop 未完成且未永久拒绝，同一持久任务最多8次且最长24小时
+      APP->>DATABASE: BEGIN；先查完成结果；领取60秒租约并递增栅栏；COMMIT
+      APP->>STORE: HEAD及GET确切版本；进程内扫描真实字节
+      APP->>DATABASE: BEGIN；按栅栏保存源版本/摘要及扫描证据；COMMIT
+      APP->>STORE: 先HEAD最终键；不存在才条件复制确切版本，存在则逐项比对
+      APP->>DATABASE: BEGIN；先查任务完成绑定及文件号版 FOR UPDATE
+      alt 已有完全相同文件
+        APP->>DATABASE: 校验所属/路径/摘要/长度；恢复原结果并COMMIT
+      else 尚无文件
+        APP->>DATABASE: INSERT唯一文件元数据；写任务完成结果并COMMIT
+      end
+      Note over APP,DATABASE: 临时失败保存next_attempt_at；1/3/10/30/60/300/900秒加抖动，重启仍恢复
+    end
+    alt 摘要/恶意内容/永久拒绝或重试耗尽
+      APP->>DATABASE: 记录rejected或manual_action，最后错误及告警；不生成可引用成功
+      APP-->>PAGE: 422或503及原上传状态；终止自动重试
+    else 文件确认已经确定提交
+      APP-->>PAGE: 201或200原文件修订；暂时未完成则409 FILE_NOT_READY
+    end
+    Note over APP,STORE: 身份/明确确认的审计证据及平台回执也稳定键保全并自动重试，不持业务事务锁
+    Note over APP,DATABASE: 数据库提交未知先当前读查结果；栅栏防旧任务提交，所有历史引用核对后才清理孤立对象

@@ -15,15 +15,14 @@
     const received=progress<2?0:expected,matched=progress===2?received*.8:received;
     const exchanged=progress<3?0:progress===3?matched*.6:matched;
     const rate=1,credited=exchanged*rate,bankFee=exchanged?80:0;
-    const commission=progress>=4?Math.round(credited*.02):0;
-    const paid=progress>=5?credited-bankFee-commission:0;
+    const serviceFeeSettled=progress>=4?300:0;
+    const paid=progress>=5?Math.max(0,credited-bankFee-serviceFeeSettled):0;
     return {
       id:'BV-EX-'+String(index+1).padStart(3,'0'),batch:'LOT-01',customer:'A客户'+String(index+1).padStart(2,'0'),
       organization:index%2?'operations':'trade',age:[1,3,5,6,10,15,20,25,29,40,60,85][index],
-      expected,received,matched,exchanged,credited,bankFee,commission,paid,
-      unavailable:received-exchanged,rmb:credited-bankFee-commission-paid,
-      netDue:progress>=4?credited-bankFee-commission-paid:0,
-      commissionDue:progress>=4?0:Math.round(credited*.02),
+      expected,received,matched,exchanged,credited,bankFee,serviceFeeSettled,paid,
+      unavailable:received-exchanged,rmb:credited-bankFee-serviceFeeSettled-paid,
+      netDue:progress>=4?Math.max(0,expected-paid):0,
       hold:index===3||index===9,
       paymentGate:progress>=4?(index===4?'账户待独立核验':index===11?'放行 / 接收凭证待补':'资料齐备'):'结汇 / 结算未完成'
     };
@@ -38,7 +37,7 @@
     const filters={
       all:()=>true,received:()=>row.received>0,unmatched:()=>row.received>row.matched,
       pendingFx:()=>row.matched>row.exchanged,exchanged:()=>row.exchanged>0,
-      unavailable:()=>row.unavailable>0,rmb:()=>row.rmb>0,commission:()=>row.commission>0,
+      unavailable:()=>row.unavailable>0,rmb:()=>row.rmb>0,serviceFee:()=>row.serviceFeeSettled>0,
       paid:()=>row.paid>0,payment:()=>row.netDue>0,ready:()=>row.netDue>0&&!blocked(row),blocked:()=>blocked(row),fees:()=>row.bankFee>0
     };
     return filters[state.fundStatus]();
@@ -52,7 +51,7 @@
       mobile:'<rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 18h4"/>',
       received:'<path d="M12 3v12m-4-4 4 4 4-4M4 15v5h16v-5"/>',
       rmb:'<rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 9h18m-7 5h4"/>',
-      commission:'<path d="M4 18V8m6 10V4m6 14v-7m5 10H2"/>',
+      serviceFee:'<path d="M4 18V8m6 10V4m6 14v-7m5 10H2"/>',
       payment:'<path d="M3 7h17m-4-4 4 4-4 4M21 17H4m4-4-4 4 4 4"/>'
     };
     return '<svg class="bv-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+paths[name]+'</svg>';
@@ -112,15 +111,15 @@
       '<div class="bv-donut-legend">'+parts.map((part,index)=>'<button type="button" data-boss-fund-status="'+part.filter+'"><i style="background:'+colors[index]+'"></i><span>'+part.label+'<b>'+money(part.value)+'</b></span><em>'+(total?part.value/total*100:0).toFixed(1)+'%</em></button>').join('')+'</div></div></article>';
   }
   function revenue(rows){
-    const series=[{key:'commission',name:'B收益银行入账',delay:3}],buckets=eventBuckets(rows,series);
+    const series=[{key:'serviceFeeSettled',name:'D服务费结算入账',delay:4}],buckets=eventBuckets(rows,series);
     const maximum=Math.max(...buckets.map(bucket=>bucket.values[0]),1),ceiling=Math.ceil(maximum/100)*100,w=state.device==='mobile'?360:640,h=220,left=state.device==='mobile'?40:54;
     const barWidth=(w-left-18)/buckets.length;
-    return '<article class="management-card bv-chart" data-chart="revenue"><header><h3>B收益银行划转趋势</h3><span>CNY · 元</span></header><svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="B收益银行划转柱状图"><title>B收益银行划转趋势，非利润</title>'+
+    return '<article class="management-card bv-chart" data-chart="revenue"><header><h3>D服务费分账结算趋势</h3><span>CNY · 元</span></header><svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="D承担服务费分账结算柱状图"><title>从D可用余额结算服务费</title>'+
       [0,.5,1].map(ratio=>'<line x1="'+left+'" y1="'+(180-ratio*150)+'" x2="'+(w-18)+'" y2="'+(180-ratio*150)+'" stroke="#e8eef5"/><text x="'+(left-8)+'" y="'+(184-ratio*150)+'" text-anchor="end">'+Math.round(ceiling*ratio)+'</text>').join('')+
       buckets.map((bucket,index)=>{
         const value=bucket.values[0],height=value/ceiling*150,x=left+index*barWidth+barWidth*.25;
         return '<rect x="'+x+'" y="'+(180-height)+'" width="'+(barWidth*.5)+'" height="'+height+'" rx="4" fill="#8e87d3"><title>'+bucket.range+' '+money(value)+' CNY</title></rect><text x="'+(x+barWidth*.25)+'" y="204" text-anchor="middle">'+bucket.label+'</text>';
-      }).join('')+'</svg><small class="bv-chart-note">双边回单核验成功的合成样本 · 不等于利润</small>'+chartData(['B收益银行入账'],series,buckets,'CNY')+'</article>';
+      }).join('')+'</svg><small class="bv-chart-note">首次获批分账时从D可用余额结算固定服务费 · 合成样本</small>'+chartData(['D服务费结算'],series,buckets,'CNY')+'</article>';
   }
   function payment(rows){
     const groups=[
@@ -138,12 +137,12 @@
     return '<details class="management-card bv-ledger"'+(mobile||state.fundStatus!=='all'||state.selected?' open':'')+'><summary>资金明细 <span>'+data.length+' 笔 · '+(mobile?'按交易查看':'展开台账')+'</span></summary>'+
       '<div class="boss-filter-row">'+select('boss-fund-status',state.fundStatus,'资金标签',[
         ['all','全部'],['received','有CNH入账'],['unmatched','待匹配'],['pendingFx','已匹配待结汇'],['exchanged','已结汇'],
-        ['unavailable','CNH不可用'],['rmb','CNY账面余额'],['commission','B收益银行入账'],['fees','银行费用'],['paid','已净付A'],['payment','A待付'],['ready','待付门禁齐备'],['blocked','付款被阻断']
+        ['unavailable','CNH不可用'],['rmb','CNY账面余额'],['serviceFee','D服务费结算'],['fees','银行费用'],['paid','已净付A'],['payment','A待付'],['ready','待付门禁齐备'],['blocked','付款被阻断']
       ])+'</div>'+(mobile?'<div class="bv-mobile-records">'+(pageRows.map(row=>'<article class="bv-mobile-record"><header><div><b>'+row.id+'</b><small>'+row.customer+' · '+row.batch+'</small></div><span class="bv-record-state'+(blocked(row)?' is-blocked':'')+'">'+(blocked(row)?'付款阻断':row.paid?'已净付 A':row.netDue?'待净付款':'处理中')+'</span></header><dl>'+
-        [['银行入账 · CNH',row.received],['未匹配 · CNH',row.received-row.matched],['结汇到账 · CNY',row.credited],['账面余额 · CNY',row.rmb],['B收益 · CNY',row.commission],['净付 A · CNY',row.paid]].map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+money(value)+'</dd></div>').join('')+'</dl><button type="button" data-boss-open="'+row.id+'">资金分配与回单摘要 <span>↗</span></button></article>').join('')||'<p class="bv-empty">当前筛选无资金记录</p>')+'</div>':
-      '<div class="management-table-wrap"><table class="bv-table"><thead><tr><th>交易 / 批次</th><th>入账 CNH</th><th>未匹配 CNH</th><th>结汇到账 CNY</th><th>余额 CNY</th><th>B收益 CNY</th><th>净付A CNY</th><th>资金摘要</th></tr></thead><tbody>'+
+        [['银行入账 · CNH',row.received],['未匹配 · CNH',row.received-row.matched],['结汇到账 · CNY',row.credited],['账面余额 · CNY',row.rmb],['D服务费结算 · CNY',row.serviceFeeSettled],['净付 A · CNY',row.paid]].map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+money(value)+'</dd></div>').join('')+'</dl><button type="button" data-boss-open="'+row.id+'">资金分配与回单摘要 <span>↗</span></button></article>').join('')||'<p class="bv-empty">当前筛选无资金记录</p>')+'</div>':
+      '<div class="management-table-wrap"><table class="bv-table"><thead><tr><th>交易 / 批次</th><th>入账 CNH</th><th>未匹配 CNH</th><th>结汇到账 CNY</th><th>余额 CNY</th><th>D服务费结算 CNY</th><th>净付A CNY</th><th>资金摘要</th></tr></thead><tbody>'+
       (pageRows.map(row=>'<tr><td>'+row.id+'<small>'+row.batch+' · '+row.customer+'</small></td>'+
-        [row.received,row.received-row.matched,row.credited,row.rmb,row.commission,row.paid].map(value=>'<td>'+money(value)+'</td>').join('')+
+        [row.received,row.received-row.matched,row.credited,row.rmb,row.serviceFeeSettled,row.paid].map(value=>'<td>'+money(value)+'</td>').join('')+
         '<td><button type="button" class="text-button" data-boss-open="'+row.id+'">查看</button></td></tr>').join('')||'<tr><td colspan="8" class="bv-empty">当前筛选无资金记录</td></tr>')+
       '</tbody></table></div>')+'<div class="bv-pagination"><span>第 '+state.page+' / '+pages+' 页</span><button type="button" data-boss-page="'+(state.page-1)+'"'+(state.page===1?' disabled':'')+'>上一页</button><button type="button" data-boss-page="'+(state.page+1)+'"'+(state.page===pages?' disabled':'')+'>下一页</button></div></details>';
   }
@@ -151,11 +150,11 @@
     const row=rows.find(item=>item.id===state.selected);
     if(!row)return '';
     return '<article class="management-card bv-detail" id="boss-transaction-detail" tabindex="-1"><header class="bv-detail-toolbar"><h3>'+row.id+' / '+row.batch+'</h3><button type="button" data-boss-close>收起</button></header><div class="bv-reconciliation"><div><b>CNH分配</b><span>入账 '+money(row.received)+' = 待匹配 '+money(row.received-row.matched)+' + 匹配待结汇 '+money(row.matched-row.exchanged)+' + 已结汇 '+money(row.exchanged)+'</span></div>'+
-      '<div><b>CNY去向</b><span>到账 '+money(row.credited)+' = 余额 '+money(row.rmb)+' + 银行费 '+money(row.bankFee)+' + B收益 '+money(row.commission)+' + 净付A '+money(row.paid)+'</span></div></div>'+
-      '<p class="chart-caption">A待付 '+money(row.netDue)+' CNY · '+(row.hold?'ON HOLD · ':'')+row.paymentGate+'；B收益：'+(row.commission?'SYN-DEBIT-'+row.id+' ↔ SYN-CREDIT-'+row.id:'尚无成功划转')+'。均为合成回单索引。</p></article>';
+      '<div><b>CNY货款去向</b><span>到账 '+money(row.credited)+' = 余额 '+money(row.rmb)+' + D服务费结算 '+money(row.serviceFeeSettled)+' + 银行费 '+money(row.bankFee)+' + 净付A '+money(row.paid)+'</span></div></div>'+
+      '<p class="chart-caption">A合同应付剩余 '+money(row.netDue)+' CNY · '+(row.hold?'ON HOLD · ':'')+row.paymentGate+'；D承担的固定服务费 '+money(row.serviceFeeSettled)+' CNY 在首次获批分账时从已核验可用余额结算，不减少A合同应付。均为合成数据。</p></article>';
   }
   function analytics(rows,section='all'){
-    const received=sum(rows,'received'),exchanged=sum(rows,'exchanged'),commission=sum(rows,'commission');
+    const received=sum(rows,'received'),exchanged=sum(rows,'exchanged'),serviceFeeSettled=sum(rows,'serviceFeeSettled');
     const trends=()=>trend(rows,'收款与结汇趋势','CNH',[{key:'received',name:'银行入账',delay:1},{key:'exchanged',name:'成功结汇原币',delay:2}],'cnh-trend')+
       trend(rows,'人民币到账与净付款趋势','CNY',[{key:'credited',name:'结汇到账',delay:2},{key:'paid',name:'净付 A',delay:4}],'cny-trend');
     const allocations=()=>donut('CNH收款分配','CNH',[
@@ -164,13 +163,13 @@
       {label:'已结汇',value:exchanged,filter:'exchanged'}
     ],'cnh-allocation')+donut('人民币到账去向','CNY',[
       {label:'账面余额',value:sum(rows,'rmb'),filter:'rmb'},{label:'已净付 A',value:sum(rows,'paid'),filter:'paid'},
-      {label:'B收益银行入账',value:commission,filter:'commission'},{label:'银行费用',value:sum(rows,'bankFee'),filter:'fees'}
+      {label:'D服务费结算',value:serviceFeeSettled,filter:'serviceFee'},{label:'银行费用',value:sum(rows,'bankFee'),filter:'fees'}
     ],'cny-allocation');
     if(section==='overview')return allocations()+payment(rows);
     if(section==='trends')return trends()+revenue(rows);
     return '<div class="bv-section-heading"><div><span>CASH FLOW</span><h3>双币种收支趋势</h3></div><p>按演示事件日期归集 · 分币种核算</p></div><div class="bv-analytics-grid">'+trends()+'</div>'+
       '<div class="bv-section-heading"><div><span>ALLOCATION</span><h3>每一笔资金，去向清晰</h3></div><p>互斥分配 · 点击图例下钻明细</p></div><div class="bv-analytics-grid">'+allocations()+'</div>'+
-      '<div class="bv-section-heading"><div><span>SETTLEMENT</span><h3>收益划转与净付款</h3></div><p>B收益银行入账 ≠ 会计利润</p></div><div class="bv-analytics-grid">'+revenue(rows)+payment(rows)+'</div>';
+      '<div class="bv-section-heading"><div><span>SETTLEMENT</span><h3>D服务费分账结算与A货款</h3></div><p>首次获批分账扣收；不减少A合同应付</p></div><div class="bv-analytics-grid">'+revenue(rows)+payment(rows)+'</div>';
   }
   function filters(rows){
     return '<div class="boss-filter-row bv-filters">'+select('boss-period',state.period,'建档范围',[['7','近7天'],['30','近30天'],['90','近90天']])+
@@ -179,18 +178,18 @@
   }
   function overview(rows){
     const held=rows.filter(blocked),unmatched=sum(rows,'received')-sum(rows,'matched');
-    return '<div class="bv-kpis">'+metric('累计银行入账',sum(rows,'received'),'CNH','received')+metric('人民币账面余额',sum(rows,'rmb'),'CNY','rmb')+metric('B收益银行累计入账',sum(rows,'commission'),'CNY','commission')+metric('A待净付款',sum(rows,'netDue'),'CNY','payment')+'</div>'+
+    return '<div class="bv-kpis">'+metric('累计银行入账',sum(rows,'received'),'CNH','received')+metric('人民币账面余额',sum(rows,'rmb'),'CNY','rmb')+metric('D服务费结算',sum(rows,'serviceFeeSettled'),'CNY','serviceFee')+metric('A合同应付剩余',sum(rows,'netDue'),'CNY','payment')+'</div>'+
       '<div class="bv-attention"><div><span class="bv-attention-dot"></span><b>资金关注</b><small>当前筛选范围</small></div><button type="button" data-boss-fund-status="blocked">付款被阻断 <strong>'+held.length+' 笔</strong><span>查看原因 ↗</span></button><button type="button" data-boss-fund-status="unmatched">待匹配受限款 <strong>'+money(unmatched)+' <small>CNH</small></strong><span>查看明细 ↗</span></button></div>';
   }
   function definitions(){
-    return '<details class="boss-disclosure bv-definitions"><summary>数据口径 / 演示边界</summary><p>电脑端与移动端共享同一筛选及合成数据。筛选按建档日期选择交易集合。指标及饼图为该集合截至快照日累计量或余额；趋势为该集合在所选时间内按演示事件日期归集的发生额，并非累计曲线。样本事件时间为建档后1 / 2 / 3 / 4天（最晚不超过快照日），不代表真实银行时间。点击图例和指标只筛选明细，不改变图表的全局范围。</p><p>CNH与CNY分币种展示，不相加。CNH饼图三项互斥，待匹配和匹配待结汇共同构成不可用余额。CNY去向互斥：结汇到账 = 账面余额 + 净付A + B收益银行划转 + 银行费；双账户合并需抵销内部划转。账面余额不等于可用余额。B收益不等于利润或已确认会计收入。样本汇率为1:1。</p><p>Boss仅查看脱敏资金摘要，无单据面板、业务审批或银行执行能力。本场景无退款；未匹配款受限挂账。正式系统的权限、银行对账及冻结在途处理须由后端实现。本看板不读取运营持久审核状态。</p></details>';
+    return '<details class="boss-disclosure bv-definitions"><summary>数据口径 / 演示边界</summary><p>电脑端与移动端共享同一筛选及合成数据。筛选按建档日期选择交易集合。指标及饼图为该集合截至快照日累计量或余额；趋势为该集合在所选时间内按演示事件日期归集的发生额，并非累计曲线。样本事件时间为建档后1 / 2 / 3 / 4天（最晚不超过快照日），不代表真实银行时间。点击图例和指标只筛选明细，不改变图表的全局范围。</p><p>CNH与CNY分币种展示，不相加。CNH饼图三项互斥，待匹配和匹配待结汇共同构成不可用余额。D货款CNY去向互斥：结汇到账 = 账面余额 + D服务费结算 + 净付A + 银行费；固定服务费由D承担并在首次获批分账时从已核验可用余额结算，不减少A合同应付。账面余额不等于可用余额。样本汇率为1:1。</p><p>Boss仅查看脱敏资金摘要，无单据面板、业务审批或银行执行能力。本场景无退款；未匹配款受限挂账。正式系统的权限、银行对账及冻结在途处理须由后端实现。本看板不读取运营持久审核状态。</p></details>';
   }
   function render(){
     const rows=scoped(),mobile=state.device==='mobile';
     if(state.selected&&!rows.some(row=>row.id===state.selected))state.selected='';
     const tabs='<div class="bv-device-toolbar"><div class="bv-device-tabs" role="tablist" aria-label="资金看板设备原型">'+[['desktop','电脑端'],['mobile','移动端']].map(([device,label])=>'<button type="button" id="boss-device-'+device+'" role="tab" aria-selected="'+(state.device===device)+'" aria-controls="boss-device-panel" tabindex="'+(state.device===device?'0':'-1')+'" data-boss-device="'+device+'">'+icon(device)+label+'</button>').join('')+'</div><span>独立布局 · 同一资金口径</span></div>';
     const hero='<header class="bv-dashboard-heading"><div><span class="bv-overline">FUNDS OVERVIEW</span><h3>资金总览<span>V1</span></h3><p>看清资金流向，掌握结算进度。</p></div><div class="bv-snapshot"><span><i></i>合成快照 · '+snapshot+'</span><small>无银行连接 · 不同步运营审批</small></div></header>';
-    const nav='<nav class="bv-mobile-nav" aria-label="移动端看板分区">'+[['overview','资金总览','rmb'],['trends','收支趋势','commission'],['ledger','交易明细','payment']].map(([section,label,glyph])=>'<button type="button" data-boss-section="'+section+'" aria-pressed="'+(state.mobileSection===section)+'">'+icon(glyph)+label+'</button>').join('')+'</nav>';
+    const nav='<nav class="bv-mobile-nav" aria-label="移动端看板分区">'+[['overview','资金总览','rmb'],['trends','收支趋势','serviceFee'],['ledger','交易明细','payment']].map(([section,label,glyph])=>'<button type="button" data-boss-section="'+section+'" aria-pressed="'+(state.mobileSection===section)+'">'+icon(glyph)+label+'</button>').join('')+'</nav>';
     const content=mobile?
       '<div class="bv-phone"><div class="bv-phone-top"><span>TRADE / BOSS VIEWER</span><b>只读</b></div>'+hero+filters(rows)+nav+'<div class="bv-mobile-body">'+
       (state.mobileSection==='overview'?overview(rows)+'<div class="bv-analytics-grid">'+analytics(rows,'overview')+'</div>':state.mobileSection==='trends'?'<div class="bv-section-heading"><div><span>CASH FLOW</span><h3>收支趋势</h3></div><p>分币种 · 发生额</p></div><div class="bv-analytics-grid">'+analytics(rows,'trends')+'</div>':ledger(rows))+

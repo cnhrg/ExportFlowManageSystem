@@ -1,0 +1,26 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 独立税务审核员界面
+    participant APP as 单体应用受限入口
+    participant DB as MySQL税务领域及受理表
+    participant FILE as 私有S3确切版本
+    participant AV as ClamAV
+    PAGE->>APP: GET本方上下文，5秒/4秒
+    APP->>DB: 对象授权读取交易批准版、税务type=1和历史
+    APP-->>PAGE: 强ETag与明确缺项
+    PAGE->>FILE: 共用上传协议直传原创材料
+    APP->>AV: 事务外扫描确切VersionId
+    AV-->>APP: clean/感染/失败，失败不引用
+    APP->>FILE: HEAD固定VersionId及SHA256核对
+    PAGE->>APP: CreateTaxProofObjectionDisposition / CreateTaxProofDelivery / CreateTaxProofReceipt，写10秒/8秒
+    APP->>DB: 按当前subject/audience/原键查受理，同文才回放
+    Note over APP,DB: 锁原异议与当前证明；记录处置证据和需官方更正结果，缺正式证据保持未闭环；解决不代替A再次核对。
+    APP->>DB: RC短事务；交易根→案件→提交/事件有序当前读并复验ETag
+    alt 缺源证据、越权、自审、旧版或终态
+      APP->>DB: ROLLBACK，不造官方事件或A确认
+      APP-->>PAGE: 明确业务错误及原资源恢复路径
+    else 本目标领域门禁满足
+      APP->>DB: 查看原异议及处理依据；需要正式更正时等待新证明，再重新交付；同事务最小受理与技术outbox
+      APP->>DB: COMMIT；不在锁内访问外部渠道
+      APP-->>PAGE: 差异未解决或供应商未重新核对前，案件继续待办
+    end

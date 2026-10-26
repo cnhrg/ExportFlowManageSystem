@@ -1,0 +1,10 @@
+sequenceDiagram
+    actor PERSON as 核对经办人
+    participant SYSTEM as 代理出口系统
+    PERSON->>SYSTEM: 针对具体差异开案
+    SYSTEM-->>PERSON: 显示当前资料版本、涉及事项、缺项和本方可办操作
+    PERSON->>SYSTEM: 核对本次内容并确认提交
+    SYSTEM-->>PERSON: 返回新案件，等待指定处理人和期限
+    actor COORDINATOR as 案件协调人
+    COORDINATOR->>SYSTEM: 查看原差异案件并分派具体责任人和期限
+    SYSTEM-->>COORDINATOR: 原案件分派结果，不表示问题已解决

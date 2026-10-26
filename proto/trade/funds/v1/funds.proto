@@ -1,0 +1,570 @@
+syntax = "proto3";
+package trade.funds.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "trade/contracts/v1/contracts.proto";
+
+service ExternalFundsService {
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetTradeFundsOverview(GetTradeFundsOverviewReqMsg) returns (GetTradeFundsOverviewRspMsg) {
+    option (google.api.http) = { get: "/api/v1/trades/{trade_number}/funds" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms. Replays the original bank-fact projection.
+  rpc GetFundReceipt(GetFundReceiptReqMsg) returns (GetFundReceiptRspMsg) {
+    option (google.api.http) = { get: "/api/v1/fund-receipts/{receipt_flow_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. A submitted invoice is not a bank-availability fact.
+  rpc CreateInvoiceDeclaration(CreateInvoiceDeclarationReqMsg) returns (CreateInvoiceDeclarationRspMsg) {
+    option (google.api.http) = { post: "/api/v1/trades/{trade_number}/invoice-declarations" body: "invoice" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetInvoiceDeclaration(GetInvoiceDeclarationReqMsg) returns (GetInvoiceDeclarationRspMsg) {
+    option (google.api.http) = { get: "/api/v1/trades/{trade_number}/invoice-declarations/{invoice_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetAgencyServiceFeeSettlement(GetAgencyServiceFeeSettlementReqMsg) returns (GetAgencyServiceFeeSettlementRspMsg) {
+    option (google.api.http) = { get: "/api/v1/trades/{trade_number}/agency-service-fee" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Separate proof by A; debit alone does not prove receipt.
+  rpc CreateBeneficiaryReceiptConfirmation(CreateBeneficiaryReceiptConfirmationReqMsg) returns (CreateBeneficiaryReceiptConfirmationRspMsg) {
+    option (google.api.http) = { post: "/api/v1/payment-transactions/{transaction_number}/beneficiary-receipt-confirmations" body: "confirmation" response_body: "resource" };
+  }
+}
+
+service InternalFundsOperationsService {
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetFundAllocationContext(GetFundAllocationContextReqMsg) returns (GetFundAllocationContextRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/fund-receipts/{receipt_flow_number}/allocation-context" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateFundAllocation(CreateFundAllocationReqMsg) returns (CreateFundAllocationRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/fund-receipts/{receipt_flow_number}/allocations" body: "allocation" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetFundAllocation(GetFundAllocationReqMsg) returns (GetFundAllocationRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/fund-allocations/{allocation_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Independent review; original amount/source remains immutable.
+  rpc CreateFundAllocationDecision(CreateFundAllocationDecisionReqMsg) returns (CreateFundAllocationDecisionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/fund-allocations/{allocation_number}/decisions" body: "decision" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Manual verified evidence intake only; no bank adapter is implied.
+  rpc CreateBankReceiptEvidence(CreateBankReceiptEvidenceReqMsg) returns (CreateBankReceiptEvidenceRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/bank-receipt-evidence" body: "evidence" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetFundsReviewContext(GetFundsReviewContextReqMsg) returns (GetFundsReviewContextRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/trades/{trade_number}/funds-review-context" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Trade review does not assert bank availability.
+  rpc CreateTradeFundsVerification(CreateTradeFundsVerificationReqMsg) returns (CreateTradeFundsVerificationRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/funds-verifications" body: "verification" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Release only the evidenced amount; partial release is supported.
+  rpc CreateFundsAvailabilityRelease(CreateFundsAvailabilityReleaseReqMsg) returns (CreateFundsAvailabilityReleaseRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/fund-releases" body: "release" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Branch gates are explicit and CNY only.
+  rpc CreateSettlement(CreateSettlementReqMsg) returns (CreateSettlementRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/settlements" body: "settlement" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetSettlement(GetSettlementReqMsg) returns (GetSettlementRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/settlements/{transaction_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. A reviewer distinct from the preparer.
+  rpc CreateSettlementDecision(CreateSettlementDecisionReqMsg) returns (CreateSettlementDecisionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/settlements/{transaction_number}/decisions" body: "decision" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Approval and bucket-3 lock are local atomic work.
+  rpc CreatePaymentApproval(CreatePaymentApprovalReqMsg) returns (CreatePaymentApprovalRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/settlements/{transaction_number}/payment-approvals" body: "approval" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Persists the exact intent; no bank success is implied.
+  rpc CreatePaymentExecutionIntent(CreatePaymentExecutionIntentReqMsg) returns (CreatePaymentExecutionIntentRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/payment-transactions/{transaction_number}/execution-intents" body: "execution" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms. Query the original payment number after unknown outcome.
+  rpc GetPaymentExecution(GetPaymentExecutionReqMsg) returns (GetPaymentExecutionRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/payment-transactions/{transaction_number}/execution" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateFundsReconciliationDifference(CreateFundsReconciliationDifferenceReqMsg) returns (CreateFundsReconciliationDifferenceRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/funds-reconciliation-differences" body: "difference" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetFundsReconciliationDifference(GetFundsReconciliationDifferenceReqMsg) returns (GetFundsReconciliationDifferenceRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/funds-reconciliation-differences/{difference_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateFundsDifferenceDisposition(CreateFundsDifferenceDispositionReqMsg) returns (CreateFundsDifferenceDispositionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/funds-reconciliation-differences/{difference_number}/dispositions" body: "disposition" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Independent close review.
+  rpc CreateFundsDifferenceReview(CreateFundsDifferenceReviewReqMsg) returns (CreateFundsDifferenceReviewRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/funds-reconciliation-differences/{difference_number}/reviews" body: "review" response_body: "resource" };
+  }
+}
+
+enum FundBucket {
+  FUND_BUCKET_UNSPECIFIED = 0;
+  FUND_BUCKET_RESTRICTED = 1;
+  FUND_BUCKET_AVAILABLE = 2;
+  FUND_BUCKET_PAYMENT_LOCKED = 3;
+}
+
+enum FundsTransactionType {
+  FUNDS_TRANSACTION_TYPE_UNSPECIFIED = 0;
+  FUNDS_TRANSACTION_TYPE_INVOICE = 1;
+  FUNDS_TRANSACTION_TYPE_VERIFICATION = 2;
+  FUNDS_TRANSACTION_TYPE_SERVICE_FEE = 3;
+  FUNDS_TRANSACTION_TYPE_SETTLEMENT = 4;
+  FUNDS_TRANSACTION_TYPE_PAYMENT = 5;
+  FUNDS_TRANSACTION_TYPE_SERVICE_FEE_RECEIPT = 6;
+  FUNDS_TRANSACTION_TYPE_REFUND = 7;
+}
+
+enum FundsTransactionStatus {
+  FUNDS_TRANSACTION_STATUS_UNSPECIFIED = 0;
+  FUNDS_TRANSACTION_STATUS_DRAFT = 1;
+  FUNDS_TRANSACTION_STATUS_PENDING_APPROVAL = 2;
+  FUNDS_TRANSACTION_STATUS_RETURNED = 3;
+  FUNDS_TRANSACTION_STATUS_APPROVED = 4;
+  FUNDS_TRANSACTION_STATUS_EXECUTING = 5;
+  FUNDS_TRANSACTION_STATUS_COMPLETED = 6;
+  FUNDS_TRANSACTION_STATUS_REJECTED = 7;
+  FUNDS_TRANSACTION_STATUS_CANCELLED = 8;
+  FUNDS_TRANSACTION_STATUS_SUPERSEDED = 9;
+}
+
+enum PaymentBranch {
+  PAYMENT_BRANCH_UNSPECIFIED = 0;
+  PAYMENT_BRANCH_PREPAYMENT = 1;
+  PAYMENT_BRANCH_POST_EXPORT = 2;
+}
+
+enum AllocationStatus {
+  ALLOCATION_STATUS_UNSPECIFIED = 0;
+  ALLOCATION_STATUS_PENDING_REVIEW = 1;
+  ALLOCATION_STATUS_ACTIVE = 2;
+  ALLOCATION_STATUS_REVOKED = 3;
+}
+
+enum DifferenceType {
+  DIFFERENCE_TYPE_UNSPECIFIED = 0;
+  DIFFERENCE_TYPE_MISSING = 1;
+  DIFFERENCE_TYPE_DUPLICATE = 2;
+  DIFFERENCE_TYPE_AMOUNT = 3;
+  DIFFERENCE_TYPE_STATUS = 4;
+}
+
+enum DifferenceStatus {
+  DIFFERENCE_STATUS_UNSPECIFIED = 0;
+  DIFFERENCE_STATUS_OPEN = 1;
+  DIFFERENCE_STATUS_PROCESSING = 2;
+  DIFFERENCE_STATUS_PENDING_REVIEW = 3;
+  DIFFERENCE_STATUS_CLOSED = 4;
+}
+
+enum ExecutionStatus {
+  EXECUTION_STATUS_UNSPECIFIED = 0;
+  EXECUTION_STATUS_NOT_SUBMITTED = 1;
+  EXECUTION_STATUS_ACCEPTED = 2;
+  EXECUTION_STATUS_UNKNOWN = 3;
+  EXECUTION_STATUS_BANK_DEBIT_CONFIRMED = 4;
+  EXECUTION_STATUS_BENEFICIARY_RECEIVED = 5;
+  EXECUTION_STATUS_EXPLICIT_FAILURE = 6;
+}
+
+// Values are the authoritative payment_fund_flow_tab.event_type codes.
+enum BankEvidenceKind {
+  BANK_EVIDENCE_KIND_UNSPECIFIED = 0;
+  BANK_EVIDENCE_KIND_CARGO_RECEIPT = 1;
+  BANK_EVIDENCE_KIND_AGENCY_FEE_RECEIPT = 10;
+  BANK_EVIDENCE_KIND_BANK_FEE_DEBIT = 11;
+}
+
+message CnyAmount {
+  string amount = 1; // DECIMAL(20,2) string, no exponent/rounding.
+  string currency_code = 2; // Always CNY.
+}
+
+message BucketBalances {
+  CnyAmount restricted = 1;
+  CnyAmount available = 2;
+  CnyAmount payment_locked = 3;
+}
+
+message FundsOverview {
+  string trade_number = 1;
+  uint32 approved_trade_revision_number = 2;
+  BucketBalances balances = 3;
+  CnyAmount matched_receipts = 4;
+  CnyAmount unmatched_restricted = 5;
+  CnyAmount allocated_gross = 6;
+  CnyAmount released = 7;
+  CnyAmount occupied = 8;
+  repeated string open_gate_codes = 9;
+  repeated string open_difference_numbers = 10;
+
+  string etag = 12;
+}
+
+message FundReceipt {
+  string flow_number = 1;
+  string account_fingerprint = 2;
+  string bank_event_key = 3;
+  CnyAmount gross_amount = 4;
+  CnyAmount allocated_amount = 5;
+  CnyAmount unmatched_amount = 6;
+  FundBucket bucket = 7;
+  string evidence_reference = 8;
+  string match_status = 9; // pending_review / matched / unmatched / disputed.
+  google.protobuf.Timestamp value_date = 10;
+  string acceptance_id = 11;
+  string etag = 12;
+}
+
+message InvoiceDeclarationInput {
+  string invoice_number = 1;
+  CnyAmount declared_amount = 2;
+  uint32 approved_trade_revision_number = 3;
+  repeated trade.contracts.v1.FileReference invoice_files = 4;
+  repeated string allocation_numbers = 5;
+  optional string replaces_invoice_number = 6;
+  bool source_contents_confirmed = 7;
+}
+
+message InvoiceDeclaration {
+  string invoice_number = 1;
+  string trade_number = 2;
+  CnyAmount declared_amount = 3;
+  uint32 approved_trade_revision_number = 4;
+  FundsTransactionStatus status = 5;
+  repeated trade.contracts.v1.FileReference invoice_files = 6;
+  optional string replaces_invoice_number = 7;
+  repeated string missing_gate_codes = 9;
+  string etag = 10;
+}
+
+message AgencyServiceFeeSettlement {
+  string transaction_number = 1;
+  string trade_number = 2;
+  CnyAmount amount = 3; // Fixed CNY 300.00, settled once from D's available balance.
+  string payer_role = 4; // D.
+  string payee_role = 5; // B.
+  repeated string source_allocation_numbers = 6;
+  FundsTransactionStatus status = 7;
+  bool affects_available_balance = 8; // Reduces verified D-funded available balance.
+  bool reduces_supplier_contract_payable = 9; // Always false.
+  string etag = 10;
+}
+
+message FundAllocationContext {
+  FundReceipt receipt = 1;
+  repeated string eligible_trade_numbers = 2;
+  repeated FundAllocation current_allocations = 3;
+  CnyAmount unmatched_amount = 4;
+  repeated string gate_codes = 5;
+}
+
+message FundAllocationInput {
+  string trade_number = 1;
+  uint32 approved_trade_revision_number = 2;
+  CnyAmount allocated_amount = 3;
+  string source_type_code = 4;
+  string source_number = 5;
+  string reason = 6;
+}
+
+message FundAllocation {
+  string allocation_number = 1;
+  string receipt_flow_number = 2;
+  string trade_number = 3;
+  uint32 approved_trade_revision_number = 4;
+  CnyAmount allocated_amount = 5; // Immutable gross attribution.
+  AllocationStatus status = 6;
+  CnyAmount released_amount = 7;
+  CnyAmount occupied_amount = 8;
+  optional string reversal_of_allocation_number = 9;
+  string etag = 10;
+}
+
+message FundAllocationDecisionInput {
+  trade.contracts.v1.DecisionOutcome outcome = 1;
+  string reason = 2;
+  repeated trade.contracts.v1.FileReference evidence = 3;
+}
+
+message BankReceiptEvidenceInput {
+  string account_number = 1;
+  string account_fingerprint = 2;
+  string bank_event_key = 3;
+  CnyAmount amount = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  google.protobuf.Timestamp value_date = 6;
+  trade.contracts.v1.FileReference source_evidence = 7;
+  string evidence_hash = 8;
+  bool manual_evidence_intake = 9; // Not a bank API notification.
+  BankEvidenceKind event_type = 10; // Closed intake subset 1/10/11; evidence alone never posts cash.
+  optional string transaction_number = 11; // Required for fee receipt/debit; exact immutable source.
+  uint32 payer_party_role_code = 12; // Agency fee: supplier A (domain party-role code 1).
+  bool independent_payment = 13; // Event 10 requires A's independent payment, never D cargo funds.
+  optional string fee_bill_transaction_number = 14; // Historical event 10 only; new fees settle from D's available balance.
+}
+
+message BankReceiptEvidence {
+  string flow_number = 1;
+  string bank_event_key = 2;
+  CnyAmount amount = 3;
+  FundBucket bucket = 4;
+  string verification_status = 5; // pending_review / verified / rejected.
+  string evidence_reference = 6;
+  string acceptance_id = 7;
+}
+
+message FundsReviewContext {
+  string trade_number = 1;
+  uint32 approved_trade_revision_number = 2;
+  repeated InvoiceDeclaration invoices = 3;
+  repeated FundReceipt receipts = 4;
+  repeated FundAllocation allocations = 5;
+  repeated string missing_gate_codes = 6;
+  repeated string open_difference_numbers = 7;
+  string etag = 8;
+}
+
+message TradeFundsVerificationInput {
+  uint32 approved_trade_revision_number = 1;
+  repeated string invoice_numbers = 2;
+  repeated string allocation_numbers = 3;
+  repeated trade.contracts.v1.FileReference verification_evidence = 4;
+  trade.contracts.v1.DecisionOutcome outcome = 5;
+  string reason = 6;
+}
+
+message TradeFundsVerification {
+  string transaction_number = 1;
+  string trade_number = 2;
+  FundsTransactionStatus status = 3;
+  CnyAmount verified_amount = 4;
+  string verification_scope_hash = 5;
+  repeated string missing_gate_codes = 6;
+  string etag = 7;
+}
+
+message FundsReleaseInput {
+  string receipt_flow_number = 1;
+  string allocation_number = 2;
+  CnyAmount release_amount = 3;
+  trade.contracts.v1.FileReference bank_available_evidence = 4;
+  string bank_available_evidence_hash = 5;
+  string verification_transaction_number = 6;
+  string reason = 7;
+}
+
+message FundsRelease {
+  string flow_number = 1;
+  string receipt_flow_number = 2;
+  string allocation_number = 3;
+  CnyAmount released_amount = 4;
+  BucketBalances balances_after = 5;
+  repeated string voucher_numbers = 6;
+  string acceptance_id = 7;
+}
+
+message PaymentRequirementEvidence {
+  uint32 requirement_code = 1; // Closed values 1..14 from the funds rules.
+  trade.contracts.v1.FileReference evidence = 2;
+  google.protobuf.Timestamp checked_at = 3;
+  string checked_by = 4;
+}
+
+message AuthorizedDeduction {
+  uint32 reason_code = 1;
+  CnyAmount amount = 2;
+  uint32 borne_by_party_role_code = 3;
+  trade.contracts.v1.FileReference authorization_evidence = 4;
+}
+
+message SettlementInput {
+  PaymentBranch payment_branch = 1;
+  uint32 approved_trade_revision_number = 2;
+  repeated string invoice_numbers = 3;
+  repeated string allocation_numbers = 4;
+  CnyAmount payable_amount = 5;
+  CnyAmount already_paid_amount = 6;
+  repeated AuthorizedDeduction authorized_deductions = 7;
+  CnyAmount proposed_amount = 8;
+  trade.contracts.v1.FileReference supplier_confirmation = 9;
+  repeated PaymentRequirementEvidence required_evidence = 10;
+  repeated trade.contracts.v1.FileReference contract_references = 11;
+  string rule_version = 12;
+}
+
+message Settlement {
+  string transaction_number = 1;
+  string trade_number = 2;
+  PaymentBranch payment_branch = 3;
+  FundsTransactionStatus status = 4;
+  CnyAmount payable_amount = 5;
+  CnyAmount already_paid_amount = 6;
+  CnyAmount locked_amount = 7;
+  CnyAmount proposed_amount = 8;
+  repeated AuthorizedDeduction authorized_deductions = 9;
+  repeated string missing_requirement_codes = 10;
+  string rule_version = 11;
+  string etag = 12;
+}
+
+message SettlementDecisionInput {
+  trade.contracts.v1.DecisionOutcome outcome = 1;
+  string reason = 2;
+  repeated PaymentRequirementEvidence verified_evidence = 3;
+}
+
+message PaymentApprovalInput {
+  CnyAmount amount = 1;
+  string beneficiary_account_number = 2;
+  string beneficiary_account_fingerprint = 3;
+  uint32 beneficiary_account_revision_number = 4;
+  repeated string allocation_numbers = 5;
+  repeated trade.contracts.v1.FileReference approval_evidence = 6;
+  string reason = 7;
+}
+
+message PaymentApproval {
+  string transaction_number = 1;
+  string settlement_transaction_number = 2;
+  CnyAmount amount = 3;
+  string beneficiary_account_number = 4;
+  uint32 beneficiary_account_revision_number = 5;
+  FundsTransactionStatus status = 6;
+  BucketBalances balances_after = 7;
+  repeated string voucher_numbers = 8;
+  string etag = 9;
+}
+
+message PaymentExecutionInput {
+  string execution_intent_reference = 1;
+  string reason = 2;
+}
+
+message PaymentExecution {
+  string transaction_number = 1;
+  CnyAmount amount = 2;
+  ExecutionStatus execution_status = 3;
+  FundsTransactionStatus transaction_status = 4;
+  BucketBalances balances = 5;
+  repeated string attempts = 6;
+  repeated string missing_evidence_codes = 7;
+  string acceptance_id = 8;
+  string etag = 9;
+}
+
+message BeneficiaryReceiptConfirmationInput {
+  CnyAmount received_amount = 1;
+  google.protobuf.Timestamp received_at = 2;
+  trade.contracts.v1.FileReference bank_receipt_evidence = 3;
+  string bank_reference = 4;
+  string reason = 5;
+}
+
+message BeneficiaryReceiptConfirmation {
+  string transaction_number = 1;
+  CnyAmount received_amount = 2;
+  ExecutionStatus status = 3;
+  trade.contracts.v1.FileReference evidence = 4;
+  bool independently_verified = 5;
+  string acceptance_id = 6;
+}
+
+message FundsDifferenceInput {
+  DifferenceType difference_type = 1;
+  string bank_account_number = 2;
+  string bank_event_key = 3;
+  optional string flow_number = 4;
+  optional string transaction_number = 5;
+  optional CnyAmount bank_amount = 6;
+  optional CnyAmount internal_amount = 7;
+  repeated trade.contracts.v1.FileReference evidence = 8;
+  string reason = 9;
+}
+
+message FundsDifference {
+  string difference_number = 1;
+  DifferenceType difference_type = 2;
+  DifferenceStatus status = 3;
+  string bank_event_key = 4;
+  optional string flow_number = 5;
+  optional string transaction_number = 6;
+  optional CnyAmount bank_amount = 7;
+  optional CnyAmount internal_amount = 8;
+  string owner_reference = 9;
+  repeated trade.contracts.v1.FileReference evidence = 10;
+  optional trade.contracts.v1.DecisionOutcome review_outcome = 11;
+  string etag = 12;
+}
+
+message FundsDifferenceDispositionInput {
+  string reason = 1;
+  repeated trade.contracts.v1.FileReference evidence = 2;
+  optional string correction_flow_number = 3;
+  optional string correction_voucher_number = 4;
+}
+
+message FundsDifferenceReviewInput {
+  trade.contracts.v1.DecisionOutcome outcome = 1;
+  string reason = 2;
+  repeated trade.contracts.v1.FileReference evidence = 3;
+}
+
+message GetTradeFundsOverviewReqMsg { string trade_number = 1; }
+message GetTradeFundsOverviewRspMsg { FundsOverview resource = 1; }
+message GetFundReceiptReqMsg { string receipt_flow_number = 1; }
+message GetFundReceiptRspMsg { FundReceipt resource = 1; }
+message CreateInvoiceDeclarationReqMsg { string trade_number = 1; InvoiceDeclarationInput invoice = 2; }
+message CreateInvoiceDeclarationRspMsg { InvoiceDeclaration resource = 1; }
+message GetInvoiceDeclarationReqMsg { string trade_number = 1; string invoice_number = 2; }
+message GetInvoiceDeclarationRspMsg { InvoiceDeclaration resource = 1; }
+message GetAgencyServiceFeeSettlementReqMsg { string trade_number = 1; }
+message GetAgencyServiceFeeSettlementRspMsg { AgencyServiceFeeSettlement resource = 1; }
+message GetFundAllocationContextReqMsg { string receipt_flow_number = 1; }
+message GetFundAllocationContextRspMsg { FundAllocationContext resource = 1; }
+message CreateFundAllocationReqMsg { string receipt_flow_number = 1; FundAllocationInput allocation = 2; }
+message CreateFundAllocationRspMsg { FundAllocation resource = 1; }
+message GetFundAllocationReqMsg { string allocation_number = 1; }
+message GetFundAllocationRspMsg { FundAllocation resource = 1; }
+message CreateFundAllocationDecisionReqMsg { string allocation_number = 1; FundAllocationDecisionInput decision = 2; }
+message CreateFundAllocationDecisionRspMsg { FundAllocation resource = 1; }
+message CreateBankReceiptEvidenceReqMsg { BankReceiptEvidenceInput evidence = 1; }
+message CreateBankReceiptEvidenceRspMsg { BankReceiptEvidence resource = 1; }
+message GetFundsReviewContextReqMsg { string trade_number = 1; }
+message GetFundsReviewContextRspMsg { FundsReviewContext resource = 1; }
+message CreateTradeFundsVerificationReqMsg { string trade_number = 1; TradeFundsVerificationInput verification = 2; }
+message CreateTradeFundsVerificationRspMsg { TradeFundsVerification resource = 1; }
+message CreateFundsAvailabilityReleaseReqMsg { string trade_number = 1; FundsReleaseInput release = 2; }
+message CreateFundsAvailabilityReleaseRspMsg { FundsRelease resource = 1; }
+message CreateSettlementReqMsg { string trade_number = 1; SettlementInput settlement = 2; }
+message CreateSettlementRspMsg { Settlement resource = 1; }
+message GetSettlementReqMsg { string transaction_number = 1; }
+message GetSettlementRspMsg { Settlement resource = 1; }
+message CreateSettlementDecisionReqMsg { string transaction_number = 1; SettlementDecisionInput decision = 2; }
+message CreateSettlementDecisionRspMsg { Settlement resource = 1; }
+message CreatePaymentApprovalReqMsg { string transaction_number = 1; PaymentApprovalInput approval = 2; }
+message CreatePaymentApprovalRspMsg { PaymentApproval resource = 1; }
+message CreatePaymentExecutionIntentReqMsg { string transaction_number = 1; PaymentExecutionInput execution = 2; }
+message CreatePaymentExecutionIntentRspMsg { PaymentExecution resource = 1; }
+message GetPaymentExecutionReqMsg { string transaction_number = 1; }
+message GetPaymentExecutionRspMsg { PaymentExecution resource = 1; }
+message CreateBeneficiaryReceiptConfirmationReqMsg { string transaction_number = 1; BeneficiaryReceiptConfirmationInput confirmation = 2; }
+message CreateBeneficiaryReceiptConfirmationRspMsg { BeneficiaryReceiptConfirmation resource = 1; }
+message CreateFundsReconciliationDifferenceReqMsg { FundsDifferenceInput difference = 1; }
+message CreateFundsReconciliationDifferenceRspMsg { FundsDifference resource = 1; }
+message GetFundsReconciliationDifferenceReqMsg { string difference_number = 1; }
+message GetFundsReconciliationDifferenceRspMsg { FundsDifference resource = 1; }
+message CreateFundsDifferenceDispositionReqMsg { string difference_number = 1; FundsDifferenceDispositionInput disposition = 2; }
+message CreateFundsDifferenceDispositionRspMsg { FundsDifference resource = 1; }
+message CreateFundsDifferenceReviewReqMsg { string difference_number = 1; FundsDifferenceReviewInput review = 2; }
+message CreateFundsDifferenceReviewRspMsg { FundsDifference resource = 1; }

@@ -1,0 +1,50 @@
+[
+  {
+    "type": "urn:export-trade:problem:customs-official-evidence-required",
+    "title": "正式来源尚未核实",
+    "status": 422,
+    "detail": "保持待核和原办理号；不写放行或退单",
+    "instance": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC",
+    "errors": [
+      {
+        "pointer": "/",
+        "code": "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED",
+        "detail": "保持待核和原办理号；不写放行或退单"
+      }
+    ],
+    "outcomeUnknown": false,
+    "retryAfterMs": 0
+  },
+  {
+    "type": "urn:export-trade:problem:customs-execution-unknown",
+    "title": "原办理结果未知",
+    "status": 409,
+    "detail": "按原请求号查单，不换号重发",
+    "instance": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC",
+    "errors": [
+      {
+        "pointer": "/",
+        "code": "CUSTOMS_EXECUTION_UNKNOWN",
+        "detail": "按原请求号查单，不换号重发"
+      }
+    ],
+    "outcomeUnknown": true,
+    "retryAfterMs": 0
+  },
+  {
+    "type": "urn:export-trade:problem:customs-recipient-mismatch",
+    "title": "非指定接收方",
+    "status": 403,
+    "detail": "A不能代B接收，F不能代收",
+    "instance": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC",
+    "errors": [
+      {
+        "pointer": "/",
+        "code": "CUSTOMS_RECIPIENT_MISMATCH",
+        "detail": "A不能代B接收，F不能代收"
+      }
+    ],
+    "outcomeUnknown": false,
+    "retryAfterMs": 0
+  }
+]

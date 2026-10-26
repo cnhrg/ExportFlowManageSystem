@@ -1,0 +1,7 @@
+sequenceDiagram
+    actor 供应商经办人 as 供应商经办人
+    participant SYSTEM as 代理出口系统
+    供应商经办人->>SYSTEM: 选择文件版本，填写本次申请内容并检查
+    SYSTEM-->>供应商经办人: 显示缺项、内容摘要、申请范围和版本预览
+    供应商经办人->>SYSTEM: 确认这一版内容并送审
+    SYSTEM-->>供应商经办人: 保存本版等待独立审核，尚未正式受理

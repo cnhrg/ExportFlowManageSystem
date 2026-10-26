@@ -1,0 +1,15 @@
+{
+  "code": "COMMIT_OUTCOME_UNKNOWN",
+  "httpStatus": 503,
+  "errors": [
+    {
+      "pointer": "/",
+      "code": "COMMIT_OUTCOME_UNKNOWN",
+      "detail": "按原业务键恢复，不换号重提"
+    }
+  ],
+  "retryable": true,
+  "retryAfterMs": 1000,
+  "outcomeUnknown": true,
+  "requestReference": "TRD-S1-DEMO-001"
+}

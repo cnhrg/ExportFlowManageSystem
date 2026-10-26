@@ -1,0 +1,685 @@
+[
+  {
+    "id": "s7-create",
+    "audience": "外部服务",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/trades/SYNTHETIC-S7-TRADE/tax-refund-cases",
+      "headers": {
+        "Authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "77777777-7777-4777-8777-000000000001",
+        "If-Match": "\"s7-case-1\"",
+        "X-Confirmation-Id": "SYNTHETIC-NOT-A-CONFIRMATION"
+      },
+      "body": {
+        "tradeRevisionNumber": 1,
+        "scope": {
+          "reference": "SYNTHETIC-PREPARATION-SCOPE",
+          "customsRevisionReferences": [],
+          "certificateReferences": []
+        },
+        "taxpayerSnapshotReference": "SYNTHETIC-A-SNAPSHOT",
+        "currencyCode": "CNY"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s7-case-1\"",
+        "Location": "/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE"
+      },
+      "body": {
+        "taxCaseNumber": "SYNTHETIC-S7-CASE",
+        "tradeNumber": "SYNTHETIC-S7-TRADE",
+        "taxTypeCode": 2,
+        "scope": {
+          "reference": "SYNTHETIC-PREPARATION-SCOPE",
+          "customsRevisionReferences": [],
+          "certificateReferences": []
+        },
+        "status": "CASE_STATUS_PREPARING",
+        "currencyCode": "CNY",
+        "version": 1,
+        "etag": "\"s7-case-1\"",
+        "missingGates": [
+          "SCOPE_RULE_UNCONFIRMED",
+          "TAX_AUTHORITY_UNCONFIRMED"
+        ]
+      }
+    },
+    "note": "设计合成输入；官方/银行成功未验证，未接渠道明确阻断",
+    "rpc": "CreateRefundCase",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateRefundCaseReqMsg",
+    "responseType": "CreateRefundCaseRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s7-case-1\"\nLocation: /api/v1/tax-refund-cases/SYNTHETIC-S7-CASE\n\n{\n  \"taxCaseNumber\": \"SYNTHETIC-S7-CASE\",\n  \"tradeNumber\": \"SYNTHETIC-S7-TRADE\",\n  \"taxTypeCode\": 2,\n  \"scope\": {\n    \"reference\": \"SYNTHETIC-PREPARATION-SCOPE\",\n    \"customsRevisionReferences\": [],\n    \"certificateReferences\": []\n  },\n  \"status\": \"CASE_STATUS_PREPARING\",\n  \"currencyCode\": \"CNY\",\n  \"version\": 1,\n  \"etag\": \"\\\"s7-case-1\\\"\",\n  \"missingGates\": [\n    \"SCOPE_RULE_UNCONFIRMED\",\n    \"TAX_AUTHORITY_UNCONFIRMED\"\n  ]\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/trades/SYNTHETIC-S7-TRADE/tax-refund-cases\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Accept: application/json' \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 77777777-7777-4777-8777-000000000001' \\\n  --header 'If-Match: \"s7-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"tradeRevisionNumber\":1,\"scope\":{\"reference\":\"SYNTHETIC-PREPARATION-SCOPE\",\"customsRevisionReferences\":[],\"certificateReferences\":[]},\"taxpayerSnapshotReference\":\"SYNTHETIC-A-SNAPSHOT\",\"currencyCode\":\"CNY\"}'"
+  },
+  {
+    "id": "s7-read",
+    "audience": "外部服务",
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE",
+      "headers": {
+        "Authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+        "Accept": "application/json"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s7-case-1\""
+      },
+      "body": {
+        "taxCaseNumber": "SYNTHETIC-S7-CASE",
+        "tradeNumber": "SYNTHETIC-S7-TRADE",
+        "taxTypeCode": 2,
+        "scope": {
+          "reference": "SYNTHETIC-PREPARATION-SCOPE",
+          "customsRevisionReferences": [],
+          "certificateReferences": []
+        },
+        "status": "CASE_STATUS_PREPARING",
+        "currencyCode": "CNY",
+        "version": 1,
+        "etag": "\"s7-case-1\"",
+        "missingGates": [
+          "SCOPE_RULE_UNCONFIRMED",
+          "TAX_AUTHORITY_UNCONFIRMED"
+        ]
+      }
+    },
+    "note": "设计合成输入；官方/银行成功未验证，未接渠道明确阻断",
+    "rpc": "GetRefundCase",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetRefundCaseReqMsg",
+    "responseType": "GetRefundCaseRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s7-case-1\"\n\n{\n  \"taxCaseNumber\": \"SYNTHETIC-S7-CASE\",\n  \"tradeNumber\": \"SYNTHETIC-S7-TRADE\",\n  \"taxTypeCode\": 2,\n  \"scope\": {\n    \"reference\": \"SYNTHETIC-PREPARATION-SCOPE\",\n    \"customsRevisionReferences\": [],\n    \"certificateReferences\": []\n  },\n  \"status\": \"CASE_STATUS_PREPARING\",\n  \"currencyCode\": \"CNY\",\n  \"version\": 1,\n  \"etag\": \"\\\"s7-case-1\\\"\",\n  \"missingGates\": [\n    \"SCOPE_RULE_UNCONFIRMED\",\n    \"TAX_AUTHORITY_UNCONFIRMED\"\n  ]\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Accept: application/json'"
+  },
+  {
+    "id": "s7-package",
+    "audience": "外部服务",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/submission-revisions",
+      "headers": {
+        "Authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "77777777-7777-4777-8777-000000000003",
+        "If-Match": "\"s7-case-1\"",
+        "X-Confirmation-Id": "SYNTHETIC-NOT-A-CONFIRMATION"
+      },
+      "body": {
+        "approvedTradeSnapshotReference": "SYNTHETIC-APPROVED-SNAPSHOT",
+        "scope": {
+          "reference": "SYNTHETIC-PREPARATION-SCOPE",
+          "customsRevisionReferences": [],
+          "certificateReferences": []
+        },
+        "currencyCode": "CNY",
+        "files": [
+          {
+            "fileNumber": "SYNTHETIC-S7-FILE",
+            "versionId": "SYNTHETIC-NOT-A-REAL-S3-VERSION",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "purposeCode": 24,
+            "revisionNumber": 1
+          }
+        ]
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s7-submission-1\"",
+        "Location": "/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/submission-revisions/1"
+      },
+      "body": {
+        "taxCaseNumber": "SYNTHETIC-S7-CASE",
+        "submissionRevisionNumber": 1,
+        "content": {
+          "approvedTradeSnapshotReference": "SYNTHETIC-APPROVED-SNAPSHOT",
+          "scope": {
+            "reference": "SYNTHETIC-PREPARATION-SCOPE",
+            "customsRevisionReferences": [],
+            "certificateReferences": []
+          },
+          "currencyCode": "CNY",
+          "files": [
+            {
+              "fileNumber": "SYNTHETIC-S7-FILE",
+              "versionId": "SYNTHETIC-NOT-A-REAL-S3-VERSION",
+              "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "purposeCode": 24,
+              "revisionNumber": 1
+            }
+          ]
+        },
+        "packageHash": "e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c",
+        "executionStatus": "not_dispatched",
+        "etag": "\"s7-submission-1\""
+      }
+    },
+    "note": "设计合成输入；官方/银行成功未验证，未接渠道明确阻断",
+    "rpc": "CreateRefundPackage",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateRefundPackageReqMsg",
+    "responseType": "CreateRefundPackageRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s7-submission-1\"\nLocation: /api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/submission-revisions/1\n\n{\n  \"taxCaseNumber\": \"SYNTHETIC-S7-CASE\",\n  \"submissionRevisionNumber\": 1,\n  \"content\": {\n    \"approvedTradeSnapshotReference\": \"SYNTHETIC-APPROVED-SNAPSHOT\",\n    \"scope\": {\n      \"reference\": \"SYNTHETIC-PREPARATION-SCOPE\",\n      \"customsRevisionReferences\": [],\n      \"certificateReferences\": []\n    },\n    \"currencyCode\": \"CNY\",\n    \"files\": [\n      {\n        \"fileNumber\": \"SYNTHETIC-S7-FILE\",\n        \"versionId\": \"SYNTHETIC-NOT-A-REAL-S3-VERSION\",\n        \"sha256\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n        \"purposeCode\": 24,\n        \"revisionNumber\": 1\n      }\n    ]\n  },\n  \"packageHash\": \"e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c\",\n  \"executionStatus\": \"not_dispatched\",\n  \"etag\": \"\\\"s7-submission-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/submission-revisions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Accept: application/json' \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 77777777-7777-4777-8777-000000000003' \\\n  --header 'If-Match: \"s7-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"approvedTradeSnapshotReference\":\"SYNTHETIC-APPROVED-SNAPSHOT\",\"scope\":{\"reference\":\"SYNTHETIC-PREPARATION-SCOPE\",\"customsRevisionReferences\":[],\"certificateReferences\":[]},\"currencyCode\":\"CNY\",\"files\":[{\"fileNumber\":\"SYNTHETIC-S7-FILE\",\"versionId\":\"SYNTHETIC-NOT-A-REAL-S3-VERSION\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"purposeCode\":24,\"revisionNumber\":1}]}'"
+  },
+  {
+    "id": "s7-submission",
+    "audience": "外部服务",
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/submission-revisions/1",
+      "headers": {
+        "Authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+        "Accept": "application/json"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s7-submission-1\""
+      },
+      "body": {
+        "taxCaseNumber": "SYNTHETIC-S7-CASE",
+        "submissionRevisionNumber": 1,
+        "content": {
+          "approvedTradeSnapshotReference": "SYNTHETIC-APPROVED-SNAPSHOT",
+          "scope": {
+            "reference": "SYNTHETIC-PREPARATION-SCOPE",
+            "customsRevisionReferences": [],
+            "certificateReferences": []
+          },
+          "currencyCode": "CNY",
+          "files": [
+            {
+              "fileNumber": "SYNTHETIC-S7-FILE",
+              "versionId": "SYNTHETIC-NOT-A-REAL-S3-VERSION",
+              "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "purposeCode": 24,
+              "revisionNumber": 1
+            }
+          ]
+        },
+        "packageHash": "e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c",
+        "executionStatus": "not_dispatched",
+        "etag": "\"s7-submission-1\""
+      }
+    },
+    "note": "设计合成输入；官方/银行成功未验证，未接渠道明确阻断",
+    "rpc": "GetRefundSubmission",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetRefundSubmissionReqMsg",
+    "responseType": "GetRefundSubmissionRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s7-submission-1\"\n\n{\n  \"taxCaseNumber\": \"SYNTHETIC-S7-CASE\",\n  \"submissionRevisionNumber\": 1,\n  \"content\": {\n    \"approvedTradeSnapshotReference\": \"SYNTHETIC-APPROVED-SNAPSHOT\",\n    \"scope\": {\n      \"reference\": \"SYNTHETIC-PREPARATION-SCOPE\",\n      \"customsRevisionReferences\": [],\n      \"certificateReferences\": []\n    },\n    \"currencyCode\": \"CNY\",\n    \"files\": [\n      {\n        \"fileNumber\": \"SYNTHETIC-S7-FILE\",\n        \"versionId\": \"SYNTHETIC-NOT-A-REAL-S3-VERSION\",\n        \"sha256\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n        \"purposeCode\": 24,\n        \"revisionNumber\": 1\n      }\n    ]\n  },\n  \"packageHash\": \"e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c\",\n  \"executionStatus\": \"not_dispatched\",\n  \"etag\": \"\\\"s7-submission-1\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/submission-revisions/1\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Accept: application/json'"
+  },
+  {
+    "id": "s7-context",
+    "audience": "内部运营",
+    "request": {
+      "method": "GET",
+      "path": "/internal/v1/tax-refund-cases/SYNTHETIC-S7-CASE/review-context",
+      "headers": {
+        "Authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+        "Accept": "application/json"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s7-context-1\""
+      },
+      "body": {
+        "taxCase": {
+          "taxCaseNumber": "SYNTHETIC-S7-CASE",
+          "tradeNumber": "SYNTHETIC-S7-TRADE",
+          "taxTypeCode": 2,
+          "scope": {
+            "reference": "SYNTHETIC-PREPARATION-SCOPE",
+            "customsRevisionReferences": [],
+            "certificateReferences": []
+          },
+          "status": "CASE_STATUS_PREPARING",
+          "currencyCode": "CNY",
+          "version": 1,
+          "etag": "\"s7-case-1\"",
+          "missingGates": [
+            "SCOPE_RULE_UNCONFIRMED",
+            "TAX_AUTHORITY_UNCONFIRMED"
+          ]
+        },
+        "submissions": [
+          {
+            "taxCaseNumber": "SYNTHETIC-S7-CASE",
+            "submissionRevisionNumber": 1,
+            "content": {
+              "approvedTradeSnapshotReference": "SYNTHETIC-APPROVED-SNAPSHOT",
+              "scope": {
+                "reference": "SYNTHETIC-PREPARATION-SCOPE",
+                "customsRevisionReferences": [],
+                "certificateReferences": []
+              },
+              "currencyCode": "CNY",
+              "files": [
+                {
+                  "fileNumber": "SYNTHETIC-S7-FILE",
+                  "versionId": "SYNTHETIC-NOT-A-REAL-S3-VERSION",
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "purposeCode": 24,
+                  "revisionNumber": 1
+                }
+              ]
+            },
+            "packageHash": "e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c",
+            "executionStatus": "not_dispatched",
+            "etag": "\"s7-submission-1\""
+          }
+        ],
+        "missingGates": [
+          "SCOPE_RULE_UNCONFIRMED",
+          "TAX_AUTHORITY_UNCONFIRMED"
+        ],
+        "verifiedEventReferences": []
+      }
+    },
+    "note": "设计合成输入；官方/银行成功未验证，未接渠道明确阻断",
+    "rpc": "GetRefundReviewContext",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetRefundReviewContextReqMsg",
+    "responseType": "GetRefundReviewContextRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s7-context-1\"\n\n{\n  \"taxCase\": {\n    \"taxCaseNumber\": \"SYNTHETIC-S7-CASE\",\n    \"tradeNumber\": \"SYNTHETIC-S7-TRADE\",\n    \"taxTypeCode\": 2,\n    \"scope\": {\n      \"reference\": \"SYNTHETIC-PREPARATION-SCOPE\",\n      \"customsRevisionReferences\": [],\n      \"certificateReferences\": []\n    },\n    \"status\": \"CASE_STATUS_PREPARING\",\n    \"currencyCode\": \"CNY\",\n    \"version\": 1,\n    \"etag\": \"\\\"s7-case-1\\\"\",\n    \"missingGates\": [\n      \"SCOPE_RULE_UNCONFIRMED\",\n      \"TAX_AUTHORITY_UNCONFIRMED\"\n    ]\n  },\n  \"submissions\": [\n    {\n      \"taxCaseNumber\": \"SYNTHETIC-S7-CASE\",\n      \"submissionRevisionNumber\": 1,\n      \"content\": {\n        \"approvedTradeSnapshotReference\": \"SYNTHETIC-APPROVED-SNAPSHOT\",\n        \"scope\": {\n          \"reference\": \"SYNTHETIC-PREPARATION-SCOPE\",\n          \"customsRevisionReferences\": [],\n          \"certificateReferences\": []\n        },\n        \"currencyCode\": \"CNY\",\n        \"files\": [\n          {\n            \"fileNumber\": \"SYNTHETIC-S7-FILE\",\n            \"versionId\": \"SYNTHETIC-NOT-A-REAL-S3-VERSION\",\n            \"sha256\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n            \"purposeCode\": 24,\n            \"revisionNumber\": 1\n          }\n        ]\n      },\n      \"packageHash\": \"e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c\",\n      \"executionStatus\": \"not_dispatched\",\n      \"etag\": \"\\\"s7-submission-1\\\"\"\n    }\n  ],\n  \"missingGates\": [\n    \"SCOPE_RULE_UNCONFIRMED\",\n    \"TAX_AUTHORITY_UNCONFIRMED\"\n  ],\n  \"verifiedEventReferences\": []\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/internal/v1/tax-refund-cases/SYNTHETIC-S7-CASE/review-context\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Accept: application/json'"
+  },
+  {
+    "id": "s7-review",
+    "audience": "内部运营",
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/tax-refund-cases/SYNTHETIC-S7-CASE/review-decisions",
+      "headers": {
+        "Authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "77777777-7777-4777-8777-000000000006",
+        "If-Match": "\"s7-case-1\"",
+        "X-Confirmation-Id": "SYNTHETIC-NOT-A-CONFIRMATION"
+      },
+      "body": {
+        "submissionRevisionNumber": 1,
+        "packageHash": "e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c",
+        "decision": "REVIEW_DECISION_RETURN",
+        "reason": "范围/责任未确认，退回补料",
+        "verifiedBasisReferences": []
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s7-case-2\"",
+        "Location": "/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/operations/SYNTHETIC-S7-OP"
+      },
+      "body": {
+        "taxCaseNumber": "SYNTHETIC-S7-CASE",
+        "operationNumber": "SYNTHETIC-S7-OP",
+        "result": "internal_synthetic_only",
+        "etag": "\"s7-case-2\""
+      }
+    },
+    "note": "设计合成输入；官方/银行成功未验证，未接渠道明确阻断",
+    "rpc": "CreateRefundReview",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateRefundReviewReqMsg",
+    "responseType": "CreateRefundReviewRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s7-case-2\"\nLocation: /api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/operations/SYNTHETIC-S7-OP\n\n{\n  \"taxCaseNumber\": \"SYNTHETIC-S7-CASE\",\n  \"operationNumber\": \"SYNTHETIC-S7-OP\",\n  \"result\": \"internal_synthetic_only\",\n  \"etag\": \"\\\"s7-case-2\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/tax-refund-cases/SYNTHETIC-S7-CASE/review-decisions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Accept: application/json' \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 77777777-7777-4777-8777-000000000006' \\\n  --header 'If-Match: \"s7-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"submissionRevisionNumber\":1,\"packageHash\":\"e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c\",\"decision\":\"REVIEW_DECISION_RETURN\",\"reason\":\"范围/责任未确认，退回补料\",\"verifiedBasisReferences\":[]}'"
+  },
+  {
+    "id": "s7-dispatch",
+    "audience": "外部服务",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/dispatch-intents",
+      "headers": {
+        "Authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "77777777-7777-4777-8777-000000000007",
+        "If-Match": "\"s7-case-1\"",
+        "X-Confirmation-Id": "SYNTHETIC-NOT-A-CONFIRMATION"
+      },
+      "body": {
+        "submissionRevisionNumber": 1,
+        "packageHash": "e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c",
+        "authorizationBasisReference": "UNVERIFIED-NOT-AUTHORITY"
+      }
+    },
+    "response": {
+      "status": 422,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:trade:problem:scope_rule_unconfirmed",
+        "title": "SCOPE_RULE_UNCONFIRMED",
+        "status": 422,
+        "detail": "缺真实权威依据，失败关闭；不产生正式成功事实",
+        "instance": "/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/dispatch-intents",
+        "errors": [
+          {
+            "pointer": "/intent",
+            "code": "SCOPE_RULE_UNCONFIRMED",
+            "detail": "补齐本意图的真实权威依据"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "note": "设计合成输入；官方/银行成功未验证，未接渠道明确阻断",
+    "rpc": "CreateRefundDispatch",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateRefundDispatchReqMsg",
+    "responseType": "CreateRefundDispatchRspMsg",
+    "httpResponse": "HTTP/1.1 422 Unprocessable Content\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:trade:problem:scope_rule_unconfirmed\",\n  \"title\": \"SCOPE_RULE_UNCONFIRMED\",\n  \"status\": 422,\n  \"detail\": \"缺真实权威依据，失败关闭；不产生正式成功事实\",\n  \"instance\": \"/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/dispatch-intents\",\n  \"errors\": [\n    {\n      \"pointer\": \"/intent\",\n      \"code\": \"SCOPE_RULE_UNCONFIRMED\",\n      \"detail\": \"补齐本意图的真实权威依据\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/dispatch-intents\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Accept: application/json' \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 77777777-7777-4777-8777-000000000007' \\\n  --header 'If-Match: \"s7-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"submissionRevisionNumber\":1,\"packageHash\":\"e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c\",\"authorizationBasisReference\":\"UNVERIFIED-NOT-AUTHORITY\"}'"
+  },
+  {
+    "id": "s7-notice",
+    "audience": "内部运营",
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/tax-refund-cases/SYNTHETIC-S7-CASE/official-notices",
+      "headers": {
+        "Authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "77777777-7777-4777-8777-000000000008",
+        "If-Match": "\"s7-case-1\"",
+        "X-Confirmation-Id": "SYNTHETIC-NOT-A-CONFIRMATION"
+      },
+      "body": {
+        "submissionRevisionNumber": 1,
+        "externalEventKey": "",
+        "authorityReferenceNumber": "",
+        "kind": "OFFICIAL_KIND_ACCEPTED",
+        "originalNotice": {
+          "fileNumber": "SYNTHETIC-S7-FILE",
+          "versionId": "SYNTHETIC-NOT-A-REAL-S3-VERSION",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "purposeCode": 21,
+          "revisionNumber": 1
+        },
+        "verifiedSourceReference": "",
+        "occurredAt": "2026-10-25T00:00:00Z",
+        "currencyCode": "CNY",
+        "dispatchReference": "UNVERIFIED"
+      }
+    },
+    "response": {
+      "status": 422,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:trade:problem:official_evidence_required",
+        "title": "OFFICIAL_EVIDENCE_REQUIRED",
+        "status": 422,
+        "detail": "缺真实权威依据，失败关闭；不产生正式成功事实",
+        "instance": "/internal/v1/tax-refund-cases/SYNTHETIC-S7-CASE/official-notices",
+        "errors": [
+          {
+            "pointer": "/notice",
+            "code": "OFFICIAL_EVIDENCE_REQUIRED",
+            "detail": "补齐本意图的真实权威依据"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "note": "设计合成输入；官方/银行成功未验证，未接渠道明确阻断",
+    "rpc": "CreateRefundNotice",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateRefundNoticeReqMsg",
+    "responseType": "CreateRefundNoticeRspMsg",
+    "httpResponse": "HTTP/1.1 422 Unprocessable Content\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:trade:problem:official_evidence_required\",\n  \"title\": \"OFFICIAL_EVIDENCE_REQUIRED\",\n  \"status\": 422,\n  \"detail\": \"缺真实权威依据，失败关闭；不产生正式成功事实\",\n  \"instance\": \"/internal/v1/tax-refund-cases/SYNTHETIC-S7-CASE/official-notices\",\n  \"errors\": [\n    {\n      \"pointer\": \"/notice\",\n      \"code\": \"OFFICIAL_EVIDENCE_REQUIRED\",\n      \"detail\": \"补齐本意图的真实权威依据\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/tax-refund-cases/SYNTHETIC-S7-CASE/official-notices\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Accept: application/json' \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 77777777-7777-4777-8777-000000000008' \\\n  --header 'If-Match: \"s7-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"submissionRevisionNumber\":1,\"externalEventKey\":\"\",\"authorityReferenceNumber\":\"\",\"kind\":\"OFFICIAL_KIND_ACCEPTED\",\"originalNotice\":{\"fileNumber\":\"SYNTHETIC-S7-FILE\",\"versionId\":\"SYNTHETIC-NOT-A-REAL-S3-VERSION\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"purposeCode\":21,\"revisionNumber\":1},\"verifiedSourceReference\":\"\",\"occurredAt\":\"2026-10-25T00:00:00Z\",\"currencyCode\":\"CNY\",\"dispatchReference\":\"UNVERIFIED\"}'"
+  },
+  {
+    "id": "s7-correction",
+    "audience": "外部服务",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/correction-revisions",
+      "headers": {
+        "Authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "77777777-7777-4777-8777-000000000009",
+        "If-Match": "\"s7-case-1\"",
+        "X-Confirmation-Id": "SYNTHETIC-NOT-A-CONFIRMATION"
+      },
+      "body": {
+        "previousSubmissionRevisionNumber": 1,
+        "correctionEventNumber": "",
+        "replacement": {
+          "approvedTradeSnapshotReference": "SYNTHETIC-APPROVED-SNAPSHOT",
+          "scope": {
+            "reference": "SYNTHETIC-PREPARATION-SCOPE",
+            "customsRevisionReferences": [],
+            "certificateReferences": []
+          },
+          "currencyCode": "CNY",
+          "files": [
+            {
+              "fileNumber": "SYNTHETIC-S7-FILE",
+              "versionId": "SYNTHETIC-NOT-A-REAL-S3-VERSION",
+              "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "purposeCode": 24,
+              "revisionNumber": 1
+            }
+          ]
+        }
+      }
+    },
+    "response": {
+      "status": 422,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:trade:problem:official_evidence_required",
+        "title": "OFFICIAL_EVIDENCE_REQUIRED",
+        "status": 422,
+        "detail": "缺真实权威依据，失败关闭；不产生正式成功事实",
+        "instance": "/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/correction-revisions",
+        "errors": [
+          {
+            "pointer": "/correction",
+            "code": "OFFICIAL_EVIDENCE_REQUIRED",
+            "detail": "补齐本意图的真实权威依据"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "note": "设计合成输入；官方/银行成功未验证，未接渠道明确阻断",
+    "rpc": "CreateRefundCorrection",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateRefundCorrectionReqMsg",
+    "responseType": "CreateRefundCorrectionRspMsg",
+    "httpResponse": "HTTP/1.1 422 Unprocessable Content\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:trade:problem:official_evidence_required\",\n  \"title\": \"OFFICIAL_EVIDENCE_REQUIRED\",\n  \"status\": 422,\n  \"detail\": \"缺真实权威依据，失败关闭；不产生正式成功事实\",\n  \"instance\": \"/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/correction-revisions\",\n  \"errors\": [\n    {\n      \"pointer\": \"/correction\",\n      \"code\": \"OFFICIAL_EVIDENCE_REQUIRED\",\n      \"detail\": \"补齐本意图的真实权威依据\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/correction-revisions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Accept: application/json' \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 77777777-7777-4777-8777-000000000009' \\\n  --header 'If-Match: \"s7-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"previousSubmissionRevisionNumber\":1,\"correctionEventNumber\":\"\",\"replacement\":{\"approvedTradeSnapshotReference\":\"SYNTHETIC-APPROVED-SNAPSHOT\",\"scope\":{\"reference\":\"SYNTHETIC-PREPARATION-SCOPE\",\"customsRevisionReferences\":[],\"certificateReferences\":[]},\"currencyCode\":\"CNY\",\"files\":[{\"fileNumber\":\"SYNTHETIC-S7-FILE\",\"versionId\":\"SYNTHETIC-NOT-A-REAL-S3-VERSION\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"purposeCode\":24,\"revisionNumber\":1}]}}'"
+  },
+  {
+    "id": "s7-followup",
+    "audience": "外部服务",
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/follow-ups",
+      "headers": {
+        "Authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "77777777-7777-4777-8777-000000000010",
+        "If-Match": "\"s7-case-1\"",
+        "X-Confirmation-Id": "SYNTHETIC-NOT-A-CONFIRMATION"
+      },
+      "body": {
+        "submissionRevisionNumber": 1,
+        "ownerReference": "SYNTHETIC-A-OPERATOR",
+        "action": "等待主管机关确认范围/职责，不猜截止日期"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s7-case-2\"",
+        "Location": "/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/operations/SYNTHETIC-S7-OP"
+      },
+      "body": {
+        "taxCaseNumber": "SYNTHETIC-S7-CASE",
+        "operationNumber": "SYNTHETIC-S7-OP",
+        "result": "internal_synthetic_only",
+        "etag": "\"s7-case-2\""
+      }
+    },
+    "note": "设计合成输入；官方/银行成功未验证，未接渠道明确阻断",
+    "rpc": "CreateRefundFollowUp",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateRefundFollowUpReqMsg",
+    "responseType": "CreateRefundFollowUpRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s7-case-2\"\nLocation: /api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/operations/SYNTHETIC-S7-OP\n\n{\n  \"taxCaseNumber\": \"SYNTHETIC-S7-CASE\",\n  \"operationNumber\": \"SYNTHETIC-S7-OP\",\n  \"result\": \"internal_synthetic_only\",\n  \"etag\": \"\\\"s7-case-2\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/follow-ups\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Accept: application/json' \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 77777777-7777-4777-8777-000000000010' \\\n  --header 'If-Match: \"s7-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"submissionRevisionNumber\":1,\"ownerReference\":\"SYNTHETIC-A-OPERATOR\",\"action\":\"等待主管机关确认范围/职责，不猜截止日期\"}'"
+  },
+  {
+    "id": "s7-credit",
+    "audience": "内部运营",
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/tax-refund-cases/SYNTHETIC-S7-CASE/credit-reconciliations",
+      "headers": {
+        "Authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "77777777-7777-4777-8777-000000000011",
+        "If-Match": "\"s7-case-1\"",
+        "X-Confirmation-Id": "SYNTHETIC-NOT-A-CONFIRMATION"
+      },
+      "body": {
+        "submissionRevisionNumber": 1,
+        "officialDecisionEventNumber": "",
+        "controlledFundObservationReference": "",
+        "recipientAccountBasisReference": ""
+      }
+    },
+    "response": {
+      "status": 422,
+      "headers": {
+        "Content-Type": "application/problem+json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "type": "urn:trade:problem:refund_observation_unavailable",
+        "title": "REFUND_OBSERVATION_UNAVAILABLE",
+        "status": 422,
+        "detail": "缺真实权威依据，失败关闭；不产生正式成功事实",
+        "instance": "/internal/v1/tax-refund-cases/SYNTHETIC-S7-CASE/credit-reconciliations",
+        "errors": [
+          {
+            "pointer": "/reconciliation",
+            "code": "REFUND_OBSERVATION_UNAVAILABLE",
+            "detail": "补齐本意图的真实权威依据"
+          }
+        ],
+        "outcomeUnknown": false,
+        "retryAfterMs": 0
+      }
+    },
+    "note": "设计合成输入；官方/银行成功未验证，未接渠道明确阻断",
+    "rpc": "ReconcileRefundCredit",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "ReconcileRefundCreditReqMsg",
+    "responseType": "ReconcileRefundCreditRspMsg",
+    "httpResponse": "HTTP/1.1 422 Unprocessable Content\nContent-Type: application/problem+json\nCache-Control: no-store\n\n{\n  \"type\": \"urn:trade:problem:refund_observation_unavailable\",\n  \"title\": \"REFUND_OBSERVATION_UNAVAILABLE\",\n  \"status\": 422,\n  \"detail\": \"缺真实权威依据，失败关闭；不产生正式成功事实\",\n  \"instance\": \"/internal/v1/tax-refund-cases/SYNTHETIC-S7-CASE/credit-reconciliations\",\n  \"errors\": [\n    {\n      \"pointer\": \"/reconciliation\",\n      \"code\": \"REFUND_OBSERVATION_UNAVAILABLE\",\n      \"detail\": \"补齐本意图的真实权威依据\"\n    }\n  ],\n  \"outcomeUnknown\": false,\n  \"retryAfterMs\": 0\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/tax-refund-cases/SYNTHETIC-S7-CASE/credit-reconciliations\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Accept: application/json' \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: 77777777-7777-4777-8777-000000000011' \\\n  --header 'If-Match: \"s7-case-1\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"submissionRevisionNumber\":1,\"officialDecisionEventNumber\":\"\",\"controlledFundObservationReference\":\"\",\"recipientAccountBasisReference\":\"\"}'"
+  },
+  {
+    "id": "s7-recovery",
+    "audience": "外部服务",
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/operations/SYNTHETIC-S7-OP",
+      "headers": {
+        "Authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+        "Accept": "application/json"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s7-context-1\""
+      },
+      "body": {
+        "operationNumber": "SYNTHETIC-S7-OP",
+        "taxCaseNumber": "SYNTHETIC-S7-CASE",
+        "executionStatus": "not_dispatched",
+        "originalReceipt": {
+          "taxCaseNumber": "SYNTHETIC-S7-CASE",
+          "operationNumber": "SYNTHETIC-S7-OP",
+          "result": "internal_synthetic_only",
+          "etag": "\"s7-case-2\""
+        }
+      }
+    },
+    "note": "设计合成输入；官方/银行成功未验证，未接渠道明确阻断",
+    "rpc": "GetRefundOperation",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetRefundOperationReqMsg",
+    "responseType": "GetRefundOperationRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s7-context-1\"\n\n{\n  \"operationNumber\": \"SYNTHETIC-S7-OP\",\n  \"taxCaseNumber\": \"SYNTHETIC-S7-CASE\",\n  \"executionStatus\": \"not_dispatched\",\n  \"originalReceipt\": {\n    \"taxCaseNumber\": \"SYNTHETIC-S7-CASE\",\n    \"operationNumber\": \"SYNTHETIC-S7-OP\",\n    \"result\": \"internal_synthetic_only\",\n    \"etag\": \"\\\"s7-case-2\\\"\"\n  }\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/tax-refund-cases/SYNTHETIC-S7-CASE/operations/SYNTHETIC-S7-OP\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Accept: application/json'"
+  }
+]

@@ -1,0 +1,7 @@
+sequenceDiagram
+    actor PERSON as 结案申请人
+    participant SYSTEM as 代理出口系统
+    PERSON->>SYSTEM: 选择最新核对报告并申请正常结案
+    SYSTEM-->>PERSON: 显示当前资料版本、涉及事项、缺项和本方可办操作
+    PERSON->>SYSTEM: 核对本次内容并确认提交
+    SYSTEM-->>PERSON: 符合条件时等待独立审批，否则列出未满足项；交易阶段暂不改变

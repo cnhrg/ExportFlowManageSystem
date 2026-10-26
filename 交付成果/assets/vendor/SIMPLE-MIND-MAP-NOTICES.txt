@@ -1,0 +1,26 @@
+SimpleMindMap browser core bundle
+Package: simple-mind-map 0.14.0-fix.3
+Source: https://github.com/wanglin2/mind-map
+License: MIT
+
+The bundled core was built from the package's framework-independent JavaScript
+entry point. Optional plugins were excluded. The page loads this bundle locally.
+The complete SimpleMindMap license is in SIMPLE-MIND-MAP-LICENSE.txt.
+
+Runtime dependencies included in the bundle:
+
+@svgdotjs/svg.js 3.2.0, MIT
+License: SVG-JS-LICENSE.txt
+https://github.com/svgdotjs/svg.js
+
+deepmerge 1.5.2, MIT
+License: DEEPMERGE-LICENSE.txt
+https://github.com/TehShrike/deepmerge
+
+eventemitter3 4.0.7, MIT
+License: EVENTEMITTER3-LICENSE.txt
+https://github.com/primus/eventemitter3
+
+uuid 9.0.1, MIT
+License: UUID-LICENSE.txt
+https://github.com/uuidjs/uuid

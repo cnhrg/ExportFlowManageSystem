@@ -1,0 +1,7 @@
+sequenceDiagram
+    actor PERSON as 独立结案审批人
+    participant SYSTEM as 代理出口系统
+    PERSON->>SYSTEM: 查看原申请和对应报告，独立批准或退回
+    SYSTEM-->>PERSON: 显示当前资料版本、涉及事项、缺项和本方可办操作
+    PERSON->>SYSTEM: 核对本次内容并确认提交
+    SYSTEM-->>PERSON: 通过则正常结案；退回则保持已批准阶段，并列明原因

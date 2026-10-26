@@ -1,0 +1,359 @@
+syntax = "proto3";
+package trade.contracts.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "trade/filing/v1/filing.proto";
+
+// Same monolith, two audiences; NOT two microservices. All writes require an
+// idempotency-key, strong if-match where specified, and confirmation-id.
+// Provider notifications use registered provider authentication instead.
+// HTTP adapter defines Location/ETag/status; non-OK RPC uses filing.v1.RpcFailure.
+service ExternalContractService {
+  // Deadline client/server: 5000/4000 ms. Supplier-owned view, no payer private declaration.
+  rpc GetTradeContractBasis(GetTradeContractBasisReqMsg) returns (GetTradeContractBasisRspMsg) {
+    option (google.api.http) = { get: "/api/v1/trades/{trade_number}/contract-basis" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateContract(CreateContractReqMsg) returns (CreateContractRspMsg) {
+    option (google.api.http) = { post: "/api/v1/contracts" body: "contract" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetContract(GetContractReqMsg) returns (GetContractRspMsg) {
+    option (google.api.http) = { get: "/api/v1/contracts/{contract_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetContractRevision(GetContractRevisionReqMsg) returns (GetContractRevisionRspMsg) {
+    option (google.api.http) = { get: "/api/v1/contracts/{contract_number}/revisions/{revision_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Draft only; if-match required.
+  rpc ReplaceContractDraft(ReplaceContractDraftReqMsg) returns (ReplaceContractDraftRspMsg) {
+    option (google.api.http) = { put: "/api/v1/contracts/{contract_number}/revisions/{revision_number}" body: "content" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. if-match of current working revision required.
+  rpc CreateContractRevision(CreateContractRevisionReqMsg) returns (CreateContractRevisionRspMsg) {
+    option (google.api.http) = { post: "/api/v1/contracts/{contract_number}/revisions" body: "revision" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. if-match required.
+  rpc CreateContractReviewSubmission(CreateContractReviewSubmissionReqMsg) returns (CreateContractReviewSubmissionRspMsg) {
+    option (google.api.http) = { post: "/api/v1/contracts/{contract_number}/revisions/{revision_number}/review-submissions" body: "submission" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Durable request; remote work after commit.
+  rpc CreateSignatureRequest(CreateSignatureRequestReqMsg) returns (CreateSignatureRequestRspMsg) {
+    option (google.api.http) = { post: "/api/v1/contracts/{contract_number}/revisions/{revision_number}/signature-requests" body: "signature" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetSignatureRequest(GetSignatureRequestReqMsg) returns (GetSignatureRequestRspMsg) {
+    option (google.api.http) = { get: "/api/v1/signature-requests/{signature_request_id}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Signer derived from current authenticated identity.
+  rpc CreateSigningSession(CreateSigningSessionReqMsg) returns (CreateSigningSessionRspMsg) {
+    option (google.api.http) = { post: "/api/v1/signature-requests/{signature_request_id}/signing-sessions" body: "session" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms. Current signer only; no URL refresh after expiry.
+  rpc GetSigningSession(GetSigningSessionReqMsg) returns (GetSigningSessionRspMsg) {
+    option (google.api.http) = { get: "/api/v1/signing-sessions/{signing_session_id}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Dedicated provider auth, raw-body signature verification.
+  rpc CreateSignatureNotification(CreateSignatureNotificationReqMsg) returns (CreateSignatureNotificationRspMsg) {
+    option (google.api.http) = { post: "/api/v1/signature-notifications" body: "notification" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateAgreementApplication(CreateAgreementApplicationReqMsg) returns (CreateAgreementApplicationRspMsg) {
+    option (google.api.http) = { post: "/api/v1/trades/{trade_number}/agreement-applications" body: "application" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetAgreementApplication(GetAgreementApplicationReqMsg) returns (GetAgreementApplicationRspMsg) {
+    option (google.api.http) = { get: "/api/v1/trades/{trade_number}/agreement-applications/{application_id}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCustomsAuthorization(CreateCustomsAuthorizationReqMsg) returns (CreateCustomsAuthorizationRspMsg) {
+    option (google.api.http) = { post: "/api/v1/trades/{trade_number}/customs-authorizations" body: "authorization" response_body: "resource" };
+  }
+}
+service InternalContractOperationsService {
+  // Deadline client/server: 5000/4000 ms. Exact submitted snapshot or current typed view.
+  rpc GetTradeReviewContext(GetTradeReviewContextReqMsg) returns (GetTradeReviewContextRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/trades/{trade_number}/review-context" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Reopen status 3 or correct status 8; no on-behalf filing.
+  rpc CreateTradeRevision(CreateTradeRevisionReqMsg) returns (CreateTradeRevisionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/revisions" body: "revision" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms. Internal reviewer/operator audience, not external credentials.
+  rpc GetInternalContractRevision(GetInternalContractRevisionReqMsg) returns (GetInternalContractRevisionRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/contracts/{contract_number}/revisions/{revision_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. No active/unknown signing outcome; legal evidence required.
+  rpc CreateContractTermination(CreateContractTerminationReqMsg) returns (CreateContractTerminationRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/contracts/{contract_number}/revisions/{revision_number}/termination-decisions" body: "termination" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Internal audience only; no recursive confirmation.
+  rpc CreateInternalOperationConfirmation(CreateInternalOperationConfirmationReqMsg) returns (CreateInternalOperationConfirmationRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/operation-confirmations" body: "intent" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetInternalOperationConfirmation(GetInternalOperationConfirmationReqMsg) returns (GetInternalOperationConfirmationRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/operation-confirmations/{confirmation_id}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateTradeReviewSubmission(CreateTradeReviewSubmissionReqMsg) returns (CreateTradeReviewSubmissionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/review-submissions" body: "submission" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateTradeReviewDecision(CreateTradeReviewDecisionReqMsg) returns (CreateTradeReviewDecisionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/review-decisions" body: "decision" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateContractReviewDecision(CreateContractReviewDecisionReqMsg) returns (CreateContractReviewDecisionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/contracts/{contract_number}/revisions/{revision_number}/review-decisions" body: "decision" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateContractActivation(CreateContractActivationReqMsg) returns (CreateContractActivationRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/contracts/{contract_number}/revisions/{revision_number}/activation-decisions" body: "activation" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCustomsAgentRecognition(CreateCustomsAgentRecognitionReqMsg) returns (CreateCustomsAgentRecognitionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/customs-agent-recognitions" body: "recognition" response_body: "resource" };
+  }
+}
+enum ContractPurpose {
+  CONTRACT_PURPOSE_UNSPECIFIED = 0;
+  CONTRACT_PURPOSE_EXPORT_AGENCY = 10;
+  CONTRACT_PURPOSE_LOGISTICS = 11;
+  CONTRACT_PURPOSE_CUSTOMS_SERVICE = 12;
+}
+enum ContractScope {
+  CONTRACT_SCOPE_UNSPECIFIED = 0;
+  CONTRACT_SCOPE_PER_TRADE = 1;
+  CONTRACT_SCOPE_FRAMEWORK = 2;
+}
+enum RevisionStatus {
+  REVISION_STATUS_UNSPECIFIED = 0;
+  REVISION_STATUS_DRAFT = 1;
+  REVISION_STATUS_IN_REVIEW = 2;
+  REVISION_STATUS_RETURNED = 3;
+  REVISION_STATUS_AWAITING_SIGNATURE = 4;
+  REVISION_STATUS_SIGNED = 5;
+  REVISION_STATUS_EFFECTIVE = 6;
+  REVISION_STATUS_SUPERSEDED = 7;
+  REVISION_STATUS_TERMINATED = 8;
+}
+enum DecisionOutcome {
+  DECISION_OUTCOME_UNSPECIFIED = 0;
+  DECISION_OUTCOME_APPROVE = 1;
+  DECISION_OUTCOME_RETURN = 2;
+}
+message FileReference {
+  string logical_file_number = 1;
+  uint32 revision_number = 2;
+  string sha256 = 3;
+  uint32 document_type_code = 4;
+}
+message PartyReference {
+  uint32 contract_party_sequence = 1;
+  uint32 party_role_code = 2;
+  optional uint32 participant_sequence_number = 3; // Per-trade only, resolved from approved snapshot.
+  optional string legal_identity_evidence_reference = 4; // Framework only, protected immutable identity snapshot.
+}
+message RevisionContent {
+  optional string trade_snapshot_number = 1;
+  repeated PartyReference parties = 2;
+  FileReference review_file = 3;
+  string effective_from = 4; // YYYY-MM-DD, business date Asia/Shanghai, inclusive.
+  optional string effective_to = 5; // Required for framework; inclusive Asia/Shanghai business date.
+  reserved 6; // Scope clauses belong to immutable review_file, not an unpersisted duplicate string.
+  reserved "scope_terms";
+}
+message ContractInput {
+  ContractScope scope = 1;
+  ContractPurpose purpose = 2;
+  optional string trade_number = 3;
+  RevisionContent content = 4;
+}
+message Contract {
+  string contract_number = 1;
+  ContractScope scope = 2;
+  ContractPurpose purpose = 3;
+  optional string trade_number = 4;
+  uint32 current_revision_number = 5; // Working revision, NOT legal effective revision.
+  string etag = 6;
+  optional uint32 effective_revision_number = 7; // Derived from version state 6; use still checks dates/holds and dependency impact.
+}
+message ContractRevision {
+  string contract_number = 1;
+  uint32 revision_number = 2;
+  RevisionStatus status = 3;
+  RevisionContent content = 4;
+  optional FileReference signed_file = 5;
+  optional google.protobuf.Timestamp signed_at = 6;
+  optional google.protobuf.Timestamp effective_at = 7;
+  string etag = 8;
+  uint32 current_revision_number = 9; // Current working pointer, even when reading a historical revision.
+  optional SignatureRequest signature_request = 10; // Authorized GET projection, not a second writable state.
+  optional ContractReviewResult review_result = 11; // Review comments needed to correct a returned revision.
+}
+message ContractReviewResult {
+  DecisionOutcome outcome = 1;
+  string reason = 2; // review_snapshot_json.comments, never a second decision.
+  string rule_version = 3;
+  google.protobuf.Timestamp reviewed_at = 4;
+  string reviewer_reference = 5; // Authorized audit reference, not raw identity/credential.
+  repeated string evidence_references = 6; // Protected immutable verification references.
+}
+// Frozen mutation projection; never reconstruct historical success from mutable draft content.
+message ContractRevisionReceipt {
+  string contract_number = 1;
+  uint32 revision_number = 2;
+  RevisionStatus status = 3;
+  string etag = 4;
+  string acceptance_id = 5; // Persistent command receipt, also anchors created submission/decision Location.
+}
+message RevisionInput {
+  uint32 previous_working_revision = 1;
+  string correction_reason = 2;
+  RevisionContent content = 3;
+}
+message TradeReviewInput { uint32 expected_trade_revision = 1; repeated FileReference supporting_evidence = 2; string summary = 3; }
+message TradeReviewSubmission { string submission_id = 1; string trade_number = 2; uint32 trade_revision = 3; string submitted_snapshot_number = 4; string etag = 5; }
+message MissingItem {
+  string missing_item_number = 1;
+  repeated string field_paths = 2;
+  repeated uint32 document_purpose_codes = 3;
+  optional uint32 participant_role_code = 4;
+  optional uint32 participant_sequence_number = 5;
+}
+message TradeDecisionInput { string submission_id = 1; DecisionOutcome outcome = 2; string reason = 3; repeated MissingItem missing_items = 4; }
+message TradeDecision { string decision_id = 1; string trade_number = 2; optional string approved_snapshot_number = 3; uint32 trade_revision = 4; string lifecycle = 5; }
+message ContractReviewInput { string declaration = 1; }
+message ContractDecisionInput { DecisionOutcome outcome = 1; string reason = 2; string rule_version = 3; repeated FileReference evidence = 4; }
+message SignatureInput { string provider_code = 1; string reviewed_document_sha256 = 2; }
+message SignatureRequest {
+  string signature_request_id = 1;
+  string client_reference = 2;
+  string contract_number = 3;
+  uint32 revision_number = 4;
+  string state = 5; // pending_dispatch / dispatch_unknown / awaiting_signers / verifying / archived / rejected / manual_action.
+  optional string provider_task_reference = 6;
+  uint32 attempt_count = 7;
+  optional google.protobuf.Timestamp next_attempt_at = 8;
+  string last_error_code = 9;
+  string etag = 10; // Server-issued strong tag of this task; GET and create both expose it.
+}
+message SigningSessionInput { string return_route = 1; } // Allowlisted local route, never arbitrary external URL.
+message SigningSession {
+  string signing_session_id = 1;
+  string signature_request_id = 2;
+  optional string redirect_url = 3; // Only ready GET, never in immutable accepted result or receipt signature.
+  optional google.protobuf.Timestamp expires_at = 4;
+  string state = 5; // pending / ready / expired / manual_action; create returns pending.
+}
+// OUR normalized ingress schema, not an invented vendor API. Vendor adapter verifies
+// raw bytes/signature before type conversion. gRPC is disabled unless the provider
+// has a separately negotiated authenticated binary-notification profile.
+message ProviderNotification { string provider_code = 1; string provider_event_id = 2; string client_reference = 3; string provider_task_reference = 4; string reported_state = 5; google.protobuf.Timestamp occurred_at = 6; }
+message NotificationReceipt { string notification_id = 1; string state = 2; } // "received", NOT "contract signed".
+message ActivationInput { repeated FileReference condition_evidence = 1; optional uint32 supersedes_revision_number = 2; string reason = 3; }
+message PartyMapping { uint32 contract_party_sequence = 1; uint32 party_role_code = 2; uint32 participant_sequence_number = 3; }
+message AgreementUseInput {
+  string contract_number = 1;
+  uint32 contract_revision_number = 2;
+  string approved_trade_snapshot_number = 3;
+  repeated PartyMapping party_mappings = 4;
+  FileReference service_order = 5;
+  string use_date = 6;
+}
+message AgreementApplication { string application_id = 1; string trade_number = 2; string contract_number = 3; uint32 contract_revision_number = 4; uint32 trade_revision = 5; string state = 6; } // pending_review, not automatic legal applicability.
+message CustomsAuthorizationInput { string approved_trade_snapshot_number = 1; FileReference official_authorization = 2; uint32 customs_participant_sequence = 3; string valid_from = 4; string valid_to = 5; string scope_description = 6; }
+message CustomsAuthorization { string authorization_id = 1; string trade_number = 2; string state = 3; uint32 trade_revision = 4; }
+message RecognitionInput { string approved_trade_snapshot_number = 1; uint32 customs_participant_sequence = 2; FileReference written_recognition = 3; string valid_from = 4; string valid_to = 5; }
+message Recognition { string recognition_id = 1; string trade_number = 2; string state = 3; uint32 trade_revision = 4; }
+// Read-only projections from participant/document/source JSON and their original events.
+// They are deliberately NOT fields of SupplierFiling, so ordinary PUT cannot forge them.
+message AgreementEvidence { AgreementApplication application = 1; AgreementUseInput content = 2; }
+message CustomsAuthorizationEvidence { CustomsAuthorization authorization = 1; CustomsAuthorizationInput content = 2; }
+message CustomsAgentRecognitionEvidence { Recognition recognition = 1; RecognitionInput content = 2; }
+message TradeContractEvidence {
+  repeated AgreementEvidence agreement_applications = 1;
+  repeated CustomsAuthorizationEvidence customs_authorizations = 2;
+  repeated CustomsAgentRecognitionEvidence customs_agent_recognitions = 3;
+}
+message TradeRevisionInput { uint32 expected_trade_revision = 1; string reason = 2; repeated FileReference evidence = 3; }
+message TradeWorkingRevision { string trade_number = 1; uint32 trade_revision = 2; string lifecycle = 3; optional string base_approved_snapshot_number = 4; string etag = 5; }
+message TradeReviewContext {
+  string trade_number = 1;
+  uint32 trade_revision = 2;
+  string lifecycle = 3;
+  trade.filing.v1.SupplierFiling supplier_filing = 4;
+  optional trade.filing.v1.PayerFiling payer_filing = 5;
+  repeated MissingItem missing_items = 6;
+  optional string submitted_snapshot_number = 7;
+  optional string approved_snapshot_number = 8;
+  string etag = 9; // Current root tag, even when showing immutable submitted content.
+  TradeContractEvidence evidence = 10; // Current view or exactly the selected submitted snapshot, never mixed.
+}
+message TradeContractBasis {
+  string trade_number = 1;
+  uint32 approved_trade_revision = 2;
+  string approved_snapshot_number = 3;
+  trade.filing.v1.SupplierFiling supplier_filing = 4;
+  string etag = 5; // Current trade-root tag for evidence/correction writes, not approval by itself.
+  TradeContractEvidence current_evidence = 6; // Clearly separate current evidence from approved supplier_filing above.
+}
+message TerminationInput { uint32 reason_code = 1; string reason = 2; repeated FileReference legal_evidence = 3; }
+
+message CreateContractReqMsg { ContractInput contract = 1; }
+message GetContractReqMsg { string contract_number = 1; }
+message GetContractRevisionReqMsg { string contract_number = 1; uint32 revision_number = 2; }
+message ReplaceContractDraftReqMsg { string contract_number = 1; uint32 revision_number = 2; RevisionContent content = 3; }
+message CreateContractRevisionReqMsg { string contract_number = 1; RevisionInput revision = 2; }
+message CreateContractReviewSubmissionReqMsg { string contract_number = 1; uint32 revision_number = 2; ContractReviewInput submission = 3; }
+message CreateContractReviewDecisionReqMsg { string contract_number = 1; uint32 revision_number = 2; ContractDecisionInput decision = 3; }
+message CreateSignatureRequestReqMsg { string contract_number = 1; uint32 revision_number = 2; SignatureInput signature = 3; }
+message GetSignatureRequestReqMsg { string signature_request_id = 1; }
+message CreateSigningSessionReqMsg { string signature_request_id = 1; SigningSessionInput session = 2; }
+message CreateSignatureNotificationReqMsg { ProviderNotification notification = 1; }
+message CreateContractActivationReqMsg { string contract_number = 1; uint32 revision_number = 2; ActivationInput activation = 3; }
+message CreateTradeReviewSubmissionReqMsg { string trade_number = 1; TradeReviewInput submission = 2; }
+message CreateTradeReviewDecisionReqMsg { string trade_number = 1; TradeDecisionInput decision = 2; }
+message CreateAgreementApplicationReqMsg { string trade_number = 1; AgreementUseInput application = 2; }
+message GetAgreementApplicationReqMsg { string trade_number = 1; string application_id = 2; }
+message CreateCustomsAuthorizationReqMsg { string trade_number = 1; CustomsAuthorizationInput authorization = 2; }
+message CreateCustomsAgentRecognitionReqMsg { string trade_number = 1; RecognitionInput recognition = 2; }
+message GetSigningSessionReqMsg { string signing_session_id = 1; }
+message GetTradeReviewContextReqMsg { string trade_number = 1; optional string submitted_snapshot_number = 2; }
+message CreateTradeRevisionReqMsg { string trade_number = 1; TradeRevisionInput revision = 2; }
+message GetInternalContractRevisionReqMsg { string contract_number = 1; uint32 revision_number = 2; }
+message CreateContractTerminationReqMsg { string contract_number = 1; uint32 revision_number = 2; TerminationInput termination = 3; }
+message GetTradeContractBasisReqMsg { string trade_number = 1; }
+
+// Explicit per-method transport messages. HTTP response_body maps only resource;
+// RPC returns this typed envelope. Errors use non-OK Status, never a success flag.
+message CreateInternalOperationConfirmationReqMsg { trade.filing.v1.OperationIntent intent = 1; }
+message GetInternalOperationConfirmationReqMsg { string confirmation_id = 1; }
+message CreateContractRspMsg { Contract resource = 1; }
+message GetContractRspMsg { Contract resource = 1; }
+message GetContractRevisionRspMsg { ContractRevision resource = 1; }
+message ReplaceContractDraftRspMsg { ContractRevisionReceipt resource = 1; }
+message CreateContractRevisionRspMsg { ContractRevisionReceipt resource = 1; }
+message CreateContractReviewSubmissionRspMsg { ContractRevisionReceipt resource = 1; }
+message CreateSignatureRequestRspMsg { SignatureRequest resource = 1; }
+message GetSignatureRequestRspMsg { SignatureRequest resource = 1; }
+message CreateSigningSessionRspMsg { SigningSession resource = 1; }
+message CreateSignatureNotificationRspMsg { NotificationReceipt resource = 1; }
+message CreateAgreementApplicationRspMsg { AgreementApplication resource = 1; }
+message GetAgreementApplicationRspMsg { AgreementApplication resource = 1; }
+message CreateCustomsAuthorizationRspMsg { CustomsAuthorization resource = 1; }
+message CreateInternalOperationConfirmationRspMsg { trade.filing.v1.OperationConfirmation resource = 1; }
+message GetInternalOperationConfirmationRspMsg { trade.filing.v1.OperationConfirmation resource = 1; }
+message CreateTradeReviewSubmissionRspMsg { TradeReviewSubmission resource = 1; }
+message CreateTradeReviewDecisionRspMsg { TradeDecision resource = 1; }
+message CreateContractReviewDecisionRspMsg { ContractRevisionReceipt resource = 1; }
+message CreateContractActivationRspMsg { ContractRevisionReceipt resource = 1; }
+message CreateCustomsAgentRecognitionRspMsg { Recognition resource = 1; }
+message GetSigningSessionRspMsg { SigningSession resource = 1; }
+message GetTradeReviewContextRspMsg { TradeReviewContext resource = 1; }
+message CreateTradeRevisionRspMsg { TradeWorkingRevision resource = 1; }
+message GetInternalContractRevisionRspMsg { ContractRevision resource = 1; }
+message CreateContractTerminationRspMsg { ContractRevisionReceipt resource = 1; }
+message GetTradeContractBasisRspMsg { TradeContractBasis resource = 1; }

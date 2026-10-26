@@ -1,0 +1,11 @@
+sequenceDiagram
+    actor USER as 独立税务审核员
+    participant SYSTEM as 代理出口系统
+    USER->>SYSTEM: 打开本方记录，查看所需资料和当前进度
+    SYSTEM-->>USER: 显示本方可办事项、材料版本和缺项
+    USER->>SYSTEM: 查看原异议及处理依据；需要正式更正时等待新证明，再重新交付
+    alt 本方有权且所需依据齐全
+      SYSTEM-->>USER: 差异未解决或供应商未重新核对前，案件继续待办
+    else 职责、范围或正式证据未确认
+      SYSTEM-->>USER: 说明缺什么、为何不能继续；已提交的请求可查原结果
+    end

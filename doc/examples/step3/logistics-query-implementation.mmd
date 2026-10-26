@@ -1,0 +1,19 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 本方或内部查询前端
+    participant APP as 单体应用对应受众入口
+    participant DB as 同一MySQL主库
+    PAGE->>APP: GET批次或证据提交，客户端5秒/应用4秒
+    APP->>DB: 当前对象授权，读取批次计划、实际进度及已核实事件
+    APP->>DB: 读取同计划版提交及不可变reviewResult退回理由
+    APP-->>PAGE: 200本方投影和当前ETag，内部读另用内部凭证
+    opt 原写请求响应丢失
+      PAGE->>APP: 原方法、原键、原文、原标签和原确认重入
+      APP->>DB: BEGIN先查原受理，验证当前权限与HMAC
+      alt 已受理且同文
+        APP-->>PAGE: 200原冻结投影及原Location，不再分配或消费确认
+      else 未查到
+        APP->>DB: 锁交易根再当前读原受理，无才按原命令完整门禁执行
+        APP-->>PAGE: 原命令结果或明确冲突，不能凭GET当前状态假定其成功
+      end
+    end

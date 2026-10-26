@@ -1,0 +1,15 @@
+{
+  "claims": {
+    "profile": "S1-RECEIPT-1",
+    "audience": "DEMO-SUPPLIER-USER",
+    "keyReference": "DEMO-PLATFORM-KEY",
+    "certificateReference": "DEMO-PLATFORM-CERT-NOT-ISSUED",
+    "suite": "SIGNATURE_SUITE_RSA_PSS_SHA256",
+    "eventNumber": "S109cc58420c78377f0f8fd708b1e289f13c8b38",
+    "requestReference": "TRD-S1-DEMO-001",
+    "businessRequestDigest": "5251345b850d5c7757004733aae3c0a6f0d5374fbac71bb583a0650685ce9a30",
+    "acceptedRepresentationDigest": "1470978a8c01ce8790fdbdf75c96ddc8cd389855d8375921780649e328770bf8",
+    "committedAt": "2026-10-25T08:25:00.000Z"
+  },
+  "signature": "AA=="
+}

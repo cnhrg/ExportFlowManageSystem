@@ -1,0 +1,22 @@
+sequenceDiagram
+    actor OP as 出口代理付款经办人
+    participant SYS as 代理出口系统（单体）
+    actor REVIEWER as 出口代理付款独立审批人
+    actor BANK as 未接入的银行（本轮不发起调用）
+    actor PAYEE as 中国供应商收款确认人
+    OP->>SYS: 提交结算付款请求、账户版本及确切意图确认
+    REVIEWER->>SYS: 查看已批准结算、案件、受益人和可用余额
+    alt 审批通过且资金足额可用
+      SYS-->>REVIEWER: 锁额并原子记账；返回原付款号
+      SYS-->>OP: 执行待办理；不得称银行成功
+      opt 银行真实接入后
+        SYS->>BANK: 按已批准的付款请求办理
+        BANK-->>SYS: 明确回执或结果未知
+      end
+    else 银行或结算证据缺失
+      SYS-->>REVIEWER: 保持原桶，拒绝新付款
+    end
+    OP->>SYS: 使用原付款号恢复未知执行
+    SYS-->>OP: 未知保持锁额；只查单，不换号重付
+    PAYEE->>SYS: 单独提交本方真实到账凭据
+    SYS-->>PAYEE: 缺凭据时继续待核；银行扣款不能证明供应商已到账

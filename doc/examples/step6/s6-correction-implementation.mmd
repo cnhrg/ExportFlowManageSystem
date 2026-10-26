@@ -1,0 +1,23 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 出口报关代理经办人界面
+    participant APP as 单体应用受限入口
+    participant DB as MySQL税务领域及受理表
+    participant FILE as 私有S3确切版本
+    participant AV as ClamAV
+    PAGE->>APP: GET本方上下文，5秒/4秒
+    APP->>DB: 对象授权读取交易批准版、税务type=1和历史
+    APP-->>PAGE: 强ETag与明确缺项
+    APP->>DB: 读取本目标依赖的确切税务领域记录
+    PAGE->>APP: CreateTaxProofSubmission / CreateTaxProofReview，写10秒/8秒
+    APP->>DB: 按当前subject/audience/原键查受理，同文才回放
+    Note over APP,DB: 锁交易→案件→原版/补正事件；未决执行先恢复；新材料版使原未执行批准失效，不覆盖原官方提交或已完成执行。
+    APP->>DB: RC短事务；交易根→案件→提交/事件有序当前读并复验ETag
+    alt 缺源证据、越权、自审、旧版或终态
+      APP->>DB: ROLLBACK，不造官方事件或A确认
+      APP-->>PAGE: 明确业务错误及原资源恢复路径
+    else 本目标领域门禁满足
+      APP->>DB: 按原版和补正要求提交新材料，再次送审；同事务最小受理与技术outbox
+      APP->>DB: COMMIT；不在锁内访问外部渠道
+      APP-->>PAGE: 保留旧版及审核记录，新版审核通过前不能办理
+    end

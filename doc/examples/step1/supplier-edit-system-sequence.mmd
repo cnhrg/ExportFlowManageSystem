@@ -1,0 +1,19 @@
+sequenceDiagram
+    actor PERSON as 供应商
+    participant SYSTEM as 代理出口系统
+    PERSON->>SYSTEM: 证明本方身份并进入本方资料
+    SYSTEM-->>PERSON: 本方可操作范围、已有资料及当前版本
+    
+    opt 有本方材料需要提供
+      PERSON->>SYSTEM: 提供材料并确认对应的业务内容
+      SYSTEM-->>PERSON: 材料版本及检查结果；未通过时说明原因
+    end
+    PERSON->>SYSTEM: 明确确认本方原资料的完整修改并验证本人身份（原请求标识、当前版本）
+    alt 新请求且身份/确认/资料满足受理条件
+      SYSTEM-->>PERSON: 本方资料已保存，返回资料版本和平台签名回执
+    else 原请求已受理
+      SYSTEM-->>PERSON: 原受理结果，不重复创建或修改
+    else 输入不满足条件或系统未能确定结果
+      SYSTEM-->>PERSON: 说明需修改的内容；结果未确定时用原请求查询
+    end
+    Note over PERSON,SYSTEM: 提交后交易仍在编辑中，尚未批准；本步骤只有供应商和付款方分别提交

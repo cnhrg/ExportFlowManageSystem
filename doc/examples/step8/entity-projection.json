@@ -1,0 +1,384 @@
+{
+  "designOnly": true,
+  "externalSuccessProven": false,
+  "report": {
+    "reportNumber": "RPT-S8-SYNTHETIC",
+    "tradeNumber": "TRD-S8-SYNTHETIC",
+    "vector": {
+      "sources": [
+        {
+          "type": "trade",
+          "id": "TRD-S8-SYNTHETIC",
+          "revision": "1",
+          "hash": "09374aec203ba430c53b9fcf46759cb154699ba852d41fb3fd2fdb226d142f72",
+          "sourceEventTail": "EVT-S8-SYNTHETIC-BASE"
+        }
+      ],
+      "objectSets": [
+        {
+          "type": "trade",
+          "objectIds": [
+            "TRD-S8-SYNTHETIC"
+          ],
+          "hash": "28c0b28c134c7ef66afdcadcb9dca9e062e5244aeb6840fbea66c2c721207ddc"
+        },
+        {
+          "type": "shipment",
+          "objectIds": [],
+          "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "type": "customs",
+          "objectIds": [],
+          "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "type": "payment",
+          "objectIds": [],
+          "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "type": "accounting",
+          "objectIds": [],
+          "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "type": "certificate",
+          "objectIds": [],
+          "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "type": "taxrefund",
+          "objectIds": [],
+          "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "type": "compliance",
+          "objectIds": [],
+          "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ],
+      "ruleVersion": "S8-RECONCILIATION-1",
+      "hash": "1058a396e57dea147da35c229791294e3ae70432544db21e0ad2c533be4adef7"
+    },
+    "checks": [
+      {
+        "itemNumber": "SOURCE-COMPLETENESS",
+        "ruleCode": "SOURCE_UNKNOWN",
+        "result": "CHECK_RESULT_UNKNOWN",
+        "sources": [
+          {
+            "type": "trade",
+            "id": "TRD-S8-SYNTHETIC",
+            "revision": "1",
+            "hash": "09374aec203ba430c53b9fcf46759cb154699ba852d41fb3fd2fdb226d142f72",
+            "sourceEventTail": "EVT-S8-SYNTHETIC-BASE"
+          }
+        ],
+        "evidence": [],
+        "blockingCodes": [
+          "SOURCE_UNKNOWN"
+        ],
+        "explanation": "跨域尚未提供真实源与完整集合，空合成集合不证明无对象"
+      },
+      {
+        "itemNumber": "EXTERNAL-EVIDENCE",
+        "ruleCode": "REAL_EXTERNAL_PROOF",
+        "result": "CHECK_RESULT_UNKNOWN",
+        "sources": [],
+        "evidence": [],
+        "blockingCodes": [
+          "EXTERNAL_EVIDENCE_MISSING"
+        ],
+        "explanation": "原创文件只证明内部合成记录，不构成银行/海关/税务证明"
+      },
+      {
+        "itemNumber": "FUNDS-ALLOCATION",
+        "ruleCode": "CNY_CONSERVATION",
+        "result": "CHECK_RESULT_PASS",
+        "expectedDecimal": "100.00",
+        "observedDecimal": "100.00",
+        "currencyCode": "CNY",
+        "sources": [
+          {
+            "type": "trade",
+            "id": "TRD-S8-SYNTHETIC",
+            "revision": "1",
+            "hash": "09374aec203ba430c53b9fcf46759cb154699ba852d41fb3fd2fdb226d142f72",
+            "sourceEventTail": "EVT-S8-SYNTHETIC-BASE"
+          }
+        ],
+        "evidence": [
+          {
+            "logicalFileNumber": "FILE-S8-SYNTHETIC",
+            "revisionNumber": 1,
+            "sha256": "5c331c40fe7d48aa26b6e83dd36aaa3b2bdea6b54d76bb7bf3d96b823aafd030",
+            "documentPurposeCode": 19
+          }
+        ],
+        "blockingCodes": [],
+        "explanation": "仅说明结构中的合成金额一致，不证明真实资金平衡"
+      }
+    ],
+    "evidence": [
+      {
+        "logicalFileNumber": "FILE-S8-SYNTHETIC",
+        "revisionNumber": 1,
+        "sha256": "5c331c40fe7d48aa26b6e83dd36aaa3b2bdea6b54d76bb7bf3d96b823aafd030",
+        "documentPurposeCode": 19
+      }
+    ],
+    "reportHash": "f21b61ebfb49a9935d675d846d88a353e096c823f861545fb968398c169320e8",
+    "creatorReference": "SYNTHETIC-RECONCILER",
+    "createdAt": "2026-11-01T01:00:00Z",
+    "acceptanceId": "S8-SYNTHETIC-REPORT"
+  },
+  "caseResource": {
+    "caseNumber": "CASE-S8-SYNTHETIC",
+    "tradeNumber": "TRD-S8-SYNTHETIC",
+    "basis": {
+      "reportNumber": "RPT-S8-SYNTHETIC",
+      "itemNumber": "EXTERNAL-EVIDENCE",
+      "caseTypeCode": 4,
+      "severityCode": 2,
+      "scopeCode": 3,
+      "owner": {
+        "type": "funds",
+        "id": "PAY-S8-SYNTHETIC",
+        "revision": "1",
+        "hash": "09374aec203ba430c53b9fcf46759cb154699ba852d41fb3fd2fdb226d142f72",
+        "sourceEventTail": "EVT-S8-SYNTHETIC-BASE"
+      },
+      "evidence": [
+        {
+          "logicalFileNumber": "FILE-S8-SYNTHETIC",
+          "revisionNumber": 1,
+          "sha256": "5c331c40fe7d48aa26b6e83dd36aaa3b2bdea6b54d76bb7bf3d96b823aafd030",
+          "documentPurposeCode": 19
+        }
+      ]
+    },
+    "caseStatus": 2,
+    "assignedTo": "SYNTHETIC-CASE-OWNER",
+    "dueAt": "2026-11-05T01:00:00Z",
+    "activeReasons": [
+      {
+        "caseNumber": "CASE-S8-SYNTHETIC",
+        "holdReference": "HOLD-S8-SYNTHETIC-1",
+        "affectedContexts": [
+          {
+            "contextCode": "funds",
+            "businessReference": "PAY-S8-SYNTHETIC",
+            "scopeCode": 3,
+            "operations": [
+              "approve-payment",
+              "execute-payment"
+            ],
+            "source": {
+              "type": "funds",
+              "id": "PAY-S8-SYNTHETIC",
+              "revision": "1",
+              "hash": "09374aec203ba430c53b9fcf46759cb154699ba852d41fb3fd2fdb226d142f72",
+              "sourceEventTail": "EVT-S8-SYNTHETIC-BASE"
+            }
+          }
+        ],
+        "pendingAcknowledgements": [
+          "funds:PAY-S8-SYNTHETIC"
+        ]
+      }
+    ],
+    "dispositions": [
+      {
+        "dispositionNumber": "DSP-S8-SYNTHETIC",
+        "caseNumber": "CASE-S8-SYNTHETIC",
+        "actionCode": 3,
+        "resultCode": 1,
+        "actorReference": "SYNTHETIC-CASE-OWNER",
+        "occurredAt": "2026-11-01T01:00:00Z",
+        "affectedContexts": [
+          {
+            "contextCode": "funds",
+            "businessReference": "PAY-S8-SYNTHETIC",
+            "scopeCode": 3,
+            "operations": [
+              "approve-payment",
+              "execute-payment"
+            ],
+            "source": {
+              "type": "funds",
+              "id": "PAY-S8-SYNTHETIC",
+              "revision": "1",
+              "hash": "09374aec203ba430c53b9fcf46759cb154699ba852d41fb3fd2fdb226d142f72",
+              "sourceEventTail": "EVT-S8-SYNTHETIC-BASE"
+            }
+          }
+        ],
+        "acceptanceId": "S8-SYNTHETIC-DISPOSITION",
+        "remedy": {
+          "originalDispositionReference": "DSP-S8-SYNTHETIC-HOLD",
+          "substantiveDispositions": [
+            {
+              "type": "trade",
+              "id": "TRD-S8-SYNTHETIC",
+              "revision": "1",
+              "hash": "09374aec203ba430c53b9fcf46759cb154699ba852d41fb3fd2fdb226d142f72",
+              "sourceEventTail": "EVT-S8-SYNTHETIC-BASE"
+            }
+          ],
+          "evidence": [
+            {
+              "logicalFileNumber": "FILE-S8-SYNTHETIC",
+              "revisionNumber": 1,
+              "sha256": "5c331c40fe7d48aa26b6e83dd36aaa3b2bdea6b54d76bb7bf3d96b823aafd030",
+              "documentPurposeCode": 19
+            }
+          ],
+          "explanation": "仅记录补正，不解除原因"
+        },
+        "etag": "\"s8-case-event-1\""
+      }
+    ],
+    "acceptanceId": "S8-SYNTHETIC-CASE",
+    "etag": "\"s8-case-event-1\""
+  },
+  "disposition": {
+    "dispositionNumber": "DSP-S8-SYNTHETIC",
+    "caseNumber": "CASE-S8-SYNTHETIC",
+    "actionCode": 3,
+    "resultCode": 1,
+    "actorReference": "SYNTHETIC-CASE-OWNER",
+    "occurredAt": "2026-11-01T01:00:00Z",
+    "affectedContexts": [
+      {
+        "contextCode": "funds",
+        "businessReference": "PAY-S8-SYNTHETIC",
+        "scopeCode": 3,
+        "operations": [
+          "approve-payment",
+          "execute-payment"
+        ],
+        "source": {
+          "type": "funds",
+          "id": "PAY-S8-SYNTHETIC",
+          "revision": "1",
+          "hash": "09374aec203ba430c53b9fcf46759cb154699ba852d41fb3fd2fdb226d142f72",
+          "sourceEventTail": "EVT-S8-SYNTHETIC-BASE"
+        }
+      }
+    ],
+    "acceptanceId": "S8-SYNTHETIC-DISPOSITION",
+    "remedy": {
+      "originalDispositionReference": "DSP-S8-SYNTHETIC-HOLD",
+      "substantiveDispositions": [
+        {
+          "type": "trade",
+          "id": "TRD-S8-SYNTHETIC",
+          "revision": "1",
+          "hash": "09374aec203ba430c53b9fcf46759cb154699ba852d41fb3fd2fdb226d142f72",
+          "sourceEventTail": "EVT-S8-SYNTHETIC-BASE"
+        }
+      ],
+      "evidence": [
+        {
+          "logicalFileNumber": "FILE-S8-SYNTHETIC",
+          "revisionNumber": 1,
+          "sha256": "5c331c40fe7d48aa26b6e83dd36aaa3b2bdea6b54d76bb7bf3d96b823aafd030",
+          "documentPurposeCode": 19
+        }
+      ],
+      "explanation": "仅记录补正，不解除原因"
+    },
+    "etag": "\"s8-case-event-1\""
+  },
+  "unexecutedApplicationShape": {
+    "applicationNumber": "APP-S8-SYNTHETIC",
+    "tradeNumber": "TRD-S8-SYNTHETIC",
+    "basis": {
+      "reportNumber": "RPT-S8-REQUIRES-REAL-EVIDENCE",
+      "reportHash": "e7f924d30e22039d4ce3d0dca99e67a942fb6ddebed90b5da83a837efa4c25ed",
+      "expectedVector": {
+        "sources": [
+          {
+            "type": "trade",
+            "id": "TRD-S8-SYNTHETIC",
+            "revision": "1",
+            "hash": "09374aec203ba430c53b9fcf46759cb154699ba852d41fb3fd2fdb226d142f72",
+            "sourceEventTail": "EVT-S8-SYNTHETIC-BASE"
+          }
+        ],
+        "objectSets": [
+          {
+            "type": "trade",
+            "objectIds": [
+              "TRD-S8-SYNTHETIC"
+            ],
+            "hash": "28c0b28c134c7ef66afdcadcb9dca9e062e5244aeb6840fbea66c2c721207ddc"
+          },
+          {
+            "type": "shipment",
+            "objectIds": [],
+            "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "type": "customs",
+            "objectIds": [],
+            "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "type": "payment",
+            "objectIds": [],
+            "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "type": "accounting",
+            "objectIds": [],
+            "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "type": "certificate",
+            "objectIds": [],
+            "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "type": "taxrefund",
+            "objectIds": [],
+            "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "type": "compliance",
+            "objectIds": [],
+            "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          }
+        ],
+        "ruleVersion": "S8-RECONCILIATION-1",
+        "hash": "1058a396e57dea147da35c229791294e3ae70432544db21e0ad2c533be4adef7"
+      },
+      "reason": "独立协议结构例：须另有当前真实证据完整报告；未建立前置，不执行、不证明受理成功"
+    },
+    "applicantReference": "SYNTHETIC-APPLICANT",
+    "createdAt": "2026-11-01T01:00:00Z",
+    "acceptanceId": "S8-SYNTHETIC-APPLICATION"
+  },
+  "returnedDecision": {
+    "decisionNumber": "DEC-S8-SYNTHETIC",
+    "applicationNumber": "APP-S8-SYNTHETIC",
+    "eventTypeCode": 20,
+    "tradeStatusCode": 8,
+    "reviewerReference": "SYNTHETIC-INDEPENDENT-REVIEWER",
+    "blockingCodes": [
+      "EXTERNAL_EVIDENCE_MISSING"
+    ],
+    "reason": "无真实外部证据，退回保持8",
+    "acceptanceId": "S8-SYNTHETIC-DECISION"
+  },
+  "mapping": {
+    "report": "trade_event_tab.event_type_code=18/event_payload",
+    "closureApplication": "trade_event_tab.event_type_code=19/event_payload",
+    "closureReturn": "trade_event_tab.event_type_code=20/event_payload",
+    "formalClosure": "trade_event_tab.event_type_code=17 + trade_status_code=10",
+    "case": "compliance_discrepancy_case_tab",
+    "businessDecisions": "compliance_disposition_event_tab.decision_snapshot_json/affected_contexts_json"
+  },
+  "note": "unexecutedApplicationShape只是消息结构，不在数据库伪造成功申请；实际缺证据422见failure-examples；关案和解除分别独立"
+}

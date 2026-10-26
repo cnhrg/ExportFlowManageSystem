@@ -1,0 +1,13 @@
+sequenceDiagram
+    actor SUP as 出口代理商业发票申报经办人
+    participant SYS as 代理出口系统（单体）
+    actor OP as 中国供应商财务经办人
+    actor REVIEWER as 出口代理资金独立审核人
+    SUP->>SYS: 提交商业发票、申报金额、批准交易版本和已扫描附件版本
+    SYS-->>SUP: 返回申报号并等待审核，货款尚未因此支付
+    REVIEWER->>SYS: 核对交易快照、金额、分配范围及附件
+    alt 首次提交或补正
+      SYS-->>REVIEWER: 保存不可变申报版；不在INVOICE阶段收取服务费
+    end
+    OP->>SYS: 查询申报与审核状态
+    SYS-->>OP: 返回申报历史；服务费将在首次获批分账时处理

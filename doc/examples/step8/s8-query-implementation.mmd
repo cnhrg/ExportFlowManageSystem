@@ -1,0 +1,12 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 内部授权查询者
+    participant APP as 单体内部接口
+    participant DB as 同一MySQL主库
+    PAGE->>APP: GET具体资源，客户端5秒应用4秒
+    APP->>APP: 当前身份、受众及对象授权
+      APP->>DB: 当前身份/对象授权后GET只读；终态新写拒绝，但同键原文允许回放
+      APP->>DB: 主库按原主体/受众/键查受理；原冻结投影/Location/正文/标签返回，不生成新决定
+      APP->>DB: 同键异文409，查无受理返回未确定并保留原键，不能擅自换键或将超时当撤销
+    APP-->>PAGE: 200资源及强ETag，Cache-Control no-store
+    Note over APP,DB: 无业务写；未知原受理保留原键，不能推定未提交

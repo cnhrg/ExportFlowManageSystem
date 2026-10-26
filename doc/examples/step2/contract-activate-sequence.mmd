@@ -1,0 +1,45 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 出口代理有权运营人员前端
+    participant APP as 单体应用的运营及外部受限入口
+    participant DATABASE as 同一MySQL领域及中间件表
+    participant STORE as 私有对象及证据存储
+    participant PROVIDER as 第三方实名电子签平台
+    opt 通知或定时唤起核实；这是人工激活之前的独立后台阶段
+      APP->>PROVIDER: 按原平台任务查询并下载签署件/证据包，不持业务锁
+      PROVIDER-->>APP: 原任务状态、实际原件及全部签署方证据
+      APP->>APP: 核验证书/可信时间/签名覆盖/授权及审核正文关联，未知不通过
+      APP->>STORE: 固定键先查后归档，失败按持久任务自动退避恢复
+      APP->>DATABASE: BEGIN依交易或机构授权根、合同根、版本、任务固定序再查原结果
+      APP->>DATABASE: 仅原版与证据均匹配才4→5及ContractSigned；文件元数据同COMMIT
+    end
+    PAGE->>APP: 使用本受众GET确切资源及强ETag，客户端5秒/应用4秒
+    APP->>APP: 核实实名/经办授权/对象权限，仅返回本方可见数据
+    APP-->>PAGE: 当前版本、已审正文与本方可操作范围
+    PAGE->>APP: 明确确认内容并完成必要强认证，取得绑定本意图的确认凭据
+    PAGE->>APP: 创建本用例资源（原键/标签/确认凭据，客户端10秒/应用8秒）
+    APP->>STORE: 事务外先查并保全操作证据，失败自行重试，不持业务根锁
+    APP->>DATABASE: BEGIN；固定锁序先查原请求结果
+    alt 原键已受理
+      APP->>DATABASE: 当前权限核验，比较原方法/路径/标签/业务HMAC
+      alt 同键同文
+        APP->>DATABASE: 读取原冻结结果及回执绑定；COMMIT只读
+        APP-->>PAGE: 200原最小受理结果及原Location，不执行新业务
+      else 同键异文
+        APP->>DATABASE: ROLLBACK；不消费新确认、不改原结果
+        APP-->>PAGE: 409 IDEMPOTENCY_CONFLICT
+      end
+    else 新请求
+      APP->>DATABASE: 核对强ETag、状态、当前授权门禁及确认绑定
+      Note over APP,DATABASE: 签署结果核实/下载/证据校验/存储均事务外，自发恢复。短事务先查任务结果，4→5并一次绑定signed_file；激活另核实5及条件，5→6追加ContractActivated。若正式替代旧版同事务6→7并保法律授权
+      alt 任一前提或写入不满足
+        APP->>DATABASE: ROLLBACK全部本地写入，确认不提前消费
+        APP-->>PAGE: 409/412/422等明确业务码；永久错误不自动重试
+      else 本地写入条件满足
+        APP->>DATABASE: 写业务/事件/冻结原最小回执到同库受理账本/消费确认；COMMIT
+        APP->>APP: 确定COMMIT后生成并持久平台回执，失败自恢复503 RECEIPT_NOT_READY
+        APP-->>PAGE: POST新建201及准确资源Location；PUT200；未知COMMIT先原键查询
+      end
+    end
+    
+    Note over APP,DATABASE: 远程超时不延长锁；确定失败预算内有界重试，提交未知先主库查原键

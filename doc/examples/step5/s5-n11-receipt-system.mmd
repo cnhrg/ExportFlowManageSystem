@@ -1,0 +1,16 @@
+sequenceDiagram
+    actor OP as 出口代理资金经办人
+    participant SYS as 代理出口系统（单体）
+    actor REVIEWER as 出口代理资金独立复核人
+    OP->>SYS: 提交待核银行流水及确切文件引用
+    SYS-->>OP: 返回原受理号和待核状态，不声称实收
+    REVIEWER->>SYS: 查看原银行证据、稳定账号身份与重复核查
+    SYS-->>REVIEWER: 展示匹配/未匹配项及缺失证据
+    REVIEWER->>SYS: 独立核实实际到账或退回
+    alt 有可验证真实到账依据
+      SYS-->>REVIEWER: 记录实际到账，款项记为受限；未匹配金额继续受限
+    else 无银行证据/渠道未接
+      SYS-->>REVIEWER: 保持待核，不写银行成功、不改变余额
+    end
+    OP->>SYS: 查询原实收号和匹配结果
+    SYS-->>OP: 返回原来款记录、匹配情况和当前使用限制

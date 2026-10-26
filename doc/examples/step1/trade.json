@@ -1,0 +1,8 @@
+{
+  "tradeNumber": "TRD-S1-DEMO-001",
+  "revisionNumber": 4,
+  "lifecycle": "editing",
+  "supplierFilingUri": "/api/v1/trades/TRD-S1-DEMO-001/supplier-filing",
+  "etag": "\"s1-trade-TRD-S1-DEMO-001-r4\"",
+  "payerFilingUri": "/api/v1/trades/TRD-S1-DEMO-001/payer-filings/primary"
+}

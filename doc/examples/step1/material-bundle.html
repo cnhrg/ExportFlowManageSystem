@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>合成人民币出口建档材料包</title>
+<body>
+<h1>合成输入 · 非真实合同、发票或签署件</h1>
+<p>独立CNY数据，不由USD历史原件折算；无签名、印章、账号或真实登记编号。不产生法律或业务授权。</p>
+<p>卖方：示例供应商；买方及实际收货人：Example Consignee。仅本合成场景设二者相同，规则不要求买方、实际收货人、付款方相同。</p>
+<section id="sales-contract">
+  <h2>销售合同字段样例 · SC-DEMO-001</h2>
+  <p>日期2026-10-25。合成商品：展示用金属支架，规格DEMO-M1，原产地CN；数量100 PCS，单价CNY 125.00，总额CNY 12500.00。</p>
+  <p>交付和付款条款：本例仅用于建档设计，具体委任、支付条件另行审批。未模拟签署。</p>
+</section>
+<section id="commercial-invoice">
+  <h2>商业发票字段样例 · CI-DEMO-001</h2>
+  <p>对应合同SC-DEMO-001。展示用金属支架，DEMO-M1，100 PCS × CNY 125.00 = CNY 12500.00；原产地CN。</p>
+</section>
+<section id="packing-list">
+  <h2>装箱单字段样例 · PL-DEMO-001</h2>
+  <p>对应发票CI-DEMO-001。展示用金属支架，DEMO-M1，100 PCS，10箱，净重100.000 KG，毛重120.000 KG。</p>
+</section>
+<p>单一物理文件、三种材料用途，通过锚点定位。SHA-256按本文件完整字节计算，不伪造各章节独立摘要。</p>
+</body>
+</html>

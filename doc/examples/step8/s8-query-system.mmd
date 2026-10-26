@@ -1,0 +1,7 @@
+sequenceDiagram
+    actor PERSON as 核对经办人
+    participant SYSTEM as 代理出口系统
+    PERSON->>SYSTEM: 查询原案件、审批记录或原请求结果
+    SYSTEM-->>PERSON: 显示当前资料版本、涉及事项、缺项和本方可办操作
+    PERSON->>SYSTEM: 查看有权读取的资料，不作修改
+    SYSTEM-->>PERSON: 返回本方可见的记录；已受理请求返回原回执，未确定的说明查询方式

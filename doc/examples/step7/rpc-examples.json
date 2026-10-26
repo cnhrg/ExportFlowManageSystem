@@ -1,0 +1,567 @@
+[
+  {
+    "designOnly": true,
+    "service": "trade.taxrefund.v1.ExternalTaxRefundService",
+    "method": "CreateRefundCase",
+    "requestType": "CreateRefundCaseReqMsg",
+    "responseType": "CreateRefundCaseRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+      "idempotency-key": "77777777-7777-4777-8777-000000000001",
+      "if-match": "\"s7-case-1\"",
+      "confirmation-id": "SYNTHETIC-NOT-A-CONFIRMATION"
+    },
+    "request": {
+      "tradeNumber": "SYNTHETIC-S7-TRADE",
+      "preparation": {
+        "tradeRevisionNumber": 1,
+        "scope": {
+          "reference": "SYNTHETIC-PREPARATION-SCOPE",
+          "customsRevisionReferences": [],
+          "certificateReferences": []
+        },
+        "taxpayerSnapshotReference": "SYNTHETIC-A-SNAPSHOT",
+        "currencyCode": "CNY"
+      }
+    },
+    "response": {
+      "resource": {
+        "taxCaseNumber": "SYNTHETIC-S7-CASE",
+        "tradeNumber": "SYNTHETIC-S7-TRADE",
+        "taxTypeCode": 2,
+        "scope": {
+          "reference": "SYNTHETIC-PREPARATION-SCOPE",
+          "customsRevisionReferences": [],
+          "certificateReferences": []
+        },
+        "status": "CASE_STATUS_PREPARING",
+        "currencyCode": "CNY",
+        "version": 1,
+        "etag": "\"s7-case-1\"",
+        "missingGates": [
+          "SCOPE_RULE_UNCONFIRMED",
+          "TAX_AUTHORITY_UNCONFIRMED"
+        ]
+      }
+    },
+    "successTrailers": {},
+    "serverBudgetMs": 8000
+  },
+  {
+    "designOnly": true,
+    "service": "trade.taxrefund.v1.ExternalTaxRefundService",
+    "method": "GetRefundCase",
+    "requestType": "GetRefundCaseReqMsg",
+    "responseType": "GetRefundCaseRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "Bearer SYNTHETIC-NOT-A-TOKEN"
+    },
+    "request": {
+      "taxCaseNumber": "SYNTHETIC-S7-CASE"
+    },
+    "response": {
+      "resource": {
+        "taxCaseNumber": "SYNTHETIC-S7-CASE",
+        "tradeNumber": "SYNTHETIC-S7-TRADE",
+        "taxTypeCode": 2,
+        "scope": {
+          "reference": "SYNTHETIC-PREPARATION-SCOPE",
+          "customsRevisionReferences": [],
+          "certificateReferences": []
+        },
+        "status": "CASE_STATUS_PREPARING",
+        "currencyCode": "CNY",
+        "version": 1,
+        "etag": "\"s7-case-1\"",
+        "missingGates": [
+          "SCOPE_RULE_UNCONFIRMED",
+          "TAX_AUTHORITY_UNCONFIRMED"
+        ]
+      }
+    },
+    "successTrailers": {},
+    "serverBudgetMs": 4000
+  },
+  {
+    "designOnly": true,
+    "service": "trade.taxrefund.v1.ExternalTaxRefundService",
+    "method": "CreateRefundPackage",
+    "requestType": "CreateRefundPackageReqMsg",
+    "responseType": "CreateRefundPackageRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+      "idempotency-key": "77777777-7777-4777-8777-000000000003",
+      "if-match": "\"s7-case-1\"",
+      "confirmation-id": "SYNTHETIC-NOT-A-CONFIRMATION"
+    },
+    "request": {
+      "taxCaseNumber": "SYNTHETIC-S7-CASE",
+      "package": {
+        "approvedTradeSnapshotReference": "SYNTHETIC-APPROVED-SNAPSHOT",
+        "scope": {
+          "reference": "SYNTHETIC-PREPARATION-SCOPE",
+          "customsRevisionReferences": [],
+          "certificateReferences": []
+        },
+        "currencyCode": "CNY",
+        "files": [
+          {
+            "fileNumber": "SYNTHETIC-S7-FILE",
+            "versionId": "SYNTHETIC-NOT-A-REAL-S3-VERSION",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "purposeCode": 24,
+            "revisionNumber": 1
+          }
+        ]
+      }
+    },
+    "response": {
+      "resource": {
+        "taxCaseNumber": "SYNTHETIC-S7-CASE",
+        "submissionRevisionNumber": 1,
+        "content": {
+          "approvedTradeSnapshotReference": "SYNTHETIC-APPROVED-SNAPSHOT",
+          "scope": {
+            "reference": "SYNTHETIC-PREPARATION-SCOPE",
+            "customsRevisionReferences": [],
+            "certificateReferences": []
+          },
+          "currencyCode": "CNY",
+          "files": [
+            {
+              "fileNumber": "SYNTHETIC-S7-FILE",
+              "versionId": "SYNTHETIC-NOT-A-REAL-S3-VERSION",
+              "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "purposeCode": 24,
+              "revisionNumber": 1
+            }
+          ]
+        },
+        "packageHash": "e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c",
+        "executionStatus": "not_dispatched",
+        "etag": "\"s7-submission-1\""
+      }
+    },
+    "successTrailers": {},
+    "serverBudgetMs": 8000
+  },
+  {
+    "designOnly": true,
+    "service": "trade.taxrefund.v1.ExternalTaxRefundService",
+    "method": "GetRefundSubmission",
+    "requestType": "GetRefundSubmissionReqMsg",
+    "responseType": "GetRefundSubmissionRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "Bearer SYNTHETIC-NOT-A-TOKEN"
+    },
+    "request": {
+      "taxCaseNumber": "SYNTHETIC-S7-CASE",
+      "submissionRevisionNumber": 1
+    },
+    "response": {
+      "resource": {
+        "taxCaseNumber": "SYNTHETIC-S7-CASE",
+        "submissionRevisionNumber": 1,
+        "content": {
+          "approvedTradeSnapshotReference": "SYNTHETIC-APPROVED-SNAPSHOT",
+          "scope": {
+            "reference": "SYNTHETIC-PREPARATION-SCOPE",
+            "customsRevisionReferences": [],
+            "certificateReferences": []
+          },
+          "currencyCode": "CNY",
+          "files": [
+            {
+              "fileNumber": "SYNTHETIC-S7-FILE",
+              "versionId": "SYNTHETIC-NOT-A-REAL-S3-VERSION",
+              "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "purposeCode": 24,
+              "revisionNumber": 1
+            }
+          ]
+        },
+        "packageHash": "e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c",
+        "executionStatus": "not_dispatched",
+        "etag": "\"s7-submission-1\""
+      }
+    },
+    "successTrailers": {},
+    "serverBudgetMs": 4000
+  },
+  {
+    "designOnly": true,
+    "service": "trade.taxrefund.v1.InternalTaxRefundOperationsService",
+    "method": "GetRefundReviewContext",
+    "requestType": "GetRefundReviewContextReqMsg",
+    "responseType": "GetRefundReviewContextRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "Bearer SYNTHETIC-NOT-A-TOKEN"
+    },
+    "request": {
+      "taxCaseNumber": "SYNTHETIC-S7-CASE"
+    },
+    "response": {
+      "resource": {
+        "taxCase": {
+          "taxCaseNumber": "SYNTHETIC-S7-CASE",
+          "tradeNumber": "SYNTHETIC-S7-TRADE",
+          "taxTypeCode": 2,
+          "scope": {
+            "reference": "SYNTHETIC-PREPARATION-SCOPE",
+            "customsRevisionReferences": [],
+            "certificateReferences": []
+          },
+          "status": "CASE_STATUS_PREPARING",
+          "currencyCode": "CNY",
+          "version": 1,
+          "etag": "\"s7-case-1\"",
+          "missingGates": [
+            "SCOPE_RULE_UNCONFIRMED",
+            "TAX_AUTHORITY_UNCONFIRMED"
+          ]
+        },
+        "submissions": [
+          {
+            "taxCaseNumber": "SYNTHETIC-S7-CASE",
+            "submissionRevisionNumber": 1,
+            "content": {
+              "approvedTradeSnapshotReference": "SYNTHETIC-APPROVED-SNAPSHOT",
+              "scope": {
+                "reference": "SYNTHETIC-PREPARATION-SCOPE",
+                "customsRevisionReferences": [],
+                "certificateReferences": []
+              },
+              "currencyCode": "CNY",
+              "files": [
+                {
+                  "fileNumber": "SYNTHETIC-S7-FILE",
+                  "versionId": "SYNTHETIC-NOT-A-REAL-S3-VERSION",
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "purposeCode": 24,
+                  "revisionNumber": 1
+                }
+              ]
+            },
+            "packageHash": "e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c",
+            "executionStatus": "not_dispatched",
+            "etag": "\"s7-submission-1\""
+          }
+        ],
+        "missingGates": [
+          "SCOPE_RULE_UNCONFIRMED",
+          "TAX_AUTHORITY_UNCONFIRMED"
+        ],
+        "verifiedEventReferences": []
+      }
+    },
+    "successTrailers": {},
+    "serverBudgetMs": 4000
+  },
+  {
+    "designOnly": true,
+    "service": "trade.taxrefund.v1.InternalTaxRefundOperationsService",
+    "method": "CreateRefundReview",
+    "requestType": "CreateRefundReviewReqMsg",
+    "responseType": "CreateRefundReviewRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+      "idempotency-key": "77777777-7777-4777-8777-000000000006",
+      "if-match": "\"s7-case-1\"",
+      "confirmation-id": "SYNTHETIC-NOT-A-CONFIRMATION"
+    },
+    "request": {
+      "taxCaseNumber": "SYNTHETIC-S7-CASE",
+      "decision": {
+        "submissionRevisionNumber": 1,
+        "packageHash": "e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c",
+        "decision": "REVIEW_DECISION_RETURN",
+        "reason": "范围/责任未确认，退回补料",
+        "verifiedBasisReferences": []
+      }
+    },
+    "response": {
+      "resource": {
+        "taxCaseNumber": "SYNTHETIC-S7-CASE",
+        "operationNumber": "SYNTHETIC-S7-OP",
+        "result": "internal_synthetic_only",
+        "etag": "\"s7-case-2\""
+      }
+    },
+    "successTrailers": {},
+    "serverBudgetMs": 8000
+  },
+  {
+    "designOnly": true,
+    "service": "trade.taxrefund.v1.ExternalTaxRefundService",
+    "method": "CreateRefundDispatch",
+    "requestType": "CreateRefundDispatchReqMsg",
+    "responseType": "CreateRefundDispatchRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+      "idempotency-key": "77777777-7777-4777-8777-000000000007",
+      "if-match": "\"s7-case-1\"",
+      "confirmation-id": "SYNTHETIC-NOT-A-CONFIRMATION"
+    },
+    "request": {
+      "taxCaseNumber": "SYNTHETIC-S7-CASE",
+      "intent": {
+        "submissionRevisionNumber": 1,
+        "packageHash": "e4afdaaaa83c04c21b71374ed7183fcf7f6b579ae9bc544aaef8e86fc195ee2c",
+        "authorizationBasisReference": "UNVERIFIED-NOT-AUTHORITY"
+      }
+    },
+    "successTrailers": {},
+    "serverBudgetMs": 8000,
+    "error": {
+      "code": "FAILED_PRECONDITION",
+      "details": {
+        "code": "SCOPE_RULE_UNCONFIRMED",
+        "httpStatus": 422,
+        "errors": [
+          {
+            "pointer": "/intent",
+            "code": "SCOPE_RULE_UNCONFIRMED",
+            "detail": "补齐本意图的真实权威依据"
+          }
+        ],
+        "retryable": false,
+        "retryAfterMs": 0,
+        "outcomeUnknown": false,
+        "requestReference": "SYNTHETIC-S7-TRACE"
+      }
+    },
+    "errorType": "trade.filing.v1.RpcFailure",
+    "httpErrorType": "trade.filing.v1.HttpProblem"
+  },
+  {
+    "designOnly": true,
+    "service": "trade.taxrefund.v1.InternalTaxRefundOperationsService",
+    "method": "CreateRefundNotice",
+    "requestType": "CreateRefundNoticeReqMsg",
+    "responseType": "CreateRefundNoticeRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+      "idempotency-key": "77777777-7777-4777-8777-000000000008",
+      "if-match": "\"s7-case-1\"",
+      "confirmation-id": "SYNTHETIC-NOT-A-CONFIRMATION"
+    },
+    "request": {
+      "taxCaseNumber": "SYNTHETIC-S7-CASE",
+      "notice": {
+        "submissionRevisionNumber": 1,
+        "externalEventKey": "",
+        "authorityReferenceNumber": "",
+        "kind": "OFFICIAL_KIND_ACCEPTED",
+        "originalNotice": {
+          "fileNumber": "SYNTHETIC-S7-FILE",
+          "versionId": "SYNTHETIC-NOT-A-REAL-S3-VERSION",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "purposeCode": 21,
+          "revisionNumber": 1
+        },
+        "verifiedSourceReference": "",
+        "occurredAt": "2026-10-25T00:00:00Z",
+        "currencyCode": "CNY",
+        "dispatchReference": "UNVERIFIED"
+      }
+    },
+    "successTrailers": {},
+    "serverBudgetMs": 8000,
+    "error": {
+      "code": "FAILED_PRECONDITION",
+      "details": {
+        "code": "OFFICIAL_EVIDENCE_REQUIRED",
+        "httpStatus": 422,
+        "errors": [
+          {
+            "pointer": "/notice",
+            "code": "OFFICIAL_EVIDENCE_REQUIRED",
+            "detail": "补齐本意图的真实权威依据"
+          }
+        ],
+        "retryable": false,
+        "retryAfterMs": 0,
+        "outcomeUnknown": false,
+        "requestReference": "SYNTHETIC-S7-TRACE"
+      }
+    },
+    "errorType": "trade.filing.v1.RpcFailure",
+    "httpErrorType": "trade.filing.v1.HttpProblem"
+  },
+  {
+    "designOnly": true,
+    "service": "trade.taxrefund.v1.ExternalTaxRefundService",
+    "method": "CreateRefundCorrection",
+    "requestType": "CreateRefundCorrectionReqMsg",
+    "responseType": "CreateRefundCorrectionRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+      "idempotency-key": "77777777-7777-4777-8777-000000000009",
+      "if-match": "\"s7-case-1\"",
+      "confirmation-id": "SYNTHETIC-NOT-A-CONFIRMATION"
+    },
+    "request": {
+      "taxCaseNumber": "SYNTHETIC-S7-CASE",
+      "correction": {
+        "previousSubmissionRevisionNumber": 1,
+        "correctionEventNumber": "",
+        "replacement": {
+          "approvedTradeSnapshotReference": "SYNTHETIC-APPROVED-SNAPSHOT",
+          "scope": {
+            "reference": "SYNTHETIC-PREPARATION-SCOPE",
+            "customsRevisionReferences": [],
+            "certificateReferences": []
+          },
+          "currencyCode": "CNY",
+          "files": [
+            {
+              "fileNumber": "SYNTHETIC-S7-FILE",
+              "versionId": "SYNTHETIC-NOT-A-REAL-S3-VERSION",
+              "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "purposeCode": 24,
+              "revisionNumber": 1
+            }
+          ]
+        }
+      }
+    },
+    "successTrailers": {},
+    "serverBudgetMs": 8000,
+    "error": {
+      "code": "FAILED_PRECONDITION",
+      "details": {
+        "code": "OFFICIAL_EVIDENCE_REQUIRED",
+        "httpStatus": 422,
+        "errors": [
+          {
+            "pointer": "/correction",
+            "code": "OFFICIAL_EVIDENCE_REQUIRED",
+            "detail": "补齐本意图的真实权威依据"
+          }
+        ],
+        "retryable": false,
+        "retryAfterMs": 0,
+        "outcomeUnknown": false,
+        "requestReference": "SYNTHETIC-S7-TRACE"
+      }
+    },
+    "errorType": "trade.filing.v1.RpcFailure",
+    "httpErrorType": "trade.filing.v1.HttpProblem"
+  },
+  {
+    "designOnly": true,
+    "service": "trade.taxrefund.v1.ExternalTaxRefundService",
+    "method": "CreateRefundFollowUp",
+    "requestType": "CreateRefundFollowUpReqMsg",
+    "responseType": "CreateRefundFollowUpRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+      "idempotency-key": "77777777-7777-4777-8777-000000000010",
+      "if-match": "\"s7-case-1\"",
+      "confirmation-id": "SYNTHETIC-NOT-A-CONFIRMATION"
+    },
+    "request": {
+      "taxCaseNumber": "SYNTHETIC-S7-CASE",
+      "followUp": {
+        "submissionRevisionNumber": 1,
+        "ownerReference": "SYNTHETIC-A-OPERATOR",
+        "action": "等待主管机关确认范围/职责，不猜截止日期"
+      }
+    },
+    "response": {
+      "resource": {
+        "taxCaseNumber": "SYNTHETIC-S7-CASE",
+        "operationNumber": "SYNTHETIC-S7-OP",
+        "result": "internal_synthetic_only",
+        "etag": "\"s7-case-2\""
+      }
+    },
+    "successTrailers": {},
+    "serverBudgetMs": 8000
+  },
+  {
+    "designOnly": true,
+    "service": "trade.taxrefund.v1.InternalTaxRefundOperationsService",
+    "method": "ReconcileRefundCredit",
+    "requestType": "ReconcileRefundCreditReqMsg",
+    "responseType": "ReconcileRefundCreditRspMsg",
+    "deadlineMs": 10000,
+    "metadata": {
+      "authorization": "Bearer SYNTHETIC-NOT-A-TOKEN",
+      "idempotency-key": "77777777-7777-4777-8777-000000000011",
+      "if-match": "\"s7-case-1\"",
+      "confirmation-id": "SYNTHETIC-NOT-A-CONFIRMATION"
+    },
+    "request": {
+      "taxCaseNumber": "SYNTHETIC-S7-CASE",
+      "reconciliation": {
+        "submissionRevisionNumber": 1,
+        "officialDecisionEventNumber": "",
+        "controlledFundObservationReference": "",
+        "recipientAccountBasisReference": ""
+      }
+    },
+    "successTrailers": {},
+    "serverBudgetMs": 8000,
+    "error": {
+      "code": "FAILED_PRECONDITION",
+      "details": {
+        "code": "REFUND_OBSERVATION_UNAVAILABLE",
+        "httpStatus": 422,
+        "errors": [
+          {
+            "pointer": "/reconciliation",
+            "code": "REFUND_OBSERVATION_UNAVAILABLE",
+            "detail": "补齐本意图的真实权威依据"
+          }
+        ],
+        "retryable": false,
+        "retryAfterMs": 0,
+        "outcomeUnknown": false,
+        "requestReference": "SYNTHETIC-S7-TRACE"
+      }
+    },
+    "errorType": "trade.filing.v1.RpcFailure",
+    "httpErrorType": "trade.filing.v1.HttpProblem"
+  },
+  {
+    "designOnly": true,
+    "service": "trade.taxrefund.v1.ExternalTaxRefundService",
+    "method": "GetRefundOperation",
+    "requestType": "GetRefundOperationReqMsg",
+    "responseType": "GetRefundOperationRspMsg",
+    "deadlineMs": 5000,
+    "metadata": {
+      "authorization": "Bearer SYNTHETIC-NOT-A-TOKEN"
+    },
+    "request": {
+      "taxCaseNumber": "SYNTHETIC-S7-CASE",
+      "operationNumber": "SYNTHETIC-S7-OP"
+    },
+    "response": {
+      "resource": {
+        "operationNumber": "SYNTHETIC-S7-OP",
+        "taxCaseNumber": "SYNTHETIC-S7-CASE",
+        "executionStatus": "not_dispatched",
+        "originalReceipt": {
+          "taxCaseNumber": "SYNTHETIC-S7-CASE",
+          "operationNumber": "SYNTHETIC-S7-OP",
+          "result": "internal_synthetic_only",
+          "etag": "\"s7-case-2\""
+        }
+      }
+    },
+    "successTrailers": {},
+    "serverBudgetMs": 4000
+  }
+]

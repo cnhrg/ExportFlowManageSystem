@@ -1,0 +1,20 @@
+sequenceDiagram
+    actor PERSON as 物流公司
+    participant SYSTEM as 代理出口系统
+    actor REVIEWER as 独立审核员
+    
+    PERSON->>SYSTEM: 查看当前本方计划、进度和可提交证据种类
+    SYSTEM-->>PERSON: 精确计划版、标签及待补原因
+    PERSON->>SYSTEM: 提交运输、到达或签收凭据并确认内容
+    SYSTEM-->>PERSON: 原受理号及待审声明，不表示已完成外部事实
+    REVIEWER->>SYSTEM: 查看原计划、本次提交和审核依据
+    SYSTEM-->>REVIEWER: 对应计划版本的凭据、来源及尚未满足的条件
+    REVIEWER->>SYSTEM: 独立核实本次事实或退回并注明理由
+    alt 真实证据及本阶段门禁齐备
+      SYSTEM-->>REVIEWER: 已核实的具体事件及允许进度
+    else 缺证据或外部结果未知
+      SYSTEM-->>REVIEWER: 保持原进度，提供明确缺项及补正原因
+    end
+    PERSON->>SYSTEM: 查询原提交的审查结果
+    SYSTEM-->>PERSON: 本方可见结论；退回后另建关联原提交的新补正
+    

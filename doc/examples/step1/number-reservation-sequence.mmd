@@ -1,0 +1,31 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 供应商前端
+    participant APP as 单体应用的对外接入接口
+    participant DATABASE as 同一MySQL的编号中间件表
+    Note over APP,DATABASE: 取号是进程内模块；不部署独立取号服务、Redis或分布式锁
+    PAGE->>APP: 实名会话确认后申请预留（原键及确认凭据，超时5秒）
+    APP->>APP: 验证会话、确认内容及建单权限，无需供应商密钥
+    APP->>DATABASE: BEGIN；按主体及幂等键SELECT预留 FOR UPDATE
+    alt 已有预留
+      APP->>APP: 校验原规范请求摘要；同文恢复原交易号，异文拒绝
+      APP->>DATABASE: COMMIT只读
+    else 未有预留
+      APP->>DATABASE: SELECT固定交易号计数行 FOR UPDATE
+      APP->>DATABASE: 当前读再次查询主体与请求键，确认仍不存在
+      APP->>DATABASE: 核验并消费确认；计数加一；INSERT预留（主体、键、原摘要、交易号、用途）
+      APP->>DATABASE: COMMIT计数与预留，一次原子提交
+    end
+    opt 仅确定同文预留已提交
+      APP-->>PAGE: 201新预留或200原预留及签名回执；回执待恢复503
+    end
+    Note over APP,DATABASE: 固定前缀TRD加全局递增序号；无需时钟或日切；达到上限明确拒绝
+    opt 并发唯一键冲突或死锁
+      APP->>DATABASE: ROLLBACK；预算内开启新事务，先查原键再决定分配
+    end
+    opt COMMIT应答丢失
+      PAGE->>APP: 保留原键申请；不另取新号
+      APP->>DATABASE: BEGIN；从主库当前读原键预留，确定结果
+      APP-->>PAGE: 原号或503结果未知；不无条件消耗第二个号
+    end
+    Note over APP,DATABASE: 预留不创建交易；已发号不复用，弃单允许空洞；预留归属在创建事务内再次锁定核验

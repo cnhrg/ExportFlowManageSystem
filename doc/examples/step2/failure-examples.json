@@ -1,0 +1,130 @@
+[
+  {
+    "type": "urn:export-trade:problem:trade_basis_not_approved",
+    "title": "TRADE_BASIS_NOT_APPROVED",
+    "status": 422,
+    "detail": "Design-only rejection; correct the prerequisite, never turn this into successful acceptance.",
+    "instance": "/design-only/step-two",
+    "errors": [
+      {
+        "pointer": "/content/tradeSnapshotNumber",
+        "code": "TRADE_BASIS_NOT_APPROVED",
+        "detail": "TRADE_BASIS_NOT_APPROVED"
+      }
+    ],
+    "outcomeUnknown": false,
+    "retryAfterMs": 0
+  },
+  {
+    "type": "urn:export-trade:problem:contract_purpose_not_reusable",
+    "title": "CONTRACT_PURPOSE_NOT_REUSABLE",
+    "status": 422,
+    "detail": "Design-only rejection; correct the prerequisite, never turn this into successful acceptance.",
+    "instance": "/design-only/step-two",
+    "errors": [
+      {
+        "pointer": "/purpose",
+        "code": "CONTRACT_PURPOSE_NOT_REUSABLE",
+        "detail": "CONTRACT_PURPOSE_NOT_REUSABLE"
+      }
+    ],
+    "outcomeUnknown": false,
+    "retryAfterMs": 0
+  },
+  {
+    "type": "urn:export-trade:problem:agreement_not_applicable",
+    "title": "AGREEMENT_NOT_APPLICABLE",
+    "status": 422,
+    "detail": "Design-only rejection; correct the prerequisite, never turn this into successful acceptance.",
+    "instance": "/design-only/step-two",
+    "errors": [
+      {
+        "pointer": "/partyMappings",
+        "code": "AGREEMENT_NOT_APPLICABLE",
+        "detail": "AGREEMENT_NOT_APPLICABLE"
+      }
+    ],
+    "outcomeUnknown": false,
+    "retryAfterMs": 0
+  },
+  {
+    "type": "urn:export-trade:problem:signature_in_progress",
+    "title": "SIGNATURE_IN_PROGRESS",
+    "status": 409,
+    "detail": "Design-only rejection; correct the prerequisite, never turn this into successful acceptance.",
+    "instance": "/design-only/step-two",
+    "errors": [
+      {
+        "pointer": "/contractNumber",
+        "code": "SIGNATURE_IN_PROGRESS",
+        "detail": "SIGNATURE_IN_PROGRESS"
+      }
+    ],
+    "outcomeUnknown": false,
+    "retryAfterMs": 0
+  },
+  {
+    "type": "urn:export-trade:problem:reviewer_not_independent",
+    "title": "REVIEWER_NOT_INDEPENDENT",
+    "status": 403,
+    "detail": "Design-only rejection; correct the prerequisite, never turn this into successful acceptance.",
+    "instance": "/design-only/step-two",
+    "errors": [
+      {
+        "pointer": "/",
+        "code": "REVIEWER_NOT_INDEPENDENT",
+        "detail": "REVIEWER_NOT_INDEPENDENT"
+      }
+    ],
+    "outcomeUnknown": false,
+    "retryAfterMs": 0
+  },
+  {
+    "type": "urn:export-trade:problem:signature_evidence_invalid",
+    "title": "SIGNATURE_EVIDENCE_INVALID",
+    "status": 422,
+    "detail": "Design-only rejection; correct the prerequisite, never turn this into successful acceptance.",
+    "instance": "/design-only/step-two",
+    "errors": [
+      {
+        "pointer": "/",
+        "code": "SIGNATURE_EVIDENCE_INVALID",
+        "detail": "SIGNATURE_EVIDENCE_INVALID"
+      }
+    ],
+    "outcomeUnknown": false,
+    "retryAfterMs": 0
+  },
+  {
+    "type": "urn:export-trade:problem:authorization_not_applicable",
+    "title": "AUTHORIZATION_NOT_APPLICABLE",
+    "status": 422,
+    "detail": "Design-only rejection; correct the prerequisite, never turn this into successful acceptance.",
+    "instance": "/design-only/step-two",
+    "errors": [
+      {
+        "pointer": "/officialAuthorization",
+        "code": "AUTHORIZATION_NOT_APPLICABLE",
+        "detail": "AUTHORIZATION_NOT_APPLICABLE"
+      }
+    ],
+    "outcomeUnknown": false,
+    "retryAfterMs": 0
+  },
+  {
+    "type": "urn:export-trade:problem:confirmation_mismatch",
+    "title": "CONFIRMATION_MISMATCH",
+    "status": 409,
+    "detail": "Design-only rejection; correct the prerequisite, never turn this into successful acceptance.",
+    "instance": "/design-only/step-two",
+    "errors": [
+      {
+        "pointer": "/headers/X-Confirmation-Id",
+        "code": "CONFIRMATION_MISMATCH",
+        "detail": "CONFIRMATION_MISMATCH"
+      }
+    ],
+    "outcomeUnknown": false,
+    "retryAfterMs": 0
+  }
+]

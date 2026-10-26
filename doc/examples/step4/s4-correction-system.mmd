@@ -1,0 +1,12 @@
+sequenceDiagram
+    actor REVIEWER as 独立关务审核员
+    actor F as 出口报关代理经办人
+    actor A as 供应商授权确认人
+    participant SYS as 代理出口系统
+    REVIEWER->>SYS: 核实原办理号的正式退单或更正要求
+    SYS-->>REVIEWER: 显示需补正的内容及原版历史，技术错误不记成退单
+    F->>SYS: 另建完整修改稿并重新送审
+    REVIEWER->>SYS: 独立审核新版本
+    A->>SYS: 书面确认新版本
+    F->>SYS: 关联原办理号申请更正或撤回
+    SYS-->>F: 返回原办理记录；结果不明时不释放占量，撤回未核实前不标已撤回

@@ -1,0 +1,58 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 付款方资料前端
+    participant APP as 单体应用的对外接入接口
+    participant DATABASE as 同一MySQL的交易与文件表
+    participant STORE as 私有文件及证据存储
+    PAGE->>APP: GET /api/v1/trades/交易号
+    APP->>APP: 本地核验法定主体及本方对象/字段权限，无运营邀请
+    APP->>DATABASE: 主库读取本方资料和当前聚合修订
+    APP-->>PAGE: 200本方资源及强实体标签（不泄露另一方私有正文）
+    Note over PAGE,DATABASE: 如有新附件，先完成共用私有对象上传及确认，无交易行锁
+    PAGE->>APP: 本方确认付款关系和原因及材料摘要，必要重新认证
+    APP-->>PAGE: 本人会话绑定的原请求确认凭据；无签名设备
+    PAGE->>APP: POST /api/v1/trades/交易号/payer-filings（超时10秒）
+    Note over PAGE,APP: 首次创建本方唯一资料资源；Idempotency-Key及X-Confirmation-Id绑定原意图
+    APP->>APP: 重查实名强认证/确认绑定/对象权限及含原标签的摘要
+    APP->>STORE: 事务外保全认证及确认的操作证据；原证据键自动重试
+    APP->>DATABASE: BEGIN；SELECT交易主表 FOR UPDATE
+    APP->>DATABASE: 按确定事件号查询原请求
+    alt 同键已受理
+      APP->>DATABASE: 比对认证主体、方法/路径和请求摘要
+      alt 原请求完全相同
+        APP->>DATABASE: COMMIT只读
+        APP->>STORE: 恢复已存原平台回执；尚无则确认原事件后补签并保存
+        APP-->>PAGE: 200原资源/原标签及原回执；回执待恢复则503
+      else 同键异文
+        APP->>DATABASE: ROLLBACK
+        APP-->>PAGE: 409 IDEMPOTENCY_CONFLICT，不签成功回执
+      end
+    else 新请求
+      APP->>DATABASE: 检查编辑状态及付款方资料尚不存在
+      APP->>DATABASE: 按固定顺序锁本地授权门禁及确切文件版
+      alt 已有付款方资料或交易已冻结
+        APP->>DATABASE: ROLLBACK
+        APP-->>PAGE: 409资源已存在；应读取后用PUT修改
+      else 所有门禁通过
+        APP->>DATABASE: 仅写付款方身份、关系及来源/证明，不改供应商字段
+        APP->>DATABASE: 事务内核验并消费确认；聚合修订递增，追加事件3/操作证据引用/原最小回执
+        alt 任一写失败或死锁
+          APP->>DATABASE: ROLLBACK；预算内新事务先查，不在失败事务继续
+          APP-->>PAGE: 503问题详情，原键原文恢复，不产生成功假象
+        else 写入阶段成功
+          APP->>DATABASE: COMMIT
+          alt 提交确定
+            APP->>STORE: 先查原平台签名回执
+            opt 尚无原平台回执
+              APP->>APP: 生成已确定受理结果的平台受控签名回执
+              APP->>STORE: 条件保存原回执，失败由持久任务自动恢复
+            end
+            APP-->>PAGE: 回执已保存才201 Location付款方资料地址；否则503 RECEIPT_NOT_READY并自动恢复
+          else COMMIT结果未知
+            APP->>DATABASE: 新事务主库当前读原键及事件，不先再次写入
+            APP-->>PAGE: 已知结果进入原回执恢复；仍不确定503 COMMIT_OUTCOME_UNKNOWN
+          end
+        end
+      end
+    end
+    Note over APP,DATABASE: 重放同样恢复原平台签名回执；无完整快照或批准，修改是原资源新修订

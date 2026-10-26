@@ -1,0 +1,367 @@
+syntax = "proto3";
+package trade.reconciliation.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+// One monolith, internal audience only; metadata carries authorization,
+// idempotency-key, if-match and confirmation-id. No special-closure method.
+service InternalReconciliationService {
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetReconciliationContext(GetReconciliationContextReqMsg) returns (GetReconciliationContextRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/trades/{trade_number}/reconciliation-context" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateReconciliationReport(CreateReconciliationReportReqMsg) returns (CreateReconciliationReportRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/reconciliation-reports" body: "report" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetReconciliationReport(GetReconciliationReportReqMsg) returns (GetReconciliationReportRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/trades/{trade_number}/reconciliation-reports/{report_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateDiscrepancyCase(CreateDiscrepancyCaseReqMsg) returns (CreateDiscrepancyCaseRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/discrepancy-cases" body: "case_input" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetDiscrepancyCase(GetDiscrepancyCaseReqMsg) returns (GetDiscrepancyCaseRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/trades/{trade_number}/discrepancy-cases/{case_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCaseAssignment(CreateCaseAssignmentReqMsg) returns (CreateCaseAssignmentRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/discrepancy-cases/{case_number}/assignments" body: "assignment" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateHoldDecision(CreateHoldDecisionReqMsg) returns (CreateHoldDecisionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/discrepancy-cases/{case_number}/hold-decisions" body: "hold" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateGateAcknowledgement(CreateGateAcknowledgementReqMsg) returns (CreateGateAcknowledgementRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/discrepancy-cases/{case_number}/gate-acknowledgements" body: "acknowledgement" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCaseRemedy(CreateCaseRemedyReqMsg) returns (CreateCaseRemedyRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/discrepancy-cases/{case_number}/remedies" body: "remedy" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCaseRemedyDecision(CreateCaseRemedyDecisionReqMsg) returns (CreateCaseRemedyDecisionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/discrepancy-cases/{case_number}/remedy-decisions" body: "decision" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCorrectionApplication(CreateCorrectionApplicationReqMsg) returns (CreateCorrectionApplicationRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/discrepancy-cases/{case_number}/correction-applications" body: "application" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCorrectionDecision(CreateCorrectionDecisionReqMsg) returns (CreateCorrectionDecisionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/discrepancy-cases/{case_number}/correction-decisions" body: "decision" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateReleaseApplication(CreateReleaseApplicationReqMsg) returns (CreateReleaseApplicationRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/discrepancy-cases/{case_number}/release-applications" body: "application" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateReleaseDecision(CreateReleaseDecisionReqMsg) returns (CreateReleaseDecisionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/discrepancy-cases/{case_number}/release-decisions" body: "decision" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCaseClosureApplication(CreateCaseClosureApplicationReqMsg) returns (CreateCaseClosureApplicationRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/discrepancy-cases/{case_number}/closure-applications" body: "application" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateCaseClosureDecision(CreateCaseClosureDecisionReqMsg) returns (CreateCaseClosureDecisionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/discrepancy-cases/{case_number}/closure-decisions" body: "decision" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetCaseDisposition(GetCaseDispositionReqMsg) returns (GetCaseDispositionRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/trades/{trade_number}/discrepancy-cases/{case_number}/dispositions/{disposition_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateTradeClosureApplication(CreateTradeClosureApplicationReqMsg) returns (CreateTradeClosureApplicationRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/closure-applications" body: "application" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetTradeClosureApplication(GetTradeClosureApplicationReqMsg) returns (GetTradeClosureApplicationRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/trades/{trade_number}/closure-applications/{application_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateTradeClosureDecision(CreateTradeClosureDecisionReqMsg) returns (CreateTradeClosureDecisionRspMsg) {
+    option (google.api.http) = { post: "/internal/v1/trades/{trade_number}/closure-applications/{application_number}/decisions" body: "decision" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetTradeClosureDecision(GetTradeClosureDecisionReqMsg) returns (GetTradeClosureDecisionRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/trades/{trade_number}/closure-applications/{application_number}/decisions/{decision_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetReconciliationAcceptance(GetReconciliationAcceptanceReqMsg) returns (GetReconciliationAcceptanceRspMsg) {
+    option (google.api.http) = { get: "/internal/v1/trades/{trade_number}/reconciliation-acceptances/{request_key}" response_body: "resource" };
+  }
+}
+
+message SourceReference {
+  string type = 1;
+  string id = 2;
+  string revision = 3;
+  string hash = 4;
+  string source_event_tail = 5;
+}
+message ObjectSet {
+  string type = 1;
+  repeated string object_ids = 2;
+  string hash = 3;
+}
+message SourceVector {
+  repeated SourceReference sources = 1;
+  repeated ObjectSet object_sets = 2;
+  string rule_version = 3;
+  string hash = 4;
+}
+message EvidenceReference {
+  string logical_file_number = 1;
+  uint32 revision_number = 2;
+  string sha256 = 3;
+  uint32 document_purpose_code = 4;
+}
+message AffectedContext {
+  string context_code = 1;
+  string business_reference = 2;
+  uint32 scope_code = 3;
+  repeated string operations = 4;
+  SourceReference source = 5;
+}
+enum CheckResult {
+  CHECK_RESULT_UNSPECIFIED = 0;
+  CHECK_RESULT_PASS = 1;
+  CHECK_RESULT_FAIL = 2;
+  CHECK_RESULT_UNKNOWN = 3;
+}
+message CheckItem {
+  string item_number = 1;
+  string rule_code = 2;
+  CheckResult result = 3;
+  string expected_decimal = 4;
+  string observed_decimal = 5;
+  string currency_code = 6;
+  repeated SourceReference sources = 7;
+  repeated EvidenceReference evidence = 8;
+  repeated string blocking_codes = 9;
+  string explanation = 10;
+}
+message HoldReason {
+  string case_number = 1;
+  string hold_reference = 2;
+  repeated AffectedContext affected_contexts = 3;
+  string release_application_reference = 4;
+  string release_decision_reference = 5;
+  repeated string pending_acknowledgements = 6;
+}
+message ReconciliationContext {
+  string trade_number = 1;
+  SourceVector vector = 2;
+  repeated CheckItem checks = 3;
+  repeated HoldReason active_reasons = 4;
+  repeated string open_case_numbers = 5;
+  repeated string unknown_execution_references = 6;
+  repeated string missing_evidence_codes = 7;
+  string etag = 8;
+}
+message ReportInput { SourceVector expected_vector = 1; }
+message ReconciliationReport {
+  string report_number = 1;
+  string trade_number = 2;
+  SourceVector vector = 3;
+  repeated CheckItem checks = 4;
+  repeated EvidenceReference evidence = 5;
+  string report_hash = 6;
+  string creator_reference = 7;
+  google.protobuf.Timestamp created_at = 8;
+  string acceptance_id = 9;
+}
+message CaseInput {
+  string report_number = 1;
+  string item_number = 2;
+  uint32 case_type_code = 3;
+  uint32 severity_code = 4;
+  uint32 scope_code = 5;
+  SourceReference owner = 6;
+  repeated EvidenceReference evidence = 7;
+}
+message DiscrepancyCase {
+  string case_number = 1;
+  string trade_number = 2;
+  CaseInput basis = 3;
+  uint32 case_status = 4;
+  string assigned_to = 5;
+  google.protobuf.Timestamp due_at = 6;
+  repeated HoldReason active_reasons = 7;
+  repeated DispositionResource dispositions = 8;
+  string acceptance_id = 9;
+  string etag = 10;
+}
+message AssignmentInput {
+  string assigned_to = 1;
+  google.protobuf.Timestamp due_at = 2;
+  string reason = 3;
+}
+message HoldInput {
+  repeated AffectedContext affected_contexts = 1;
+  string reason = 2;
+  repeated EvidenceReference evidence = 3;
+  string independent_approval_reference = 4;
+}
+message GateAcknowledgementInput {
+  string decision_reference = 1;
+  string hold_reference = 2;
+  AffectedContext target = 3;
+  SourceReference owner_execution = 4;
+  string phase = 5;
+}
+message RemedyInput {
+  string original_disposition_reference = 1;
+  repeated SourceReference substantive_dispositions = 2;
+  repeated EvidenceReference evidence = 3;
+  string explanation = 4;
+}
+message CorrectionInput {
+  SourceReference original_node = 1;
+  repeated AffectedContext affected_contexts = 2;
+  repeated SourceReference dependency_edges = 3;
+  SourceVector expected_vector = 4;
+  string reason = 5;
+  repeated EvidenceReference evidence = 6;
+}
+message ReleaseInput {
+  string hold_reference = 1;
+  repeated SourceReference substantive_dispositions = 2;
+  SourceVector expected_vector = 3;
+  repeated EvidenceReference evidence = 4;
+}
+message CaseClosureInput {
+  repeated SourceReference substantive_dispositions = 1;
+  SourceReference money_difference_closure = 2;
+  SourceVector expected_vector = 3;
+  repeated EvidenceReference evidence = 4;
+}
+enum ReviewOutcome {
+  REVIEW_OUTCOME_UNSPECIFIED = 0;
+  REVIEW_OUTCOME_APPROVE = 1;
+  REVIEW_OUTCOME_RETURN = 2;
+}
+message ReviewInput {
+  string application_reference = 1;
+  ReviewOutcome outcome = 2;
+  string reason = 3;
+  SourceVector expected_vector = 4;
+  repeated EvidenceReference evidence = 5;
+}
+message DispositionResource {
+  string disposition_number = 1;
+  string case_number = 2;
+  uint32 action_code = 3;
+  uint32 result_code = 4;
+  string actor_reference = 5;
+  string approver_reference = 6;
+  google.protobuf.Timestamp occurred_at = 7;
+  repeated AffectedContext affected_contexts = 8;
+  string acceptance_id = 9;
+  oneof content {
+    AssignmentInput assignment = 10;
+    HoldInput hold = 11;
+    GateAcknowledgementInput acknowledgement = 12;
+    RemedyInput remedy = 13;
+    CorrectionInput correction_application = 14;
+    ReviewInput review = 15;
+    ReleaseInput release_application = 16;
+    CaseClosureInput closure_application = 17;
+  }
+  string hold_reference = 18;
+  string etag = 19;
+}
+message ClosureInput {
+  string report_number = 1;
+  string report_hash = 2;
+  SourceVector expected_vector = 3;
+  string reason = 4;
+}
+message ClosureApplication {
+  string application_number = 1;
+  string trade_number = 2;
+  ClosureInput basis = 3;
+  string applicant_reference = 4;
+  google.protobuf.Timestamp created_at = 5;
+  string acceptance_id = 6;
+}
+message ClosureDecisionInput {
+  ReviewOutcome outcome = 1;
+  string reason = 2;
+  SourceVector expected_vector = 3;
+  repeated EvidenceReference evidence = 4;
+}
+message ClosureDecision {
+  string decision_number = 1;
+  string application_number = 2;
+  uint32 event_type_code = 3;
+  uint32 trade_status_code = 4;
+  string reviewer_reference = 5;
+  repeated string blocking_codes = 6;
+  string reason = 7;
+  string acceptance_id = 8;
+}
+message AcceptanceResource {
+  string request_key = 1;
+  uint32 original_http_status = 2;
+  string original_location = 3;
+  string original_etag = 4;
+  string body_hash = 5;
+  oneof original_resource {
+    ReconciliationReport report = 6;
+    DiscrepancyCase discrepancy_case = 7;
+    DispositionResource disposition = 8;
+    ClosureApplication closure_application = 9;
+    ClosureDecision closure_decision = 10;
+  }
+}
+
+message GetReconciliationContextReqMsg { string trade_number = 1; }
+message GetReconciliationContextRspMsg { ReconciliationContext resource = 1; }
+message CreateReconciliationReportReqMsg { string trade_number = 1; ReportInput report = 2; }
+message CreateReconciliationReportRspMsg { ReconciliationReport resource = 1; }
+message GetReconciliationReportReqMsg { string trade_number = 1; string report_number = 2; }
+message GetReconciliationReportRspMsg { ReconciliationReport resource = 1; }
+message CreateDiscrepancyCaseReqMsg { string trade_number = 1; CaseInput case_input = 2; }
+message CreateDiscrepancyCaseRspMsg { DiscrepancyCase resource = 1; }
+message GetDiscrepancyCaseReqMsg { string trade_number = 1; string case_number = 2; }
+message GetDiscrepancyCaseRspMsg { DiscrepancyCase resource = 1; }
+message CreateCaseAssignmentReqMsg { string trade_number = 1; string case_number = 2; AssignmentInput assignment = 3; }
+message CreateCaseAssignmentRspMsg { DispositionResource resource = 1; }
+message CreateHoldDecisionReqMsg { string trade_number = 1; string case_number = 2; HoldInput hold = 3; }
+message CreateHoldDecisionRspMsg { DispositionResource resource = 1; }
+message CreateGateAcknowledgementReqMsg { string trade_number = 1; string case_number = 2; GateAcknowledgementInput acknowledgement = 3; }
+message CreateGateAcknowledgementRspMsg { DispositionResource resource = 1; }
+message CreateCaseRemedyReqMsg { string trade_number = 1; string case_number = 2; RemedyInput remedy = 3; }
+message CreateCaseRemedyRspMsg { DispositionResource resource = 1; }
+message CreateCaseRemedyDecisionReqMsg { string trade_number = 1; string case_number = 2; ReviewInput decision = 3; }
+message CreateCaseRemedyDecisionRspMsg { DispositionResource resource = 1; }
+message CreateCorrectionApplicationReqMsg { string trade_number = 1; string case_number = 2; CorrectionInput application = 3; }
+message CreateCorrectionApplicationRspMsg { DispositionResource resource = 1; }
+message CreateCorrectionDecisionReqMsg { string trade_number = 1; string case_number = 2; ReviewInput decision = 3; }
+message CreateCorrectionDecisionRspMsg { DispositionResource resource = 1; }
+message CreateReleaseApplicationReqMsg { string trade_number = 1; string case_number = 2; ReleaseInput application = 3; }
+message CreateReleaseApplicationRspMsg { DispositionResource resource = 1; }
+message CreateReleaseDecisionReqMsg { string trade_number = 1; string case_number = 2; ReviewInput decision = 3; }
+message CreateReleaseDecisionRspMsg { DispositionResource resource = 1; }
+message CreateCaseClosureApplicationReqMsg { string trade_number = 1; string case_number = 2; CaseClosureInput application = 3; }
+message CreateCaseClosureApplicationRspMsg { DispositionResource resource = 1; }
+message CreateCaseClosureDecisionReqMsg { string trade_number = 1; string case_number = 2; ReviewInput decision = 3; }
+message CreateCaseClosureDecisionRspMsg { DispositionResource resource = 1; }
+message GetCaseDispositionReqMsg { string trade_number = 1; string case_number = 2; string disposition_number = 3; }
+message GetCaseDispositionRspMsg { DispositionResource resource = 1; }
+message CreateTradeClosureApplicationReqMsg { string trade_number = 1; ClosureInput application = 2; }
+message CreateTradeClosureApplicationRspMsg { ClosureApplication resource = 1; }
+message GetTradeClosureApplicationReqMsg { string trade_number = 1; string application_number = 2; }
+message GetTradeClosureApplicationRspMsg { ClosureApplication resource = 1; }
+message CreateTradeClosureDecisionReqMsg { string trade_number = 1; string application_number = 2; ClosureDecisionInput decision = 3; }
+message CreateTradeClosureDecisionRspMsg { ClosureDecision resource = 1; }
+message GetTradeClosureDecisionReqMsg { string trade_number = 1; string application_number = 2; string decision_number = 3; }
+message GetTradeClosureDecisionRspMsg { ClosureDecision resource = 1; }
+message GetReconciliationAcceptanceReqMsg { string trade_number = 1; string request_key = 2; }
+message GetReconciliationAcceptanceRspMsg { AcceptanceResource resource = 1; }

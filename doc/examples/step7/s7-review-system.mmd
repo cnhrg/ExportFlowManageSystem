@@ -1,0 +1,9 @@
+sequenceDiagram
+    actor 独立税务审核员 as 独立税务审核员
+    actor 供应商经办人 as 供应商经办人
+    participant SYSTEM as 代理出口系统
+    独立税务审核员->>SYSTEM: 查看待审版本和审核依据
+    SYSTEM-->>独立税务审核员: 显示内容摘要、待确认规则和所需凭据
+    独立税务审核员->>SYSTEM: 批准或退回并填写理由
+    SYSTEM-->>独立税务审核员: 保存这一版审核结论，尚未由主管机关受理
+    SYSTEM-->>供应商经办人: 显示退回原因或待办理进度

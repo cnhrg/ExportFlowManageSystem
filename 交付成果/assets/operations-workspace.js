@@ -13,13 +13,13 @@
     foreign:['银行实际入账（CNH）','number'],
     rate:['人民币本金系数（非汇率）（须本笔有效报价）','number'],
     fee:['银行 / 中转费（RMB）','number'],
-    commission:['本次佣金 / 手续费（RMB）','number'],
+    serviceFee:['代理服务费（每笔固定人民币300元，由D从可用余额承担）','number'],
     other:['其他已批准扣款（RMB）','number'],
     deposit:['已付定金 / 预付款（RMB）','number'],
     quoteDate:['本笔书面报价日期','date'],
     consignee:['C收货方 / 地址','text'],
     payer:['D付款方 / C与D关系','text'],
-    commissionRule:['佣金规则版本 / 确认依据','text'],
+    serviceFeeRule:['D承担服务费 / 分账结算依据及授权','text'],
     parties:['签约主体 / 委托链','text'],
     contractType:['协议类型 / 授权范围','text'],
     validity:['签署日期 / 授权有效期','text'],
@@ -42,7 +42,7 @@
     freightEvidence:['运费凭证 / 对应批次（如适用）','text',true]
   };
   const scenes={
-    dossier:{name:'交易建档审核',group:'交易与协议',nodes:'N01',owner:'B运营',module:'sales',fields:['reference','summary','company'],checks:['A—F身份及C/D关系证据齐备','本笔货物及材料与档案对应','佣金规则及A/B确认版本完整'],result:'建档业务审核通过，待正式系统生成交易单'},
+    dossier:{name:'签约交易依据审核（步骤二）',group:'交易与协议',nodes:'N02–N04',owner:'B运营 / 独立审核员',module:'sales',fields:['reference','summary','company'],checks:['适用主体及C/D关系证据齐备','确切资料与本交易对应，交易已由A首次提交创建','D承担固定人民币300元服务费的收费依据及扣收授权完整'],result:'签约依据审核演示通过，不代表合同已签或付款门禁已满足'},
     agreements:{name:'协议资料审核',group:'交易与协议',nodes:'N02–N04',owner:'B运营 / 法务',module:'contracts',fields:['reference','summary','company'],checks:['本笔签章、生效日期与主体一致','A—E委托链、A—F授权有效','专业条款意见及适用付款分支已关联'],result:'协议资料审核通过，不替代法务意见或真实签署'},
     documents:{name:'出口单证审核',group:'出运与报关',nodes:'N05',owner:'B运营 / A',module:'logistics',fields:['reference','summary','quantity'],checks:['合同、发票、箱单及实货逐项一致','历史主体、零数量与错误公式已清理','修订对比、原版与本版材料可追溯'],result:'本版出口单证审核通过，后续改版须重审'},
     transport:{name:'物流履约审核',group:'出运与报关',nodes:'N06 / N10',owner:'B运营 / E',module:'logistics',fields:['reference','summary','route'],checks:['运输编号、路线、口岸与批次一致','提货、交接或签收凭证已关联','延误、货损及拒收差异已解释'],result:'物流资料审核通过，不代替真实货物验收'},
@@ -51,13 +51,13 @@
     closure:{name:'四流结案审核',group:'证明与结案',nodes:'N21–N22',owner:'B运营 / 合规',module:'compliance',fields:['reference','summary','company'],checks:['货物、报关、资金及退税资料一致','资金由财务独立复核且无未解释余额','退税结果、适用证明及全部异常已闭环'],result:'结案资料审核通过（演示），非正式交易结案'},
     exceptions:{name:'异常更正审核',group:'证明与结案',nodes:'N23',owner:'B运营 / 合规',module:'compliance',fields:['reference','summary','company'],checks:['异常原因、受影响节点及版本已记录','修订材料与外部正式反馈一致','受影响审批已失效并重新取得必要确认'],result:'更正方案审核通过，不自动解除其他节点ON HOLD'},
     incoming:{name:'来款匹配处理',group:'资金与账户',nodes:'N11–N12',owner:'B财务',module:'funds',fields:['reference','summary','amount'],checks:['银行实际入账、D与付款号匹配','分配金额加未匹配差额等于入账本金','同一流水未重复分配 / 入账'],result:'来款匹配复核通过，不等于贸易核验入账成功'},
-    settlement:{name:'结算单处理',group:'资金与账户',nodes:'N13–N14',owner:'B财务',module:'funds',fields:['reference','summary','foreign','rate','fee','commission','other','deposit','quoteDate'],checks:['最新带日期的有效书面报价已核验','CNH入账、银行贸易核验入账及人民币入账结果齐备','佣金按步骤1规则计算并记入B收益账户','A净付款与佣金扣取、银行费及预付可勾稽'],result:'结算资料复核通过，不构成银行指令'},
+    settlement:{name:'服务费及货款结算',group:'资金与账户',nodes:'N13–N14',owner:'B财务',module:'funds',fields:['reference','summary','foreign','rate','fee','serviceFee','serviceFeeRule','other','deposit','quoteDate'],checks:['最新带日期的有效书面报价已核验','CNH入账、银行贸易核验入账及人民币入账结果齐备','A合同应付按合同金额核算；银行实际费用凭据齐全','首次获批分账时按trade唯一键从D已核验可用余额结算300元，须有D授权且不得减少A合同应付'],result:'结算资料复核通过，不构成银行指令'},
     payment:{name:'付款申请审核',group:'资金与账户',nodes:'N15–N17',owner:'B资金授权人',module:'funds',fields:['reference','summary','amount'],checks:['适用预付 / 出口后付款前置门禁通过','实际可用余额、净额及审批额度足够','A账户独立核验且经办审批分离'],result:'付款申请内部审核通过，未执行付款 / 未确认到账'},
     accounts:{name:'账户变更审核',group:'资金与账户',nodes:'N17',owner:'B财务',module:'accounts',fields:['reference','summary','account'],checks:['正式账户资料与A主体一致','独立渠道回拨及双人核验有记录','影响的付款申请已冻结并重新送审'],result:'账户变更材料审核通过，未变更任何真实银行账户'},
-    legal:{name:'合同条款审核',group:'专业审核',nodes:'N02–N04',owner:'B法务',module:'contracts',fields:['reference','summary','company'],checks:['代理范围及真实委托链清晰','费率、汇率、费用与付款时点无冲突','修订对比及双方书面一致意见齐备'],result:'法务条款审核通过，不替代合同签署与财务审批'},
+    legal:{name:'合同条款审核',group:'专业审核',nodes:'N02–N04',owner:'B法务',module:'contracts',fields:['reference','summary','company'],checks:['代理范围及真实委托链清晰','固定人民币300元服务费由D承担，首次获批分账时从D已核验可用余额结算；收费依据及D授权齐备','汇率、银行实际费用与付款时点无冲突','修订对比及相关方书面一致意见齐备'],result:'法务条款审核通过，不替代合同签署与财务审批'},
     risk:{name:'合规补证审核',group:'专业审核',nodes:'N23',owner:'B合规',module:'compliance',fields:['reference','summary','company'],checks:['主体、用途及适用外部要求有核查依据','风险命中、解释及补证已逐项留痕','独立复核人及受影响节点已明确'],result:'合规补证审核通过，不代替外部机关批准'}
   };
-  Object.assign(scenes.dossier,{fields:['reference','company','consignee','payer','commissionRule','summary']});
+  Object.assign(scenes.dossier,{fields:['reference','company','consignee','payer','serviceFeeRule','summary']});
   Object.assign(scenes.agreements,{fields:['reference','contractType','parties','validity','summary']});
   Object.assign(scenes.documents,{fields:['reference','goods','quantity','packages','weight','tradeValue','summary']});
   Object.assign(scenes.transport,{nodes:'N03 / N06 / N10',fields:['reference','route','transportNo','delivery','logisticsQuote','freightEvidence','summary']});
@@ -111,9 +111,9 @@
       parties:{A:kind===1?'A-002':'A-001',E:kind===1?'E-002':'E-001',F:kind===1?'F-002':'F-001'},
       status:kind===2?'rejected':'pending',version:kind===2?2:1,
       submitter:kind===2?'退回原经办':'外部 / 上游经办',editor:'',updated:'10-21 10:30',
-      values:{reference:id+'-V'+(kind===2?2:1),summary:kind===1?'待补本笔正式凭证及差异说明':'合成演示资料 · '+config.name,company:kind===1?'A示例乙':'A示例甲',quantity:'1200',route:'提货点 → 出口口岸（演示）',amount:'10000',account:'5508',foreign:'10000',rate:'1',fee:'80',commission:'2000',other:'0',deposit:'2000',quoteDate:'2026-10-21',
+      values:{reference:id+'-V'+(kind===2?2:1),summary:kind===1?'待补本笔正式凭证及差异说明':'合成演示资料 · '+config.name,company:kind===1?'A示例乙':'A示例甲',quantity:'1200',route:'提货点 → 出口口岸（演示）',amount:'10000',account:'5508',foreign:'10000',rate:'1',fee:'80',serviceFee:'300',serviceFeeRule:'每笔人民币300元由D承担；首次获批分账时从D可用余额结算，D授权及收费依据必须齐备',other:'0',deposit:'2000',quoteDate:'2026-10-21',
         consignee:'C示例收货方 / 合成送货地址',payer:'D示例付款方 / 关系说明索引 SYN-CD',
-        commissionRule:'合成规则V1 / SYN-COM · 贸易核验入账成功后结款A前扣取并记入B收益账户',
+        serviceFeeRule:'代理服务费固定人民币300元 / 交易单；D承担并在首次获批分账时从可用余额结算',
         parties:(kind===1?'A示例乙':'A示例甲')+' / B示例代理商 / 关联E与F',
         contractType:'本笔代理协议及适用授权（合成）',validity:'合成日期：2026-10-21 / 有效期待正式材料核验',
         goods:'家居收纳用品 / 合成规格',packages:'120箱 / 合成包装',weight:'210 / 235',tradeValue:'CNH 10,000 · 合成贸易货值',
@@ -179,6 +179,7 @@
   function notice(text){state.message=text;if(!storageBusy)render();}
   let navigationScope='operations';
   function navigation(active,scope=navigationScope){
+    const menuScenes=['B','E','F'].includes(role().entity)?allScenes:role().menus;
     navigationScope=scope;
     state.active=active;
     $('ops-user-controls').innerHTML='<div class="work-role"><label>岗位权限预览<select data-work-role aria-label="岗位权限预览">'+Object.entries(roles).map(([id,item])=>'<option value="'+id+'"'+(id===state.role?' selected':'')+'>'+item.name+'</option>').join('')+'</select></label>'+
@@ -192,14 +193,14 @@
       (canAccessEntry(scope)?'<label>当前工作区页面<select data-work-page aria-label="当前工作区页面">'+
         (scope==='catalog'?['entry','query'].map((tab,index)=>'<option value="'+tab+'"'+(document.querySelector('[data-catalog-tab="'+tab+'"].active')?' selected':'')+'>'+(index?'信息查询':'信息录入')+'</option>').join(''):'<option value="dossier">建档资料填报 / 汇总</option>')+'</select></label>':'<span>当前岗位无此工作区页面权限</span>'):
       '<label>当前工作区页面<select data-work-entry aria-label="当前工作区页面">'+
-      [...new Set(role().menus.map(id=>scenes[id].group))].map(group=>'<optgroup label="'+group+'">'+role().menus.filter(id=>scenes[id].group===group).map(id=>'<option value="scene:'+id+'"'+(selectedEntry==='scene:'+id?' selected':'')+'>'+sceneName(id)+' · '+pendingCount(id)+' 待办</option>').join('')+'</optgroup>').join('')+
-      (!role().menus.length?'<option value="">此岗位无单据操作权限</option>':'')+'</select></label><span>仅显示当前岗位授权范围</span>';
+      [...new Set(menuScenes.map(id=>scenes[id].group))].map(group=>'<optgroup label="'+group+'">'+menuScenes.filter(id=>scenes[id].group===group).map(id=>'<option value="scene:'+id+'"'+(selectedEntry==='scene:'+id?' selected':'')+'>'+sceneName(id)+(allowed(id)?' · '+pendingCount(id)+' 待办':' · 无操作权限')+'</option>').join('')+'</optgroup>').join('')+
+      (!menuScenes.length?'<option value="">此岗位无单据操作权限</option>':'')+'</select></label><span>B/E/F共用目录；数据和动作仍按岗位及受托交易校验</span>';
     $('ops-navigation')?.remove();
     if(scope!=='operations')return;
     const container=document.createElement('div');
     container.id='ops-navigation';
     container.innerHTML='<div class="work-menu-caption">授权操作入口 <small>数字为在途待处理单据</small></div>'+
-      [...new Set(role().menus.map(id=>scenes[id].group))].map(group=>'<div class="work-menu-group"><h4>'+group+'</h4>'+role().menus.filter(id=>scenes[id].group===group).map(id=>'<button type="button" data-work-scene="'+id+'" class="work-menu-item'+(active&&state.scene===id?' active':'')+'" aria-current="'+(active&&state.scene===id?'page':'false')+'"><span>'+sceneName(id)+'</span><b>'+pendingCount(id)+'</b></button>').join('')+'</div>').join('')+
+      [...new Set(menuScenes.map(id=>scenes[id].group))].map(group=>'<div class="work-menu-group"><h4>'+group+'</h4>'+menuScenes.filter(id=>scenes[id].group===group).map(id=>'<button type="button" data-work-scene="'+id+'" class="work-menu-item'+(active&&state.scene===id?' active':'')+'" aria-current="'+(active&&state.scene===id?'page':'false')+'"><span>'+sceneName(id)+'</span><b>'+(allowed(id)?pendingCount(id):'无权限')+'</b></button>').join('')+'</div>').join('')+
       (!role().menus.length?'<p class="work-menu-empty">此岗位无单据操作权限</p><button type="button" class="work-menu-item" data-work-link="'+(state.role==='boss'?'boss-viewer':'rbac')+'">'+(state.role==='boss'?'经营看板 · 只读':'账号 / 角色配置')+'</button>':'');
     $('capability-list').append(container);
   }
@@ -227,7 +228,7 @@
       (item.snapshot?'<details><summary>查看此刻证据 / 依赖版本快照</summary><pre class="work-snapshot">'+escape(JSON.stringify(item.snapshot,null,2))+'</pre></details>':'')+'</li>').join('');
     return '<section class="work-document" id="work-document" tabindex="-1"><header><div><small>'+config.nodes+' · '+config.owner+'</small><h4>'+record.id+' <span>V'+record.version+'</span></h4></div><span class="work-state '+record.status+'">'+labels[record.status]+'</span></header><button type="button" class="work-return" data-work-return>‹ 返回待办列表</button>'+
       '<div class="work-document-grid"><div><div class="work-fields">'+fieldsHtml+'</div>'+
-      (record.scene==='settlement'?'<div class="work-net"><small>人民币净付款试算 · 非付款依据</small><strong id="work-net">CNY '+net(values).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})+'</strong><p>CNH × 汇率 − 银行费 − 本次佣金/手续费（转入B收益账户）− 其他扣款 − 已付定金。佣金按步骤1档案规则，须在贸易核验入账成功后扣取；1:1不是已验证报价。</p></div>':'')+
+      (record.scene==='settlement'?'<div class="work-net"><small>D扣除服务费后的A付款资金上限 · 非A合同应付</small><strong id="work-net">CNY '+net(values).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})+'</strong><p>核验可用余额 − 固定服务费300元 − 银行实际费用 − 其他已批准扣款 − 已付定金。服务费在首次获批分账时由D承担并仅结算一次；A合同应付仍按合同核算，不因该费用降低。1:1不是已验证报价。</p></div>':'')+
       '<div class="work-document-actions">'+(canEdit?(editing?button('save','保存新版本')+button('cancel','取消修改'):button('edit',record.status==='approved'?'修订并重新审核':'修改单据')):'')+(canSubmit?button('submit','提交审核'):'')+'</div>'+
       '<div class="work-document-actions">'+
       (record.status==='pending'&&canEdit&&record.submitter===actor()?button('withdraw','撤销送审'):'')+
@@ -247,7 +248,7 @@
       (record.approval?'<p class="work-approved">'+escape(config.result)+'<br>'+escape(record.approval.actor+' · V'+record.approval.version)+'</p>':'')+'</div></div>'+
       '<details class="work-history" open><summary>持久审计轨迹 · '+record.history.length+'</summary><ol>'+(history||'<li>暂无操作记录；上游合成单据待处理。</li>')+'</ol><p class="work-hint">每次动作留存字段、核验人、文件摘要、批准及上游版本快照；本机摘要链非可信时间戳、不可篡改存储或真实身份认证。</p></details></section>';
   }
-  function net(values){return Number(values.foreign)*Number(values.rate)-Number(values.fee)-Number(values.commission)-Number(values.other)-Number(values.deposit);}
+  function net(values){return Number(values.foreign)*Number(values.rate)-Number(values.serviceFee)-Number(values.fee)-Number(values.other)-Number(values.deposit);}
   function sources(scene){
     const links={
       agreements:[['M06 · 代理协议候选模板','步骤2-出口货物贸易代理合同(10.16).docx'],['M07 · 物流合同（委托链待核）','步骤2-国际物流服务合同-龙南逸泰源&国际运输合同(1).doc']],
@@ -334,9 +335,10 @@
       if(state.editing!==key(record)){notice('保存被拒绝：请先进入单据修改。');return;}
       const draft=state.drafts[key(record)],config=scenes[record.scene];
       if(state.draftVersions[key(record)]!==record.version){notice('保存被拒绝：原单据版本已变化，请重新载入。');return;}
-      if(!note||config.fields.some(name=>!fields[name][2]&&!String(draft[name]??'').trim()||fields[name][1]==='number'&&(!Number.isFinite(Number(draft[name]))||(['fee','commission','other','deposit'].includes(name)?Number(draft[name])<0:Number(draft[name])<=0)))){
+      if(!note||config.fields.some(name=>!fields[name][2]&&!String(draft[name]??'').trim()||fields[name][1]==='number'&&(!Number.isFinite(Number(draft[name]))||(['fee','serviceFee','other','deposit'].includes(name)?Number(draft[name])<0:Number(draft[name])<=0)))){
         notice('保存未执行：请补齐必填字段和修改原因；数量、金额及汇率须为正数，费用与已付款不得为负数。');return;
       }
+      if(record.scene==='settlement'&&Number(draft.serviceFee)!==300){notice('保存未执行：代理服务费必须为每笔人民币300元，由D在首次获批分账时从可用余额承担。');return;}
       if(record.scene==='settlement'&&(!Number.isFinite(net(draft))||net(draft)<0)){notice('保存未执行：结算净额无效或资金不足，请核对金额和汇率。');return;}
       if(config.fields.every(name=>draft[name]===record.values[name])){notice('保存未执行：单据内容没有变化。');return;}
       const before=record.status,oldVersion=record.version;

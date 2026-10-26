@@ -1,0 +1,14 @@
+{
+  "type": "https://api.example.invalid/problems/IDEMPOTENCY_CONFLICT",
+  "title": "IDEMPOTENCY_CONFLICT",
+  "status": 409,
+  "detail": "原键不能改文或更改原If-Match",
+  "instance": "/synthetic/request",
+  "errors": [
+    {
+      "pointer": "/headers/Idempotency-Key",
+      "code": "IDEMPOTENCY_CONFLICT",
+      "detail": "原键不能改文或更改原If-Match"
+    }
+  ]
+}

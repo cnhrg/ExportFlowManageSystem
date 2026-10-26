@@ -2,13 +2,13 @@
 (function(root){
   const scenarios=[
     {
-      id:'sales',number:'01',title:'建立交易档案',owner:'A / B / C / D / E / F 提供资料；B运营汇总；人工审核员终审',category:'入口：PC网页 / Mobile二维码（受限VPN）',flow:'建档与签约 · 货物流 · 报关流',
-      summary:'根据操作指引步骤1，归集交易主体、货物及本笔单证；系统基于交易档案生成待审批资料并按规则检查资料的正确性，人工审核员审批通过后，系统才生成唯一交易单并关联交易档案。',
-      trigger:'收到本次出口业务指示后，由运营发起PC网页建档链接或Mobile二维码邀请，A—F按各自责任补充本笔资料。',
-      inputs:['A：供应商法定主体资料；本笔货物名称、数量、货值、币种、商业发票、装箱单、销售合同 / 订单、原产地及产品资料','B：代理业务指示、代理范围与本笔收付款路径；A/B确认的佣金费率、计费基数、计价币种/换算依据、税费口径、分批规则、规则版本及结算扣取方式','C：真实收货人主体资料及完整送货地址','D：付款方主体资料、向B付款确认，以及与C的商业关系说明和支持资料','E：出口口岸、运输方式 / 工具等基础信息；步骤1暂缺可标记待补，后续报关 / 物流节点补齐','F：报关服务商资质、联系人、报价及服务范围'],
-      controls:['对照操作指引§3步骤1核实A—F法定名称、角色和本次出口相关材料；确认C为实际收货方、D为付款方并记录两者关系。','由B运营汇总并查重；待B指定人工审核员终审通过后，生成唯一交易编号、交易档案目录及原件索引。','运输资料可标记“步骤1暂缺”，但必须列出补齐责任及后续节点；此状态不构成物流 / 报关资料豁免。','仅做档案信息校验和待人工核查提示；本步骤不连接银行、不执行制裁 / AML自动批准、不提交报关或付款。'],
-      outputs:['唯一交易编号及已批准交易建档清单（包含步骤1确认的佣金规则及A/B确认依据）','按交易号归档的本笔文件夹、材料版本 / 来源索引与数据库关键字段；步骤5按已批准佣金版本结算扣取并记入B收益账户，变更须重审','缺件 / 待补任务及责任人；进入步骤2协议签署的业务入口'],
-      exceptions:['A—F主体、角色、C/D关系或货物资料无法解释 / 互相矛盾：退回补充或ON HOLD；审批未通过不得生成正式交易单。','文件不是本次出口业务的有效版本、角色资质 / 报价 / 服务范围缺失：不得标记建档通过。','运输信息暂缺：可继续建档待审，但后续出运 / 报关前必须补齐并核验。'],
+      id:'sales',number:'01',title:'建立交易档案',owner:'A供应商与D付款方分别提交；B在步骤一只读',category:'入口：对外A/D网页；内部独立查询',flow:'建档与签约 · 货物流 · 报关流',
+      summary:'供应商事先收集适用主体及三单，预取号并首次提交创建交易；D独立提交付款声明。双方分别修改本方原资料，不在步骤一终审批准。',
+      trigger:'A事先与代理及服务商沟通后自行填写；D在交易及身份关系核实后提交本方资料。无运营先建单或A至F邀请提交。',
+      inputs:['A：供应商法定主体资料；本笔货物名称、数量、货值、币种、商业发票、装箱单、销售合同 / 订单、原产地及产品资料','B：代理业务指示、代理范围与本笔收付款路径；每笔固定人民币300元服务费由D承担，并在首次获批分账时从D已核验可用余额一次性结算；D授权及收费依据须齐备','C：真实收货人主体资料及完整送货地址','D：付款方主体资料、向B付款确认，以及与C的商业关系说明和支持资料','E：出口口岸、运输方式 / 工具等基础信息；步骤1暂缺可标记待补，后续报关 / 物流节点补齐','F：报关服务商资质、联系人、报价及服务范围'],
+      controls:['仅A和D分别首次提交及修改本方资料，不能读取或覆盖另一方私有字段。','A首次提交才创建同号交易；B在此阶段只读，签约依据送审和独立审核属于步骤二。','适用运输细节可显式待补，不能因此豁免后续物流与报关门禁。','本步骤不连接银行、不批准整单、不提交报关或付款。'],
+      outputs:['唯一同号交易及A/D分别提交的本方资料','可追踪的确切材料版本和追加受理记录；不代表整单已批准','缺件及后续签约阶段待核项目'],
+      exceptions:['首次提交未知先恢复原号受理，不能另取号重复建单。','本方修改遇到版本冲突先重读比较；付款关系依赖变化须先核实。','运输信息暂缺须明确责任和后续门禁。'],
       nodes:['N01'],next:'02 · 签署必要协议'
     },
     {
@@ -16,7 +16,7 @@
       summary:'按本笔交易分别核验代理协议、物流合同、报关服务合同和电子委托；协议有效、签署完整并与付款分支一致后，才开放后续节点。',
       trigger:'交易建档审批通过，且B拟开展代理 / 代收代付或E、F拟开始服务时。',
       inputs:['交易号与A / B / E / F真实法定主体、授权签署人','附件1费用、结算、付款时点与预付款 / 出口后付款分支','物流报价、委托主体、服务范围；A委任F的合同及电子授权'],
-      controls:['逐份检查主体、服务范围、报价、费用、签章、生效日、交易 / 批次和授权有效期。','M06候选模板存在费率空白、章次及结算期限与付款门禁等待Review事项；正式签前须法务 / 财务书面统一。','M07现有合同甲方为B；先确认A→E委托链或补有效三方 / 转委托约定，并区分F的中国出口报关职责。','M05仅为流程图，不是附件4合同；预付款前须A—F合同及B认可同一F，正式申报前须有效电子委托。'],
+      controls:['逐份检查主体、服务范围、报价、费用、签章、生效日、交易 / 批次和授权有效期。','M06候选模板的原收费 / 扣款条款与当前固定服务费设计冲突，且章次及结算期限待Review；正式签前须法务 / 财务书面统一。','M07现有合同甲方为B；先确认A→E委托链或补有效三方 / 转委托约定，并区分F的中国出口报关职责。','M05仅为流程图，不是附件4合同；预付款前须A—F合同及B认可同一F，正式申报前须有效电子委托。'],
       outputs:['逐份协议Review清单、条款意见及审批轨迹','已签生效协议 / 授权版本与待补材料任务'],
       exceptions:['未签署、主体不一致、服务商名称与发票 / 收款资料不符或授权过期：暂停。','缺附件4正文 / 电子委托，或结算条款与付款门禁冲突：不得签批或放行付款。'],
       nodes:['N02','N03','N04'],next:'03 · 备货及安排物流'
@@ -82,7 +82,7 @@
   const dossier={entry:'web',device:'pc',vpn:false,section:'A',submitted:false,approved:false,transportMissing:true,attachments:{},attachmentSequence:0,previewId:'',customsPreview:false,customsApplied:false,customsValues:{},fieldSources:{},historySelection:'',message:'',values:{
     aName:'龙南逸泰源跨境电商有限公司',aCode:'91360727DEMO00001',aAddress:'江西省赣州市龙南市示范路88号',aContact:'林女士',aPhone:'13800000001',
     goods:'家居收纳用品',spec:'塑料材质；型号 DEMO-01',origin:'中国',quantity:'1200',unit:'件',unitPrice:'8.50',totalValue:'10200',currency:'USD',brand:'DEMO',contractNo:'SALE-DEMO-001',invoiceNo:'INV-DEMO-001',packingNo:'PL-DEMO-001',
-    bName:'示例贸易代理有限公司',bCode:'91360727DEMO00002',bContact:'陈先生',bPhone:'13800000003',bInstruction:'代理出口；按本笔交易编号收取D货款并按约定向A结算。',bCollection:'D → B收款账户（具体账户在资金节点核验）',bPayment:'B → A收款账户（付款前独立核验）',bCurrency:'USD',bMode:'出口后付款',
+    bName:'示例贸易代理有限公司',bCode:'91360727DEMO00002',bContact:'陈先生',bPhone:'13800000003',bInstruction:'代理出口；D货款按本笔交易编号收取并按约定分账；每笔交易固定300元服务费由D承担，在首次获批分账时从D已核验可用余额一次性结算。',bCollection:'D → B收款账户（具体账户在资金节点核验）',bPayment:'B → A收款账户（付款前独立核验）',bCurrency:'USD',bMode:'出口后付款',serviceFeeAmount:'300',serviceFeePayer:'D',serviceFeeMethod:'首次获批分账时按trade唯一键从D已核验可用余额一次性结算；不减少A合同应付',
     cName:'示例境外收货有限公司',cCountry:'俄罗斯',cCode:'C-REG-DEMO-001',cAddress:'俄罗斯示例州示范市出口大道 100 号',cContact:'Alex Demo',cPhone:'+7 900 000 0001',cDelivery:'送至合同指定仓库；收货预约待确认',
     dName:'示例付款主体有限公司',dCountry:'吉尔吉斯斯坦',dCode:'D-REG-DEMO-001',dContact:'Dana Demo',dPhone:'+996 700 000 001',dConfirm:'按交易编号及付款发票向B付款，金额与币种以审批后文件为准。',dRelationship:'D为C本笔采购的关联付款主体；具体商业关系以支持文件和人工核验为准。',
     ePort:'待E确认',eMode:'公路运输',eVehicle:'待订车后补充',eRoute:'待物流方案确认',eEta:'',
@@ -90,9 +90,9 @@
   }};
   const dossierSections=[
     {id:'A',title:'A · 中国供应商',subtitle:'供应商主体、货物资料与本笔出口单证',requiredFiles:['A商业发票','A装箱单','A销售合同 / 订单']},
-    {id:'B',title:'B · 贸易代理商',subtitle:'代理业务指示、收付款路径与步骤1佣金规则确认',requiredFiles:['B本笔代理业务指示 / 收付路径说明','A/B佣金规则确认资料']},
+    {id:'B',title:'B · 贸易代理商',subtitle:'代理业务指示、收付款路径与固定服务费规则',requiredFiles:['B本笔代理业务指示 / 收付路径说明']},
     {id:'C',title:'C · 境外收货人',subtitle:'实际收货主体、送货地址与交付安排',requiredFiles:['C收货主体及地址支持资料']},
-    {id:'D',title:'D · 付款方',subtitle:'付款主体、付款确认及C / D商业关系',requiredFiles:['D付款确认','C / D关系支持资料']},
+    {id:'D',title:'D · 付款方',subtitle:'付款主体、付款确认、C / D商业关系及服务费授权',requiredFiles:['D付款确认','C / D关系支持资料','D服务费承担及分账扣收授权']},
     {id:'E',title:'E · 物流公司',subtitle:'口岸及运输工具基础信息（步骤1可暂缺）',requiredFiles:[]},
     {id:'F',title:'F · 报关代理',subtitle:'服务商资质、联系人、报价及服务范围',requiredFiles:['F服务商资质','F报价 / 服务范围资料']}
   ];
@@ -150,15 +150,9 @@
       {key:'bName',label:'代理商法定名称',required:true},{key:'bCode',label:'统一社会信用代码 / 注册号',required:true},{key:'bContact',label:'业务联系人',required:true},{key:'bPhone',label:'联系人电话',required:true},
       {key:'bInstruction',label:'本笔代理业务指示 / 代理范围',required:true,wide:true},{key:'bCollection',label:'收款路径（描述，不等于银行核验）',required:true,wide:true},{key:'bPayment',label:'出款路径（描述，不等于账户批准）',required:true,wide:true},
       {key:'bCurrency',label:'预期收款币种',required:true},{key:'bMode',label:'付款分支',type:'select',required:true,options:['出口后付款','出口前预付款（待审批）']},
-      {key:'commissionRate',label:'佣金费率（%，无默认值）',type:'number',required:true,placeholder:'按A/B确认值填写；免佣填0并提供依据'},
-      {key:'commissionBasis',label:'佣金计费基数及金额来源',required:true,placeholder:'如货物总货值；须与本笔协议一致'},
-      {key:'commissionCurrency',label:'佣金计价币种',required:true,placeholder:'按协议确认；合同模板以USD计价'},
-      {key:'commissionFxBasis',label:'佣金计价币种及结算换算依据',required:true},
-      {key:'commissionTaxBasis',label:'含税 / 不含税、税率及税额口径',required:true},
-      {key:'commissionPartialPolicy',label:'分批确认佣金的归属、尾差及累计上限规则',required:true,wide:true},
-      {key:'commissionVersion',label:'佣金规则版本及生效日期',required:true},
-      {key:'commissionEvidence',label:'A/B确认依据及对应协议版本',required:true},
-      {key:'commissionDeductionRule',label:'贸易核验入账后扣佣方式（结款A前扣取并转入B收益账户）',required:true,wide:true}
+      {key:'serviceFeeAmount',label:'代理服务费（固定人民币 / 每笔）',type:'number',required:true,readonly:true},
+      {key:'serviceFeePayer',label:'服务费承担方',required:true,readonly:true},
+      {key:'serviceFeeMethod',label:'服务费结算方式',required:true,wide:true,readonly:true}
     ],
     C:[
       {key:'cName',label:'真实境外收货人法定名称',required:true},{key:'cCountry',label:'国家 / 地区',required:true},{key:'cCode',label:'注册号 / 主体识别信息',required:true},
@@ -242,16 +236,16 @@
     const source=dossier.fieldSources[field.key]?'<small class="dossier-field-source">来源：'+escape(dossier.fieldSources[field.key])+'</small>':'';
     const control=field.type==='select'
       ?'<select data-dossier-field="'+field.key+'"'+(field.required?' required':'')+'>'+field.options.map(option=>'<option'+(option===value?' selected':'')+'>'+escape(option)+'</option>').join('')+'</select>'
-      :'<input data-dossier-field="'+field.key+'" type="'+(field.type||'text')+'" value="'+value+'" placeholder="'+escape(field.placeholder||'请填写本笔真实信息')+'"'+(field.required?' required':'')+'>';
+      :'<input data-dossier-field="'+field.key+'" type="'+(field.type||'text')+'" value="'+value+'" placeholder="'+escape(field.placeholder||'请填写本笔真实信息')+'"'+(field.required?' required':'')+(field.readonly?' readonly':'')+'>';
     return '<label class="dossier-field'+(field.wide?' wide':'')+'"><span>'+escape(field.label)+required+'</span>'+control+source+'</label>';
   }
-  function commissionIssues(){
-    const rate=String(dossier.values.commissionRate||'').trim();
-    return rate&&(!Number.isFinite(Number(rate))||Number(rate)<0||Number(rate)>100)?['佣金费率须为0—100之间的有效百分数；0费率仍须确认依据']:[];
+  function serviceFeeIssues(){
+    return dossier.values.serviceFeeAmount!=='300'||dossier.values.serviceFeePayer!=='D'||!String(dossier.values.serviceFeeMethod||'').includes('D已核验可用余额')
+      ?['服务费须为每笔人民币300元、由D承担并在首次获批分账时从可用余额结算']: [];
   }
   function dossierReview(){
     const requiredValues=Object.values(dossierFields).flat().filter(field=>field.required);
-    const missingFields=requiredValues.filter(field=>!String(dossier.values[field.key]||'').trim()).map(field=>field.label).concat(commissionIssues());
+    const missingFields=requiredValues.filter(field=>!String(dossier.values[field.key]||'').trim()).map(field=>field.label).concat(serviceFeeIssues());
     const missingFiles=dossierSections.flatMap(section=>section.requiredFiles.filter(name=>!attachmentsFor(name).some(file=>file.source==='upload')));
     const linkedFiles=dossierSections.flatMap(section=>section.requiredFiles.flatMap(name=>attachmentsFor(name).map(file=>({category:name,file}))));
     const list=items=>items.length?'<ul>'+items.map(item=>'<li>'+escape(item)+'</li>').join('')+'</ul>':'<p>当前演示字段已填写；正式原件仍须按清单上传并由人工审核员核验。</p>';
@@ -342,20 +336,20 @@
   }
   function fundsAccountDiagram(){
     return `<figure class="funds-account-figure" aria-labelledby="funds-account-heading">
-      <div class="funds-design-section-head"><div><small>ACCOUNT VIEW / FUNDS MAP</small><h3 id="funds-account-heading">先看资金去向 · 账户 × CIPS × 供货商</h3></div><span class="demo-chip blue">B收益为独立真实银行账户 · 本场景不含退款</span></div>
+      <div class="funds-design-section-head"><div><small>ACCOUNT VIEW / FUNDS MAP</small><h3 id="funds-account-heading">先看资金去向 · 账户 × CIPS × 供货商</h3></div><span class="demo-chip blue">D承担服务费 · 首次获批分账时结算 · 本场景不含退款</span></div>
       <div class="funds-account-legend"><span class="cash">实线：资金流转 / 余额转换</span><span class="info">蓝色虚线：材料信息提交</span></div>
       <div class="funds-account-scroll" tabindex="0" role="region" aria-label="账户资金路径图，小屏可横向滚动">
         <svg class="funds-account-svg" viewBox="0 0 1280 650" role="img" aria-labelledby="funds-account-svg-title funds-account-svg-desc">
-          <title id="funds-account-svg-title">D来款进入CNH不可用余额，贸易核验入账至国内RMB可用余额后，划转两项费用至B收益账户并按批准结算额向A付款；V1不垫资</title>
-          <desc id="funds-account-svg-desc">入账费按每笔实收本金乘0.03%计提，INVOICE申报费每贸易单完成申报后计提人民币300元，均由D承担。计提不等于实际扣划：费用必须先随对应D来款经银行核验入账至国内RMB可用余额，再从该可用余额扣取并划转至B收益账户，不能从CNH不可用余额直接划转。V1无垫资，V2支持B垫资及后续回款清偿。</desc>
+          <title id="funds-account-svg-title">D货款经贸易核验进入可用余额；首次获批分账时从D可用余额结算固定300元服务费，再按合同向A付款</title>
+          <desc id="funds-account-svg-desc">不按实收本金比例抽佣。每笔交易固定300元服务费由D承担，在首次获批分账时从D已核验可用余额一次性结算；该事件不减少A合同应付。银行及中转费用按实际凭证单列。</desc>
           <defs>
             <marker id="funds-cash-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#7c91a9"/></marker>
             <marker id="funds-available-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#329475"/></marker>
             <marker id="funds-info-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#5085c5"/></marker>
           </defs>
           <rect class="account-group" x="440" y="155" width="505" height="420" rx="18"/>
-          <text class="account-heading" x="465" y="190">B · 收款账户与收益账户</text>
-          <text class="account-caption" x="465" y="212">D承担两项费用 · 来款扣费与贸易货款分账</text>
+          <text class="account-heading" x="465" y="190">B · 贸易收款账户与内部资金分类</text>
+          <text class="account-caption" x="465" y="212">D货款实收与服务费分账结算分别记账</text>
           <rect class="account-party" x="20" y="240" width="160" height="130" rx="12"/>
           <text class="account-heading" x="100" y="279" text-anchor="middle">D · 付款方</text>
           <text class="account-copy" x="100" y="307" text-anchor="middle">汇总多笔单据</text>
@@ -367,11 +361,11 @@
           <rect class="account-unavailable" x="465" y="245" width="185" height="125" rx="12"/>
           <text class="account-heading" x="557" y="280" text-anchor="middle">CNH不可用余额</text>
           <text class="account-copy" x="557" y="307" text-anchor="middle">待核验 + 未匹配</text>
-          <text class="account-caption" x="557" y="335" text-anchor="middle">费用仅计提预留，不直接转收益</text>
+          <text class="account-caption" x="557" y="335" text-anchor="middle">先核验贸易及银行可用状态</text>
           <rect class="account-available" x="735" y="245" width="185" height="125" rx="12"/>
           <text class="account-heading" x="827" y="280" text-anchor="middle">国内人民币可用余额</text>
           <text class="account-copy" x="827" y="307" text-anchor="middle">仅释放核验成功额度</text>
-          <text class="account-caption" x="827" y="335" text-anchor="middle">以银行实际入账及可用状态为准</text>
+          <text class="account-caption" x="827" y="335" text-anchor="middle">分账前余额须达到300元</text>
           <rect class="account-party" x="1035" y="240" width="220" height="130" rx="12"/>
           <text class="account-heading" x="1145" y="279" text-anchor="middle">A · 供货商</text>
           <text class="account-copy" x="1145" y="307" text-anchor="middle">经独立核验的人民币账户</text>
@@ -382,50 +376,41 @@
           <text class="account-edge" x="430" y="395" text-anchor="middle">② 入账CNH不可用</text>
           <path class="account-success-path" d="M650 290H735" marker-end="url(#funds-available-arrow)"/>
           <text class="account-edge account-success-label" x="692" y="235" text-anchor="middle">④ 贸易核验入账成功</text>
-          <text class="account-caption" x="692" y="320" text-anchor="middle">含待扣费用</text>
+          <text class="account-caption" x="692" y="320" text-anchor="middle">仅核验贸易货款</text>
           <path class="account-success-path" d="M920 290H1035" marker-end="url(#funds-available-arrow)"/>
           <text class="account-edge account-success-label" x="977" y="225" text-anchor="middle">⑤ 按批准结算额向A付款</text>
           <text class="account-caption" x="1005" y="402" text-anchor="middle">A账户独立核验 · 实际到账后确认</text>
           <text class="account-caption" x="1005" y="425" text-anchor="middle">V1不垫资 · 实际可用货款足额才放行</text>
-          <path class="account-success-path" d="M790 370V450" marker-end="url(#funds-available-arrow)"/>
-          <text class="account-edge account-success-label" x="480" y="419">②a 入账时计提万分之三</text>
-          <text class="account-caption" x="480" y="442">实收本金 × 0.03% · 可用后过扣</text>
-          <path class="account-success-path" d="M865 370V450" marker-end="url(#funds-available-arrow)"/>
-          <text class="account-edge account-success-label" x="480" y="505">③a INVOICE申报后计提300元</text>
-          <text class="account-caption" x="480" y="528">每贸易单一次 · 可用后扣取</text>
-          <text class="account-caption" x="827" y="395" text-anchor="middle">仅从国内RMB</text>
-          <text class="account-caption" x="827" y="418" text-anchor="middle">可用余额转收益</text>
-          <rect class="account-commission" x="735" y="450" width="185" height="110" rx="12"/>
-          <text class="account-heading" x="827" y="479" text-anchor="middle">B · 收益账户</text>
-          <text class="account-copy" x="827" y="505" text-anchor="middle">入账费 + INVOICE申报费</text>
-          <text class="account-caption" x="827" y="535" text-anchor="middle">D承担 · 从RMB可用余额扣划</text>
+          <rect class="account-service" x="735" y="450" width="185" height="110" rx="12"/>
+          <text class="account-heading" x="827" y="479" text-anchor="middle">B · 服务费收入科目</text>
+          <text class="account-copy" x="827" y="505" text-anchor="middle">D承担 · 固定CNY 300</text>
+          <text class="account-caption" x="827" y="535" text-anchor="middle">首次获批分账时内部转列</text>
+          <path class="account-success-path" d="M827 370V450" marker-end="url(#funds-available-arrow)"/>
+          <text class="account-edge account-success-label" x="827" y="417" text-anchor="middle">分账时一次性结算</text>
           <path class="account-info-path" d="M465 260H420V95H317V240" marker-end="url(#funds-info-arrow)"/>
           <text class="account-info-label" x="440" y="45" text-anchor="middle">③ 按备注关联交易档案ID → 生成INVOICE → 人工审批</text>
           <text class="account-info-label" x="440" y="70" text-anchor="middle">向收款银行提交贸易材料，核验后确认入账；CIPS仅为支付清算链路</text>
           <rect class="account-failure" x="465" y="590" width="480" height="47" rx="8"/>
-          <text class="account-failure-label" x="705" y="610" text-anchor="middle">核验未通过或未确认RMB可用 → 不扣划费用、不转收益</text>
-          <text class="account-caption" x="705" y="628" text-anchor="middle">仅计提不算已扣费；可用余额不足暂停，双边回单核清才确认收益到账</text>
+          <text class="account-failure-label" x="705" y="610" text-anchor="middle">未核验、未授权或余额不足 → 不执行服务费分账</text>
+          <text class="account-caption" x="705" y="628" text-anchor="middle">A合同应付仍按合同核算，不以服务费扣减</text>
         </svg>
       </div>
-      <figcaption>计费触发不变：②a每笔实收登记CNH不可用余额后按本金×0.03%计提一次；③a每贸易单完成INVOICE申报后计提人民币300元一次，补件或重复申报不重收。实际收益路径统一为：CNH不可用余额 → 收款银行贸易核验入账并确认国内RMB可用余额（含对应待扣费用）→ 从该RMB可用余额扣取两项费用 → B收益账户；不允许CNH不可用余额直转收益。费用由D承担，不向A另收；扣费后货款不足须D补足，V1不垫资，也不默认冲减A合同应收。收费须有D授权及银行确认的核验/扣划依据，双边回单核清才确认收益到账。V2支持B以获批授信/自有资金先行垫付A，后续D回款完成核验入账后按协议核销垫资并清偿；不把CNH不可用余额当作垫资来源。原型不执行真实扣划或垫资。</figcaption>
+      <figcaption>D汇款通过贸易核验并确认可用后，首次获批分账时由D承担固定人民币300元服务费，从可用余额一次性结算；余款按合同及批准金额向A付款。服务费事件不降低A合同应付；银行及中转费用按实际凭证单列并依合同承担。本地原型不执行真实银行收付。</figcaption>
     </figure>`;
   }
   function fundsInformationDesign(){
     return '<section class="funds-design-section funds-information" id="funds-information-v1"><div class="funds-design-section-head"><div><h3>信息流</h3></div></div>'+
       table(['资金事件 / 节点','唯一关联与关键字段','流水文件 / 执行凭据','发票 / 合同 / 业务材料','逐笔对账方式 / 差异处置'],[
-        ['① D汇款入B · N11','receipt_id；银行交易号、价值日、D原付款账户、B收款账户、币种、银行实际入账本金及原始备注；银行交易号与账户/币种共同去重','银行正式流水、入账通知、原始支付报文及水单；付款截图不替代银行实收凭证','贸易合同/订单、代理协议与收款授权；D≠C时补付款关系依据；另关联D确认的两项收费条款及扣款授权','先全额登记CNH不可用余额，再区分费用和贸易货款；银行费用另列，不能以汇出额代替实收本金'],
-        ['②a 入账费计提 / 可用后过扣 · N11–N14','receipt_fee_id → receipt_id；D承担；基数为每笔银行实际入账本金，费率0.03%（万分之三）；以receipt_id + receipt_fee为唯一计费键；计提时间与实际扣划时间分开记录','实收入账凭证、费用计提记录、对应国内RMB入账及可用确认；实际扣取后保存RMB来源扣账与B收益入账双边流水','D收费协议/扣款授权及银行确认的核验、费用扣划依据；计提不等于贸易核验通过或费用已扣','CNH全额登记后按实收本金×0.03%计提一次；对应资金先经银行核验进入国内RMB可用余额，再从该余额过扣至B收益。CNH不可用时只计提预留，不实际扣划；重复回执或重新匹配不重收，余额不足/冻结/路径未确认则暂停'],
-        ['② 水单拆分 / 档案匹配 · N11–N12','allocation_id → receipt_id + trade_id + batch_id；货款分配、费用预留及各自核验/可用状态；一笔来款可关联多笔贸易单','原水单、D分单清单、两项费用计提及实际执行明细、分配版本；每笔费用仅占用一次额度','贸易货款绑定有效合同及付款关系；费用绑定D收费授权与银行确认的核验依据，不以货物合同虚增费用；D须预留足额货款和费用','实收本金 = 已实际扣划费用 + 待扣费用预留 + 剩余货款（含未匹配/已付A）；预留和货款互斥，不重复占用。待扣费用进入RMB可用余额后仍须预留，不得拿去付A；未入账可用不得直转收益'],
-        ['③ 货款INVOICE申报 · N12','invoice_id + version → trade_id + allocation_id；申报编号、提交时间、申报完成回执及内部批准版本','当前INVOICE、内部核验及申报完成凭证；草稿、仅生成发票或内部批准不作为申报完成','货款INVOICE、对应贸易合同、代理协议、档案及水单；货款与D承担的手续费分别列示','申报完成触发每贸易单300元费用计提，不代表立即扣划；实际扣费须对应资金先进入国内RMB可用余额。申报状态未知先核查，不重复申报或计费'],
-        ['③a INVOICE申报费计提 / 可用后扣取 · N12–N14','invoice_fee_id → trade_id + 首次完成申报记录 + receipt_id；D承担人民币300元/贸易交易单；以trade_id + invoice_fee为唯一计费键，INVOICE版本不作为新收费依据','申报完成凭证、300元计提记录、对应国内RMB入账及可用确认；扣费后保存RMB来源扣账/B收益入账双边流水','D收费授权、对应INVOICE申报记录及银行确认的核验/扣划安排；财税凭证另按适用要求办理','完成申报后计提300元，待对应D来款先进入国内RMB可用余额，再从该余额扣取至B收益；不能从CNH不可用余额直接划转。补件、改版或重复申报不重收，余额不足暂停并通知D补足'],
-        ['④ 贸易核验入账 · N13','trade_verification_id → 申报编号 + INVOICE版本 + allocation_id + fee_id；分别记录货款及费用的核验依据、核验金额、国内RMB入账/可用确认和预留状态','银行核验结果、实际RMB入账及可用凭证；跨账户划转另存双边流水；仅内部释放不虚构银行扣账','货款按真实贸易合同、INVOICE、水单及付款关系核验；费用另按D收费授权及银行确认的适用依据核验，不虚增货物贸易额','CNH中对应货款及待扣费用，均须经银行核验且确认国内RMB实际入账/可用后才释放；费用释放后保持扣费预留，随后才转B收益。仅部分入账可用时不得超额扣费或支付；未匹配/未通过部分继续受限'],
-        ['B收益账户 · 仅从国内RMB可用余额转入','fee_id + fee_type → receipt_id / trade_id + trade_verification_id + transfer_id；区分receipt_fee（0.03%）与invoice_fee（300元），来源固定为对应D来款的国内RMB可用余额','计提台账、国内RMB实际入账/可用确认、扣划指令及RMB来源扣账/B收益入账双边回单；计提、待可用、在途和成功分状态','D收费授权、银行核验及扣划依据；科目、收入确认、税额与适用发票由财税核定','逐笔核对：费用计提 → CNH核验入账为国内RMB可用 → RMB扣账 → B收益入账。不允许CNH不可用直转收益或以计提冒充到账；双边未核清保持锁额，不重发，合并展示抵销内部划转'],
-        ['⑤ B向A付款 · V1不垫资','payment_id → settlement_id + trade_id + 审批版本；A核实账户、合同应付、D对应RMB可用货款及累计已付；剔除费用预留/锁额','批准结算单、银行扣账/成功回单与A到账确认分别留存；两项费用不得二次扣减','A—B协议及付款条件、A账户核验、适用出运/放行证据；V1不以B垫资绕过资金门禁','V1仅在D货款实际入账可用且扣费后足额时付款；不足须D补足，不默认减少A应收。V2支持先行垫付A及后续回款清偿，须独立授信、锁额及审批，不使用CNH不可用余额']
+        ['① D汇款入B · N11','receipt_id；银行交易号、价值日、D原付款账户、B收款账户、币种、银行实际入账本金及原始备注；银行交易号与账户/币种共同去重','银行正式流水、入账通知、原始支付报文及水单；付款截图不替代银行实收凭证','贸易合同/订单、代理协议与收款授权；D≠C时补付款关系依据','实际入账全额登记CNH不可用余额；银行及中转费按实际凭证单列，不按实收本金计提比例费用'],
+        ['② 水单拆分 / 档案匹配 · N11–N12','allocation_id → receipt_id + trade_id + batch_id；仅记录货款毛额分配；一笔来款可关联多笔贸易单','原水单、D分单清单、分配版本及差异台账','贸易货款绑定有效合同、付款关系和批准的交易档案；服务费待可用确认后再结算','实收本金 = 已关联货款 + 未匹配差额；未匹配金额继续受限，不得转收入或可付款余额'],
+        ['④ 贸易核验入账 · N13','trade_verification_id → 申报编号 + INVOICE版本 + allocation_id；记录货款核验依据、核验金额、国内RMB实际入账及可用确认','银行核验结果、实际RMB入账及可用凭证；内部释放不虚构银行扣账','货款按真实贸易合同、INVOICE、水单及付款关系核验；此节点不扣服务费','仅银行核验成功且确认国内RMB实际入账/可用后释放对应货款；未匹配或未通过部分继续受限，服务费留待获批分账时处理'],
+        ['⑤ 货款分账与A付款 · N14–N17','payment_id → settlement_id + trade_id + 批准版本；关联A合同应付、已付、D可用余额及累计分账','批准结算单、D服务费结算事件、银行付款回单及A到账确认分别留存','D收费授权、来源分配、A账户核验及适用出运 / 放行证据；银行费凭实际凭证另列','首次获批分账时从D可用余额一次性结算300元；A合同应付仍按合同核算，不以服务费作A应付扣项'],
+        ['⑥ 代理服务费分账结算 · N14','service_fee_id → trade_id + allocation_id；固定人民币300元/交易；payer_role=D；trade_id + agency_service_fee唯一','内部结算事件、D已核验可用余额、批准分账和对应凭证；不伪造独立银行扣款','正式收费依据及D授权；INVOICE申报、补件、改版和重复命令不触发或重复收费','首次获批分账时从D可用余额转列B服务费；至少300元可用且授权齐备才结算，不降低A合同应付']
       ])+'</section>';
   }
   function fundsDesign(){
     return '<div class="funds-design">'+
-      '<div class="funds-version-bar" aria-label="资金流设计版本"><span class="funds-version-current"><b>V1 · 当前设计 / 不垫资</b><small>D来款 → CNH不可用 → 国内RMB可用 → 两项费用转B收益 / 货款付A</small></span><span class="funds-version-reserved"><b>V2 · 支持B垫资链路</b><small>获批授信/自有资金 → 先行付A → D回款核验入账 → 按协议核销垫资并清偿；方案说明，未接入执行</small></span></div>'+
+      '<div class="funds-version-bar" aria-label="资金流设计版本"><span class="funds-version-current"><b>V1 · 当前设计 / D承担分账时结算服务费</b><small>D来款 → CNH不可用 → 国内RMB可用 → 首次获批分账结算300元后按合同向A付款</small></span><span class="funds-version-reserved"><b>V2 · 支持B垫资链路</b><small>获批授信/自有资金 → 先行付A → D回款核验入账 → 按协议核销垫资并清偿；方案说明，未接入执行</small></span></div>'+
       fundsAccountDiagram()+
       fundsInformationDesign()+'</div>';
   }
@@ -433,7 +418,7 @@
     return '<div class="demo-screen process-prototype"><div class="demo-screen-head"><div><small>02 / N02—N04 · 协议与授权</small><h4>本笔交易协议清单</h4></div>'+chip('签署 / 授权均待本笔原件','amber')+'</div>'+
       '<div class="prototype-notice">材料目录只用于识别模板与核对风险；所有示例 / 流程图均不算本笔已签协议。服务商名称、签约主体或收款信息不一致时暂停。</div>'+
       '<div class="prototype-cards">'+
-      '<article><header><strong>附件1 · A—B出口代理合同</strong>'+chip('候选模板 · M06','blue')+'</header><p>核对法定主体、代理范围、费率、费用承担、付款时点、结算汇率、账户与签章 / 生效日。</p><small>Review重点：现有模板费率留空、条款编号需核对；“收汇后2个工作日付款”须与本笔预付 / 出口后门禁、贸易核验入账及银行费用条款统一。</small><a href="../材料/步骤2-出口货物贸易代理合同(10.16).docx" target="_blank" rel="noopener">打开 M06 候选合同</a></article>'+
+      '<article><header><strong>附件1 · A—B出口代理合同</strong>'+chip('候选模板 · M06','blue')+'</header><p>核对法定主体、代理范围、固定服务费及承担方、付款时点、结算汇率、账户与签章 / 生效日。</p><small>Review重点：现有模板收费及扣款条款与当前设计不一致，须正式修订；“收汇后2个工作日付款”须与本笔预付 / 出口后门禁、贸易核验入账及银行费用条款统一。</small><a href="../材料/步骤2-出口货物贸易代理合同(10.16).docx" target="_blank" rel="noopener">打开 M06 候选合同</a></article>'+
       '<article><header><strong>国际物流服务合同 · A—E</strong>'+chip('主体待核 · M07','amber')+'</header><p>核对E身份、联系人、报价、提货 / 运输 / 签收 / 货损责任及服务范围。</p><small>现有合同甲方为B，不可直接视为A—E已签合同；先确认委托链或补有效三方 / 转委托约定。E不承担F的中国出口报关。</small><a href="../材料/步骤2-国际物流服务合同-龙南逸泰源&国际运输合同(1).doc" target="_blank" rel="noopener">打开 M07 物流合同</a></article>'+
       '<article><header><strong>附件4 · A—F报关服务合同</strong>'+chip('缺正式正文','red')+'</header><p>补双方主体、报关服务范围、报价、责任、单证交付、更正约定及签署 / 生效记录。</p><small>M05仅为业务流程图，不是合同正文；需本笔已签合同。预付款前还须B书面认可与A实际委任同一F。</small><a href="../材料/代理出口业务四流流程图-简体中文-附件4.pdf" target="_blank" rel="noopener">查看 M05 流程图参考</a></article>'+
       '<article><header><strong>报关电子委托 / 授权</strong>'+chip('本笔待补','amber')+'</header><p>记录授权主体、F、货物 / 批次、范围、有效期及撤销状态。</p><small>正式申报前必须有效；授权范围或批次变更需重新核验。</small><span class="prototype-source">目录未见本笔有效电子委托</span></article></div>'+
@@ -463,9 +448,9 @@
     return '<div class="demo-screen process-prototype"><div class="demo-screen-head"><div><small>05 / N11—N17 · 开票 → CNH入账 → 结算 → 付款</small><h4>付款发票与净额结算 · 合成数据</h4></div>'+chip('实际银行 / 付款未接入','blue')+'</div>'+
       '<div class="prototype-notice warning">1:1仅为操作指引所述的待核条件。须将本笔最新、带日期的银行书面报价归档，并确认无滑点、无溢价；已过期或条件不同即暂停。勾选仅表示原型状态，不验证银行文件。</div>'+
       '<div class="prototype-payment-flow"><span>B向D开具货物INVOICE</span><i>→</i><span>D付CNH</span><i>→</i><span>B核实银行入账</span><i>→</i><span>结算审批</span><i>→</i><span>B向A付人民币</span></div>'+
-      '<div class="prototype-finance-grid"><section><header><strong>本笔入账 / 结算输入</strong>'+chip('按付款编号关联','blue')+'</header><label>交易号 / 批次<input value="DEMO-EX-001 / LOT-01"></label><label>B向D发票 / 付款编号<input value="待生成本笔货物INVOICE"></label><div class="prototype-input-row"><label>银行实际入账 (CNH)<input type="number" min="0" step="0.01" data-calc="foreign" value="10000"></label><input type="hidden" data-calc="rate" value="1"></div><label>银行金额确认日期<input type="date" data-quote-date></label><label class="prototype-checkbox"><input type="checkbox" data-quote-confirmed'+(demo.quoteArchived?' checked':'')+'> 我已归档并核对银行入账金额及可用凭证（仅演示状态）</label><div class="prototype-input-row"><label>银行 / 中转费用 (RMB)<input type="number" min="0" step="0.01" data-calc="fee" value="80"></label><label>本次佣金 / 手续费 (RMB，按步骤1规则)<input type="number" min="0" step="0.01" data-calc="service" value="2000"></label></div><div class="prototype-input-row"><label>其他已批准扣款 (RMB)<input type="number" min="0" step="0.01" data-calc="other" value="0"></label><label>已付定金 / 预付款 (RMB)<input type="number" min="0" step="0.01" data-calc="deposit" value="2000"></label></div><label>结算分支<select data-calc="timing"><option>出口后付款</option><option>预付款</option></select></label></section>'+
+      '<div class="prototype-finance-grid"><section><header><strong>本笔入账 / 结算输入</strong>'+chip('按付款编号关联','blue')+'</header><label>交易号 / 批次<input value="DEMO-EX-001 / LOT-01"></label><label>B向D发票 / 付款编号<input value="待生成本笔货物INVOICE"></label><div class="prototype-input-row"><label>银行实际入账 (CNH)<input type="number" min="0" step="0.01" data-calc="foreign" value="10000"></label><input type="hidden" data-calc="rate" value="1"></div><label>银行金额确认日期<input type="date" data-quote-date></label><label class="prototype-checkbox"><input type="checkbox" data-quote-confirmed'+(demo.quoteArchived?' checked':'')+'> 我已归档并核对银行入账金额及可用凭证（仅演示状态）</label><div class="prototype-input-row"><label>银行 / 中转实际费用 (RMB)<input type="number" min="0" step="0.01" data-calc="fee" value="80"></label><label>其他已批准扣款 (RMB)<input type="number" min="0" step="0.01" data-calc="other" value="0"></label></div><div class="prototype-input-row"><label>已付定金 / 预付款 (RMB)<input type="number" min="0" step="0.01" data-calc="deposit" value="2000"></label><label>代理服务费 (CNY)<input type="text" value="300 / D承担，首次获批分账时从可用余额结算" readonly></label></div><label>结算分支<select data-calc="timing"><option>出口后付款</option><option>预付款</option></select></label></section>'+
       '<section><header><strong>审批与放行门禁</strong>'+chip('未放行','amber')+'</header>'+table(['控制','状态'],[['CNH与本笔INVOICE / D / 付款号匹配',chip('待核实','amber')],['B银行实际入账及贸易核验入账结果',chip('待银行凭证','amber')],['银行人民币入账金额确认',chip(demo.quoteArchived?'原型已勾选 · 未验真':'待归档核验','amber')],['费用、定金、累计应付 / 不超付',chip('待复核','amber')],['A人民币账户独立核验 / 付款回执 / 到账确认',chip('待核验','amber')]])+'<div class="prototype-gate"><strong>出口后付款</strong><p>额外核验B为境内发货人、B已收正式附件2及出口放行证据。预付款须协议 / F委任 / 适用垫资审批全部通过。</p></div></section></div>'+
-      '<div class="demo-calculator"><div class="demo-calculator-title"><strong>人民币净付款试算</strong><span>贸易核验入账成功后：人民币可用额 − 本次佣金/手续费（转入B收益账户）− 银行费 − 其他扣款 − 已付定金</span></div><div class="demo-calc-result"><span>预计人民币净额</span><strong id="settlement-result">'+(demo.settlementInputs?'待重新试算':'CNY 5,920.00')+'</strong><small id="settlement-timing">'+(demo.settlementInputs?'参数已保存 · 请重新试算':'合成示例 · 报价 / 入账 / 门禁未验证')+'</small></div><div class="demo-screen-footer"><span class="demo-screen-status">'+(demo.settlement?(demo.settlementDirty?'输入已变更；请重新试算后再复核':'演示试算已更新；须人工核验所有正式凭证'):demo.settlementInputs?'参数已保存；请重新试算，不能作为结算依据':'净额仅用于原型试算，不构成应付款或付款批准')+'</span>'+demoButton('preview-settlement','计算净额',true)+'<button type="button" class="demo-button" disabled>付款放行（未接入）</button></div></div>'+
+      '<div class="demo-calculator"><div class="demo-calculator-title"><strong>D可用于A付款的余额上限</strong><span>贸易核验入账成功后：D可用余额 − 固定服务费300元 − 银行实际费用 − 其他扣款 − 已付定金；A合同应付仍独立按合同核算</span></div><div class="demo-calc-result"><span>可用资金上限</span><strong id="settlement-result">'+(demo.settlementInputs?'待重新试算':'CNY 7,620.00')+'</strong><small id="settlement-timing">'+(demo.settlementInputs?'参数已保存 · 请重新试算':'合成示例 · 报价 / 入账 / 门禁未验证')+'</small></div><div class="demo-screen-footer"><span class="demo-screen-status">'+(demo.settlement?(demo.settlementDirty?'输入已变更；请重新试算后再复核':'演示试算已更新；须人工核验所有正式凭证'):demo.settlementInputs?'参数已保存；请重新试算，不能作为结算依据':'仅为可用资金上限试算，不构成A应付款或付款批准')+'</span>'+demoButton('preview-settlement','计算资金上限',true)+'<button type="button" class="demo-button" disabled>付款放行（未接入）</button></div></div>'+
       '<div class="prototype-materials"><strong>材料对照</strong><span><b>M14</b> 历史陆运费发票，非货物付款发票</span><span><b>M15</b> 人民币付款报文样例，非银行成功回执</span><span><b>M16 / M17</b> B账户参考，非A收款账户核验</span><span><b>R08—R11</b> 银行报价、结算、付款与到账证据按本笔补齐</span><a href="../材料/步骤5-付款发票INVOICE,SZ26101401(2).pdf" target="_blank" rel="noopener">查看M14样例</a><a href="../材料/步骤5-CIPS系统贷记转账报文TFLS00032_SWIFT_CNY_5 000,00(3).pdf" target="_blank" rel="noopener">查看M15样例</a></div></div>';
   }
   function demoScreen(){
@@ -479,10 +464,10 @@
       '<div class="prototype-gate"><strong>异常未闭环不得结案</strong><p>退税证明、四流一致性和适用放行凭证须逐项留证；模拟核验不构成合规批准或退税申报。</p></div>'+
       '<div class="demo-screen-footer"><span class="demo-screen-status">'+(demo.complianceChecked?'已生成本页演示差异清单；正式风险状态未解除':'待按责任方补齐本笔证据')+'</span>'+demoButton('check-compliance','生成四流差异清单',true)+'</div></div>';
     if(selected==='contracts')return '<div class="demo-screen"><div class="demo-screen-head"><div><small>02 / 合同中心 · 模板 / Review / 审批</small><h4>合同与审批进度</h4></div>'+chip(demo.reviewStarted?'Review 进行中':'待业务 Review',demo.reviewStarted?'amber':'blue')+'</div>'+table(['合同 / 交易','模板版本','Review / 审批','签署状态'],[['出口销售合同 · EX-D-00128','中英模板 V3.2','业务已提交 · 法务待审',chip('未签署','amber')],['代理出口合同 · EX-D-00126','代理模板 V2.4','法务通过 · 财务通过',chip('待双方签署','blue')],['物流服务合同 · EX-D-00120','物流模板 V1.8','已完成',chip('已归档','green')]])+'<div class="demo-approval-track"><span class="done">业务起草</span><i></i><span class="'+(demo.reviewStarted?'done':'current')+'">法务 Review</span><i></i><span>财务复核</span><i></i><span>授权审批</span><i></i><span>双方签署</span></div><div class="demo-screen-footer"><span class="demo-screen-status">'+(demo.reviewStarted?'已创建Review任务，等待法务处理':'版本差异、结算条款及账户信息纳入审阅')+'</span>'+demoButton('start-review',demo.reviewStarted?'Review 已发起':'发起合同 Review',true)+'</div></div>';
-    if(selected==='accounts')return '<div class="demo-screen"><div class="demo-screen-head"><div><small>06 / 资金账户 · 按银行 / 主体 / 币种管理</small><h4>账户与银行连接</h4></div>'+chip('4 个演示账户组','blue')+'</div>'+table(['银行 / 主体','收款账户','付款账户','清算 / 中转','连接状态'],[['演示银行 A · B代理商','CNH / 尾号 0281','CNY / 尾号 1046','CNH收款及待贸易核验入账资金',chip('回单导入演示','amber')],['演示银行 B · B代理商','CNY / 尾号 7319','USD / 尾号 6420','在途清算 · 独立台账',chip('接口待接入','blue')],['B代理商 · 国内人民币收益账户','CNY / 待配置','—','结款A前佣金/手续费转入',chip('账户待配置','amber')],['演示银行 A · A供应商','CNY / 尾号 5508','—','不适用',chip('仅作收款核验','green')]])+'<div class="demo-account-callout"><strong>账户与余额隔离</strong><span>合并收款先记CNH不可用；贸易核验入账成功后登记国内人民币可用余额。佣金/手续费在结款A前从人民币可用余额转入B国内人民币收益账户；每笔均保留交易档案、实际入账、价值日及回单关联。</span></div><div class="demo-screen-footer"><span class="demo-screen-status">'+(demo.bankChecked?'本地连接检查完成；当前未连接任何真实银行':'支持授权 API / 主机直连 / 受控回单导入的接入设计')+'</span>'+demoButton('check-bank','演示连接检查')+'</div></div>';
-    if(selected==='funds')return     '<div class="demo-screen"><div class="demo-screen-head"><div><small>04 / 资金运营 · CNH入账 → 银行贸易核验入账 → 人民币扣佣与付款</small><h4>收款与结算试算</h4></div>'+chip('待财务复核','amber')+'</div>'+table(['时间 / 交易','资金事件','金额','状态'],[['10-20 09:42 · EX-D-00128','CNH货款入账 · CNH不可用','CNH 100,000.00',chip('银行已入账','green')],['10-20 10:05 · EX-D-00128','银行贸易核验入账 · 银行核验入账待确认','CNY 100,000.00',chip('待审批','amber')],['10-20 10:06 · EX-D-00128','银行手续费 / 中转费','CNY 150.00',chip('费用待确认','amber')]])+'<div class="demo-calculator"><div class="demo-calculator-title"><strong>结算净额试算</strong><span>贸易核验入账成功后按步骤1规则扣佣至B收益账户，再向A付净额 · 示例值非银行报价</span></div><div class="demo-calc-fields"><label>货款金额 (CNH)<input type="number" min="0" step="0.01" data-calc="foreign" value="100000"></label><input type="hidden" data-calc="rate" value="1"><label>银行费用 (CNY)<input type="number" min="0" step="0.01" data-calc="fee" value="150"></label><label>本次佣金 / 手续费 (CNY)<input type="number" min="0" step="0.01" data-calc="service" value="2000"></label><label>已付定金 (CNY)<input type="number" min="0" step="0.01" data-calc="deposit" value="10000"></label><label>其他扣款 (CNY)<input type="number" min="0" step="0.01" data-calc="other" value="0"></label><label>结算时点<select data-calc="timing"><option>实时入账</option><option>T-1 预约结算</option><option>跨月结算</option></select></label></div><div class="demo-calc-result"><span>预计尾款净额</span><strong id="settlement-result">CNY 87,850.00</strong><small id="settlement-timing">实时入账 · 待财务复核</small></div></div><div class="demo-screen-footer"><span class="demo-screen-status">'+(demo.settlement?'试算已更新；付款仍须银行回执、权限审批及余额校验':'贸易核验入账人民币、佣金收益、其他费用、定金与A净付款分别记账；T-1 / 跨月按确认价值日归属')+'</span>'+demoButton('preview-settlement','更新试算',true)+'</div></div>';
+    if(selected==='accounts')return '<div class="demo-screen"><div class="demo-screen-head"><div><small>06 / 资金账户 · 按银行 / 主体 / 币种管理</small><h4>账户与银行连接</h4></div>'+chip('4 个演示账户组','blue')+'</div>'+table(['银行 / 主体','收款账户','付款账户','清算 / 中转','连接状态'],[['演示银行 A · B代理商','CNH / 尾号 0281','CNY / 尾号 1046','CNH收款及待贸易核验入账资金',chip('回单导入演示','amber')],['演示银行 B · B代理商','CNY / 尾号 7319','USD / 尾号 6420','在途清算 · 独立台账',chip('接口待接入','blue')],['B代理商 · 服务费科目','D可用余额内部分账','—','首次获批分账时结算300元',chip('待分账结算','amber')],['演示银行 A · A供应商','CNY / 尾号 5508','—','不适用',chip('仅作收款核验','green')]])+'<div class="demo-account-callout"><strong>账户与余额隔离</strong><span>D货款合并收款先记CNH不可用；贸易核验入账成功后登记国内人民币可用余额。首次获批分账时从D已核验可用余额一次性结算固定300元服务费，再按合同应付向A付款；服务费不降低A合同应付。</span></div><div class="demo-screen-footer"><span class="demo-screen-status">'+(demo.bankChecked?'本地连接检查完成；当前未连接任何真实银行':'支持授权 API / 主机直连 / 受控回单导入的接入设计')+'</span>'+demoButton('check-bank','演示连接检查')+'</div></div>';
+    if(selected==='funds')return     '<div class="demo-screen"><div class="demo-screen-head"><div><small>04 / 资金运营 · CNH入账 → 银行贸易核验入账 → D服务费分账 → A货款结算</small><h4>收款与资金上限试算</h4></div>'+chip('待财务复核','amber')+'</div>'+table(['时间 / 交易','资金事件','金额','状态'],[['10-20 09:42 · EX-D-00128','CNH货款入账 · CNH不可用','CNH 100,000.00',chip('银行已入账','green')],['10-20 10:05 · EX-D-00128','银行贸易核验入账 · 银行核验入账待确认','CNY 100,000.00',chip('待审批','amber')],['10-20 10:06 · EX-D-00128','银行手续费 / 中转费','CNY 150.00',chip('费用待确认','amber')],['首次获批分账 · EX-D-00128','D可用余额服务费结算','CNY 300.00',chip('待余额核验','amber')]])+'<div class="demo-calculator"><div class="demo-calculator-title"><strong>D可用于A付款的余额上限</strong><span>人民币可用货款 − 固定服务费300元 − 银行实际费用 − 其他扣款 − 已付定金；A合同应付仍按合同核算</span></div><div class="demo-calc-fields"><label>货款金额 (CNH)<input type="number" min="0" step="0.01" data-calc="foreign" value="100000"></label><input type="hidden" data-calc="rate" value="1"><label>银行实际费用 (CNY)<input type="number" min="0" step="0.01" data-calc="fee" value="150"></label><label>已付定金 (CNY)<input type="number" min="0" step="0.01" data-calc="deposit" value="10000"></label><label>其他扣款 (CNY)<input type="number" min="0" step="0.01" data-calc="other" value="0"></label><label>结算时点<select data-calc="timing"><option>实时入账</option><option>T-1 预约结算</option><option>跨月结算</option></select></label></div><div class="demo-calc-result"><span>可用资金上限</span><strong id="settlement-result">CNY 89,550.00</strong><small id="settlement-timing">实时入账 · 待财务复核</small></div></div><div class="demo-screen-footer"><span class="demo-screen-status">'+(demo.settlement?'试算已更新；付款仍须银行回执、权限审批及余额校验':'货款入账、银行费用、服务费结算、定金与A合同应付分别记账；T-1 / 跨月按确认价值日归属')+'</span>'+demoButton('preview-settlement','更新资金上限',true)+'</div></div>';
     if(selected==='customs')return '<div class="demo-screen"><div class="demo-screen-head"><div><small>05 / 报关协同 · 草稿 → 确认 → 申报回执</small><h4>出口申报任务</h4></div>'+chip(demo.customsConfirmed?'A 已确认演示版本':'等待 A 确认','amber')+'</div>'+table(['交易 / 批次','申报主体 / 代理','草稿版本','关键校验','当前状态'],[['EX-D-2026-00128 / LOT-01','B · F代理','V3 · 10:21',chip('4 项一致','green'),chip(demo.customsConfirmed?'已确认演示版':'待 A 确认','amber')],['EX-D-2026-00126 / LOT-02','B · F代理','V2 · 10-19',chip('1 项待补','amber'),chip('缺物流资料','red')]])+'<div class="demo-customs-flow"><span class="done">销售单证锁版</span><i>→</i><span class="'+(demo.customsConfirmed?'done':'current')+'">A 书面确认摘要</span><i>→</i><span>授权 F 正式申报</span><i>→</i><span>回填受理 / 放行回执</span></div><div class="demo-screen-footer"><span class="demo-screen-status">'+(demo.customsConfirmed?'演示确认已绑定 V3；真实申报仍须由授权人员在正式渠道办理':'版本变更会撤销旧确认；草稿不能代替申报回执')+'</span>'+demoButton('confirm-customs',demo.customsConfirmed?'已确认演示版本':'模拟 A 确认此版本')+'</div></div>';
-    return     '<div class="demo-screen"><div class="demo-screen-head"><div><small>06 / 合规与经营分析 · 四流核验</small><h4>交易风险与对账驾驶舱</h4></div>'+chip(demo.complianceChecked?'模拟核验已完成':'2 项待处理','amber')+'</div><div class="demo-risk-summary"><div><small>主体 / 关系</small><strong class="risk-ok">已核验</strong><span>付款方与收货人关系留痕</span></div><div><small>单证 / 版本</small><strong class="risk-ok">版本一致</strong><span>销售单与报关草稿 V3</span></div><div><small>资金 / 费用</small><strong class="risk-warn">待解释</strong><span>贸易核验入账费用 / 佣金收益入账待匹配</span></div><div><small>退税 / 结果</small><strong class="risk-pending">待归档</strong><span>正式证明 / 处理结果</span></div></div>'+table(['核验规则','系统提示','负责人 / 下一步'],[['银行实收 ≠ 付款方凭证','以银行回单及CNH不可用 / 人民币可用状态为准','资金岗 · 等待回单'],['佣金扣取与收益账户','步骤1规则、本次扣佣及收益账户入账逐笔勾稽','财务岗 · 补充结算记录'],['报关放行与批次','附件2 / 放行证明待关联','报关岗 · 回填正式回执']])+'<div class="demo-screen-footer"><span class="demo-screen-status">'+(demo.complianceChecked?'已生成演示差异清单；不构成真实合规筛查或批准':'命中差异时暂停付款 / 结案，按角色派发补证任务')+'</span>'+demoButton('check-compliance','运行四流模拟核验',true)+'</div></div>';
+    return     '<div class="demo-screen"><div class="demo-screen-head"><div><small>06 / 合规与经营分析 · 四流核验</small><h4>交易风险与对账驾驶舱</h4></div>'+chip(demo.complianceChecked?'模拟核验已完成':'2 项待处理','amber')+'</div><div class="demo-risk-summary"><div><small>主体 / 关系</small><strong class="risk-ok">已核验</strong><span>付款方与收货人关系留痕</span></div><div><small>单证 / 版本</small><strong class="risk-ok">版本一致</strong><span>销售单与报关草稿 V3</span></div><div><small>资金 / 费用</small><strong class="risk-warn">待解释</strong><span>银行实际费用与D服务费结算、A合同应付待核对</span></div><div><small>退税 / 结果</small><strong class="risk-pending">待归档</strong><span>正式证明 / 处理结果</span></div></div>'+table(['核验规则','系统提示','负责人 / 下一步'],[['银行实收 ≠ 付款方凭证','以银行回单及CNH不可用 / 人民币可用状态为准','资金岗 · 等待回单'],['D服务费与A合同应付分开','固定300元由D承担，首次获批分账时从已核验可用余额结算；不减少A合同应付','财务岗 · 核验D授权及可用余额'],['报关放行与批次','附件2 / 放行证明待关联','报关岗 · 回填正式回执']])+'<div class="demo-screen-footer"><span class="demo-screen-status">'+(demo.complianceChecked?'已生成演示差异清单；不构成真实合规筛查或批准':'命中差异时暂停付款 / 结案，按角色派发补证任务')+'</span>'+demoButton('check-compliance','运行四流模拟核验',true)+'</div></div>';
   }
   function renderList(){
     const directory=selected==='directory',catalog=selected==='sales'&&salesPage==='customs-catalog';
@@ -512,6 +497,10 @@
     }
     if(selected==='sales'){
       const catalog=salesPage==='customs-catalog';
+      if(!catalog){
+        detail.innerHTML='<header class="capability-entry-bar"><h3>A/D交易资料入口</h3><p>A首次提交创建同号交易；D独立提交本方资料。B在步骤一只读。旧“邀请A至F填报、终审后建单”流程已停用。</p></header><p><a class="primary-link" href="#product-workspace/A/supplier-submit">A首次提交与本方修改</a></p><p><a class="primary-link" href="#product-workspace/D/payer-submit">D付款资料首次提交与修改</a></p><p><a href="#product-workspace/B/supplier-submit">B只读查询及步骤二签约依据送审</a></p>';
+        return;
+      }
       if(!root.EXPORT_OPERATIONS.canAccessEntry(catalog?'catalog':'dossier')){
         detail.innerHTML='<section class="ops-empty" role="status"><h3>当前岗位无此工作区页面权限</h3><p>工作入口目录展示全部入口，但不授予业务访问权限。请切换已授权岗位，或返回工作入口目录。</p></section>';return;
       }
@@ -686,7 +675,7 @@
         dossier.section='OPS';
         const empty=Object.values(dossierFields).flat().filter(field=>field.required&&!String(dossier.values[field.key]||'').trim());
         const missingFiles=originalFilesMissing();
-        if(empty.length||missingFiles.length||commissionIssues().length){
+        if(empty.length||missingFiles.length||serviceFeeIssues().length){
           dossier.message='提交被阻断：请先补齐必填字段和本次业务材料。';
         }else{
           dossier.submitted=true;dossier.message='已进入演示审核队列；B指定人工审核员终审前不生成交易单。';
@@ -696,7 +685,7 @@
       if(action==='approve-dossier'){
         const empty=Object.values(dossierFields).flat().filter(field=>field.required&&!String(dossier.values[field.key]||'').trim());
         const missingFiles=originalFilesMissing();
-        if(!dossier.vpn||!dossier.submitted||empty.length||missingFiles.length||commissionIssues().length){
+        if(!dossier.vpn||!dossier.submitted||empty.length||missingFiles.length||serviceFeeIssues().length){
           dossier.message='审批未执行：入口、资料或材料状态不满足建档终审条件。';renderDetail();return;
         }
         dossier.approved=true;dossier.message='演示审批已通过；生成唯一交易单并关联交易档案。正式系统需写入服务端并留存原件索引 / 审核记录。';renderDetail();return;
@@ -709,18 +698,18 @@
       if(action==='check-compliance')demo.complianceChecked=true;
       if(action==='preview-settlement'){
         const read=name=>Number($('capability-detail').querySelector('[data-calc="'+name+'"]')?.value||0);
-        const foreign=read('foreign'),rate=read('rate'),fee=read('fee'),service=read('service'),other=read('other'),deposit=read('deposit');
-        if([foreign,rate,fee,service,other,deposit].some(value=>!Number.isFinite(value)||value<0)||rate===0){
+        const foreign=read('foreign'),rate=read('rate'),fee=read('fee'),other=read('other'),deposit=read('deposit');
+        if([foreign,rate,fee,other,deposit].some(value=>!Number.isFinite(value)||value<0)||rate===0){
           $('settlement-result').textContent='请检查金额与汇率';return;
         }
-        const amount=foreign*rate-fee-service-other-deposit;
-        if(amount<0){$('settlement-result').textContent='资金不足，无法形成尾款';return;}
+        const serviceFee=300,amount=foreign*rate-serviceFee-fee-other-deposit;
+        if(amount<0){$('settlement-result').textContent='可用资金不足，无法覆盖服务费及已批准扣款';return;}
         const timing=$('capability-detail').querySelector('[data-calc="timing"]').value;
         $('settlement-result').textContent='CNY '+amount.toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});
         $('settlement-timing').textContent=timing+' · 示例试算';
         captureSettlementDraft();
         demo.quoteDate=$('capability-detail').querySelector('[data-quote-date]').value;
-        demo.settlement={values:{foreign,rate,fee,service,other,deposit,timing},amount,timing};
+        demo.settlement={values:{foreign,rate,serviceFee,fee,other,deposit,timing},amount,timing};
         demo.settlementDirty=false;
         const status=$('capability-detail').querySelector('.demo-screen-status');
         status.textContent=demo.quoteArchived?'试算已更新；仍须人工核验正式银行 / 入账 / 审批凭证':'试算已更新但银行入账及可用凭证未确认；须暂停结算与付款';

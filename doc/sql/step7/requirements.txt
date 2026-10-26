@@ -1,0 +1,4 @@
+-r ../../../infra/local/requirements-validation.txt
+boto3==1.43.118
+googleapis-common-protos==1.76.0
+protobuf==7.36.2

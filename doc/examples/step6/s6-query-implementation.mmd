@@ -1,0 +1,23 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 出口代理经办人界面
+    participant APP as 单体应用受限入口
+    participant DB as MySQL税务领域及受理表
+    participant FILE as 私有S3确切版本
+    participant AV as ClamAV
+    PAGE->>APP: GET本方上下文，5秒/4秒
+    APP->>DB: 对象授权读取交易批准版、税务type=1和历史
+    APP-->>PAGE: 强ETag与明确缺项
+    APP->>DB: 读取本目标依赖的确切税务领域记录
+    PAGE->>APP: GetTaxProofCase / GetTaxProofSubmission / GetTaxProofHistory / GetTaxProofCommandResult，写10秒/8秒
+    APP->>DB: 按当前subject/audience/原键查受理，同文才回放
+    Note over APP,DB: 主库读取原subject/audience/key受理；确认当前权限后回放冻结结果；历史按不可变提交/事件有界读取，禁止query过滤绕授权。
+    APP->>DB: RC短事务；交易根→案件→提交/事件有序当前读并复验ETag
+    alt 缺源证据、越权、自审、旧版或终态
+      APP->>DB: ROLLBACK，不造官方事件或A确认
+      APP-->>PAGE: 明确业务错误及原资源恢复路径
+    else 本目标领域门禁满足
+      APP->>DB: 查看本方历史或查询原请求的处理结果；同事务最小受理与技术outbox
+      APP->>DB: COMMIT；不在锁内访问外部渠道
+      APP-->>PAGE: 返回有权查看的原记录或说明不可见，不另建办理号
+    end

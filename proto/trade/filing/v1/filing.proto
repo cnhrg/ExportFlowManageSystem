@@ -1,0 +1,388 @@
+syntax = "proto3";
+package trade.filing.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+// One application, two interface audiences (external integration / operations).
+// Optional gRPC ingress and HTTP share the same handlers; NO module-to-module RPC.
+// Metadata, proof profile, deadlines and status mappings are normative in
+// doc/步骤一HTTP接口协议.md and doc/步骤一身份签名与可靠性设计.md.
+service ExternalTradeFilingService {
+  // Deadline client/server: 5000/4000 ms. Required idempotency-key + confirmation-id.
+  rpc CreateTradeNumberReservation(CreateTradeNumberReservationReqMsg) returns (CreateTradeNumberReservationRspMsg) {
+    option (google.api.http) = { post: "/api/v1/trade-number-reservations" body: "reservation" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetTradeNumberReservation(GetTradeNumberReservationReqMsg) returns (GetTradeNumberReservationRspMsg) {
+    option (google.api.http) = { get: "/api/v1/trade-number-reservations/{reservation_id}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Non-OK may have unknown commit outcome.
+  rpc CreateTrade(CreateTradeReqMsg) returns (CreateTradeRspMsg) {
+    option (google.api.http) = { post: "/api/v1/trades" body: "trade" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetTrade(GetTradeReqMsg) returns (GetTradeRspMsg) {
+    option (google.api.http) = { get: "/api/v1/trades/{trade_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetSupplierFiling(GetSupplierFilingReqMsg) returns (GetSupplierFilingRspMsg) {
+    option (google.api.http) = { get: "/api/v1/trades/{trade_number}/supplier-filing" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Required if-match, idempotency-key, confirmation-id.
+  rpc ReplaceSupplierFiling(ReplaceSupplierFilingReqMsg) returns (ReplaceSupplierFilingRspMsg) {
+    option (google.api.http) = { put: "/api/v1/trades/{trade_number}/supplier-filing" body: "supplier_filing" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Required idempotency-key + confirmation-id.
+  rpc CreatePayerFiling(CreatePayerFilingReqMsg) returns (CreatePayerFilingRspMsg) {
+    option (google.api.http) = { post: "/api/v1/trades/{trade_number}/payer-filings" body: "payer_filing" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetPayerFiling(GetPayerFilingReqMsg) returns (GetPayerFilingRspMsg) {
+    option (google.api.http) = { get: "/api/v1/trades/{trade_number}/payer-filings/{payer_filing_id}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Required if-match, idempotency-key, confirmation-id.
+  rpc ReplacePayerFiling(ReplacePayerFilingReqMsg) returns (ReplacePayerFilingRspMsg) {
+    option (google.api.http) = { put: "/api/v1/trades/{trade_number}/payer-filings/{payer_filing_id}" body: "payer_filing" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateFileUpload(CreateFileUploadReqMsg) returns (CreateFileUploadRspMsg) {
+    option (google.api.http) = { post: "/api/v1/file-uploads" body: "upload" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetFileUpload(GetFileUploadReqMsg) returns (GetFileUploadRspMsg) {
+    option (google.api.http) = { get: "/api/v1/file-uploads/{upload_id}" response_body: "resource" };
+  }
+  // Deadline client/server: 15000/12000 ms. FILE_NOT_READY while durable task recovers automatically.
+  rpc CreateFile(CreateFileReqMsg) returns (CreateFileRspMsg) {
+    option (google.api.http) = { post: "/api/v1/file-uploads/{upload_id}/files" body: "file" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetFileRevision(GetFileRevisionReqMsg) returns (GetFileRevisionRspMsg) {
+    option (google.api.http) = { get: "/api/v1/files/{file_number}/revisions/{revision_number}" response_body: "resource" };
+  }
+  // Deadline client/server: 10000/8000 ms. Verified step-up session; no recursive confirmation-id.
+  rpc CreateOperationConfirmation(CreateOperationConfirmationReqMsg) returns (CreateOperationConfirmationRspMsg) {
+    option (google.api.http) = { post: "/api/v1/operation-confirmations" body: "intent" response_body: "resource" };
+  }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetOperationConfirmation(GetOperationConfirmationReqMsg) returns (GetOperationConfirmationRspMsg) {
+    option (google.api.http) = { get: "/api/v1/operation-confirmations/{confirmation_id}" response_body: "resource" };
+  }
+}
+
+// Server rebuilds this intent from the subsequent typed operation. Identity is NOT supplied here.
+message OperationIntent {
+  string method = 1;
+  string resource_path = 2;
+  string idempotency_key = 3;
+  string if_match = 4;
+  string body_sha256 = 5;
+}
+message OperationConfirmation {
+  string confirmation_id = 1; // Opaque random reference, not a bearer authorization.
+  string request_digest = 2;
+  google.protobuf.Timestamp expires_at = 3;
+  string state = 4; // available / accepted; expiry does not erase original accepted result.
+}
+message CreateOperationConfirmationReqMsg { OperationIntent intent = 1; }
+message GetOperationConfirmationReqMsg { string confirmation_id = 1; }
+
+message Money { string amount = 1; string currency_code = 2; }
+message Party {
+  string legal_name = 1;
+  string country_code = 2;
+  string registered_address = 3;
+  string contact_name = 4;
+  string contact_phone = 5;
+  string contact_email = 6;
+  string identity_protected_reference = 7;
+}
+message GoodsItem {
+  uint32 item_sequence_number = 1;
+  string product_name = 2;
+  string specification = 3;
+  string quantity = 4;
+  string unit_code = 5;
+  Money unit_price = 6;
+  Money total = 7;
+  string origin_country_code = 8;
+}
+message PackingItem {
+  uint32 goods_item_sequence_number = 1;
+  string quantity = 2;
+  string unit_code = 3;
+  uint32 cartons = 4;
+  string net_weight_kg = 5;
+  string gross_weight_kg = 6;
+}
+enum MaterialPurpose {
+  MATERIAL_PURPOSE_UNSPECIFIED = 0;
+  MATERIAL_PURPOSE_SALES_CONTRACT = 1;
+  MATERIAL_PURPOSE_COMMERCIAL_INVOICE = 2;
+  MATERIAL_PURPOSE_PACKING_LIST = 3;
+  MATERIAL_PURPOSE_PRODUCT_INFORMATION = 4;
+  MATERIAL_PURPOSE_AGENCY_INSTRUCTIONS = 5;
+  MATERIAL_PURPOSE_RELATIONSHIP_EVIDENCE = 6;
+  MATERIAL_PURPOSE_TRANSPORT_INFORMATION = 7;
+  MATERIAL_PURPOSE_CUSTOMS_QUALIFICATION = 8;
+  MATERIAL_PURPOSE_CUSTOMS_QUOTATION = 9;
+  MATERIAL_PURPOSE_EXPORT_AGENCY_AGREEMENT = 10;
+  MATERIAL_PURPOSE_LOGISTICS_AGREEMENT = 11;
+  MATERIAL_PURPOSE_CUSTOMS_SERVICE_AGREEMENT = 12;
+  MATERIAL_PURPOSE_CUSTOMS_AUTHORIZATION = 13;
+  MATERIAL_PURPOSE_PAYER_INVOICE = 14;
+  MATERIAL_PURPOSE_BANK_PAYMENT_EVIDENCE = 15;
+  MATERIAL_PURPOSE_SETTLEMENT_FEE_AUTHORIZATION = 16;
+  MATERIAL_PURPOSE_FILING_BUNDLE = 17;
+  MATERIAL_PURPOSE_CUSTOMS_DRAFT = 18;
+  MATERIAL_PURPOSE_SUPPLIER_WRITTEN_CONFIRMATION = 19;
+  MATERIAL_PURPOSE_FORMAL_CUSTOMS_DOCUMENT = 20;
+  MATERIAL_PURPOSE_AUTHORITY_RECEIPT = 21;
+  MATERIAL_PURPOSE_EXPORT_PROOF = 22;
+  MATERIAL_PURPOSE_DELIVERY_ACKNOWLEDGEMENT = 23;
+  MATERIAL_PURPOSE_TAX_REFUND_PACKAGE = 24;
+  MATERIAL_PURPOSE_BANK_FEE_EVIDENCE = 25;
+}
+message MaterialReference {
+  MaterialPurpose purpose = 1;
+  string logical_file_number = 2;
+  uint32 revision_number = 3;
+  string sha256 = 4;
+  oneof location { string workbook_sheet = 5; string html_anchor = 6; }
+}
+message Consignee {
+  Party party = 1;
+  string delivery_address = 2;
+  optional string delivery_arrangements = 3;
+}
+message AgreedServiceProvider {
+  Party party = 1;
+  string service_scope = 2;
+  optional string agreed_instructions = 3;
+  reserved 4;
+  optional ExportAgentDetails export_agent_details = 5;
+  optional LogisticsDetails logistics_details = 6;
+  optional CustomsDetails customs_details = 7;
+}
+// Role-exclusive typed fields collected by the supplier; absent in initial
+// filing is allowed but blocks review when required at the signing-basis stage.
+message ExportAgentDetails {
+  string receipt_path = 1;
+  string payment_path = 2;
+  uint32 payment_branch_code = 3; // 1 advance / 2 post-export; server validates.
+}
+message LogisticsDetails {
+  string port = 1;
+  uint32 transport_mode_code = 2;
+  optional string transport_identification = 3;
+  string route = 4;
+  optional google.protobuf.Timestamp expected_pickup_at = 5;
+  optional google.protobuf.Timestamp expected_departure_at = 6;
+}
+message CustomsDetails {
+  MaterialReference qualification = 1; // Purpose 8.
+  Money quoted_amount = 2;
+  string pricing_basis = 3;
+  MaterialReference quotation = 4; // Purpose 9.
+}
+message SupplierFiling {
+  Party supplier = 1;
+  Consignee consignee = 2;
+  string sales_contract_number = 3;
+  string invoice_number = 4;
+  string packing_list_number = 5;
+  repeated GoodsItem goods = 6;
+  repeated PackingItem packing = 7;
+  repeated MaterialReference materials = 8;
+  Money contract_total = 9;
+  Money invoice_total = 10;
+  bool source_contents_confirmed = 11;
+  AgreedServiceProvider export_agent = 12;
+  AgreedServiceProvider logistics_provider = 13;
+  AgreedServiceProvider customs_broker = 14;
+  string nominated_payer_protected_reference = 15; // Identity evidence, NOT an access grant.
+}
+enum PayerRelationship {
+  PAYER_RELATIONSHIP_UNSPECIFIED = 0;
+  PAYER_RELATIONSHIP_SAME_LEGAL_ENTITY = 1;
+  PAYER_RELATIONSHIP_RELATED_ENTITY = 2;
+  PAYER_RELATIONSHIP_OTHER = 3;
+}
+message PayerFiling {
+  Party payer = 1;
+  PayerRelationship relationship = 2;
+  string payment_purpose = 3;
+  repeated MaterialReference relationship_evidence = 4;
+  bool source_contents_confirmed = 5;
+}
+message ReservationInput { string purpose = 1; } // Fixed "supplier-trade-filing".
+message TradeNumberReservation {
+  string reservation_id = 1;
+  string trade_number = 2;
+  google.protobuf.Timestamp created_at = 3;
+}
+message TradeInput {
+  string trade_number = 1;
+  string reservation_id = 2;
+  SupplierFiling supplier_filing = 3;
+}
+message Trade {
+  string trade_number = 1;
+  uint32 revision_number = 2;
+  string lifecycle = 3; // "editing", not approval.
+  string supplier_filing_uri = 4;
+  string payer_filing_uri = 5; // Empty until the payer creates its own resource.
+  string etag = 6;
+}
+message SupplierFilingResource {
+  string trade_number = 1;
+  SupplierFiling content = 2;
+  uint32 revision_number = 3; // Aggregate view revision; mutation returns accepted revision.
+  string etag = 4;
+}
+message PayerFilingResource {
+  string trade_number = 1;
+  string payer_filing_id = 2;
+  PayerFiling content = 3;
+  uint32 revision_number = 4;
+  string etag = 5;
+}
+message SignedUploadHeader { string name = 1; string value = 2; }
+message SignedUploadAuthorization {
+  string url = 1;
+  string method = 2;
+  repeated SignedUploadHeader required_headers = 3;
+  google.protobuf.Timestamp expires_at = 4;
+}
+message FileUploadInput {
+  oneof owner {
+    string reservation_id = 1;
+    string trade_number = 2;
+    string organization_reference = 8; // Framework draft only; verified current membership/permission, never client-asserted ownership.
+  }
+  MaterialPurpose purpose = 3;
+  string display_name = 4;
+  string media_type = 5;
+  uint64 size_bytes = 6;
+  string sha256 = 7;
+}
+message FileUpload {
+  string upload_id = 1;
+  string state = 2; // awaiting_upload / processing / retry_wait / ready / rejected / manual_action.
+  optional SignedUploadAuthorization signed_upload = 3;
+  string file_uri = 4; // Only set when confirmation committed.
+  uint32 attempt_count = 5;
+  optional google.protobuf.Timestamp next_attempt_at = 6;
+  string last_error_code = 7;
+}
+message FileConfirmationInput { string expected_sha256 = 1; uint64 expected_size_bytes = 2; }
+message FileRevision {
+  string logical_file_number = 1;
+  uint32 revision_number = 2;
+  MaterialPurpose purpose = 3;
+  string sha256 = 4;
+  uint64 size_bytes = 5;
+  bool reference_eligible = 6;
+}
+// Header values are mapped explicitly by the HTTP adapter; google.api.http
+// does not map headers, response codes, ETag or Location by itself.
+message CreateTradeNumberReservationReqMsg { ReservationInput reservation = 1; }
+message GetTradeNumberReservationReqMsg { string reservation_id = 1; }
+message CreateTradeReqMsg { TradeInput trade = 1; }
+message GetTradeReqMsg { string trade_number = 1; }
+message GetSupplierFilingReqMsg { string trade_number = 1; }
+message ReplaceSupplierFilingReqMsg { string trade_number = 1; SupplierFiling supplier_filing = 2; }
+message CreatePayerFilingReqMsg { string trade_number = 1; PayerFiling payer_filing = 2; }
+message GetPayerFilingReqMsg { string trade_number = 1; string payer_filing_id = 2; }
+message ReplacePayerFilingReqMsg { string trade_number = 1; string payer_filing_id = 2; PayerFiling payer_filing = 3; }
+message CreateFileUploadReqMsg { FileUploadInput upload = 1; }
+message GetFileUploadReqMsg { string upload_id = 1; }
+message CreateFileReqMsg { string upload_id = 1; FileConfirmationInput file = 2; }
+message GetFileRevisionReqMsg { string file_number = 1; uint32 revision_number = 2; }
+
+message FieldError { string pointer = 1; string code = 2; string detail = 3; }
+// HTTP application/problem+json (RFC 9457), not a successful resource.
+message HttpProblem {
+  string type = 1;
+  string title = 2;
+  uint32 status = 3;
+  string detail = 4;
+  string instance = 5;
+  repeated FieldError errors = 6;
+  bool outcome_unknown = 7;
+  uint32 retry_after_ms = 8;
+}
+
+// Details carried by non-OK google.rpc.Status via grpc-status-details-bin.
+// code uses exactly the stable business codes of HttpProblem.errors[].code.
+message RpcFailure {
+  string code = 1;
+  uint32 http_status = 2;
+  repeated FieldError errors = 3;
+  bool retryable = 4;
+  uint32 retry_after_ms = 5;
+  bool outcome_unknown = 6;
+  string request_reference = 7;
+}
+enum SignatureSuite {
+  SIGNATURE_SUITE_UNSPECIFIED = 0;
+  SIGNATURE_SUITE_RSA_PSS_SHA256 = 1;
+  SIGNATURE_SUITE_ECDSA_P256_SHA256 = 2;
+  SIGNATURE_SUITE_SM2_SM3 = 3;
+}
+// Optional registered institutional integration only. NOT required from supplier browsers.
+// S1-PROOF-1 signs canonical JSON rebuilt from ALL these fields, not protobuf wire bytes.
+// certificate_reference/key_reference are resolved against a trusted, identity-bound registry.
+message InvocationClaims {
+  string profile = 1;
+  string audience = 2;
+  string subject_reference = 3;
+  string key_reference = 4;
+  string certificate_reference = 5;
+  SignatureSuite suite = 6;
+  string method = 7; // Logical HTTP verb even when transported via gRPC.
+  string resource_path = 8; // Canonical resource URI, NOT the gRPC method path.
+  string idempotency_key = 9;
+  string if_match = 10;
+  string body_digest = 11; // Lowercase hex; SHA-256 or SM3 as fixed by the suite.
+  google.protobuf.Timestamp issued_at = 12;
+  google.protobuf.Timestamp expires_at = 13;
+  string nonce = 14;
+}
+message InvocationProof {
+  InvocationClaims claims = 1;
+  bytes signature = 2; // RSA-PSS salt=32; ECDSA P1363 r||s; SM2 DER with bound user ID.
+}
+// Platform-signed acceptance statement, independent of a current GET projection.
+message ReceiptClaims {
+  string profile = 1;
+  string audience = 2; // Original submitting subject, not a shared anonymous audience.
+  string key_reference = 3;
+  string certificate_reference = 4;
+  SignatureSuite suite = 5;
+  string event_number = 6; // Empty for middleware writes; bind their committed result instead.
+  string request_reference = 7;
+  string business_request_digest = 8;
+  string accepted_representation_digest = 9;
+  google.protobuf.Timestamp committed_at = 10;
+}
+message ReceiptProof { ReceiptClaims claims = 1; bytes signature = 2; }
+
+// Explicit per-method transport messages. HTTP response_body maps only resource;
+// RPC returns this typed envelope. Errors use non-OK Status, never a success flag.
+message CreateTradeNumberReservationRspMsg { TradeNumberReservation resource = 1; }
+message GetTradeNumberReservationRspMsg { TradeNumberReservation resource = 1; }
+message CreateTradeRspMsg { Trade resource = 1; }
+message GetTradeRspMsg { Trade resource = 1; }
+message GetSupplierFilingRspMsg { SupplierFilingResource resource = 1; }
+message ReplaceSupplierFilingRspMsg { SupplierFilingResource resource = 1; }
+message CreatePayerFilingRspMsg { PayerFilingResource resource = 1; }
+message GetPayerFilingRspMsg { PayerFilingResource resource = 1; }
+message ReplacePayerFilingRspMsg { PayerFilingResource resource = 1; }
+message CreateFileUploadRspMsg { FileUpload resource = 1; }
+message GetFileUploadRspMsg { FileUpload resource = 1; }
+message CreateFileRspMsg { FileRevision resource = 1; }
+message GetFileRevisionRspMsg { FileRevision resource = 1; }
+message CreateOperationConfirmationRspMsg { OperationConfirmation resource = 1; }
+message GetOperationConfirmationRspMsg { OperationConfirmation resource = 1; }

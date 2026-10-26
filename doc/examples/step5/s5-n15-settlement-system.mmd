@@ -1,0 +1,16 @@
+sequenceDiagram
+    actor OP as 出口代理资金经办人
+    participant SYS as 代理出口系统（单体）
+    actor REVIEWER as 出口代理资金独立审批人
+    actor SUP as 中国供应商经办人
+    OP->>SYS: 选择预付款或出口后分支并建立结算试算
+    SYS-->>OP: 返回逐项清单、A合同应付、D可用余额、缺项和资金来源
+    SUP->>SYS: 对结算单金额/供应商收讫附件作有权确认（适用时）
+    REVIEWER->>SYS: 独立审核该分支全部合同、授权、银行/出口证据
+    alt 资金可用且分支规则全部满足
+      SYS-->>REVIEWER: 首次分账从D可用余额结算300元；A合同应付不变
+    else 缺证据/受限资金/额度不足
+      SYS-->>REVIEWER: 退回或阻断；不提供贷款、透支或垫资
+    end
+    OP->>SYS: 用原结算号查询与补正
+    SYS-->>OP: 保留原审查意见，新增版本重新审查

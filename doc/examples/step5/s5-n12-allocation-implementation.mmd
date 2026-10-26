@@ -1,0 +1,22 @@
+sequenceDiagram
+    autonumber
+    actor PAGE as 出口代理资金经办人
+    actor ACTOR1 as 出口代理资金独立复核人
+    participant APP as 单体资金应用
+    participant DB as MySQL资金及账务
+    participant STORE as 私有S3确切版本
+    participant SCAN as ClamAV
+    participant BANK as 银行事实边界（未接入）
+    PAGE->>APP: GET当前资源/强ETag，再确认具体正文及原幂等键
+    APP->>DB: BEGIN READ COMMITTED；先查分配/decision原键与正文摘要
+    APP->>DB: 按trade号锁交易根和批准版，再锁稳定银行身份和实收flow
+    APP->>DB: 根锁后按allocation_number排序FOR UPDATE当前读全部待审/有效分配
+    APP->>APP: 定点核对gross等于有效分配加未匹配；待审预留避免并发超分
+    alt 超额/实收不存在/复核人与发起人相同
+    APP->>DB: ROLLBACK；不写分配或增加可用额
+    APP-->>PAGE: 409/422缺项；GET原分配再补正
+    else 足额且独立复核
+    APP->>DB: 原子保存毛额/批准快照/decision及确认消费；COMMIT
+    APP-->>PAGE: 返回待复核或有效分配；货款仍受限，无资金迁移/无新增分录
+    end
+    Note over APP,DB: RC先查重入/根锁后当前读；资金与账务本地原子；外部I/O事务外

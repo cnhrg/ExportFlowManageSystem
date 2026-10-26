@@ -1,0 +1,10 @@
+sequenceDiagram
+    actor F as 出口报关代理经办人
+    actor REVIEWER as 独立关务审核员
+    participant SYS as 代理出口系统
+    F->>SYS: 登记原办理号、正式来源、事件键和确切文件
+    SYS-->>F: 待核证据事件，不推进正式进度
+    REVIEWER->>SYS: 查看来源、原办理、确切版及前序事实
+    SYS-->>REVIEWER: 原件与验真缺项；技术异常不冒充监管决定
+    REVIEWER->>SYS: 独立核实或拒绝并说明原因
+    SYS-->>REVIEWER: 仅真实证据齐备才推进对应阶段；无证据保持待核

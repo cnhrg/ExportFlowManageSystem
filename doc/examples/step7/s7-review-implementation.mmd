@@ -1,0 +1,33 @@
+sequenceDiagram
+    actor PERSON as 独立税务审核员
+    participant PAGE as 本方客户端
+    participant APP as 单体两受众门面
+    participant DB as MySQL主库
+    participant FILE as 文件任务与S3扫描
+    participant WORKER as 租约恢复worker
+    PERSON->>PAGE: 独立审核退税材料或退回补充，明确本次确切意图
+    PAGE->>APP: 本受众凭证、对象、原键/标签/确认
+    APP->>DB: 认证授权；先读本subject/audience原受理
+    alt 原键已受理
+      APP->>DB: 校验原意图HMAC及当前权限；异文409
+      APP-->>PAGE: 原冻结resource/Location/ETag，不重复消费确认
+    else 新请求
+      opt 本目标需要新文件
+        APP->>FILE: 事务外查确切VersionId/hash/scan；未就绪只留任务
+        WORKER->>FILE: 按租约恢复未完成文件，不持业务锁
+      end
+      APP->>DB: SET TRANSACTION ISOLATION LEVEL READ COMMITTED； BEGIN
+      APP->>DB: 锁交易根→案件→提交版→事件/确认/受理；锁根后当前读重入
+      APP->>DB: 校验两受众权限/If-Match/确切意图确认，过期或异主体拒绝
+      APP->>DB: 锁案件/确切提交，校验status2及当前内容hash、独立审核身份
+      APP->>DB: 当前读批准交易与文件、职责、范围、核算和账户规则；缺失不批准
+      APP->>DB: 追加审核领域事件；review_snapshot_json冻结审核者/摘要/依据/意见
+      APP->>DB: 批准案件2→3；退回2→1；旧版本内容及原批准不可覆盖
+      alt 门禁满足
+        APP->>DB: 领域写/确认消费/最小冻结受理/任务同COMMIT
+        APP-->>PAGE: 本次结果；未产生的官方/到账事实不宣称成功
+      else 门禁不满足或数据库异常
+        APP->>DB: ROLLBACK，明确业务码
+        APP-->>PAGE: 缺项及原请求恢复路径
+      end
+    end

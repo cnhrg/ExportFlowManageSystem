@@ -1,0 +1,250 @@
+{
+  "designOnly": true,
+  "allExternalSuccessUnverified": true,
+  "draft": {
+    "approvedSnapshotNumber": "SNP-S4-SYNTHETIC-APPROVED",
+    "tradeRevisionNumber": 4,
+    "shipmentPlanRevision": "SYNTHETIC-PLAN-1",
+    "productionSalesUnit": {
+      "partyRoleCode": 1,
+      "participantSequenceNumber": 1
+    },
+    "domesticConsignor": {
+      "partyRoleCode": 2,
+      "participantSequenceNumber": 1
+    },
+    "overseasConsignee": {
+      "partyRoleCode": 3,
+      "participantSequenceNumber": 1
+    },
+    "customsAgent": {
+      "partyRoleCode": 6,
+      "participantSequenceNumber": 1
+    },
+    "customsOfficeCode": "SYNTHETIC-OFFICE",
+    "channelCode": "SYNTHETIC-NOT-OFFICIAL",
+    "destinationCountryCode": "VN",
+    "transportReference": "SYNTHETIC-TRANSPORT",
+    "authorizationEvidenceReference": "SYNTHETIC-NOT-VALID-AUTHORITY",
+    "items": [
+      {
+        "itemSequenceNumber": 1,
+        "tradeGoodsItemSequenceNumber": 1,
+        "shipmentAllocationNumber": "SHP-S4-SYNTHETIC#1",
+        "hsCode": "SYNTHETIC",
+        "declaredDescription": "原创合成货物非真实归类",
+        "specification": "SYNTHETIC",
+        "declaredQuantity": "40.000000",
+        "unitCode": "PCS",
+        "declaredUnitPriceAmount": "100.00",
+        "declaredTotalAmount": "4000.00",
+        "currencyCode": "CNY",
+        "originCountryCode": "CN"
+      }
+    ],
+    "supportingFiles": [
+      {
+        "logicalFileNumber": "FILE-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+        "documentTypeCode": 3
+      }
+    ]
+  },
+  "domainContent": {
+    "schema_version": 1,
+    "header": {
+      "approved_snapshot_number": "SNP-S4-SYNTHETIC-APPROVED",
+      "trade_revision_number": 4,
+      "shipment_plan_revision": "SYNTHETIC-PLAN-1",
+      "customs_office_code": "SYNTHETIC-OFFICE",
+      "channel_code": "SYNTHETIC-NOT-OFFICIAL",
+      "destination_country_code": "VN",
+      "transport_reference": "SYNTHETIC-TRANSPORT",
+      "authorization_evidence_reference": "SYNTHETIC-NOT-VALID-AUTHORITY"
+    },
+    "participant_references": [
+      {
+        "function_code": "production_sales_unit",
+        "party_role_code": 1,
+        "participant_sequence_number": 1
+      },
+      {
+        "function_code": "domestic_consignor",
+        "party_role_code": 2,
+        "participant_sequence_number": 1
+      },
+      {
+        "function_code": "overseas_consignee",
+        "party_role_code": 3,
+        "participant_sequence_number": 1
+      },
+      {
+        "function_code": "customs_agent",
+        "party_role_code": 6,
+        "participant_sequence_number": 1
+      }
+    ],
+    "goods": [
+      {
+        "item_sequence_number": 1,
+        "trade_goods_item_sequence_number": 1,
+        "shipment_allocation_number": "SHP-S4-SYNTHETIC#1",
+        "hs_code": "SYNTHETIC",
+        "declared_description": "原创合成货物非真实归类",
+        "specification": "SYNTHETIC",
+        "declared_quantity": "40.000000",
+        "unit_code": "PCS",
+        "declared_unit_price_amount": "100.00",
+        "declared_total_amount": "4000.00",
+        "currency_code": "CNY",
+        "origin_country_code": "CN"
+      }
+    ],
+    "document_references": [
+      {
+        "logical_file_number": "FILE-S4-SYNTHETIC",
+        "revision_number": 1,
+        "content_digest": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+        "document_purpose_code": 3
+      }
+    ],
+    "previous_revision_number": null,
+    "rule_version": "STEP4-DESIGN-1"
+  },
+  "revision": {
+    "declarationNumber": "DEC-S4-SYNTHETIC",
+    "revisionNumber": 1,
+    "content": {
+      "approvedSnapshotNumber": "SNP-S4-SYNTHETIC-APPROVED",
+      "tradeRevisionNumber": 4,
+      "shipmentPlanRevision": "SYNTHETIC-PLAN-1",
+      "productionSalesUnit": {
+        "partyRoleCode": 1,
+        "participantSequenceNumber": 1
+      },
+      "domesticConsignor": {
+        "partyRoleCode": 2,
+        "participantSequenceNumber": 1
+      },
+      "overseasConsignee": {
+        "partyRoleCode": 3,
+        "participantSequenceNumber": 1
+      },
+      "customsAgent": {
+        "partyRoleCode": 6,
+        "participantSequenceNumber": 1
+      },
+      "customsOfficeCode": "SYNTHETIC-OFFICE",
+      "channelCode": "SYNTHETIC-NOT-OFFICIAL",
+      "destinationCountryCode": "VN",
+      "transportReference": "SYNTHETIC-TRANSPORT",
+      "authorizationEvidenceReference": "SYNTHETIC-NOT-VALID-AUTHORITY",
+      "items": [
+        {
+          "itemSequenceNumber": 1,
+          "tradeGoodsItemSequenceNumber": 1,
+          "shipmentAllocationNumber": "SHP-S4-SYNTHETIC#1",
+          "hsCode": "SYNTHETIC",
+          "declaredDescription": "原创合成货物非真实归类",
+          "specification": "SYNTHETIC",
+          "declaredQuantity": "40.000000",
+          "unitCode": "PCS",
+          "declaredUnitPriceAmount": "100.00",
+          "declaredTotalAmount": "4000.00",
+          "currencyCode": "CNY",
+          "originCountryCode": "CN"
+        }
+      ],
+      "supportingFiles": [
+        {
+          "logicalFileNumber": "FILE-S4-SYNTHETIC",
+          "revisionNumber": 1,
+          "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+          "documentTypeCode": 3
+        }
+      ]
+    },
+    "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+    "createdBy": "SYNTHETIC-F",
+    "events": []
+  },
+  "receipt": {
+    "declarationNumber": "DEC-S4-SYNTHETIC",
+    "revisionNumber": 1,
+    "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+    "status": "DECLARATION_STATUS_DRAFT",
+    "etag": "\"s4-v1-57e9172357bd\"",
+    "acceptanceId": "ACCEPT-S4-SYNTHETIC"
+  },
+  "filing": {
+    "requestNumber": "REQ-S4-SYNTHETIC",
+    "declarationNumber": "DEC-S4-SYNTHETIC",
+    "intent": {
+      "revisionNumber": 1,
+      "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+      "action": "FILING_ACTION_DECLARE",
+      "reason": "仅登记本地待办，正式职责及渠道仍待确认"
+    },
+    "executionStatus": "EXECUTION_STATUS_PENDING",
+    "missingGateCodes": [
+      "CUSTOMS_AUTHORITY_UNVERIFIED",
+      "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED"
+    ],
+    "etag": "\"s4-v1-57e9172357bd\""
+  },
+  "purposeSpecificFiles": {
+    "packingList": {
+      "logicalFileNumber": "FILE-S4-SYNTHETIC",
+      "revisionNumber": 1,
+      "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+      "documentTypeCode": 3
+    },
+    "writtenConfirmation": {
+      "logicalFileNumber": "FILE-S4-WRITTEN",
+      "revisionNumber": 1,
+      "sha256": "2cdd2b12968cd24ac396a6f5cd3071fc134d80919678524d029a444763e1e57f",
+      "documentTypeCode": 19
+    },
+    "authorityClaim": {
+      "logicalFileNumber": "FILE-S4-AUTHORITY-CLAIM",
+      "revisionNumber": 1,
+      "sha256": "62c1d00fe1155148acf0d7ca4d888b0dc752cf9c93977247efaf4b55cd6c6e72",
+      "documentTypeCode": 21
+    },
+    "attachmentTwoShape": {
+      "logicalFileNumber": "FILE-S4-ATTACHMENT-SHAPE",
+      "revisionNumber": 1,
+      "sha256": "142688a3f9c2ff44906430e8d07108b72252cbe0806e5cbb60f3af0736d55110",
+      "documentTypeCode": 20
+    }
+  },
+  "domainRequest": {
+    "schema_version": 1,
+    "approved_snapshot_number": "SNP-S4-SYNTHETIC-APPROVED",
+    "declaration_content_hash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+    "action_code": 1,
+    "operation_evidence_reference": "SYNTHETIC-NOT-A-REAL-OPERATION-EVIDENCE",
+    "evidence_references": []
+  },
+  "domainEvent": {
+    "schema_version": 1,
+    "content_hash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+    "operation_evidence_reference": "SYNTHETIC-NOT-A-REAL-OPERATION-EVIDENCE",
+    "reviewer_reference": "SYNTHETIC-REVIEWER",
+    "reviewed_revision_number": 1,
+    "comments": "合成退回理由",
+    "review_submission_event_number": "SYNTHETIC-SUBMISSION"
+  },
+  "fieldMapping": {
+    "current": "customs_declaration_tab",
+    "history": "customs_declaration_revision_tab.content_json",
+    "items": "customs_declaration_item_tab",
+    "reviewAndWrittenConfirmation": "customs_event_tab typed payload events3/4/5/6",
+    "filing": "customs_filing_request_tab",
+    "evidence": "customs_event_tab events17/18/8..14",
+    "deliveryAndReceipt": "customs_event_tab events15/16",
+    "etag": "customs_declaration_tab.version + content_hash",
+    "technicalOnly": "同库中间件确认/受理/文件恢复任务"
+  }
+}

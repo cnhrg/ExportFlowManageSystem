@@ -1,0 +1,24 @@
+groups:
+  - name: local-infrastructure
+    rules:
+      - alert: MetricsTargetDown
+        expr: up == 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Metrics target unavailable: {{ $labels.instance }}"
+      - alert: InfrastructureProbeFailed
+        expr: probe_success == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Infrastructure probe failed: {{ $labels.instance }}"
+      - alert: LogDeliveryFailed
+        expr: sum(rate(loki_write_dropped_entries_total[5m])) > 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Alloy is dropping log entries"

@@ -1,0 +1,11 @@
+sequenceDiagram
+    actor USER as 出口报关代理经办人
+    participant SYSTEM as 代理出口系统
+    USER->>SYSTEM: 打开本方记录，查看所需资料和当前进度
+    SYSTEM-->>USER: 显示本方可办事项、材料版本和缺项
+    USER->>SYSTEM: 核对材料全文、职责依据和申请范围，确认本版后送审
+    alt 本方有权且所需依据齐全
+      SYSTEM-->>USER: 保存本版等待独立审核，旧版不变
+    else 职责、范围或正式证据未确认
+      SYSTEM-->>USER: 说明缺什么、为何不能继续；已提交的请求可查原结果
+    end

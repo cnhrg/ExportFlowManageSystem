@@ -1,0 +1,19 @@
+{
+  "uploadId": "UPLOAD-DEMO-001",
+  "state": "awaiting_upload",
+  "signedUpload": {
+    "url": "https://s3.example.invalid/private-staging/UPLOAD-DEMO-001?SIGNATURE-NOT-USABLE",
+    "method": "PUT",
+    "requiredHeaders": [
+      {
+        "name": "Content-Type",
+        "value": "text/html"
+      },
+      {
+        "name": "x-amz-checksum-sha256",
+        "value": "d8o3HEiVpScvnpv2qhgFzNSXiqJbBdtU9uZ8++JB8oQ="
+      }
+    ],
+    "expiresAt": "2026-10-25T08:20:00Z"
+  }
+}

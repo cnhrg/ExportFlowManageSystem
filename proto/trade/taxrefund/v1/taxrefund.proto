@@ -1,0 +1,124 @@
+syntax = "proto3";
+package trade.taxrefund.v1;
+import "google/api/annotations.proto";
+import "trade/filing/v1/filing.proto";
+
+// Two audiences in one monolith; no production tax or bank adapter is claimed.
+// Errors: trade.filing.v1.HttpProblem; non-OK RPC details: trade.filing.v1.RpcFailure.
+service ExternalTaxRefundService {
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateRefundCase(CreateRefundCaseReqMsg) returns (CreateRefundCaseRspMsg) { option (google.api.http) = { post: "/api/v1/trades/{trade_number}/tax-refund-cases" body: "preparation" response_body: "resource" }; }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetRefundCase(GetRefundCaseReqMsg) returns (GetRefundCaseRspMsg) { option (google.api.http) = { get: "/api/v1/tax-refund-cases/{tax_case_number}" response_body: "resource" }; }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateRefundPackage(CreateRefundPackageReqMsg) returns (CreateRefundPackageRspMsg) { option (google.api.http) = { post: "/api/v1/tax-refund-cases/{tax_case_number}/submission-revisions" body: "package" response_body: "resource" }; }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetRefundSubmission(GetRefundSubmissionReqMsg) returns (GetRefundSubmissionRspMsg) { option (google.api.http) = { get: "/api/v1/tax-refund-cases/{tax_case_number}/submission-revisions/{submission_revision_number}" response_body: "resource" }; }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateRefundDispatch(CreateRefundDispatchReqMsg) returns (CreateRefundDispatchRspMsg) { option (google.api.http) = { post: "/api/v1/tax-refund-cases/{tax_case_number}/dispatch-intents" body: "intent" response_body: "resource" }; }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateRefundCorrection(CreateRefundCorrectionReqMsg) returns (CreateRefundCorrectionRspMsg) { option (google.api.http) = { post: "/api/v1/tax-refund-cases/{tax_case_number}/correction-revisions" body: "correction" response_body: "resource" }; }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateRefundFollowUp(CreateRefundFollowUpReqMsg) returns (CreateRefundFollowUpRspMsg) { option (google.api.http) = { post: "/api/v1/tax-refund-cases/{tax_case_number}/follow-ups" body: "follow_up" response_body: "resource" }; }
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetRefundOperation(GetRefundOperationReqMsg) returns (GetRefundOperationRspMsg) { option (google.api.http) = { get: "/api/v1/tax-refund-cases/{tax_case_number}/operations/{operation_number}" response_body: "resource" }; }
+}
+service InternalTaxRefundOperationsService {
+  // Deadline client/server: 5000/4000 ms.
+  rpc GetRefundReviewContext(GetRefundReviewContextReqMsg) returns (GetRefundReviewContextRspMsg) { option (google.api.http) = { get: "/internal/v1/tax-refund-cases/{tax_case_number}/review-context" response_body: "resource" }; }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateRefundReview(CreateRefundReviewReqMsg) returns (CreateRefundReviewRspMsg) { option (google.api.http) = { post: "/internal/v1/tax-refund-cases/{tax_case_number}/review-decisions" body: "decision" response_body: "resource" }; }
+  // Deadline client/server: 10000/8000 ms.
+  rpc CreateRefundNotice(CreateRefundNoticeReqMsg) returns (CreateRefundNoticeRspMsg) { option (google.api.http) = { post: "/internal/v1/tax-refund-cases/{tax_case_number}/official-notices" body: "notice" response_body: "resource" }; }
+  // Deadline client/server: 10000/8000 ms.
+  rpc ReconcileRefundCredit(ReconcileRefundCreditReqMsg) returns (ReconcileRefundCreditRspMsg) { option (google.api.http) = { post: "/internal/v1/tax-refund-cases/{tax_case_number}/credit-reconciliations" body: "reconciliation" response_body: "resource" }; }
+}
+enum CaseStatus {
+  CASE_STATUS_UNSPECIFIED = 0;
+  CASE_STATUS_PREPARING = 1;
+  CASE_STATUS_REVIEW_PENDING = 2;
+  CASE_STATUS_DISPATCH_PENDING = 3;
+  CASE_STATUS_SUBMITTED = 4;
+  CASE_STATUS_ACCEPTED = 5;
+  CASE_STATUS_CORRECTION = 6;
+  CASE_STATUS_PROCESSING = 7;
+  CASE_STATUS_OFFICIAL_COMPLETED = 8;
+  CASE_STATUS_HANDOVER_RECONCILED = 9;
+  CASE_STATUS_TERMINAL_REJECTED = 10;
+  CASE_STATUS_REVOKED = 11;
+}
+enum ReviewDecision { REVIEW_DECISION_UNSPECIFIED = 0; REVIEW_DECISION_APPROVE = 1; REVIEW_DECISION_RETURN = 2; }
+enum OfficialKind { OFFICIAL_KIND_UNSPECIFIED = 0; OFFICIAL_KIND_ACCEPTED = 1; OFFICIAL_KIND_CORRECTION = 2; OFFICIAL_KIND_PROCESSING = 3; OFFICIAL_KIND_APPROVED = 4; OFFICIAL_KIND_REJECTED = 5; OFFICIAL_KIND_REVOKED = 6; }
+message FileVersion { string file_number = 1; string version_id = 2; string sha256 = 3; uint32 purpose_code = 4; uint32 revision_number = 5; }
+message Scope { string reference = 1; optional string confirmed_rule_reference = 2; repeated string customs_revision_references = 3; repeated string certificate_references = 4; }
+message PreparationInput { uint32 trade_revision_number = 1; Scope scope = 2; string taxpayer_snapshot_reference = 3; optional string claimed_amount = 4; string currency_code = 5; }
+message PackageInput {
+  string approved_trade_snapshot_reference = 1;
+  Scope scope = 2;
+  optional string claimed_amount = 3; // DECIMAL(20,2); NULL in preparation, not guessed zero.
+  string currency_code = 4; // CNY only.
+  optional string calculation_rule_reference = 5;
+  optional string recipient_account_basis_reference = 6; // A, never the B goods account.
+  repeated FileVersion files = 7;
+}
+message ReviewInput { uint32 submission_revision_number = 1; string package_hash = 2; ReviewDecision decision = 3; string reason = 4; repeated string verified_basis_references = 5; }
+message DispatchInput { uint32 submission_revision_number = 1; string package_hash = 2; string authorization_basis_reference = 3; }
+message OfficialNoticeInput {
+  uint32 submission_revision_number = 1; // Exact original official version; never latest fallback.
+  string external_event_key = 2;
+  string authority_reference_number = 3;
+  OfficialKind kind = 4;
+  FileVersion original_notice = 5;
+  string verified_source_reference = 6;
+  string occurred_at = 7; // RFC3339 UTC.
+  optional string approved_amount = 8; // Not claimed or credited amount.
+  string currency_code = 9;
+  string dispatch_reference = 10;
+}
+message CorrectionInput { uint32 previous_submission_revision_number = 1; string correction_event_number = 2; PackageInput replacement = 3; }
+message FollowUpInput { uint32 submission_revision_number = 1; string owner_reference = 2; string action = 3; optional string deadline_at = 4; optional string deadline_rule_reference = 5; }
+message CreditInput { uint32 submission_revision_number = 1; string official_decision_event_number = 2; string controlled_fund_observation_reference = 3; string recipient_account_basis_reference = 4; }
+message ReviewSnapshot { string reviewer_reference = 1; string package_hash = 2; ReviewDecision decision = 3; string reason = 4; repeated string verified_basis_references = 5; }
+message Submission {
+  string tax_case_number = 1; uint32 submission_revision_number = 2;
+  PackageInput content = 3; string package_hash = 4;
+  ReviewSnapshot review_snapshot = 5;
+  optional uint32 previous_submission_revision_number = 6;
+  optional string correction_event_number = 7;
+  optional string dispatch_reference = 8;
+  string execution_status = 9; string etag = 10;
+}
+message RefundCase {
+  string tax_case_number = 1; string trade_number = 2; uint32 tax_type_code = 3;
+  Scope scope = 4; CaseStatus status = 5; optional string claimed_amount = 6;
+  string currency_code = 7; uint32 version = 8; string etag = 9;
+  repeated string missing_gates = 10;
+  optional string approved_amount = 11; optional string verified_credit_amount = 12;
+}
+message Receipt { string tax_case_number = 1; string operation_number = 2; string result = 3; string etag = 4; optional string dispatch_reference = 5; }
+message ReviewContext { RefundCase tax_case = 1; repeated Submission submissions = 2; repeated string missing_gates = 3; repeated string verified_event_references = 4; }
+message Operation { string operation_number = 1; string tax_case_number = 2; string execution_status = 3; Receipt original_receipt = 4; optional string dispatch_reference = 5; }
+message CreateRefundCaseReqMsg { string trade_number = 1; PreparationInput preparation = 2; }
+message CreateRefundCaseRspMsg { RefundCase resource = 1; }
+message GetRefundCaseReqMsg { string tax_case_number = 1; }
+message GetRefundCaseRspMsg { RefundCase resource = 1; }
+message CreateRefundPackageReqMsg { string tax_case_number = 1; PackageInput package = 2; }
+message CreateRefundPackageRspMsg { Submission resource = 1; }
+message GetRefundSubmissionReqMsg { string tax_case_number = 1; uint32 submission_revision_number = 2; }
+message GetRefundSubmissionRspMsg { Submission resource = 1; }
+message GetRefundReviewContextReqMsg { string tax_case_number = 1; }
+message GetRefundReviewContextRspMsg { ReviewContext resource = 1; }
+message CreateRefundReviewReqMsg { string tax_case_number = 1; ReviewInput decision = 2; }
+message CreateRefundReviewRspMsg { Receipt resource = 1; }
+message CreateRefundDispatchReqMsg { string tax_case_number = 1; DispatchInput intent = 2; }
+message CreateRefundDispatchRspMsg { Receipt resource = 1; }
+message CreateRefundNoticeReqMsg { string tax_case_number = 1; OfficialNoticeInput notice = 2; }
+message CreateRefundNoticeRspMsg { Receipt resource = 1; }
+message CreateRefundCorrectionReqMsg { string tax_case_number = 1; CorrectionInput correction = 2; }
+message CreateRefundCorrectionRspMsg { Submission resource = 1; }
+message CreateRefundFollowUpReqMsg { string tax_case_number = 1; FollowUpInput follow_up = 2; }
+message CreateRefundFollowUpRspMsg { Receipt resource = 1; }
+message ReconcileRefundCreditReqMsg { string tax_case_number = 1; CreditInput reconciliation = 2; }
+message ReconcileRefundCreditRspMsg { Receipt resource = 1; }
+message GetRefundOperationReqMsg { string tax_case_number = 1; string operation_number = 2; }
+message GetRefundOperationRspMsg { Operation resource = 1; }

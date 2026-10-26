@@ -1,0 +1,67 @@
+{
+  "designOnly": true,
+  "executed": false,
+  "actualStepOneDatabaseUnchanged": true,
+  "trade_record_tab": {
+    "trade_number": "TRD-S2-DEMO-001",
+    "trade_status_code": 8,
+    "revision_number": 4,
+    "approved_revision_number": 4
+  },
+  "trade_revision_tab": {
+    "snapshot_number": "SNP-S2-DEMO-APPROVED-001",
+    "trade_number": "TRD-S2-DEMO-001",
+    "revision_number": 4,
+    "snapshot_reason_code": 2,
+    "source_event_number": "EVT-S2-APPROVE-DEMO"
+  },
+  "contract_record_tab": {
+    "contract_number": "CON-S2-DEMO-001",
+    "contract_scope_code": 1,
+    "document_type_code": 10,
+    "trade_number": "TRD-S2-DEMO-001",
+    "current_revision_number": 1
+  },
+  "contract_revision_tab": {
+    "revision_number": 1,
+    "trade_snapshot_number": "SNP-S2-DEMO-APPROVED-001",
+    "party_references_json": [
+      {
+        "contract_party_sequence": 1,
+        "party_role_code": 1,
+        "participant_sequence_number": 1
+      },
+      {
+        "contract_party_sequence": 2,
+        "party_role_code": 2,
+        "participant_sequence_number": 1
+      }
+    ],
+    "review_file_revision_id": "resolve FILE-S2-REVIEW-001 version 1",
+    "signed_file_revision_id": null,
+    "contract_revision_status_code": 1,
+    "review_snapshot_json": null,
+    "lifecycle_events_json": [],
+    "effective_from": "2026-10-25",
+    "effective_to": "2027-10-25",
+    "signed_at": null,
+    "effective_at": null,
+    "supersedes_revision_number": null
+  },
+  "document_file_tab": {
+    "logical_file_number": "FILE-S2-REVIEW-001",
+    "revision_number": 1,
+    "document_type_code": 10,
+    "storage_path": "doc/examples/step2/review-document.html",
+    "sha256": "54bd82f2df4660a8d8bcdfc80f5ef9b9167f2e9a708d12b9e205d74b52f4e175",
+    "size_bytes": "578",
+    "media_type": "text/html",
+    "note": "Real local ORIGINAL DRAFT bytes only; not a verified signed file or remote storage fact."
+  },
+  "projectedAcceptanceResources": {
+    "agreementApplication": "transaction_filing_document_references_json + event 3 agreement_application/source, pending correction review",
+    "customsAuthorization": "customs broker participant_information_json.customs_authorizations + source/event 3, pending correction review",
+    "customsRecognition": "export agent participant_information_json.customs_agent_recognitions + source/event 3, pending correction review"
+  },
+  "unresolvedExternalEvidence": "No real signer identity, CA/authorization, official customs permission, provider task or signed archive exists. Hypothetical HTTP response states are NOT legal/payment evidence."
+}

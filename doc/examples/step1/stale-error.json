@@ -1,0 +1,14 @@
+{
+  "type": "https://api.example.invalid/problems/REVISION_CONFLICT",
+  "title": "REVISION_CONFLICT",
+  "status": 412,
+  "detail": "重新GET本方资源并人工核对后以新键提交",
+  "instance": "/synthetic/request",
+  "errors": [
+    {
+      "pointer": "/headers/If-Match",
+      "code": "REVISION_CONFLICT",
+      "detail": "重新GET本方资源并人工核对后以新键提交"
+    }
+  ]
+}

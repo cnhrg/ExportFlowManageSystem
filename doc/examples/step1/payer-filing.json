@@ -1,0 +1,15 @@
+{
+  "payer": {
+    "legalName": "Example Consignee",
+    "countryCode": "SG",
+    "registeredAddress": "合成注册地址，非真实地点",
+    "contactName": "合成联系人",
+    "contactPhone": "DEMO-NOT-A-PHONE",
+    "contactEmail": "demo@example.invalid",
+    "identityProtectedReference": "DEMO-IDENTITY-CONSIGNEE"
+  },
+  "relationship": "PAYER_RELATIONSHIP_SAME_LEGAL_ENTITY",
+  "paymentPurpose": "支付本笔合成出口交易货款",
+  "relationshipEvidence": [],
+  "sourceContentsConfirmed": true
+}

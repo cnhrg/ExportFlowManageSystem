@@ -1,0 +1,1181 @@
+[
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/shipments/SHP-S4-SYNTHETIC/customs-basis",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s4-v1-57e9172357bd\""
+      },
+      "body": {
+        "tradeNumber": "TRD-S4-SYNTHETIC",
+        "shipmentNumber": "SHP-S4-SYNTHETIC",
+        "approvedSnapshotNumber": "SNP-S4-SYNTHETIC-APPROVED",
+        "shipmentPlanRevision": "SYNTHETIC-PLAN-1",
+        "etag": "\"s4-v1-57e9172357bd\"",
+        "parties": [
+          {
+            "partyRoleCode": 1,
+            "participantSequenceNumber": 1
+          },
+          {
+            "partyRoleCode": 2,
+            "participantSequenceNumber": 1
+          },
+          {
+            "partyRoleCode": 3,
+            "participantSequenceNumber": 1
+          },
+          {
+            "partyRoleCode": 6,
+            "participantSequenceNumber": 1
+          }
+        ],
+        "missingGateCodes": [
+          "CUSTOMS_AUTHORITY_UNVERIFIED"
+        ]
+      }
+    },
+    "rpc": "GetCustomsBasis",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetCustomsBasisReqMsg",
+    "responseType": "GetCustomsBasisRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s4-v1-57e9172357bd\"\n\n{\n  \"tradeNumber\": \"TRD-S4-SYNTHETIC\",\n  \"shipmentNumber\": \"SHP-S4-SYNTHETIC\",\n  \"approvedSnapshotNumber\": \"SNP-S4-SYNTHETIC-APPROVED\",\n  \"shipmentPlanRevision\": \"SYNTHETIC-PLAN-1\",\n  \"etag\": \"\\\"s4-v1-57e9172357bd\\\"\",\n  \"parties\": [\n    {\n      \"partyRoleCode\": 1,\n      \"participantSequenceNumber\": 1\n    },\n    {\n      \"partyRoleCode\": 2,\n      \"participantSequenceNumber\": 1\n    },\n    {\n      \"partyRoleCode\": 3,\n      \"participantSequenceNumber\": 1\n    },\n    {\n      \"partyRoleCode\": 6,\n      \"participantSequenceNumber\": 1\n    }\n  ],\n  \"missingGateCodes\": [\n    \"CUSTOMS_AUTHORITY_UNVERIFIED\"\n  ]\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/shipments/SHP-S4-SYNTHETIC/customs-basis\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/shipments/SHP-S4-SYNTHETIC/customs-declarations",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7040000-0000-4000-8000-000000000002",
+        "If-Match": "\"s4-v1-57e9172357bd\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "approvedSnapshotNumber": "SNP-S4-SYNTHETIC-APPROVED",
+        "tradeRevisionNumber": 4,
+        "shipmentPlanRevision": "SYNTHETIC-PLAN-1",
+        "productionSalesUnit": {
+          "partyRoleCode": 1,
+          "participantSequenceNumber": 1
+        },
+        "domesticConsignor": {
+          "partyRoleCode": 2,
+          "participantSequenceNumber": 1
+        },
+        "overseasConsignee": {
+          "partyRoleCode": 3,
+          "participantSequenceNumber": 1
+        },
+        "customsAgent": {
+          "partyRoleCode": 6,
+          "participantSequenceNumber": 1
+        },
+        "customsOfficeCode": "SYNTHETIC-OFFICE",
+        "channelCode": "SYNTHETIC-NOT-OFFICIAL",
+        "destinationCountryCode": "VN",
+        "transportReference": "SYNTHETIC-TRANSPORT",
+        "authorizationEvidenceReference": "SYNTHETIC-NOT-VALID-AUTHORITY",
+        "items": [
+          {
+            "itemSequenceNumber": 1,
+            "tradeGoodsItemSequenceNumber": 1,
+            "shipmentAllocationNumber": "SHP-S4-SYNTHETIC#1",
+            "hsCode": "SYNTHETIC",
+            "declaredDescription": "原创合成货物非真实归类",
+            "specification": "SYNTHETIC",
+            "declaredQuantity": "40.000000",
+            "unitCode": "PCS",
+            "declaredUnitPriceAmount": "100.00",
+            "declaredTotalAmount": "4000.00",
+            "currencyCode": "CNY",
+            "originCountryCode": "CN"
+          }
+        ],
+        "supportingFiles": [
+          {
+            "logicalFileNumber": "FILE-S4-SYNTHETIC",
+            "revisionNumber": 1,
+            "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+            "documentTypeCode": 3
+          }
+        ]
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s4-v1-57e9172357bd\"",
+        "Location": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC"
+      },
+      "body": {
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+        "status": "DECLARATION_STATUS_DRAFT",
+        "etag": "\"s4-v1-57e9172357bd\"",
+        "acceptanceId": "ACCEPT-S4-SYNTHETIC"
+      }
+    },
+    "rpc": "CreateCustomsDeclaration",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateCustomsDeclarationReqMsg",
+    "responseType": "CreateCustomsDeclarationRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s4-v1-57e9172357bd\"\nLocation: /api/v1/customs-declarations/DEC-S4-SYNTHETIC\n\n{\n  \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n  \"revisionNumber\": 1,\n  \"contentHash\": \"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\n  \"status\": \"DECLARATION_STATUS_DRAFT\",\n  \"etag\": \"\\\"s4-v1-57e9172357bd\\\"\",\n  \"acceptanceId\": \"ACCEPT-S4-SYNTHETIC\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/shipments/SHP-S4-SYNTHETIC/customs-declarations\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7040000-0000-4000-8000-000000000002' \\\n  --header 'If-Match: \"s4-v1-57e9172357bd\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"approvedSnapshotNumber\":\"SNP-S4-SYNTHETIC-APPROVED\",\"tradeRevisionNumber\":4,\"shipmentPlanRevision\":\"SYNTHETIC-PLAN-1\",\"productionSalesUnit\":{\"partyRoleCode\":1,\"participantSequenceNumber\":1},\"domesticConsignor\":{\"partyRoleCode\":2,\"participantSequenceNumber\":1},\"overseasConsignee\":{\"partyRoleCode\":3,\"participantSequenceNumber\":1},\"customsAgent\":{\"partyRoleCode\":6,\"participantSequenceNumber\":1},\"customsOfficeCode\":\"SYNTHETIC-OFFICE\",\"channelCode\":\"SYNTHETIC-NOT-OFFICIAL\",\"destinationCountryCode\":\"VN\",\"transportReference\":\"SYNTHETIC-TRANSPORT\",\"authorizationEvidenceReference\":\"SYNTHETIC-NOT-VALID-AUTHORITY\",\"items\":[{\"itemSequenceNumber\":1,\"tradeGoodsItemSequenceNumber\":1,\"shipmentAllocationNumber\":\"SHP-S4-SYNTHETIC#1\",\"hsCode\":\"SYNTHETIC\",\"declaredDescription\":\"原创合成货物非真实归类\",\"specification\":\"SYNTHETIC\",\"declaredQuantity\":\"40.000000\",\"unitCode\":\"PCS\",\"declaredUnitPriceAmount\":\"100.00\",\"declaredTotalAmount\":\"4000.00\",\"currencyCode\":\"CNY\",\"originCountryCode\":\"CN\"}],\"supportingFiles\":[{\"logicalFileNumber\":\"FILE-S4-SYNTHETIC\",\"revisionNumber\":1,\"sha256\":\"4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7\",\"documentTypeCode\":3}]}'"
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s4-v1-57e9172357bd\""
+      },
+      "body": {
+        "current": {
+          "declarationNumber": "DEC-S4-SYNTHETIC",
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "status": "DECLARATION_STATUS_DRAFT",
+          "etag": "\"s4-v1-57e9172357bd\"",
+          "acceptanceId": "ACCEPT-S4-SYNTHETIC"
+        },
+        "revision": {
+          "declarationNumber": "DEC-S4-SYNTHETIC",
+          "revisionNumber": 1,
+          "content": {
+            "approvedSnapshotNumber": "SNP-S4-SYNTHETIC-APPROVED",
+            "tradeRevisionNumber": 4,
+            "shipmentPlanRevision": "SYNTHETIC-PLAN-1",
+            "productionSalesUnit": {
+              "partyRoleCode": 1,
+              "participantSequenceNumber": 1
+            },
+            "domesticConsignor": {
+              "partyRoleCode": 2,
+              "participantSequenceNumber": 1
+            },
+            "overseasConsignee": {
+              "partyRoleCode": 3,
+              "participantSequenceNumber": 1
+            },
+            "customsAgent": {
+              "partyRoleCode": 6,
+              "participantSequenceNumber": 1
+            },
+            "customsOfficeCode": "SYNTHETIC-OFFICE",
+            "channelCode": "SYNTHETIC-NOT-OFFICIAL",
+            "destinationCountryCode": "VN",
+            "transportReference": "SYNTHETIC-TRANSPORT",
+            "authorizationEvidenceReference": "SYNTHETIC-NOT-VALID-AUTHORITY",
+            "items": [
+              {
+                "itemSequenceNumber": 1,
+                "tradeGoodsItemSequenceNumber": 1,
+                "shipmentAllocationNumber": "SHP-S4-SYNTHETIC#1",
+                "hsCode": "SYNTHETIC",
+                "declaredDescription": "原创合成货物非真实归类",
+                "specification": "SYNTHETIC",
+                "declaredQuantity": "40.000000",
+                "unitCode": "PCS",
+                "declaredUnitPriceAmount": "100.00",
+                "declaredTotalAmount": "4000.00",
+                "currencyCode": "CNY",
+                "originCountryCode": "CN"
+              }
+            ],
+            "supportingFiles": [
+              {
+                "logicalFileNumber": "FILE-S4-SYNTHETIC",
+                "revisionNumber": 1,
+                "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+                "documentTypeCode": 3
+              }
+            ]
+          },
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "createdBy": "SYNTHETIC-F",
+          "events": []
+        },
+        "availableRevisions": [
+          1
+        ],
+        "filingRequests": [],
+        "events": [],
+        "attachmentDeliveries": [],
+        "missingGateCodes": [
+          "CUSTOMS_AUTHORITY_UNVERIFIED"
+        ]
+      }
+    },
+    "rpc": "GetCustomsDeclaration",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetCustomsDeclarationReqMsg",
+    "responseType": "GetCustomsDeclarationRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s4-v1-57e9172357bd\"\n\n{\n  \"current\": {\n    \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n    \"revisionNumber\": 1,\n    \"contentHash\": \"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\n    \"status\": \"DECLARATION_STATUS_DRAFT\",\n    \"etag\": \"\\\"s4-v1-57e9172357bd\\\"\",\n    \"acceptanceId\": \"ACCEPT-S4-SYNTHETIC\"\n  },\n  \"revision\": {\n    \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n    \"revisionNumber\": 1,\n    \"content\": {\n      \"approvedSnapshotNumber\": \"SNP-S4-SYNTHETIC-APPROVED\",\n      \"tradeRevisionNumber\": 4,\n      \"shipmentPlanRevision\": \"SYNTHETIC-PLAN-1\",\n      \"productionSalesUnit\": {\n        \"partyRoleCode\": 1,\n        \"participantSequenceNumber\": 1\n      },\n      \"domesticConsignor\": {\n        \"partyRoleCode\": 2,\n        \"participantSequenceNumber\": 1\n      },\n      \"overseasConsignee\": {\n        \"partyRoleCode\": 3,\n        \"participantSequenceNumber\": 1\n      },\n      \"customsAgent\": {\n        \"partyRoleCode\": 6,\n        \"participantSequenceNumber\": 1\n      },\n      \"customsOfficeCode\": \"SYNTHETIC-OFFICE\",\n      \"channelCode\": \"SYNTHETIC-NOT-OFFICIAL\",\n      \"destinationCountryCode\": \"VN\",\n      \"transportReference\": \"SYNTHETIC-TRANSPORT\",\n      \"authorizationEvidenceReference\": \"SYNTHETIC-NOT-VALID-AUTHORITY\",\n      \"items\": [\n        {\n          \"itemSequenceNumber\": 1,\n          \"tradeGoodsItemSequenceNumber\": 1,\n          \"shipmentAllocationNumber\": \"SHP-S4-SYNTHETIC#1\",\n          \"hsCode\": \"SYNTHETIC\",\n          \"declaredDescription\": \"原创合成货物非真实归类\",\n          \"specification\": \"SYNTHETIC\",\n          \"declaredQuantity\": \"40.000000\",\n          \"unitCode\": \"PCS\",\n          \"declaredUnitPriceAmount\": \"100.00\",\n          \"declaredTotalAmount\": \"4000.00\",\n          \"currencyCode\": \"CNY\",\n          \"originCountryCode\": \"CN\"\n        }\n      ],\n      \"supportingFiles\": [\n        {\n          \"logicalFileNumber\": \"FILE-S4-SYNTHETIC\",\n          \"revisionNumber\": 1,\n          \"sha256\": \"4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7\",\n          \"documentTypeCode\": 3\n        }\n      ]\n    },\n    \"contentHash\": \"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\n    \"createdBy\": \"SYNTHETIC-F\",\n    \"events\": []\n  },\n  \"availableRevisions\": [\n    1\n  ],\n  \"filingRequests\": [],\n  \"events\": [],\n  \"attachmentDeliveries\": [],\n  \"missingGateCodes\": [\n    \"CUSTOMS_AUTHORITY_UNVERIFIED\"\n  ]\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/revisions",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7040000-0000-4000-8000-000000000004",
+        "If-Match": "\"s4-v1-57e9172357bd\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "baseRevisionNumber": 1,
+        "draft": {
+          "approvedSnapshotNumber": "SNP-S4-SYNTHETIC-APPROVED",
+          "tradeRevisionNumber": 4,
+          "shipmentPlanRevision": "SYNTHETIC-PLAN-1",
+          "productionSalesUnit": {
+            "partyRoleCode": 1,
+            "participantSequenceNumber": 1
+          },
+          "domesticConsignor": {
+            "partyRoleCode": 2,
+            "participantSequenceNumber": 1
+          },
+          "overseasConsignee": {
+            "partyRoleCode": 3,
+            "participantSequenceNumber": 1
+          },
+          "customsAgent": {
+            "partyRoleCode": 6,
+            "participantSequenceNumber": 1
+          },
+          "customsOfficeCode": "SYNTHETIC-OFFICE",
+          "channelCode": "SYNTHETIC-NOT-OFFICIAL",
+          "destinationCountryCode": "VN",
+          "transportReference": "SYNTHETIC-CORRECTED",
+          "authorizationEvidenceReference": "SYNTHETIC-NOT-VALID-AUTHORITY",
+          "items": [
+            {
+              "itemSequenceNumber": 1,
+              "tradeGoodsItemSequenceNumber": 1,
+              "shipmentAllocationNumber": "SHP-S4-SYNTHETIC#1",
+              "hsCode": "SYNTHETIC",
+              "declaredDescription": "原创合成货物非真实归类",
+              "specification": "SYNTHETIC",
+              "declaredQuantity": "40.000000",
+              "unitCode": "PCS",
+              "declaredUnitPriceAmount": "100.00",
+              "declaredTotalAmount": "4000.00",
+              "currencyCode": "CNY",
+              "originCountryCode": "CN"
+            }
+          ],
+          "supportingFiles": [
+            {
+              "logicalFileNumber": "FILE-S4-SYNTHETIC",
+              "revisionNumber": 1,
+              "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+              "documentTypeCode": 3
+            }
+          ]
+        },
+        "reason": "修改运输引用，新版须重新审核及A确认"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s4-v2-synthetic\"",
+        "Location": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/revisions/2"
+      },
+      "body": {
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 2,
+        "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+        "status": "DECLARATION_STATUS_DRAFT",
+        "etag": "\"s4-v2-synthetic\"",
+        "acceptanceId": "ACCEPT-S4-SYNTHETIC"
+      }
+    },
+    "rpc": "CreateCustomsRevision",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateCustomsRevisionReqMsg",
+    "responseType": "CreateCustomsRevisionRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s4-v2-synthetic\"\nLocation: /api/v1/customs-declarations/DEC-S4-SYNTHETIC/revisions/2\n\n{\n  \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n  \"revisionNumber\": 2,\n  \"contentHash\": \"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\n  \"status\": \"DECLARATION_STATUS_DRAFT\",\n  \"etag\": \"\\\"s4-v2-synthetic\\\"\",\n  \"acceptanceId\": \"ACCEPT-S4-SYNTHETIC\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/revisions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7040000-0000-4000-8000-000000000004' \\\n  --header 'If-Match: \"s4-v1-57e9172357bd\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"baseRevisionNumber\":1,\"draft\":{\"approvedSnapshotNumber\":\"SNP-S4-SYNTHETIC-APPROVED\",\"tradeRevisionNumber\":4,\"shipmentPlanRevision\":\"SYNTHETIC-PLAN-1\",\"productionSalesUnit\":{\"partyRoleCode\":1,\"participantSequenceNumber\":1},\"domesticConsignor\":{\"partyRoleCode\":2,\"participantSequenceNumber\":1},\"overseasConsignee\":{\"partyRoleCode\":3,\"participantSequenceNumber\":1},\"customsAgent\":{\"partyRoleCode\":6,\"participantSequenceNumber\":1},\"customsOfficeCode\":\"SYNTHETIC-OFFICE\",\"channelCode\":\"SYNTHETIC-NOT-OFFICIAL\",\"destinationCountryCode\":\"VN\",\"transportReference\":\"SYNTHETIC-CORRECTED\",\"authorizationEvidenceReference\":\"SYNTHETIC-NOT-VALID-AUTHORITY\",\"items\":[{\"itemSequenceNumber\":1,\"tradeGoodsItemSequenceNumber\":1,\"shipmentAllocationNumber\":\"SHP-S4-SYNTHETIC#1\",\"hsCode\":\"SYNTHETIC\",\"declaredDescription\":\"原创合成货物非真实归类\",\"specification\":\"SYNTHETIC\",\"declaredQuantity\":\"40.000000\",\"unitCode\":\"PCS\",\"declaredUnitPriceAmount\":\"100.00\",\"declaredTotalAmount\":\"4000.00\",\"currencyCode\":\"CNY\",\"originCountryCode\":\"CN\"}],\"supportingFiles\":[{\"logicalFileNumber\":\"FILE-S4-SYNTHETIC\",\"revisionNumber\":1,\"sha256\":\"4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7\",\"documentTypeCode\":3}]},\"reason\":\"修改运输引用，新版须重新审核及A确认\"}'"
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/revisions/1",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "content": {
+          "approvedSnapshotNumber": "SNP-S4-SYNTHETIC-APPROVED",
+          "tradeRevisionNumber": 4,
+          "shipmentPlanRevision": "SYNTHETIC-PLAN-1",
+          "productionSalesUnit": {
+            "partyRoleCode": 1,
+            "participantSequenceNumber": 1
+          },
+          "domesticConsignor": {
+            "partyRoleCode": 2,
+            "participantSequenceNumber": 1
+          },
+          "overseasConsignee": {
+            "partyRoleCode": 3,
+            "participantSequenceNumber": 1
+          },
+          "customsAgent": {
+            "partyRoleCode": 6,
+            "participantSequenceNumber": 1
+          },
+          "customsOfficeCode": "SYNTHETIC-OFFICE",
+          "channelCode": "SYNTHETIC-NOT-OFFICIAL",
+          "destinationCountryCode": "VN",
+          "transportReference": "SYNTHETIC-TRANSPORT",
+          "authorizationEvidenceReference": "SYNTHETIC-NOT-VALID-AUTHORITY",
+          "items": [
+            {
+              "itemSequenceNumber": 1,
+              "tradeGoodsItemSequenceNumber": 1,
+              "shipmentAllocationNumber": "SHP-S4-SYNTHETIC#1",
+              "hsCode": "SYNTHETIC",
+              "declaredDescription": "原创合成货物非真实归类",
+              "specification": "SYNTHETIC",
+              "declaredQuantity": "40.000000",
+              "unitCode": "PCS",
+              "declaredUnitPriceAmount": "100.00",
+              "declaredTotalAmount": "4000.00",
+              "currencyCode": "CNY",
+              "originCountryCode": "CN"
+            }
+          ],
+          "supportingFiles": [
+            {
+              "logicalFileNumber": "FILE-S4-SYNTHETIC",
+              "revisionNumber": 1,
+              "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+              "documentTypeCode": 3
+            }
+          ]
+        },
+        "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+        "createdBy": "SYNTHETIC-F",
+        "events": []
+      }
+    },
+    "rpc": "GetCustomsRevision",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetCustomsRevisionReqMsg",
+    "responseType": "GetCustomsRevisionRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\n\n{\n  \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n  \"revisionNumber\": 1,\n  \"content\": {\n    \"approvedSnapshotNumber\": \"SNP-S4-SYNTHETIC-APPROVED\",\n    \"tradeRevisionNumber\": 4,\n    \"shipmentPlanRevision\": \"SYNTHETIC-PLAN-1\",\n    \"productionSalesUnit\": {\n      \"partyRoleCode\": 1,\n      \"participantSequenceNumber\": 1\n    },\n    \"domesticConsignor\": {\n      \"partyRoleCode\": 2,\n      \"participantSequenceNumber\": 1\n    },\n    \"overseasConsignee\": {\n      \"partyRoleCode\": 3,\n      \"participantSequenceNumber\": 1\n    },\n    \"customsAgent\": {\n      \"partyRoleCode\": 6,\n      \"participantSequenceNumber\": 1\n    },\n    \"customsOfficeCode\": \"SYNTHETIC-OFFICE\",\n    \"channelCode\": \"SYNTHETIC-NOT-OFFICIAL\",\n    \"destinationCountryCode\": \"VN\",\n    \"transportReference\": \"SYNTHETIC-TRANSPORT\",\n    \"authorizationEvidenceReference\": \"SYNTHETIC-NOT-VALID-AUTHORITY\",\n    \"items\": [\n      {\n        \"itemSequenceNumber\": 1,\n        \"tradeGoodsItemSequenceNumber\": 1,\n        \"shipmentAllocationNumber\": \"SHP-S4-SYNTHETIC#1\",\n        \"hsCode\": \"SYNTHETIC\",\n        \"declaredDescription\": \"原创合成货物非真实归类\",\n        \"specification\": \"SYNTHETIC\",\n        \"declaredQuantity\": \"40.000000\",\n        \"unitCode\": \"PCS\",\n        \"declaredUnitPriceAmount\": \"100.00\",\n        \"declaredTotalAmount\": \"4000.00\",\n        \"currencyCode\": \"CNY\",\n        \"originCountryCode\": \"CN\"\n      }\n    ],\n    \"supportingFiles\": [\n      {\n        \"logicalFileNumber\": \"FILE-S4-SYNTHETIC\",\n        \"revisionNumber\": 1,\n        \"sha256\": \"4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7\",\n        \"documentTypeCode\": 3\n      }\n    ]\n  },\n  \"contentHash\": \"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\n  \"createdBy\": \"SYNTHETIC-F\",\n  \"events\": []\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/revisions/1\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/review-submissions",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7040000-0000-4000-8000-000000000006",
+        "If-Match": "\"s4-v1-57e9172357bd\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "revisionNumber": 1,
+        "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/events/EV-S4-SYNTHETIC"
+      },
+      "body": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "pending_review",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "reviewSubmission": {
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca"
+        }
+      }
+    },
+    "rpc": "CreateCustomsReviewSubmission",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateCustomsReviewSubmissionReqMsg",
+    "responseType": "CreateCustomsReviewSubmissionRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /api/v1/customs-declarations/DEC-S4-SYNTHETIC/events/EV-S4-SYNTHETIC\n\n{\n  \"eventNumber\": \"EV-S4-SYNTHETIC\",\n  \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n  \"revisionNumber\": 1,\n  \"actorReference\": \"SYNTHETIC-ACTOR\",\n  \"state\": \"pending_review\",\n  \"reason\": \"仅合成设计，不证明外部业务成功\",\n  \"reviewSubmission\": {\n    \"revisionNumber\": 1,\n    \"contentHash\": \"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\"\n  }\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/review-submissions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7040000-0000-4000-8000-000000000006' \\\n  --header 'If-Match: \"s4-v1-57e9172357bd\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"revisionNumber\":1,\"contentHash\":\"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\"}'"
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/internal/v1/customs-declarations/DEC-S4-SYNTHETIC/review-context",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "declaration": {
+          "current": {
+            "declarationNumber": "DEC-S4-SYNTHETIC",
+            "revisionNumber": 1,
+            "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+            "status": "DECLARATION_STATUS_DRAFT",
+            "etag": "\"s4-v1-57e9172357bd\"",
+            "acceptanceId": "ACCEPT-S4-SYNTHETIC"
+          },
+          "revision": {
+            "declarationNumber": "DEC-S4-SYNTHETIC",
+            "revisionNumber": 1,
+            "content": {
+              "approvedSnapshotNumber": "SNP-S4-SYNTHETIC-APPROVED",
+              "tradeRevisionNumber": 4,
+              "shipmentPlanRevision": "SYNTHETIC-PLAN-1",
+              "productionSalesUnit": {
+                "partyRoleCode": 1,
+                "participantSequenceNumber": 1
+              },
+              "domesticConsignor": {
+                "partyRoleCode": 2,
+                "participantSequenceNumber": 1
+              },
+              "overseasConsignee": {
+                "partyRoleCode": 3,
+                "participantSequenceNumber": 1
+              },
+              "customsAgent": {
+                "partyRoleCode": 6,
+                "participantSequenceNumber": 1
+              },
+              "customsOfficeCode": "SYNTHETIC-OFFICE",
+              "channelCode": "SYNTHETIC-NOT-OFFICIAL",
+              "destinationCountryCode": "VN",
+              "transportReference": "SYNTHETIC-TRANSPORT",
+              "authorizationEvidenceReference": "SYNTHETIC-NOT-VALID-AUTHORITY",
+              "items": [
+                {
+                  "itemSequenceNumber": 1,
+                  "tradeGoodsItemSequenceNumber": 1,
+                  "shipmentAllocationNumber": "SHP-S4-SYNTHETIC#1",
+                  "hsCode": "SYNTHETIC",
+                  "declaredDescription": "原创合成货物非真实归类",
+                  "specification": "SYNTHETIC",
+                  "declaredQuantity": "40.000000",
+                  "unitCode": "PCS",
+                  "declaredUnitPriceAmount": "100.00",
+                  "declaredTotalAmount": "4000.00",
+                  "currencyCode": "CNY",
+                  "originCountryCode": "CN"
+                }
+              ],
+              "supportingFiles": [
+                {
+                  "logicalFileNumber": "FILE-S4-SYNTHETIC",
+                  "revisionNumber": 1,
+                  "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+                  "documentTypeCode": 3
+                }
+              ]
+            },
+            "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+            "createdBy": "SYNTHETIC-F",
+            "events": []
+          },
+          "availableRevisions": [
+            1
+          ],
+          "filingRequests": [],
+          "events": [],
+          "attachmentDeliveries": [],
+          "missingGateCodes": [
+            "CUSTOMS_AUTHORITY_UNVERIFIED"
+          ]
+        },
+        "missingGateCodes": [
+          "CUSTOMS_AUTHORITY_UNVERIFIED"
+        ]
+      }
+    },
+    "rpc": "GetCustomsReviewContext",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetCustomsReviewContextReqMsg",
+    "responseType": "GetCustomsReviewContextRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\n\n{\n  \"declaration\": {\n    \"current\": {\n      \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n      \"revisionNumber\": 1,\n      \"contentHash\": \"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\n      \"status\": \"DECLARATION_STATUS_DRAFT\",\n      \"etag\": \"\\\"s4-v1-57e9172357bd\\\"\",\n      \"acceptanceId\": \"ACCEPT-S4-SYNTHETIC\"\n    },\n    \"revision\": {\n      \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n      \"revisionNumber\": 1,\n      \"content\": {\n        \"approvedSnapshotNumber\": \"SNP-S4-SYNTHETIC-APPROVED\",\n        \"tradeRevisionNumber\": 4,\n        \"shipmentPlanRevision\": \"SYNTHETIC-PLAN-1\",\n        \"productionSalesUnit\": {\n          \"partyRoleCode\": 1,\n          \"participantSequenceNumber\": 1\n        },\n        \"domesticConsignor\": {\n          \"partyRoleCode\": 2,\n          \"participantSequenceNumber\": 1\n        },\n        \"overseasConsignee\": {\n          \"partyRoleCode\": 3,\n          \"participantSequenceNumber\": 1\n        },\n        \"customsAgent\": {\n          \"partyRoleCode\": 6,\n          \"participantSequenceNumber\": 1\n        },\n        \"customsOfficeCode\": \"SYNTHETIC-OFFICE\",\n        \"channelCode\": \"SYNTHETIC-NOT-OFFICIAL\",\n        \"destinationCountryCode\": \"VN\",\n        \"transportReference\": \"SYNTHETIC-TRANSPORT\",\n        \"authorizationEvidenceReference\": \"SYNTHETIC-NOT-VALID-AUTHORITY\",\n        \"items\": [\n          {\n            \"itemSequenceNumber\": 1,\n            \"tradeGoodsItemSequenceNumber\": 1,\n            \"shipmentAllocationNumber\": \"SHP-S4-SYNTHETIC#1\",\n            \"hsCode\": \"SYNTHETIC\",\n            \"declaredDescription\": \"原创合成货物非真实归类\",\n            \"specification\": \"SYNTHETIC\",\n            \"declaredQuantity\": \"40.000000\",\n            \"unitCode\": \"PCS\",\n            \"declaredUnitPriceAmount\": \"100.00\",\n            \"declaredTotalAmount\": \"4000.00\",\n            \"currencyCode\": \"CNY\",\n            \"originCountryCode\": \"CN\"\n          }\n        ],\n        \"supportingFiles\": [\n          {\n            \"logicalFileNumber\": \"FILE-S4-SYNTHETIC\",\n            \"revisionNumber\": 1,\n            \"sha256\": \"4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7\",\n            \"documentTypeCode\": 3\n          }\n        ]\n      },\n      \"contentHash\": \"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\n      \"createdBy\": \"SYNTHETIC-F\",\n      \"events\": []\n    },\n    \"availableRevisions\": [\n      1\n    ],\n    \"filingRequests\": [],\n    \"events\": [],\n    \"attachmentDeliveries\": [],\n    \"missingGateCodes\": [\n      \"CUSTOMS_AUTHORITY_UNVERIFIED\"\n    ]\n  },\n  \"missingGateCodes\": [\n    \"CUSTOMS_AUTHORITY_UNVERIFIED\"\n  ]\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/internal/v1/customs-declarations/DEC-S4-SYNTHETIC/review-context\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/customs-declarations/DEC-S4-SYNTHETIC/review-decisions",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7040000-0000-4000-8000-000000000008",
+        "If-Match": "\"s4-v1-57e9172357bd\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "submissionEventNumber": "EV-S4-SYNTHETIC-SUBMIT",
+        "revisionNumber": 1,
+        "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+        "outcome": "DECISION_OUTCOME_RETURN",
+        "reason": "缺有效业务证明，退回补正",
+        "verificationEvidence": []
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/internal/v1/customs-declarations/DEC-S4-SYNTHETIC/events/EV-S4-SYNTHETIC"
+      },
+      "body": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "returned",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "reviewDecision": {
+          "submissionEventNumber": "EV-S4-SYNTHETIC-SUBMIT",
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "outcome": "DECISION_OUTCOME_RETURN",
+          "reason": "缺有效业务证明，退回补正",
+          "verificationEvidence": []
+        }
+      }
+    },
+    "rpc": "CreateCustomsReviewDecision",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateCustomsReviewDecisionReqMsg",
+    "responseType": "CreateCustomsReviewDecisionRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /internal/v1/customs-declarations/DEC-S4-SYNTHETIC/events/EV-S4-SYNTHETIC\n\n{\n  \"eventNumber\": \"EV-S4-SYNTHETIC\",\n  \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n  \"revisionNumber\": 1,\n  \"actorReference\": \"SYNTHETIC-ACTOR\",\n  \"state\": \"returned\",\n  \"reason\": \"仅合成设计，不证明外部业务成功\",\n  \"reviewDecision\": {\n    \"submissionEventNumber\": \"EV-S4-SYNTHETIC-SUBMIT\",\n    \"revisionNumber\": 1,\n    \"contentHash\": \"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\n    \"outcome\": \"DECISION_OUTCOME_RETURN\",\n    \"reason\": \"缺有效业务证明，退回补正\",\n    \"verificationEvidence\": []\n  }\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/customs-declarations/DEC-S4-SYNTHETIC/review-decisions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7040000-0000-4000-8000-000000000008' \\\n  --header 'If-Match: \"s4-v1-57e9172357bd\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"submissionEventNumber\":\"EV-S4-SYNTHETIC-SUBMIT\",\"revisionNumber\":1,\"contentHash\":\"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\"outcome\":\"DECISION_OUTCOME_RETURN\",\"reason\":\"缺有效业务证明，退回补正\",\"verificationEvidence\":[]}'"
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/exporter-confirmations",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7040000-0000-4000-8000-000000000009",
+        "If-Match": "\"s4-v1-57e9172357bd\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "revisionNumber": 1,
+        "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+        "authorityReference": "SYNTHETIC-NOT-VALID-AUTHORITY",
+        "writtenEvidence": [
+          {
+            "logicalFileNumber": "FILE-S4-WRITTEN",
+            "revisionNumber": 1,
+            "sha256": "2cdd2b12968cd24ac396a6f5cd3071fc134d80919678524d029a444763e1e57f",
+            "documentTypeCode": 19
+          }
+        ]
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/events/EV-S4-SYNTHETIC"
+      },
+      "body": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "recorded_written_confirmation",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "exporterConfirmation": {
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "authorityReference": "SYNTHETIC-NOT-VALID-AUTHORITY",
+          "writtenEvidence": [
+            {
+              "logicalFileNumber": "FILE-S4-WRITTEN",
+              "revisionNumber": 1,
+              "sha256": "2cdd2b12968cd24ac396a6f5cd3071fc134d80919678524d029a444763e1e57f",
+              "documentTypeCode": 19
+            }
+          ]
+        }
+      }
+    },
+    "rpc": "CreateCustomsExporterConfirmation",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateCustomsExporterConfirmationReqMsg",
+    "responseType": "CreateCustomsExporterConfirmationRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /api/v1/customs-declarations/DEC-S4-SYNTHETIC/events/EV-S4-SYNTHETIC\n\n{\n  \"eventNumber\": \"EV-S4-SYNTHETIC\",\n  \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n  \"revisionNumber\": 1,\n  \"actorReference\": \"SYNTHETIC-ACTOR\",\n  \"state\": \"recorded_written_confirmation\",\n  \"reason\": \"仅合成设计，不证明外部业务成功\",\n  \"exporterConfirmation\": {\n    \"revisionNumber\": 1,\n    \"contentHash\": \"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\n    \"authorityReference\": \"SYNTHETIC-NOT-VALID-AUTHORITY\",\n    \"writtenEvidence\": [\n      {\n        \"logicalFileNumber\": \"FILE-S4-WRITTEN\",\n        \"revisionNumber\": 1,\n        \"sha256\": \"2cdd2b12968cd24ac396a6f5cd3071fc134d80919678524d029a444763e1e57f\",\n        \"documentTypeCode\": 19\n      }\n    ]\n  }\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/exporter-confirmations\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7040000-0000-4000-8000-000000000009' \\\n  --header 'If-Match: \"s4-v1-57e9172357bd\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"revisionNumber\":1,\"contentHash\":\"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\"authorityReference\":\"SYNTHETIC-NOT-VALID-AUTHORITY\",\"writtenEvidence\":[{\"logicalFileNumber\":\"FILE-S4-WRITTEN\",\"revisionNumber\":1,\"sha256\":\"2cdd2b12968cd24ac396a6f5cd3071fc134d80919678524d029a444763e1e57f\",\"documentTypeCode\":19}]}'"
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/filing-requests",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7040000-0000-4000-8000-000000000010",
+        "If-Match": "\"s4-v1-57e9172357bd\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "revisionNumber": 1,
+        "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+        "action": "FILING_ACTION_DECLARE",
+        "reason": "仅登记本地待办，正式职责及渠道仍待确认"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s4-v1-57e9172357bd\"",
+        "Location": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/filing-requests/REQ-S4-SYNTHETIC"
+      },
+      "body": {
+        "requestNumber": "REQ-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "intent": {
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "action": "FILING_ACTION_DECLARE",
+          "reason": "仅登记本地待办，正式职责及渠道仍待确认"
+        },
+        "executionStatus": "EXECUTION_STATUS_PENDING",
+        "missingGateCodes": [
+          "CUSTOMS_AUTHORITY_UNVERIFIED",
+          "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED"
+        ],
+        "etag": "\"s4-v1-57e9172357bd\""
+      }
+    },
+    "rpc": "CreateCustomsFilingRequest",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateCustomsFilingRequestReqMsg",
+    "responseType": "CreateCustomsFilingRequestRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s4-v1-57e9172357bd\"\nLocation: /api/v1/customs-declarations/DEC-S4-SYNTHETIC/filing-requests/REQ-S4-SYNTHETIC\n\n{\n  \"requestNumber\": \"REQ-S4-SYNTHETIC\",\n  \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n  \"intent\": {\n    \"revisionNumber\": 1,\n    \"contentHash\": \"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\n    \"action\": \"FILING_ACTION_DECLARE\",\n    \"reason\": \"仅登记本地待办，正式职责及渠道仍待确认\"\n  },\n  \"executionStatus\": \"EXECUTION_STATUS_PENDING\",\n  \"missingGateCodes\": [\n    \"CUSTOMS_AUTHORITY_UNVERIFIED\",\n    \"CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED\"\n  ],\n  \"etag\": \"\\\"s4-v1-57e9172357bd\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/filing-requests\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7040000-0000-4000-8000-000000000010' \\\n  --header 'If-Match: \"s4-v1-57e9172357bd\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"revisionNumber\":1,\"contentHash\":\"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\"action\":\"FILING_ACTION_DECLARE\",\"reason\":\"仅登记本地待办，正式职责及渠道仍待确认\"}'"
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/filing-requests/REQ-S4-SYNTHETIC",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "ETag": "\"s4-v1-57e9172357bd\""
+      },
+      "body": {
+        "requestNumber": "REQ-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "intent": {
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "action": "FILING_ACTION_DECLARE",
+          "reason": "仅登记本地待办，正式职责及渠道仍待确认"
+        },
+        "executionStatus": "EXECUTION_STATUS_PENDING",
+        "missingGateCodes": [
+          "CUSTOMS_AUTHORITY_UNVERIFIED",
+          "CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED"
+        ],
+        "etag": "\"s4-v1-57e9172357bd\""
+      }
+    },
+    "rpc": "GetCustomsFilingRequest",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetCustomsFilingRequestReqMsg",
+    "responseType": "GetCustomsFilingRequestRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nETag: \"s4-v1-57e9172357bd\"\n\n{\n  \"requestNumber\": \"REQ-S4-SYNTHETIC\",\n  \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n  \"intent\": {\n    \"revisionNumber\": 1,\n    \"contentHash\": \"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\n    \"action\": \"FILING_ACTION_DECLARE\",\n    \"reason\": \"仅登记本地待办，正式职责及渠道仍待确认\"\n  },\n  \"executionStatus\": \"EXECUTION_STATUS_PENDING\",\n  \"missingGateCodes\": [\n    \"CUSTOMS_AUTHORITY_UNVERIFIED\",\n    \"CUSTOMS_OFFICIAL_EVIDENCE_REQUIRED\"\n  ],\n  \"etag\": \"\\\"s4-v1-57e9172357bd\\\"\"\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/filing-requests/REQ-S4-SYNTHETIC\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/official-evidence",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7040000-0000-4000-8000-000000000012",
+        "If-Match": "\"s4-v1-57e9172357bd\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "requestNumber": "REQ-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "kind": "OFFICIAL_KIND_SUBMITTED",
+        "sourceEventKey": "SYNTHETIC-CLAIM-NOT-VERIFIED",
+        "externalReferenceNumber": "SYNTHETIC-NOT-OFFICIAL",
+        "files": [
+          {
+            "logicalFileNumber": "FILE-S4-AUTHORITY-CLAIM",
+            "revisionNumber": 1,
+            "sha256": "62c1d00fe1155148acf0d7ca4d888b0dc752cf9c93977247efaf4b55cd6c6e72",
+            "documentTypeCode": 21
+          }
+        ],
+        "occurredAt": "2026-10-25T01:00:00.123Z"
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/official-evidence/EV-S4-SYNTHETIC"
+      },
+      "body": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "pending_verification",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "officialEvidence": {
+          "requestNumber": "REQ-S4-SYNTHETIC",
+          "revisionNumber": 1,
+          "kind": "OFFICIAL_KIND_SUBMITTED",
+          "sourceEventKey": "SYNTHETIC-CLAIM-NOT-VERIFIED",
+          "externalReferenceNumber": "SYNTHETIC-NOT-OFFICIAL",
+          "files": [
+            {
+              "logicalFileNumber": "FILE-S4-AUTHORITY-CLAIM",
+              "revisionNumber": 1,
+              "sha256": "62c1d00fe1155148acf0d7ca4d888b0dc752cf9c93977247efaf4b55cd6c6e72",
+              "documentTypeCode": 21
+            }
+          ],
+          "occurredAt": "2026-10-25T01:00:00.123Z"
+        }
+      }
+    },
+    "rpc": "CreateCustomsOfficialEvidence",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateCustomsOfficialEvidenceReqMsg",
+    "responseType": "CreateCustomsOfficialEvidenceRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /api/v1/customs-declarations/DEC-S4-SYNTHETIC/official-evidence/EV-S4-SYNTHETIC\n\n{\n  \"eventNumber\": \"EV-S4-SYNTHETIC\",\n  \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n  \"revisionNumber\": 1,\n  \"actorReference\": \"SYNTHETIC-ACTOR\",\n  \"state\": \"pending_verification\",\n  \"reason\": \"仅合成设计，不证明外部业务成功\",\n  \"officialEvidence\": {\n    \"requestNumber\": \"REQ-S4-SYNTHETIC\",\n    \"revisionNumber\": 1,\n    \"kind\": \"OFFICIAL_KIND_SUBMITTED\",\n    \"sourceEventKey\": \"SYNTHETIC-CLAIM-NOT-VERIFIED\",\n    \"externalReferenceNumber\": \"SYNTHETIC-NOT-OFFICIAL\",\n    \"files\": [\n      {\n        \"logicalFileNumber\": \"FILE-S4-AUTHORITY-CLAIM\",\n        \"revisionNumber\": 1,\n        \"sha256\": \"62c1d00fe1155148acf0d7ca4d888b0dc752cf9c93977247efaf4b55cd6c6e72\",\n        \"documentTypeCode\": 21\n      }\n    ],\n    \"occurredAt\": \"2026-10-25T01:00:00.123Z\"\n  }\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/official-evidence\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7040000-0000-4000-8000-000000000012' \\\n  --header 'If-Match: \"s4-v1-57e9172357bd\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"requestNumber\":\"REQ-S4-SYNTHETIC\",\"revisionNumber\":1,\"kind\":\"OFFICIAL_KIND_SUBMITTED\",\"sourceEventKey\":\"SYNTHETIC-CLAIM-NOT-VERIFIED\",\"externalReferenceNumber\":\"SYNTHETIC-NOT-OFFICIAL\",\"files\":[{\"logicalFileNumber\":\"FILE-S4-AUTHORITY-CLAIM\",\"revisionNumber\":1,\"sha256\":\"62c1d00fe1155148acf0d7ca4d888b0dc752cf9c93977247efaf4b55cd6c6e72\",\"documentTypeCode\":21}],\"occurredAt\":\"2026-10-25T01:00:00.123Z\"}'"
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/official-evidence/EV-S4-SYNTHETIC",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "pending_verification",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "officialEvidence": {
+          "requestNumber": "REQ-S4-SYNTHETIC",
+          "revisionNumber": 1,
+          "kind": "OFFICIAL_KIND_SUBMITTED",
+          "sourceEventKey": "SYNTHETIC-CLAIM-NOT-VERIFIED",
+          "externalReferenceNumber": "SYNTHETIC-NOT-OFFICIAL",
+          "files": [
+            {
+              "logicalFileNumber": "FILE-S4-AUTHORITY-CLAIM",
+              "revisionNumber": 1,
+              "sha256": "62c1d00fe1155148acf0d7ca4d888b0dc752cf9c93977247efaf4b55cd6c6e72",
+              "documentTypeCode": 21
+            }
+          ],
+          "occurredAt": "2026-10-25T01:00:00.123Z"
+        }
+      }
+    },
+    "rpc": "GetCustomsOfficialEvidence",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetCustomsOfficialEvidenceReqMsg",
+    "responseType": "GetCustomsOfficialEvidenceRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\n\n{\n  \"eventNumber\": \"EV-S4-SYNTHETIC\",\n  \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n  \"revisionNumber\": 1,\n  \"actorReference\": \"SYNTHETIC-ACTOR\",\n  \"state\": \"pending_verification\",\n  \"reason\": \"仅合成设计，不证明外部业务成功\",\n  \"officialEvidence\": {\n    \"requestNumber\": \"REQ-S4-SYNTHETIC\",\n    \"revisionNumber\": 1,\n    \"kind\": \"OFFICIAL_KIND_SUBMITTED\",\n    \"sourceEventKey\": \"SYNTHETIC-CLAIM-NOT-VERIFIED\",\n    \"externalReferenceNumber\": \"SYNTHETIC-NOT-OFFICIAL\",\n    \"files\": [\n      {\n        \"logicalFileNumber\": \"FILE-S4-AUTHORITY-CLAIM\",\n        \"revisionNumber\": 1,\n        \"sha256\": \"62c1d00fe1155148acf0d7ca4d888b0dc752cf9c93977247efaf4b55cd6c6e72\",\n        \"documentTypeCode\": 21\n      }\n    ],\n    \"occurredAt\": \"2026-10-25T01:00:00.123Z\"\n  }\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/official-evidence/EV-S4-SYNTHETIC\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/internal/v1/customs-declarations/DEC-S4-SYNTHETIC/official-evidence-decisions",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7040000-0000-4000-8000-000000000014",
+        "If-Match": "\"s4-v1-57e9172357bd\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "evidenceEventNumber": "EV-S4-SYNTHETIC",
+        "outcome": "DECISION_OUTCOME_RETURN",
+        "reason": "正式来源未接入，仅退回核实不记海关退单",
+        "verificationProfileReference": "SYNTHETIC-NOT-REGISTERED",
+        "verificationEvidence": []
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/internal/v1/customs-declarations/DEC-S4-SYNTHETIC/events/EV-S4-SYNTHETIC"
+      },
+      "body": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "verification_returned",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "officialEvidenceDecision": {
+          "evidenceEventNumber": "EV-S4-SYNTHETIC",
+          "outcome": "DECISION_OUTCOME_RETURN",
+          "reason": "正式来源未接入，仅退回核实不记海关退单",
+          "verificationProfileReference": "SYNTHETIC-NOT-REGISTERED",
+          "verificationEvidence": []
+        }
+      }
+    },
+    "rpc": "CreateCustomsOfficialEvidenceDecision",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateCustomsOfficialEvidenceDecisionReqMsg",
+    "responseType": "CreateCustomsOfficialEvidenceDecisionRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /internal/v1/customs-declarations/DEC-S4-SYNTHETIC/events/EV-S4-SYNTHETIC\n\n{\n  \"eventNumber\": \"EV-S4-SYNTHETIC\",\n  \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n  \"revisionNumber\": 1,\n  \"actorReference\": \"SYNTHETIC-ACTOR\",\n  \"state\": \"verification_returned\",\n  \"reason\": \"仅合成设计，不证明外部业务成功\",\n  \"officialEvidenceDecision\": {\n    \"evidenceEventNumber\": \"EV-S4-SYNTHETIC\",\n    \"outcome\": \"DECISION_OUTCOME_RETURN\",\n    \"reason\": \"正式来源未接入，仅退回核实不记海关退单\",\n    \"verificationProfileReference\": \"SYNTHETIC-NOT-REGISTERED\",\n    \"verificationEvidence\": []\n  }\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/internal/v1/customs-declarations/DEC-S4-SYNTHETIC/official-evidence-decisions\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7040000-0000-4000-8000-000000000014' \\\n  --header 'If-Match: \"s4-v1-57e9172357bd\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"evidenceEventNumber\":\"EV-S4-SYNTHETIC\",\"outcome\":\"DECISION_OUTCOME_RETURN\",\"reason\":\"正式来源未接入，仅退回核实不记海关退单\",\"verificationProfileReference\":\"SYNTHETIC-NOT-REGISTERED\",\"verificationEvidence\":[]}'"
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7040000-0000-4000-8000-000000000015",
+        "If-Match": "\"s4-v1-57e9172357bd\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "revisionNumber": 1,
+        "submittedEventNumber": "SYNTHETIC-NOT-A-REAL-SUBMISSION",
+        "recipientPartyRoleCode": 2,
+        "recipientParticipantSequenceNumber": 1,
+        "attachmentTwo": {
+          "logicalFileNumber": "FILE-S4-ATTACHMENT-SHAPE",
+          "revisionNumber": 1,
+          "sha256": "142688a3f9c2ff44906430e8d07108b72252cbe0806e5cbb60f3af0736d55110",
+          "documentTypeCode": 20
+        }
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries/DEL-S4-SYNTHETIC"
+      },
+      "body": {
+        "deliveryNumber": "DEL-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "content": {
+          "revisionNumber": 1,
+          "submittedEventNumber": "SYNTHETIC-NOT-A-REAL-SUBMISSION",
+          "recipientPartyRoleCode": 2,
+          "recipientParticipantSequenceNumber": 1,
+          "attachmentTwo": {
+            "logicalFileNumber": "FILE-S4-ATTACHMENT-SHAPE",
+            "revisionNumber": 1,
+            "sha256": "142688a3f9c2ff44906430e8d07108b72252cbe0806e5cbb60f3af0736d55110",
+            "documentTypeCode": 20
+          }
+        },
+        "state": "delivered",
+        "receipts": []
+      }
+    },
+    "rpc": "CreateCustomsAttachmentDelivery",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateCustomsAttachmentDeliveryReqMsg",
+    "responseType": "CreateCustomsAttachmentDeliveryRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries/DEL-S4-SYNTHETIC\n\n{\n  \"deliveryNumber\": \"DEL-S4-SYNTHETIC\",\n  \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n  \"content\": {\n    \"revisionNumber\": 1,\n    \"submittedEventNumber\": \"SYNTHETIC-NOT-A-REAL-SUBMISSION\",\n    \"recipientPartyRoleCode\": 2,\n    \"recipientParticipantSequenceNumber\": 1,\n    \"attachmentTwo\": {\n      \"logicalFileNumber\": \"FILE-S4-ATTACHMENT-SHAPE\",\n      \"revisionNumber\": 1,\n      \"sha256\": \"142688a3f9c2ff44906430e8d07108b72252cbe0806e5cbb60f3af0736d55110\",\n      \"documentTypeCode\": 20\n    }\n  },\n  \"state\": \"delivered\",\n  \"receipts\": []\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7040000-0000-4000-8000-000000000015' \\\n  --header 'If-Match: \"s4-v1-57e9172357bd\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"revisionNumber\":1,\"submittedEventNumber\":\"SYNTHETIC-NOT-A-REAL-SUBMISSION\",\"recipientPartyRoleCode\":2,\"recipientParticipantSequenceNumber\":1,\"attachmentTwo\":{\"logicalFileNumber\":\"FILE-S4-ATTACHMENT-SHAPE\",\"revisionNumber\":1,\"sha256\":\"142688a3f9c2ff44906430e8d07108b72252cbe0806e5cbb60f3af0736d55110\",\"documentTypeCode\":20}}'",
+    "externalSuccessStatus": "UNVERIFIED",
+    "requiresUnverifiedPreconditions": [
+      "真实正式提交证据",
+      "同版正式附件2原件",
+      "真实交付及对应收件方身份"
+    ]
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries/DEL-S4-SYNTHETIC",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "deliveryNumber": "DEL-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "content": {
+          "revisionNumber": 1,
+          "submittedEventNumber": "SYNTHETIC-NOT-A-REAL-SUBMISSION",
+          "recipientPartyRoleCode": 2,
+          "recipientParticipantSequenceNumber": 1,
+          "attachmentTwo": {
+            "logicalFileNumber": "FILE-S4-ATTACHMENT-SHAPE",
+            "revisionNumber": 1,
+            "sha256": "142688a3f9c2ff44906430e8d07108b72252cbe0806e5cbb60f3af0736d55110",
+            "documentTypeCode": 20
+          }
+        },
+        "state": "delivered",
+        "receipts": []
+      }
+    },
+    "rpc": "GetCustomsAttachmentDelivery",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetCustomsAttachmentDeliveryReqMsg",
+    "responseType": "GetCustomsAttachmentDeliveryRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\n\n{\n  \"deliveryNumber\": \"DEL-S4-SYNTHETIC\",\n  \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n  \"content\": {\n    \"revisionNumber\": 1,\n    \"submittedEventNumber\": \"SYNTHETIC-NOT-A-REAL-SUBMISSION\",\n    \"recipientPartyRoleCode\": 2,\n    \"recipientParticipantSequenceNumber\": 1,\n    \"attachmentTwo\": {\n      \"logicalFileNumber\": \"FILE-S4-ATTACHMENT-SHAPE\",\n      \"revisionNumber\": 1,\n      \"sha256\": \"142688a3f9c2ff44906430e8d07108b72252cbe0806e5cbb60f3af0736d55110\",\n      \"documentTypeCode\": 20\n    }\n  },\n  \"state\": \"delivered\",\n  \"receipts\": []\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries/DEL-S4-SYNTHETIC\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\"",
+    "externalSuccessStatus": "UNVERIFIED",
+    "requiresUnverifiedPreconditions": [
+      "真实正式提交证据",
+      "同版正式附件2原件",
+      "真实交付及对应收件方身份"
+    ]
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries/DEL-S4-SYNTHETIC/receipts",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>",
+        "Content-Type": "application/json",
+        "Idempotency-Key": "d7040000-0000-4000-8000-000000000017",
+        "If-Match": "\"s4-v1-57e9172357bd\"",
+        "X-Confirmation-Id": "<INVALID-SYNTHETIC-CONFIRMATION>"
+      },
+      "body": {
+        "outcome": "disputed",
+        "reason": "仅设计：来源未核实，不承认收到正式附件2",
+        "evidence": [
+          {
+            "logicalFileNumber": "FILE-S4-SYNTHETIC",
+            "revisionNumber": 1,
+            "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+            "documentTypeCode": 3
+          }
+        ]
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Location": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/events/EV-S4-SYNTHETIC"
+      },
+      "body": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "disputed",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "attachmentReceipt": {
+          "outcome": "disputed",
+          "reason": "仅设计：来源未核实，不承认收到正式附件2",
+          "evidence": [
+            {
+              "logicalFileNumber": "FILE-S4-SYNTHETIC",
+              "revisionNumber": 1,
+              "sha256": "4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7",
+              "documentTypeCode": 3
+            }
+          ]
+        }
+      }
+    },
+    "rpc": "CreateCustomsAttachmentReceipt",
+    "designOnly": true,
+    "timeoutMs": 10000,
+    "requestType": "CreateCustomsAttachmentReceiptReqMsg",
+    "responseType": "CreateCustomsAttachmentReceiptRspMsg",
+    "httpResponse": "HTTP/1.1 201 Created\nContent-Type: application/json\nCache-Control: no-store\nLocation: /api/v1/customs-declarations/DEC-S4-SYNTHETIC/events/EV-S4-SYNTHETIC\n\n{\n  \"eventNumber\": \"EV-S4-SYNTHETIC\",\n  \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n  \"revisionNumber\": 1,\n  \"actorReference\": \"SYNTHETIC-ACTOR\",\n  \"state\": \"disputed\",\n  \"reason\": \"仅合成设计，不证明外部业务成功\",\n  \"attachmentReceipt\": {\n    \"outcome\": \"disputed\",\n    \"reason\": \"仅设计：来源未核实，不承认收到正式附件2\",\n    \"evidence\": [\n      {\n        \"logicalFileNumber\": \"FILE-S4-SYNTHETIC\",\n        \"revisionNumber\": 1,\n        \"sha256\": \"4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7\",\n        \"documentTypeCode\": 3\n      }\n    ]\n  }\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 10 \\\n  --request POST \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/attachment-deliveries/DEL-S4-SYNTHETIC/receipts\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\" \\\n  --header 'Content-Type: application/json' \\\n  --header 'Idempotency-Key: d7040000-0000-4000-8000-000000000017' \\\n  --header 'If-Match: \"s4-v1-57e9172357bd\"' \\\n  --header \"X-Confirmation-Id: ${CONFIRMATION_ID:?Confirm this exact intent first}\" \\\n  --data-raw '{\"outcome\":\"disputed\",\"reason\":\"仅设计：来源未核实，不承认收到正式附件2\",\"evidence\":[{\"logicalFileNumber\":\"FILE-S4-SYNTHETIC\",\"revisionNumber\":1,\"sha256\":\"4798e78866b4a0563bbb5ffebf2f1b7a3bf3f23cee90623749e666cd57944bd7\",\"documentTypeCode\":3}]}'",
+    "externalSuccessStatus": "UNVERIFIED",
+    "requiresUnverifiedPreconditions": [
+      "真实正式提交证据",
+      "同版正式附件2原件",
+      "真实交付及对应收件方身份"
+    ]
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/v1/customs-declarations/DEC-S4-SYNTHETIC/events/EV-S4-SYNTHETIC",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-EXTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "pending_review",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "reviewSubmission": {
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca"
+        }
+      }
+    },
+    "rpc": "GetCustomsEvent",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetCustomsEventReqMsg",
+    "responseType": "GetCustomsEventRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\n\n{\n  \"eventNumber\": \"EV-S4-SYNTHETIC\",\n  \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n  \"revisionNumber\": 1,\n  \"actorReference\": \"SYNTHETIC-ACTOR\",\n  \"state\": \"pending_review\",\n  \"reason\": \"仅合成设计，不证明外部业务成功\",\n  \"reviewSubmission\": {\n    \"revisionNumber\": 1,\n    \"contentHash\": \"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\"\n  }\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/api/v1/customs-declarations/DEC-S4-SYNTHETIC/events/EV-S4-SYNTHETIC\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/internal/v1/customs-declarations/DEC-S4-SYNTHETIC/events/EV-S4-SYNTHETIC",
+      "headers": {
+        "Authorization": "<INVALID-SYNTHETIC-INTERNAL-CREDENTIAL>"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store"
+      },
+      "body": {
+        "eventNumber": "EV-S4-SYNTHETIC",
+        "declarationNumber": "DEC-S4-SYNTHETIC",
+        "revisionNumber": 1,
+        "actorReference": "SYNTHETIC-ACTOR",
+        "state": "returned",
+        "reason": "仅合成设计，不证明外部业务成功",
+        "reviewDecision": {
+          "submissionEventNumber": "EV-S4-SYNTHETIC-SUBMIT",
+          "revisionNumber": 1,
+          "contentHash": "57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca",
+          "outcome": "DECISION_OUTCOME_RETURN",
+          "reason": "缺有效业务证明，退回补正",
+          "verificationEvidence": []
+        }
+      }
+    },
+    "rpc": "GetInternalCustomsEvent",
+    "designOnly": true,
+    "timeoutMs": 5000,
+    "requestType": "GetInternalCustomsEventReqMsg",
+    "responseType": "GetInternalCustomsEventRspMsg",
+    "httpResponse": "HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\n\n{\n  \"eventNumber\": \"EV-S4-SYNTHETIC\",\n  \"declarationNumber\": \"DEC-S4-SYNTHETIC\",\n  \"revisionNumber\": 1,\n  \"actorReference\": \"SYNTHETIC-ACTOR\",\n  \"state\": \"returned\",\n  \"reason\": \"仅合成设计，不证明外部业务成功\",\n  \"reviewDecision\": {\n    \"submissionEventNumber\": \"EV-S4-SYNTHETIC-SUBMIT\",\n    \"revisionNumber\": 1,\n    \"contentHash\": \"57e9172357bd31326b1ca3015f93d19bbd570ca4f551ad8588929f3e2a536bca\",\n    \"outcome\": \"DECISION_OUTCOME_RETURN\",\n    \"reason\": \"缺有效业务证明，退回补正\",\n    \"verificationEvidence\": []\n  }\n}",
+    "curl": "# Design-only synthetic input. Set BASE_URL and the required credentials/confirmation first.\n# No automatic write retries: unknown outcome must recover the original key.\ncurl --include --fail-with-body --connect-timeout 2 --max-time 5 \\\n  --request GET \"${BASE_URL:?Set BASE_URL}/internal/v1/customs-declarations/DEC-S4-SYNTHETIC/events/EV-S4-SYNTHETIC\" \\\n  --header \"Authorization: Bearer ${ACCESS_TOKEN:?Set ACCESS_TOKEN}\""
+  }
+]

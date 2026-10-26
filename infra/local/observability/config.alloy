@@ -1,0 +1,55 @@
+logging {
+	level = "warn"
+}
+
+discovery.docker "local" {
+	host             = "tcp://docker-log-proxy:2375"
+	refresh_interval = "10s"
+
+	filter {
+		name   = "label"
+		values = ["com.docker.compose.project=export-trade-local"]
+	}
+}
+
+discovery.relabel "containers" {
+	targets = discovery.docker.local.targets
+
+	rule {
+		source_labels = ["__meta_docker_container_label_com_docker_compose_service"]
+		target_label  = "service"
+	}
+
+	rule {
+		source_labels = ["__meta_docker_container_name"]
+		regex         = "/(.*)"
+		target_label  = "container"
+	}
+
+	rule {
+		target_label = "environment"
+		replacement  = "local"
+	}
+}
+
+loki.source.docker "local" {
+	host             = "tcp://docker-log-proxy:2375"
+	targets          = discovery.relabel.containers.output
+	forward_to       = [loki.process.redacted.receiver]
+	refresh_interval = "10s"
+}
+
+loki.process "redacted" {
+	// Defense in depth only; applications must avoid logging secrets themselves.
+	stage.replace {
+		expression = "(?i)((?:password|secret|token|authorization|access_key)[\"\\s:=]+)([^\\s,;\"}]+)"
+		replace    = "${1}[REDACTED]"
+	}
+	forward_to = [loki.write.local.receiver]
+}
+
+loki.write "local" {
+	endpoint {
+		url = "http://loki:3100/loki/api/v1/push"
+	}
+}

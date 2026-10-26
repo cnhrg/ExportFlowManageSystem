@@ -1,0 +1,8 @@
+sequenceDiagram
+    actor 税务通知核实员 as 税务通知核实员
+    actor 供应商经办人 as 供应商经办人
+    participant SYSTEM as 代理出口系统
+    税务通知核实员->>SYSTEM: 核实正式决定、批准额及原确切版
+    SYSTEM-->>税务通知核实员: 决定已登记或缺证据阻断
+    供应商经办人->>SYSTEM: 查看决定并登记跟进待办
+    SYSTEM-->>供应商经办人: 申请额、批准额和到账核对分列；拒绝不结交易

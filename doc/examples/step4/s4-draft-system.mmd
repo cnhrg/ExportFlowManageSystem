@@ -1,0 +1,7 @@
+sequenceDiagram
+    actor F as 出口报关代理经办人
+    participant SYS as 代理出口系统
+    F->>SYS: 查看批次准备依据
+    SYS-->>F: 已批准商品、实际主体、可申报数量和缺项
+    F->>SYS: 核对完整草稿及附件版本后保存
+    SYS-->>F: 草稿已保存，返回本地申报号、版本1和内容摘要；尚未正式申报

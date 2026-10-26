@@ -1,0 +1,54 @@
+sequenceDiagram
+    autonumber
+    participant PAGE as 合同各方授权签署人前端
+    participant APP as 单体应用的对外接入入口
+    participant DATABASE as 同一MySQL领域及中间件表
+    participant STORE as 私有对象及证据存储
+    participant PROVIDER as 第三方实名电子签平台
+    
+    PAGE->>APP: 使用本受众GET确切资源及强ETag，客户端5秒/应用4秒
+    APP->>APP: 核实实名/经办授权/对象权限，仅返回本方可见数据
+    APP-->>PAGE: 当前版本、已审正文与本方可操作范围
+    PAGE->>APP: 明确确认内容并完成必要强认证，取得绑定本意图的确认凭据
+    PAGE->>APP: 创建本用例资源（原键/标签/确认凭据，客户端10秒/应用8秒）
+    APP->>STORE: 事务外先查并保全操作证据，失败自行重试，不持业务根锁
+    APP->>DATABASE: BEGIN；固定锁序先查原请求结果
+    alt 原键已受理
+      APP->>DATABASE: 当前权限核验，比较原方法/路径/标签/业务HMAC
+      alt 同键同文
+        APP->>DATABASE: 读取原冻结结果及回执绑定；COMMIT只读
+        APP-->>PAGE: 200原最小受理结果及原Location，不执行新业务
+      else 同键异文
+        APP->>DATABASE: ROLLBACK；不消费新确认、不改原结果
+        APP-->>PAGE: 409 IDEMPOTENCY_CONFLICT
+      end
+    else 新请求
+      APP->>DATABASE: 核对强ETag、状态、当前授权门禁及确认绑定
+      Note over APP,DATABASE: 本地持久clientReference/确切版本/正文摘要后COMMIT；进程内任务对接平台。发起未知先按原引用查单；平台回调验签/去重后仅落持久通知，主库核对原任务，不因浏览器跳回/通知完成直接置已签
+      alt 任一前提或写入不满足
+        APP->>DATABASE: ROLLBACK全部本地写入，确认不提前消费
+        APP-->>PAGE: 409/412/422等明确业务码；永久错误不自动重试
+      else 本地写入条件满足
+        APP->>DATABASE: 写业务/事件/冻结原最小回执到同库受理账本/消费确认；COMMIT
+        APP->>APP: 确定COMMIT后生成并持久平台回执，失败自恢复503 RECEIPT_NOT_READY
+        APP-->>PAGE: POST新建201及准确资源Location；PUT200；未知COMMIT先原键查询
+      end
+    end
+    opt 仅已持久签署任务待发起，应用启动及定时自行恢复
+      APP->>PROVIDER: 先按原clientReference查询；确定不存在才幂等发起确切版本
+      PROVIDER-->>APP: 原平台任务号或结果未知，按原绑定恢复
+      APP->>DATABASE: BEGIN先查原绑定；条件保存原任务号/阶段；COMMIT
+      PAGE->>APP: GET原任务强ETag，本签署方带标签/原键/确认创建会话
+      APP->>DATABASE: BEGIN先查本人原会话，无才持久会话准备任务和最小pending回执；COMMIT
+      APP-->>PAGE: 201待准备会话及Location，尚无短期链接
+      APP->>PROVIDER: 后台服务端核对本签署方再取短期链接，连接3秒/总10秒
+      APP->>DATABASE: 条件保存本人会话ready/有效期及受控能力，未知同会话恢复
+      PAGE->>APP: GET本人原会话，ready才读取短期链接，过期只返回expired
+      APP-->>PAGE: 本人短期地址不进受理回执/普通审计，不因查询延长时效
+      PAGE->>PROVIDER: 查看确切合同并实名签署，平台控制签名密钥与授权
+      PROVIDER->>APP: 签名通知；不是浏览器跳回即成功
+      APP->>APP: 按平台规范验证原报文签名/时效/事件唯一键
+      APP->>STORE: 事务外持久保全平台原报文，失败不假应答
+      APP->>DATABASE: BEGIN先查机构/事件键，保存受控引用和任务；COMMIT才201或同文200 received，异文409
+    end
+    Note over APP,DATABASE: 远程超时不延长锁；确定失败预算内有界重试，提交未知先主库查原键

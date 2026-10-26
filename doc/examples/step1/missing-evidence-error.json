@@ -1,0 +1,14 @@
+{
+  "type": "https://api.example.invalid/problems/REQUIRED_EVIDENCE",
+  "title": "REQUIRED_EVIDENCE",
+  "status": 422,
+  "detail": "不同主体需实际关系证明",
+  "instance": "/synthetic/request",
+  "errors": [
+    {
+      "pointer": "/relationshipEvidence",
+      "code": "REQUIRED_EVIDENCE",
+      "detail": "不同主体需实际关系证明"
+    }
+  ]
+}
